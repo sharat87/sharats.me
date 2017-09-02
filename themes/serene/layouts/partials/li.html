@@ -1,0 +1,18 @@
+<li {{ if .Draft }}class="draft"{{ end }}>
+  <a href="{{ .Permalink }}">{{ .Title }}</a>
+
+  {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
+  <p class="footnote">
+    posted <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
+
+    {{ if or .Params.tags .Params.categories }}&mdash;{{ end }}
+
+    {{ range .Params.tags}}
+      <a href="{{ $.Site.BaseURL }}tags/{{ . | urlize }}">#{{ . }}</a>
+    {{ end }}
+
+    {{ range .Params.categories }}
+      <a href="{{ $.Site.BaseURL }}categories/{{ . | urlize }}">%{{ . }}</a>
+    {{ end }}
+  </p>
+</li>

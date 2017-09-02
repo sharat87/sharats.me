@@ -1,0 +1,61 @@
+<div class="header">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+    <div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="desktop pure-menu pure-menu-horizontal nav-menu">
+            {{ $baseurl := .Site.BaseURL }}
+            <a href="{{ $baseurl }}" class="site-title">{{ .Site.Title }}</a>
+            <ul class="pure-menu-list">
+                {{ if eq .Site.Params.topmenu "categories" }}
+                {{ range $name, $page := .Site.Taxonomies.categories }}
+                <li class="pure-menu-item">
+                  <a href="{{ $baseurl }}categories/{{ $name | urlize }}" class="pure-menu-link">
+                    {{ $name | title }}</a>
+                </li>
+                {{ end }}
+                {{ end }}
+                {{ range .Site.Menus.main }}
+                <li class="pure-menu-item">
+                  <a href='{{ .URL }}'
+                    {{ if or ( $.IsMenuCurrent "main" . ) ( $.HasMenuCurrent "main" . ) }}
+                      class="pure-menu-link current" aria-current="page"
+                    {{ else }}
+                      class="pure-menu-link"
+                    {{ end }}
+                  >
+                    {{- .Name -}}
+                  </a>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+        <div class="mobile pure-menu nav-menu">
+            <a href="/" class="pure-menu-heading" id="toggle-home">{{ .Site.Title }}</a>
+            <a href="#" id="toggle-btn">&#9776;</a>
+            <ul class="pure-menu-list" id="toggle-content" style="display:none;">
+                {{ $baseurl := .Site.BaseURL }}
+                {{ if eq .Site.Params.topmenu "categories" }}
+                {{ range $name,$page := .Site.Taxonomies.categories }}
+                <li class="pure-menu-item">
+                  <a href="{{ $baseurl }}categories/{{ $name | urlize }}" class="pure-menu-link">
+                    {{ $name | title }}</a>
+                </li>
+                {{ end }}
+                {{ end }}
+                {{ range .Site.Menus.main }}
+                <li class="pure-menu-item">
+                  <a href='{{ .URL }}'
+                    {{ if or ( $.IsMenuCurrent "main" . ) ( $.HasMenuCurrent "main" . ) }}
+                      class='pure-menu-link current' aria-current='page'
+                    {{ else }}
+                      class=pure-menu-link
+                    {{ end }}
+                  >
+                    {{- .Name -}}
+                  </a>
+                {{ end }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>

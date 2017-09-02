@@ -1,0 +1,93 @@
+<div class="footer pure-g">
+  <div class="pure-u-1-24 pure-u-md-5-24"></div>
+  <div class="pure-u-11-12 pure-u-md-5-8 content">
+    <ul>
+      {{ if .Site.Author.name }}
+      <li class="author">&copy; 2017 {{ .Site.Author.name }}:</li>
+      {{- end -}}
+
+      {{- if .Site.Author.email -}}
+      <li>
+        <a href="mailto:{{ .Site.Author.email }}" class="pure-menu-link">Email</a>
+      </li>
+      {{- end -}}
+
+      {{- if .Site.Author.github -}}
+      <li>
+        <a href="https://github.com/{{ .Site.Author.github }}" class="pure-menu-link">GitHub</a>
+      </li>
+      {{- end -}}
+
+      {{- if .Site.Author.linkedin -}}
+      <li>
+        <a href="https://www.linkedin.com/in/{{ .Site.Author.linkedin }}" class="pure-menu-link">LinkedIn</a>
+      </li>
+      {{- end -}}
+
+      {{- if .Site.Author.facebook -}}
+      <li>
+        <a href="https://www.facebook.com/{{ .Site.Author.facebook }}" class="pure-menu-link">Facebook</a>
+      </li>
+      {{- end -}}
+
+      {{- if .Site.Author.twitter -}}
+      <li>
+        <a href="https://twitter.com/{{ .Site.Author.twitter }}" class="pure-menu-link">Twitter</a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+
+<link rel="stylesheet"
+  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+<script type="text/javascript">
+  setInterval(updateTimes, 60000);
+  updateTimes();
+  hljs.initHighlighting();
+
+  var navListBox = document.getElementById('toggle-content');
+  document.getElementById('toggle-btn').addEventListener('click', function (e) {
+    e.preventDefault();
+    navListBox.style.display = navListBox.style.display ? '' : 'none';
+  });
+
+  function updateTimes() {
+    var times = document.querySelectorAll('time.timeago');
+    for (var i = times.length; i-- > 0;) {
+      var d = Date.parse(times[i].getAttribute('datetime'));
+      times[i].textContent = timeSince(d) + ' ago';
+    }
+  }
+
+  function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = Math.floor(seconds / 31536000);
+    if (interval > 1) {
+      return interval + " years";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+</script>
+
+{{ template "_internal/google_analytics_async.html" . }}

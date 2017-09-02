@@ -1,0 +1,42 @@
+baseURL: http://sharats.me/
+languageCode: en-us
+title: "The Sharat's"
+theme: serene
+
+disqusShortname: sharats-me
+googleAnalytics: UA-105705354-1
+
+Paginate: 4
+rssLimit: 10
+
+author:
+  name: Shrikant Sharat Kandula
+  email: shrikantsharat.k@gmail.com
+  facebook: sharat87
+  github: sharat87
+  twitter: sharat87
+
+menu:
+  main:
+    - name: Posts
+      url: /posts/
+      weight: 10
+    - name: Labs
+      url: /labs/
+      weight: 20
+    - name: Résumé
+      url: /resume/
+      weight: 30
+    - name: Atom
+      url: /posts/index.xml
+      weight: 40
+    - name: About
+      url: /about/
+      weight: 50
+
+
+params:
+  highlight:
+    # TODO: Add support for this in the serene theme. Currently hardcoded.
+    style: atom-one-light
+    version: 9.12.0

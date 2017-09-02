@@ -1,0 +1,24 @@
+{{ partial "header.html" . }}
+{{ partial "navbar.html" . }}
+
+<div>
+  <div class="pure-u-1-24 pure-u-md-5-24"></div>
+  <div class="pure-u-11-12 pure-u-md-5-8">
+    <div class="post-content">
+      {{ .Content }}
+
+      <h2>Recent Posts</h2>
+
+      {{ $baseurl := .Site.BaseURL }}
+      <ul class="posts">
+        {{ range (.Paginate (where .Data.Pages "Type" "posts")).Pages }}
+          {{ partial "li.html" . }}
+        {{ end }}
+      </ul>
+      <p><a href="{{ $baseurl }}/posts/">View all posts &rarr;</a></p>
+    </div>
+  </div>
+  <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+{{ partial "footer.html" . }}
