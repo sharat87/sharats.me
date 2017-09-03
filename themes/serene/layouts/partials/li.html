@@ -1,9 +1,10 @@
 <li {{ if .Draft }}class="draft"{{ end }}>
-  <a href="{{ .Permalink }}">{{ .Title }}</a>
+  <a class="post-title" href="{{ .Permalink }}">{{ .Title }}</a>
 
-  {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
-  <p class="footnote">
-    posted <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
+  <p class="post-footnote">
+    {{ with .Date.Format "2006-01-02T15:04:05Z07:00" }}
+    <time datetime="{{ . }}" title="{{ . }}" class="timeago">{{ . }}</time>
+    {{ end }}
 
     {{ if or .Params.tags .Params.categories }}&mdash;{{ end }}
 

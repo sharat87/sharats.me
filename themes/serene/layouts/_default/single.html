@@ -1,41 +1,40 @@
 {{ partial "header.html" . }}
 {{ partial "navbar.html" . }}
 
-<div class="pure-g">
-  <div class="pure-u-1-24 pure-u-md-5-24"></div>
-  <div class="pure-u-11-12 pure-u-md-5-8">
-    <div class="post">
+<article class="post">
+  <h1>{{ if .Draft }}DRAFT: {{ end }}{{ .Title }}</h1>
 
-      <div class="post-title">
-        <p class="footnote">
-          {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
-          <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
+  <em class="footnote">
+    {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
+    <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
 
-          {{ $baseurl := .Site.BaseURL }}
+    {{ $baseurl := .Site.BaseURL }}
 
-          {{ if or .Params.tags .Params.categories .Params.series }}&mdash;{{ end }}
+    {{ if or .Params.tags .Params.categories .Params.series }}&mdash;{{ end }}
 
-          {{ range .Params.tags }}
-            <a href="{{ $baseurl }}tags/{{ . | urlize }}">#{{ . }}</a>
-          {{ end }}
+    {{ range .Params.tags }}
+    <a href="{{ $baseurl }}tags/{{ . | urlize }}">#{{ . }}</a>
+    {{ end }}
 
-          {{ range .Params.categories }}
-            <a href="{{ $baseurl }}categories/{{ . | urlize }}">%{{ . }}</a>
-          {{ end }}
-        </p>
-        <h1>{{ if .Draft }}DRAFT: {{ end }}{{ .Title }}</h1>
-      </div>
+    {{ range .Params.categories }}
+    <a href="{{ $baseurl }}categories/{{ . | urlize }}">%{{ . }}</a>
+    {{ end }}
+  </em>
 
-      <div class="post-content">
-        {{ .Content }}
-      </div>
+  {{ partial "pageline.html" . }}
 
-      <div class="comments">
-        {{ template "_internal/disqus.html" . }}
-      </div>
-    </div>
+  <div class="post-content">
+    {{ .Content }}
   </div>
-  <div class="pure-u-1-24 pure-u-md-1-6"></div>
-</div>
+
+  {{ partial "pageline.html" . }}
+
+  {{ if or (not (isset .Params "comments")) .Params.comments }}
+  <div class="comments">
+    <h1>{{ partial "icon.html" "comments" }}Comments</h1>
+    {{ template "_internal/disqus.html" . }}
+  </div>
+  {{ end }}
+</article>
 
 {{ partial "footer.html" . }}

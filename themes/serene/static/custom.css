@@ -1,22 +1,13 @@
-html {
-    min-height: 100%;
-    width: 100%;
-    position: relative;
-}
-
 body {
     color: #333;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: Lato, sans-serif;
+    font-size: 18px;
+    overflow-y: scroll;
 }
 
-h1, h2, h3, h4, h5, h6, .header {
+h1, h2, h3, h4, h5, h6, header {
     font-family: Raleway, sans-serif;
     font-weight: bold;
-}
-
-h1 + em {
-    margin-top: -2em;
-    display: block;
 }
 
 pre, code {
@@ -29,29 +20,43 @@ p code {
     padding: 0 3px;
 }
 
-.nav-menu {
-    border-bottom: 1px solid #e3e3e3;
+header {
+    border-bottom: 1px solid #E3E3E3;
 }
 
-.header {
-    text-align: left;
-}
-
-.header a {
+header a, footer a {
     display: inline-block;
     color: inherit;
+    padding: .5em 1em;
 }
 
-.header a:hover {
+header a:hover, header .active, footer a:hover {
+    background-color: rgba(0, 0, 0, .03);
     color: #000;
-    text-decoration: none;
+    opacity: 1;
 }
 
-.header .site-title {
+header .menu {
+    float: right;
+}
+
+header .menu a {
+    opacity: .8;
+}
+
+header .site-title {
     font-weight: bold;
     vertical-align: middle;
-    padding: .5em 3px;
+    padding: .5em 1em;
     margin-right: 1em;
+    float: left;
+}
+
+header:after {
+    content: ' ';
+    visibility: hidden;
+    clear: both;
+    display: block;
 }
 
 .pull-right {
@@ -68,7 +73,15 @@ p code {
 }
 
 .posts li {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
+}
+
+.posts .post-title {
+    font-size: 1.4em;
+}
+
+.posts .post-footnote {
+    opacity: .6;
 }
 
 a {
@@ -76,96 +89,39 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 .comments {
-    margin-bottom: 2em;
+    margin-top: 2em;
 }
 
-.footnote {
-    color: #888;
-    font-size: x-small;
-    margin-bottom: 0;
+h1 + em {
+    margin-top: -1.8em;
+    display: block;
+    font-size: .8em;
 }
 
-.footnote a {
-    color: #888;
+footer {
+    border-top: 1px solid #EEE;
+    margin: 2em auto 0;
+    font-size: 1.05em;
+    text-align: center;
 }
 
-.footnote a:hover {
-    text-decoration: underline;
-    color: #369;
+footer .author {
+    margin-right: 24px;
 }
 
-.footer {
-    height: auto;
-    width: 100%;
-    font-size: 80%;
+body > section, body > article {
+    width: 960px;
+    margin: 0 auto;
 }
 
-.footer .content {
-    border-top: 1px solid #e3e3e3;
-}
-
-.footer .author {
-    margin-right: 12px;
-}
-
-.footer ul {
-    height: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-    display: inline-block;
-    padding-left: 0;
-}
-
-.footer li {
-    display: inline-block;
-}
-
-.footer a:hover {
-    text-decoration: none;
-}
-
-.post {
-    color: #484848;
-    letter-spacing: normal;
-    padding-left: .5em;
-}
-
-.post-content {
-    z-index: 9;
-    overflow: auto;
-    padding: 0;
-    padding-bottom: 3em;
-    font-size: 16px;
-    line-height: 1.4;
-}
-
-.post-content img {
+body > section img, body > article img {
     max-width: 100%;
     height: auto;
 }
 
-.post a {
-    color: #c05b4d;
-    text-decoration: none;
-}
-
-.post a: hover {
-    color: #a5473a;
+body > section a:hover, body > article a:hover {
     text-decoration: underline;
-}
-
-.post-title {
-    margin-top: 0;
-    margin-bottom: 2em;
-}
-
-.post-title h1 {
-    margin-top: 0;
 }
 
 .pagination {
@@ -194,8 +150,23 @@ a:hover {
 }
 
 .pagination a:hover {
-    text-decoration: none;
     background-color: rgba(0, 0, 0, .1);
+}
+
+.pageline {
+    color: #CCC;
+    position: relative;
+    border-top: 1px solid #EEE;
+    margin: 2em 0;
+}
+
+.pageline > span {
+    position: absolute;
+    left: 20%;
+    top: -.5em;
+    background: white;
+    display: block;
+    padding: 0 12px;
 }
 
 @media screen and (max-width: 767px) {
@@ -209,7 +180,6 @@ a:hover {
         display: inline-block;
         float: right;
         padding: .5em 1em;
-        text-decoration: none;
         color: #484848;
         font-weight: bold;
     }

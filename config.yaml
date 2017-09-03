@@ -6,13 +6,14 @@ theme: serene
 disqusShortname: sharats-me
 googleAnalytics: UA-105705354-1
 
-Paginate: 4
+Paginate: 6
 rssLimit: 10
 
 author:
   name: Shrikant Sharat Kandula
   email: shrikantsharat.k@gmail.com
   facebook: sharat87
+  linkedin: sharat87
   github: sharat87
   twitter: sharat87
 
@@ -20,18 +21,23 @@ menu:
   main:
     - name: Posts
       url: /posts/
+      pre: pencil
       weight: 10
     - name: Labs
       url: /labs/
+      pre: flask
       weight: 20
     - name: Résumé
       url: /resume/
+      pre: paper-plane
       weight: 30
-    - name: Atom
+    - name: RSS
       url: /posts/index.xml
+      pre: rss
       weight: 40
     - name: About
       url: /about/
+      pre: user-secret
       weight: 50
 
 
