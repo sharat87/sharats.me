@@ -20,6 +20,12 @@ p code {
     padding: 0 3px;
 }
 
+pre {
+    margin: 0 1em;
+    padding: .5em;
+    background-color: rgba(0, 0, 0, .02);
+}
+
 header {
     border-bottom: 1px solid #E3E3E3;
 }
@@ -31,7 +37,7 @@ header a, footer a {
 }
 
 header a:hover, header .active, footer a:hover {
-    background-color: rgba(0, 0, 0, .03);
+    background-color: rgba(0, 0, 0, .05);
     color: #000;
     opacity: 1;
 }
