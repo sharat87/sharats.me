@@ -11,6 +11,11 @@
   <a href="https://github.com/{{ . }}">{{ partial "icon.html" "github-alt" }} GitHub</a>
   {{- end -}}
 
+  {{- with .Site.Author.stackoverflow -}}
+  <a href="https://stackoverflow.com/users/{{ . }}">{{ partial "icon.html" "stack-overflow" }} Stack
+    Overflow</a>
+  {{- end -}}
+
   {{- with .Site.Author.linkedin -}}
   <a href="https://www.linkedin.com/in/{{ . }}">{{ partial "icon.html" "linkedin" }} LinkedIn</a>
   {{- end -}}
