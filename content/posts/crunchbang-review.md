@@ -18,9 +18,10 @@ install crunchbang from usb with the help of unetbootin. After downloading the
 same laptop) and setup my 1GB pen drive to be bootable. After that, I had to
 create a couple of symlinks (using cygwin) on the usb drive as following
 
-    :::shell
-    ln -s live/vmlinuz1 vmlinuz
-    ln -s live/initrd1.img initrd.img
+```bash
+ln -s live/vmlinuz1 vmlinuz
+ln -s live/initrd1.img initrd.img
+```
 
 After that, the boot was pretty smooth, and I had to choose the graphical
 installer as the text based installer wouldn't load, which I have no idea why.

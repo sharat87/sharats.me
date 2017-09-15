@@ -43,12 +43,13 @@ said file and other wierdos.
 I want to share how I went about evolving the search functionality. Let's talk
 about one function here,
 
-    :::clojure
-    (defn matches?
-      [search-str entry]
-      (-> resource
-        (.indexOf search-str)
-        (not= -1)))
+```clojure
+(defn matches?
+  [search-str entry]
+  (-> resource
+    (.indexOf search-str)
+    (not= -1)))
+```
 
 This is the first incarnation of the search implementation. It just checks if
 the given `search-str` is present inside the `entry`.
@@ -58,14 +59,18 @@ language to describe what we want to find, and it should be easy to remember.
 Lets work on negation of search results first, thinking up the simplest of
 syntaxes,
 
-    not resource
+```clojure
+not resource
+```
 
 should match entries that do *not* contain `resource`. This doesn't look good,
 as it might also mean to search for entries that contain `not` or `resource`. We
 need some sugar to identify the `not` part as a directive that modifies how the
 search is done. Lets try again,
 
-    :not resource
+```clojure
+:not resource
+```
 
 Ah, the `:` in from of `not` gives it the special behaviour we need. Don't worry
 too much about why the syntax isn't `not: resource` or something else, it will
@@ -77,31 +82,34 @@ match or not. I suck at writing, read that again.
 Essentially, `(digest ":not resource")` should return a function, which more or
 less works like
 
-    :::clojure
-    (fn [entry]
-      (not (matches? "resource" entry)))
+```clojure
+(fn [entry]
+  (not (matches? "resource" entry)))
+```
 
 We see if there is a match, and `not` its result. Lets try writing the `digest`
 function,
 
-    :::clojure
-    (defn digest
-      [search-str]
-      (read-string (str "(" search-str ")")))
+```clojure
+(defn digest
+  [search-str]
+  (read-string (str "(" search-str ")")))
+```
 
 What we do above is wrap the `search-str` in paranthesis and read it into a
 clojure `list`. Lets try out our function in the repl
 
-    :::clojure
-    user=> (digest ":not resource")
-    (:not resource)
-
+```clojure
+user=> (digest ":not resource")
+(:not resource)
+```
 Yep, just what we expected. Now, lets take this further ahead
 
-    :::clojure
-    (defn digest
-      [search-str]
-      (let [spec (read-string (str "(" search-str ")"))]
-        (cond
-          (= (first spec) :not) (fn [e]
-                                  (not (matches? (nth spec 1) e))))))
+```clojure
+(defn digest
+  [search-str]
+  (let [spec (read-string (str "(" search-str ")"))]
+    (cond
+      (= (first spec) :not) (fn [e]
+                              (not (matches? (nth spec 1) e))))))
+```

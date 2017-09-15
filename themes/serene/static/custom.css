@@ -26,6 +26,10 @@ pre {
     background-color: rgba(0, 0, 0, .02);
 }
 
+pre code.hljs {
+    padding: 0;
+}
+
 header {
     border-bottom: 1px solid #E3E3E3;
 }

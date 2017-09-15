@@ -13,8 +13,9 @@ nice it is to have parentheses and brackets to get auto-closed. If you don't
 know what I'm talking about, its a feature usually present in IDEs like eclipse
 and easily recreated in vim with mappings like
 
-    :::vim
-    inoremap ( ()<Left>
+```vim
+inoremap ( ()<Left>
+```
 
 Of course, that's just a simple taste. There are vastly complicated plugins that
 achieve this.
@@ -28,7 +29,9 @@ time and a few days ago, I finally sat down to explore. I am writing my
 experience here. First, a simple test case to see if the auto-close plugin you
 use breaks undo, open vim (a blank file) and hit the following keys:
 
-    iabc{<CR><ESC>u
+```vim
+iabc{<CR><ESC>u
+```
 
 Where instead of `<CR>` you'd hit the return key and instead of `<ESC>` you'd
 hit the Escape key. Decent knowledge of vim should tell you that after the above
@@ -45,17 +48,19 @@ least 3 of those, I say there are basically two different implementations of
 this functionality, which all these plugins use. The first one is pretty much
 what was shown at the start of this article,
 
-    :::vim
-    inoremap ( ()<Left>
-    " or
-    inoremap ( <C-r>="()\<Left>"
+```vim
+inoremap ( ()<Left>
+" or
+inoremap ( <C-r>="()\<Left>"
+```
 
 I'm going to call this class of plugins, the critters. These do *not* break your
 undo. The next class of implementations, that do break your undo, the beasts, do
 a bit of dark sorcery with stuff like
 
-    :::vim
-    inoremap ( <C-r>=MyAwesomePairInseter()<CR>
+```vim
+inoremap ( <C-r>=MyAwesomePairInseter()<CR>
+```
 
 There is no dark sorcery here that is immediately apparent. The real sorcery is
 *inside* that function, where a call to `setline()` function is made to replace
@@ -97,39 +102,41 @@ configuration (except for `nocompatible`). So, I checked out the latest version
 (vim73-353) from the mercurial repository, compiled (with python, ruby and
 usual shit) and opened it, with no plugins and a simple vimrc as the following:
 
-    :::vim
-    set nocompatible
+```vim
+set nocompatible
 
-    inoremap <buffer> <silent> ( <C-R>=<SID>InsertPair("(", ")")<CR>
-    inoremap <buffer> <silent> [ <C-R>=<SID>InsertPair("[", "]")<CR>
-    inoremap <buffer> <silent> { <C-R>=<SID>InsertPair("{", "}")<CR>
+inoremap <buffer> <silent> ( <C-R>=<SID>InsertPair("(", ")")<CR>
+inoremap <buffer> <silent> [ <C-R>=<SID>InsertPair("[", "]")<CR>
+inoremap <buffer> <silent> { <C-R>=<SID>InsertPair("{", "}")<CR>
 
-    function! s:InsertPair(opener, closer)
-        let l:save_ve = &ve
-        set ve=all
+function! s:InsertPair(opener, closer)
+    let l:save_ve = &ve
+    set ve=all
 
-        call s:InsertStringAtCursor(a:closer)
+    call s:InsertStringAtCursor(a:closer)
 
-        exec "set ve=" . l:save_ve
-        return a:opener
-    endfunction
+    exec "set ve=" . l:save_ve
+    return a:opener
+endfunction
 
-    function! s:InsertStringAtCursor(str)
-        let l:line = getline('.')
-        let l:column = col('.')-2
+function! s:InsertStringAtCursor(str)
+    let l:line = getline('.')
+    let l:column = col('.')-2
 
-        if l:column < 0
-            call setline('.', a:str . l:line)
-        else
-            call setline('.', l:line[:l:column] . a:str . l:line[l:column+1:])
-        endif
-    endfunction
+    if l:column < 0
+        call setline('.', a:str . l:line)
+    else
+        call setline('.', l:line[:l:column] . a:str . l:line[l:column+1:])
+    endif
+endfunction
+```
 
 Which is a stripped down version of the auto-close functionality implemented in
 townk's auto-close plugin. And opened vim
 
-    :::shell
-    vim -u undo-breaker-vimrc
+```bash
+vim -u undo-breaker-vimrc
+```
 
 and did the test here. Boom, a dangling brace character.
 

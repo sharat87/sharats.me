@@ -12,8 +12,7 @@ seriously. You should.
 
 So, I assume you are also versioning your dotvim directory, like on github or
 bitbucket with git or mercurial respectively. If you are not, then you should.
-You really really should. If you are going to ask why, go ahead, I will refer
-to you here on as the douche-bag.
+You really really should.
 
 If your answer was no to both of the above, you better get the hell out of here
 before I get my lawn mowers.

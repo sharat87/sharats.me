@@ -27,18 +27,19 @@ all the installed jars would give me a picture. And yes, it did.
 
 Here's how I got the flowchart: (save this in say, gem-graph.sh)
 
-    :::bash
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    gem list \
-        | cut -d\  -f1 \
-        | xargs gem dep \
-        | awk '\
-            BEGIN { print "digraph gems {" } \
-            /^Gem / { cur=$2; sub(/-[0-9\.]+$/, "", cur); print "  \"" cur "\";" } \
-            ! /^Gem / && $0 != "" { print "  \"" cur "\" -> \"" $1 "\";" } \
-            END { print "}" }' \
-        | dot -Tpng -o gems.png
+gem list \
+    | cut -d\  -f1 \
+    | xargs gem dep \
+    | awk '\
+        BEGIN { print "digraph gems {" } \
+        /^Gem / { cur=$2; sub(/-[0-9\.]+$/, "", cur); print "  \"" cur "\";" } \
+        ! /^Gem / && $0 != "" { print "  \"" cur "\" -> \"" $1 "\";" } \
+        END { print "}" }' \
+    | dot -Tpng -o gems.png
+```
 
 Assuming you have [GraphViz](http://www.graphviz.org/) installed, you can just
 do

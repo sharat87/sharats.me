@@ -35,6 +35,7 @@
 <script type="text/javascript">
   setInterval(updateTimes, 60000);
   updateTimes();
+  hljs.configure({languages: []}); // Disable language-detection.
   hljs.initHighlighting();
 
   var navListBox = document.getElementById('toggle-content');
