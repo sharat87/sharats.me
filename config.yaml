@@ -16,10 +16,11 @@ author:
   linkedin: sharat87
   github: sharat87
   twitter: sharat87
+  stackoverflow: 151048
 
 menu:
   main:
-    - name: Posts
+    - name: Blog
       url: /posts/
       pre: pencil
       weight: 10
@@ -37,7 +38,7 @@ menu:
       weight: 40
     - name: About
       url: /about/
-      pre: user-secret
+      pre: id-card
       weight: 50
 
 
