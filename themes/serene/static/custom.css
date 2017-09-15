@@ -109,6 +109,14 @@ h1 + em {
     font-size: .8em;
 }
 
+figure.profile {
+    float: left;
+    border: 3px solid #333;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+}
+
 footer {
     border-top: 1px solid #EEE;
     margin: 2em auto 0;
@@ -117,7 +125,14 @@ footer {
 }
 
 footer .author {
-    margin-right: 24px;
+    margin-right: 1em;
+}
+
+footer .sep {
+    opacity: .3;
+    margin-right: 1em;
+    transform: scale(.7);
+    display: inline-block;
 }
 
 body > section, body > article {
@@ -132,6 +147,13 @@ body > section img, body > article img {
 
 body > section a:hover, body > article a:hover {
     text-decoration: underline;
+}
+
+article:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
 }
 
 .pagination {

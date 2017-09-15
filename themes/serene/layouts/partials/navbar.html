@@ -1,27 +1,24 @@
 <header>
+
   <div class="pure-menu-horizontal nav-menu">
-    {{ $baseurl := .Site.BaseURL }}
-    <a href="{{ $baseurl }}" class="site-title">{{ .Site.Title }}</a>
+    <a href="{{ .Site.BaseURL }}" class="site-title">{{ .Site.Title }}</a>
     <ul class="menu pure-menu-list">
       {{ range .Site.Menus.main }}
       <li class="pure-menu-item">
         <a href='{{ .URL }}'
           {{ if or ( $.IsMenuCurrent "main" . ) ( $.HasMenuCurrent "main" . ) }}
           class="active" aria-current="page"
-          {{ end }}
-          >
-          {{ partial "icon.html" .Pre }}
-          {{- .Name -}}
+          {{ end }}>
+          {{ partial "icon.html" .Pre }} {{ .Name }}
         </a>
-      </li>
       {{ end }}
     </ul>
   </div>
+
   <div class="mobile pure-menu nav-menu">
     <a href="/" class="pure-menu-heading" id="toggle-home">{{ .Site.Title }}</a>
     <a href="#" id="toggle-btn">&#9776;</a>
     <ul class="pure-menu-list" id="toggle-content" style="display:none;">
-      {{ $baseurl := .Site.BaseURL }}
       {{ range .Site.Menus.main }}
       <li class="pure-menu-item">
         <a href='{{ .URL }}'
@@ -32,7 +29,7 @@
           {{- .Name -}}
         </a>
         {{ end }}
-      </li>
     </ul>
   </div>
+
 </header>
