@@ -1,7 +1,7 @@
 ---
 title: Labs
 date: 2017-08-26
-draft: true
+type: standalone
 ---
 
 This is a list of my public projects and experiments. You can follow me on Github for updates on my

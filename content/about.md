@@ -1,8 +1,7 @@
 ---
 title: About
 date: 2017-08-25
-comments: off
-pagelines: off
+type: standalone
 ---
 
 Hi there! I am Shrikant Sharat Kandula. Welcome to my blog.

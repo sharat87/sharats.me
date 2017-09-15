@@ -21,15 +21,25 @@
     {{ end }}
   </em>
 
+  {{ if ne .Type "standalone" }}
   {{ partial "pageline.html" . }}
+  {{ end }}
 
   <div class="post-content">
     {{ .Content }}
   </div>
 
+  {{ if ne .Type "standalone" }}
   {{ partial "pageline.html" . }}
+  {{ end }}
 
-  {{ if or (not (isset .Params "comments")) .Params.comments }}
+  {{ if isset .Params "comments" }}
+    {{ $.Scratch.Set "showComments" .Params.comments }}
+  {{ else }}
+    {{ $.Scratch.Set "showComments" (ne .Type "standalone") }}
+  {{ end }}
+
+  {{ if $.Scratch.Get "showComments" }}
   <div class="comments">
     <h1>{{ partial "icon.html" "comments" }}Comments</h1>
     {{ template "_internal/disqus.html" . }}
