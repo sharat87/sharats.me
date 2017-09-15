@@ -4,28 +4,27 @@
   {{- end -}}
 
   {{- with .Site.Author.email -}}
-  <a href="mailto:{{ . }}">{{ partial "icon.html" "envelope" }} Email</a>
+  <a href="mailto:{{ . }}">{{ partial "icon.html" "envelope" }}</a>
   {{- end -}}
 
   {{- with .Site.Author.github -}}
-  <a href="https://github.com/{{ . }}">{{ partial "icon.html" "github-alt" }} GitHub</a>
+  <a href="https://github.com/{{ . }}">{{ partial "icon.html" "github-alt" }}</a>
   {{- end -}}
 
   {{- with .Site.Author.stackoverflow -}}
-  <a href="https://stackoverflow.com/users/{{ . }}">{{ partial "icon.html" "stack-overflow" }} Stack
-    Overflow</a>
+  <a href="https://stackoverflow.com/users/{{ . }}">{{ partial "icon.html" "stack-overflow" }}</a>
   {{- end -}}
 
   {{- with .Site.Author.linkedin -}}
-  <a href="https://www.linkedin.com/in/{{ . }}">{{ partial "icon.html" "linkedin" }} LinkedIn</a>
+  <a href="https://www.linkedin.com/in/{{ . }}">{{ partial "icon.html" "linkedin" }}</a>
   {{- end -}}
 
   {{- with .Site.Author.twitter -}}
-  <a href="https://twitter.com/{{ . }}">{{ partial "icon.html" "twitter" }} Twitter</a>
-  {{ end }}
+  <a href="https://twitter.com/{{ . }}">{{ partial "icon.html" "twitter" }}</a>
+  {{- end -}}
 
   {{- with .Site.Author.facebook -}}
-  <a href="https://www.facebook.com/{{ . }}">{{ partial "icon.html" "facebook" }} Facebook</a>
+  <a href="https://www.facebook.com/{{ . }}">{{ partial "icon.html" "facebook" }}</a>
   {{- end -}}
 </footer>
 
