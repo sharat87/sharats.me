@@ -29,7 +29,7 @@ menu:
       pre: flask
       weight: 20
     - name: Résumé
-      url: /resume/
+      url: /shrikant-sharat-kandula-resume.pdf
       pre: paper-plane
       weight: 30
     - name: RSS
