@@ -1,16 +1,52 @@
 ---
-title: "Migrate From Pelican to Hugo"
+title: Migrate from Pelican to Hugo
 date: 2017-08-23T18:23:21+05:30
-draft: true
 ---
 
 I recently got around to resurrecting my blog up after around five years of death. As part of that,
 I chose to migrate my blog to Hugo, from the current Pelican builder. The first post after
 resurrection will be about the migration.
 
+If you're wondering why the long break, well, I could blame it on life and work, but it was just me
+being lazy. Hopefully, that won't happen agian.
+
+# Why Hugo
+
+When I decided to start writing again, I couldn't remember who I was building the site. That's
+probably entirely my fault fot not documenting it for myself, but I ended up being almost new to
+Pelican. So, instead of directly going to Pelican's homepage, I checked out
+[StaticGen](https://www.staticgen.com/) to see the current landscape of static site generators. The
+most popular (measure by GitHub stars) is obvious, Jekyll. Then came [Hugo](https://gohugo.io), a
+name I didn't recognize. Other than Pelican, all the ones in the top-ten are built on Ruby or
+JavaScript (node.js). I wasn't keen on either. Hugo was in a unique position since it is written in
+a compiled language, so multiplatform binaries are relatively easy to come by.
+
+I read the documentation on a weekend and I was impressed. Hugo it is. The thing that struck me most
+in Hugo is that it does it's primary thing only. Generating HTML files from Markdown files. It
+doesn't force a blog-like website or a documentation-like website. That's up to you. Hugo is like a
+bridge between your markdown files and the output HTML files. The structure of the output is a
+mirror image of your source files and the `config.toml` file (or `config.yaml`).
+
+# Migration
+
 ## A new site
 
 Issued the command `hugo new site sharats.me`.
+
+## Configuration
+
+Hugo's default configuration is of the [TOML](https://github.com/toml-lang/toml) format. I read the
+README and wasn't convinced. Thankfully, Hugo supports configuration in [YAML](http://yaml.org/).
+
+So, this is what I came up with in my `config.yaml` file.
+
+```yaml
+baseURL: http://sharats.me/
+languageCode: en-us
+title: "The Sharat's"
+```
+
+The current `config.yaml` is much longer and can be viewed on the github repo of this site.
 
 ## Change metadata format
 
@@ -23,8 +59,9 @@ Tags: python, python-requests, python-pickle
 Reddit: true
 ```
 
-There's a lot of things in this that I wouldn't do if I wrote that article today, but meh. I need
-this to look like the following to make Hugo happy.
+There's a lot of things in this that I wouldn't do if I wrote that article today, but meh.
+
+Hugo calls these *frontmatter* and I needed it to look like the following to make it happy.
 
 ```yaml
 ---
@@ -59,3 +96,65 @@ c { print; next }
 }
 ```
 
+## Change code blocks
+
+All my code blocks were of the following format:
+
+        :::python
+        import this
+
+But, I needed them like this:
+
+    ```python
+    import this
+    ```
+
+So, the following little python script did the trick:
+
+```python
+#!/usr/bin/env python3
+
+import sys
+
+
+def process(f):
+    cb = False
+    empties = 0
+    output = []
+    for line in f:
+        line = line.rstrip('\n')
+
+        if not line:
+            empties += 1
+            continue
+
+        prefix = ''
+        if line.startswith('    '):
+            line = line[4:]
+            if not cb:
+                cb = True
+                line = line.replace(':::', '```', 1) if line.startswith(':::') else ('```\n' + line)
+
+        elif cb:
+            cb = False
+            prefix = '```\n'
+
+        output.append(prefix + '\n' * empties + line)
+        empties = 0
+
+    return '\n'.join(output)
+
+
+for file_name in sys.argv[1:]:
+    with open(file_name) as f:
+        output = process(f)
+    print(output)
+```
+
+Yeah, didn't have the patience to do it with `awk` this time.
+
+I initially considered rebuilding my current theme as a Hugo theme, but while browsing existing
+themes for examples on how to do it, I fell in love with the **nofancy** theme. So, I started
+modifying it until I arrived at the current look.
+
+Hope to be writing more articles in the coming weeks.

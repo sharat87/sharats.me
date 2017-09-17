@@ -11,11 +11,11 @@
   {{ end }}
 
   <ul class="posts">
-    {{ $baseurl := .Site.BaseURL }}
     {{ range $paginator.Pages }}
     {{ partial "li.html" . }}
     {{ end }}
   </ul>
+
   {{ template "_internal/pagination.html" . }}
 </section>
 
