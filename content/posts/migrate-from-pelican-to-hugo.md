@@ -1,6 +1,7 @@
 ---
 title: Migrate from Pelican to Hugo
 date: 2017-08-23T18:23:21+05:30
+tags: ['hugo', 'meta', 'awk', 'python']
 ---
 
 I recently got around to resurrecting my blog up after around five years of death. As part of that,

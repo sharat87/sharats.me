@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6, header {
 
 pre, code {
     font-family: 'Fira Mono', monospace;
-    font-size: .95em;
+    font-size: .9em;
 }
 
 p code {
@@ -109,12 +109,14 @@ h1 + em {
     font-size: .8em;
 }
 
-figure.profile {
+.profile {
     float: left;
     border: 3px solid #333;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
+    max-width: 130px;
+    margin: .5em 2em;
 }
 
 footer {
@@ -199,6 +201,24 @@ article:after {
     background: white;
     display: block;
     padding: 0 12px;
+}
+
+blockquote {
+    margin-left: 1em;
+    padding: 3px 0 3px 1em;
+    border-left: 3px solid rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, .04);
+    position: relative;
+    font-style: italic;
+}
+
+blockquote:before {
+    font-family: FontAwesome;
+    content: '\f10d';
+    display: block;
+    position: absolute;
+    transform: translateX(-2em) scale(3);
+    opacity: .1;
 }
 
 @media screen and (max-width: 767px) {

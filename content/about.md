@@ -4,7 +4,7 @@ date: 2017-08-25
 type: standalone
 ---
 
-{{< figure src="/images/shrikant-sharat-kandula.jpg" class="profile" width="130px" >}}
+<img src="/images/shrikant-sharat-kandula.jpg" class=profile>
 
 Hello! I am Shrikant Sharat Kandula, a Programmer and student Actuary, from India.
 
