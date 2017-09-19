@@ -11,7 +11,7 @@ All code for generation of the blog (that is written by me) is licensed with the
 To build, install Hugo and issue `make build` or to serve locally, `make serve`.
 
 If you find any error (*e.g.,* typos) or bugs, please open an issue or send a PR to fix. I'll be
-very grateful.
+very greatful.
 
 ## Usage
 
