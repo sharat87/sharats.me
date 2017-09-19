@@ -40,10 +40,9 @@
   hljs.configure({languages: []}); // Disable language-detection.
   hljs.initHighlighting();
 
-  var navListBox = document.getElementById('toggle-content');
-  document.getElementById('toggle-btn').addEventListener('click', function (e) {
+  document.getElementById('nav-toggle-btn').addEventListener('click', function (e) {
     e.preventDefault();
-    navListBox.style.display = navListBox.style.display ? '' : 'none';
+    document.getElementById('nav-menu-list').classList.toggle('show');
   });
 
   function updateTimes() {

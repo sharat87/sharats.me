@@ -46,8 +46,15 @@ header a:hover, header .active, footer a:hover {
     opacity: 1;
 }
 
+header .nav-menu {
+    width: 100%;
+    white-space: nowrap;
+}
+
 header .menu {
-    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 header .menu a {
@@ -138,7 +145,8 @@ footer .sep {
 }
 
 body > section, body > article {
-    width: 960px;
+    padding: 0 1em;
+    max-width: 960px;
     margin: 0 auto;
 }
 
@@ -221,20 +229,40 @@ blockquote:before {
     opacity: .1;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 730px) {
+    header .menu {
+        display: none;
+    }
+
+    header .menu.show {
+        display: block;
+    }
+
+    header .menu:before {
+        content: ' ';
+        visibility: hidden;
+        display: block;
+        clear: both;
+    }
+
+    header .menu a {
+        display: block;
+    }
+
     .desktop {
         display: none;
     }
     .mobile {
         display: block;
     }
-    #toggle-btn {
+
+    #nav-toggle-btn {
         display: inline-block;
         float: right;
         padding: .5em 1em;
         color: #484848;
-        font-weight: bold;
     }
+
     #toggle-content li {
         clear: both;
         height: auto;
@@ -245,7 +273,22 @@ blockquote:before {
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 731px) {
+    #nav-toggle-btn {
+        display: none;
+    }
+
+    header .menu {
+        float: right;
+        display: inline-block;
+    }
+
+    header .menu li {
+        display: inline-block;
+        zoom: 1;
+        vertical-align: middle;
+    }
+
     .mobile {
         display: none;
     }

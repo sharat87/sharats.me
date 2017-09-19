@@ -1,10 +1,13 @@
 <header>
 
-  <div class="pure-menu-horizontal nav-menu">
+  <div class="nav-menu">
     <a href="/" class="site-title">{{ .Site.Title }}</a>
-    <ul class="menu pure-menu-list">
+
+    <a href="#" id="nav-toggle-btn">{{ partial "icon.html" "bars" }}</a>
+
+    <ul id="nav-menu-list" class="menu">
       {{ range .Site.Menus.main }}
-      <li class="pure-menu-item">
+      <li>
         <a href='{{ .URL }}'
           {{ if or ( $.IsMenuCurrent "main" . ) ( $.HasMenuCurrent "main" . ) }}
           class="active" aria-current="page"
@@ -13,8 +16,10 @@
         </a>
       {{ end }}
     </ul>
+
   </div>
 
+  <!--
   <div class="mobile pure-menu nav-menu">
     <a href="/" class="pure-menu-heading" id="toggle-home">{{ .Site.Title }}</a>
     <a href="#" id="toggle-btn">&#9776;</a>
@@ -31,5 +36,6 @@
         {{ end }}
     </ul>
   </div>
+  -->
 
 </header>
