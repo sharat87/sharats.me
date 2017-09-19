@@ -29,6 +29,7 @@
     {{ .Content }}
   </div>
 
+  {{ if ne .Type "standalone" }}
   <div class="share-buttons">
     <span>Share article on</span>
     <a href="#" title="Share on Twitter">
@@ -45,7 +46,6 @@
     </a>
   </div>
 
-  {{ if ne .Type "standalone" }}
   {{ partial "pageline.html" . }}
   {{ end }}
 
