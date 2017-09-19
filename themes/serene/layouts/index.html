@@ -11,7 +11,7 @@
     {{ partial "li.html" . }}
     {{ end }}
   </ul>
-  <p><a href="{{ $baseurl }}posts/">View all posts &rarr;</a></p>
+  <p><a href="{{ $baseurl }}posts/">View all posts {{ partial "icon.html" "long-arrow-right" }}</a></p>
 </section>
 
 {{ partial "footer.html" . }}

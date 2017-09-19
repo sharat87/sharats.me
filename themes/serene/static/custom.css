@@ -229,6 +229,24 @@ blockquote:before {
     opacity: .1;
 }
 
+.share-buttons {
+    margin-top: 1em;
+    font-size: 1.4em;
+    background-color: rgba(0, 0, 0, .05);
+    padding: 1em;
+}
+
+.share-buttons a {
+    color: inherit;
+    display: inline-block;
+    font-size: .6em;
+    margin-left: 1em;
+}
+
+.share-buttons a:hover {
+    color: black;
+}
+
 @media screen and (max-width: 730px) {
     header .menu {
         display: none;
@@ -246,13 +264,6 @@ blockquote:before {
     }
 
     header .menu a {
-        display: block;
-    }
-
-    .desktop {
-        display: none;
-    }
-    .mobile {
         display: block;
     }
 
@@ -287,12 +298,5 @@ blockquote:before {
         display: inline-block;
         zoom: 1;
         vertical-align: middle;
-    }
-
-    .mobile {
-        display: none;
-    }
-    .desktop {
-        display: block;
     }
 }
