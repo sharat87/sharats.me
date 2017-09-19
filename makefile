@@ -1,8 +1,14 @@
 serve:
 	hugo --buildDrafts server --bind 0.0.0.0
 
-build:
-	hugo
+build: public
+	hugo --cleanDestinationDir
+	echo sharats.me > public/CNAME
+	touch public/.nojekyll
+
+public:
+	git worktree prune
+	git worktree add public gh-pages
 
 gh-pages:
 	git clone -b gh-pages . .tmp-gh-pages
