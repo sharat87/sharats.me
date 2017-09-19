@@ -1,3 +1,5 @@
+## About
+
 This is the source of my blog, hosted at [sharats.me](http://sharats.me). It is powered by
 [Hugo](https://gohugo.io) and articles are written in Markdown.
 
@@ -10,3 +12,17 @@ To build, install Hugo and issue `make build` or to serve locally, `make serve`.
 
 If you find any error (*e.g.,* typos) or bugs, please open an issue or send a PR to fix. I'll be
 very grateful.
+
+## Usage
+
+Create a new post in markdown with:
+
+    hugo new posts/my-new-post.md
+
+Start a live server with:
+
+    make serve
+
+Build static site with:
+
+    make build
