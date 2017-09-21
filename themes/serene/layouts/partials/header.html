@@ -19,5 +19,7 @@
 <link href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" rel="stylesheet">
 
 <style>
-  {{- partial "styles.css" . | safeCSS -}}
+  /* Styles for highlight.js */
+  {{- partial "atom-one-light.min.css" . | safeCSS }}
+  {{ partial "styles.css" . | safeCSS -}}
 </style>
