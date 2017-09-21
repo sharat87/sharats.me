@@ -32,6 +32,10 @@ pre, code {
     font-size: .9em;
 }
 
+h1 code, h2 code, h3 code, h4 code {
+    font-weight: 500;
+}
+
 p code {
     background-color: rgba(0, 0, 0, .05);
     padding: 0 3px;
