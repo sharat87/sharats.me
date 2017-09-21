@@ -2,7 +2,7 @@
 {{ partial "navbar.html" . }}
 
 <article class="post">
-  <h1>{{ if .Draft }}DRAFT: {{ end }}{{ .Title }}</h1>
+  <h1>{{ .Title }}</h1>
 
   <em class="footnote">
     {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
@@ -61,6 +61,11 @@
     {{ template "_internal/disqus.html" . }}
   </div>
   {{ end }}
+
+  {{ if .Draft }}<div class="draft-label"
+    title="This page is a draft. It hasn't been published yet.">
+    {{ partial "icon.html" "save" }} DRAFT
+  </div>{{ end }}
 </article>
 
 {{ partial "footer.html" . }}

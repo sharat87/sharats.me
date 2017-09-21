@@ -280,6 +280,17 @@ aside > :last-child {
     color: black;
 }
 
+.draft-label {
+    position: fixed;
+    background-color: maroon;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 3px;
+    right: 1em;
+    bottom: 1em;
+    cursor: default;
+}
+
 @media screen and (max-width: 730px) {
     header .menu {
         display: none;
