@@ -20,6 +20,6 @@
 
 <style>
   /* Styles for highlight.js */
-  {{- partial "atom-one-light.min.css" . | safeCSS }}
-  {{ partial "styles.css" . | safeCSS -}}
+  {{- partialCached "atom-one-light.min.css" . | safeCSS }}
+  {{ partialCached "styles.css" . | safeCSS -}}
 </style>
