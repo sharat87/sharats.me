@@ -8,7 +8,23 @@ body {
 
 h1, h2, h3, h4, h5, h6, header {
     font-family: Raleway, sans-serif;
-    font-weight: bold;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+h4 {
+    font-size: 1.2em;
 }
 
 pre, code {
@@ -22,7 +38,7 @@ p code {
 }
 
 pre {
-    margin: 0 1em;
+    margin: 1em;
     padding: .5em;
     background-color: rgba(0, 0, 0, .02);
 }
@@ -228,6 +244,18 @@ blockquote:before {
     position: absolute;
     transform: translateX(-2em) scale(3);
     opacity: .1;
+}
+
+aside {
+    border: 1px solid rgba(0, 0, 50, .2);
+    background-color: rgba(0, 0, 50, .05);
+    padding: 1em;
+    opacity: .9;
+    margin: 1em 3em;
+}
+
+aside > :last-child {
+    margin-bottom: 0;
 }
 
 .share-buttons {
