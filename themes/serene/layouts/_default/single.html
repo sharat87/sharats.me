@@ -8,6 +8,11 @@
     {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
     <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
 
+    <span class="sep">&bull;</span>
+    {{ .ReadingTime }} mins
+    <span class="sep">&bull;</span>
+    ~{{ .FuzzyWordCount | lang.NumFmt 0 }} words
+
     {{ $baseurl := .Site.BaseURL }}
 
     {{ if or .Params.tags .Params.categories .Params.series }}&mdash;{{ end }}
