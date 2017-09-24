@@ -43,7 +43,8 @@ menu:
 
 
 params:
-  highlight:
-    # TODO: Add support for this in the serene theme. Currently hardcoded.
-    style: atom-one-light
-    version: 9.12.0
+  postProcess:
+    - re: '<p>(TODO:?)'
+      to: '<p style="color:red">$1'
+    - re: '<p>(Note:?)'
+      to: '<p><span class=note>$1</span>'

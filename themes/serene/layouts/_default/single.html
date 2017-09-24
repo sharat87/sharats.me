@@ -12,7 +12,7 @@
     {{ .ReadingTime }} mins
 
     <span class="sep">&middot;</span>
-    ~{{ .FuzzyWordCount | lang.NumFmt 0 }} words
+    {{ .FuzzyWordCount | lang.NumFmt 0 }} words
 
     {{ if or .Params.tags .Params.categories .Params.series }}
     <span class="sep">&middot;</span>
@@ -33,7 +33,11 @@
   {{ end }}
 
   <div class="post-content">
-    {{ .Content }}
+    {{- $.Scratch.Set "content" .Content -}}
+    {{- range .Site.Params.PostProcess -}}
+    {{- $.Scratch.Get "content" | replaceRE .re .to | $.Scratch.Set "content" -}}
+    {{- end -}}
+    {{- $.Scratch.Get "content" | safeHTML -}}
   </div>
 
   {{ if ne .Type "standalone" }}
