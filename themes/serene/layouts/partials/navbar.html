@@ -3,7 +3,7 @@
   <div class="nav-menu">
     <a href="/" class="site-title">{{ .Site.Title }}</a>
 
-    <a href="#" id="nav-toggle-btn">{{ partial "icon.html" "bars" }}</a>
+    <a href="#" id="nav-toggle-btn">&vellip;</a>
 
     <ul id="nav-menu-list" class="menu">
       {{ range .Site.Menus.main }}
@@ -12,7 +12,7 @@
           {{ if or ( $.IsMenuCurrent "main" . ) ( $.HasMenuCurrent "main" . ) }}
           class="active" aria-current="page"
           {{ end }}>
-          {{ partial "icon.html" .Pre }} {{ .Name }}
+          {{- .Name -}}
         </a>
       {{ end }}
     </ul>

@@ -55,7 +55,11 @@ pre code.hljs {
 }
 
 header {
-    border-bottom: 1px solid #E3E3E3;
+    background-color: #369;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .2));
+    color: rgba(256, 256, 256, .9);
+    font-size: 1.2em;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 }
 
 header a, footer a {
@@ -65,9 +69,7 @@ header a, footer a {
 }
 
 header a:hover, header .active, footer a:hover {
-    background-color: rgba(0, 0, 0, .05);
-    color: #000;
-    opacity: 1;
+    color: white;
 }
 
 header .nav-menu {
@@ -81,15 +83,10 @@ header .menu {
     padding: 0;
 }
 
-header .menu a {
-    opacity: .8;
-}
-
 header .site-title {
     font-weight: bold;
     vertical-align: middle;
     padding: .5em 1em;
-    margin-right: 1em;
     float: left;
 }
 
@@ -326,7 +323,6 @@ aside > :last-child {
         display: inline-block;
         float: right;
         padding: .5em 1em;
-        color: #484848;
     }
 
     #toggle-content li {
