@@ -1,13 +1,13 @@
 body {
     margin: 0;
     color: #222;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: Lato, sans-serif;
     font-size: 16px;
     overflow-y: scroll;
 }
 
 h1, h2, h3, h4, h5, h6, header, strong {
-    font-weight: 600;
+    font-weight: 700;
 }
 
 h1 {
@@ -32,7 +32,7 @@ p .note {
 }
 
 pre, code {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Source Code Pro', monospace;
 }
 
 h1 code, h2 code, h3 code, h4 code {
@@ -130,6 +130,19 @@ a {
     text-decoration: none;
 }
 
+article a:hover, section a:hover {
+    text-decoration: underline;
+}
+
+#TableOfContents ul {
+    list-style-type: none;
+    padding-left: 1.2em;
+}
+
+#TableOfContents > ul {
+    list-style-type: decimal;
+}
+
 .comments {
     margin-top: 2em;
 }
@@ -186,10 +199,6 @@ body > section, body > article {
 body > section img, body > article img {
     max-width: 100%;
     height: auto;
-}
-
-body > section a:hover, body > article a:hover {
-    text-decoration: underline;
 }
 
 article:after {
@@ -253,21 +262,11 @@ blockquote {
     font-style: italic;
 }
 
-blockquote:before {
-    font-family: FontAwesome;
-    content: '\f10d';
-    display: block;
-    position: absolute;
-    transform: translateX(-2em) scale(3);
-    opacity: .1;
-}
-
 aside {
     border: 1px solid rgba(0, 0, 50, .2);
     background-color: rgba(0, 0, 50, .05);
-    padding: 1em;
-    opacity: .9;
-    margin: 1em 3em;
+    padding: 0 1em 1em;
+    opacity: .8;
 }
 
 aside > :last-child {
@@ -354,5 +353,11 @@ aside > :last-child {
         display: inline-block;
         zoom: 1;
         vertical-align: middle;
+    }
+
+    aside {
+        float: right;
+        width: 30%;
+        margin: 0 0 1em 1em;
     }
 }
