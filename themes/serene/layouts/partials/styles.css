@@ -62,13 +62,13 @@ header {
     box-shadow: 0 0 3px rgba(0, 0, 0, .5);
 }
 
-header a, footer a {
+header a {
     display: inline-block;
     color: inherit;
     padding: .5em 1em;
 }
 
-header a:hover, header .active, footer a:hover {
+header a:hover, header .active {
     color: white;
 }
 
@@ -172,6 +172,7 @@ h1 + em a {
 footer {
     border-top: 1px solid #EEE;
     margin: 2em auto 0;
+    padding: .5em 0;
     font-size: 1.05em;
     text-align: center;
 }
@@ -297,6 +298,14 @@ aside > :last-child {
     right: 1em;
     bottom: 1em;
     cursor: default;
+}
+
+.social-buttons {
+    text-align: center;
+}
+
+.icon:hover {
+    fill: "#F09";
 }
 
 @media screen and (max-width: 730px) {
