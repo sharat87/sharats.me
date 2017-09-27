@@ -249,6 +249,7 @@ article:after, .post-content:after {
     background: white;
     display: block;
     padding: 0 12px;
+    transform: scale(1.5);
 }
 
 blockquote {
