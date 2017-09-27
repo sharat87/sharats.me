@@ -8,6 +8,11 @@ document.getElementById('nav-toggle-btn').addEventListener('click', function (e)
     document.getElementById('nav-menu-list').classList.toggle('show');
 });
 
+document.querySelectorAll('a[rel="footnote"]').forEach(function (el) {
+    var target = document.getElementById(el.getAttribute('href').slice(1));
+    el.setAttribute('title', target.firstChild.textContent.trim());
+});
+
 function updateTimes() {
     var times = document.querySelectorAll('time.timeago');
     for (var i = times.length; i-- > 0;) {

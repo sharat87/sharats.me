@@ -45,8 +45,17 @@
 
   {{ if ne .Type "standalone" }}
   <div class="share-buttons">
-    <span>Share article on</span>
-    <p style="color:red">TODO: Add Twitter and Facebook share buttons.</p>
+    <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large"
+      {{- with .Site.Author.twitter }} data-via="{{ . }}" {{ end -}}
+      >Tweet</a>
+    <script>window.twttr = (function(d, s) {
+      var js = d.createElement(s), t = window.twttr || {};
+      js.src = 'https://platform.twitter.com/widgets.js';
+      d.body.appendChild(js);
+      t._e = [];
+      t.ready = function(f) { t._e.push(f) };
+      return t;
+    }(document, 'script'))</script>
   </div>
 
   {{ partial "pageline.html" . }}
@@ -66,7 +75,7 @@
   {{ end }}
 
   {{ if .Draft }}<div class="draft-label"
-    title="This page is a draft. It hasn't been published yet.">DRAFT</div>{{ end }}
+    title="This page is a draft. It hasn't been published yet."><b>&#x1f5ab;</b> DRAFT</div>{{ end }}
 </article>
 
 {{ partial "footer.html" . }}

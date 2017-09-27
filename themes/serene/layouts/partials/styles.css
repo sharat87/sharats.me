@@ -39,7 +39,7 @@ h1 code, h2 code, h3 code, h4 code {
     font-weight: 500;
 }
 
-p code {
+p code, table code {
     background-color: rgba(0, 0, 0, .05);
     padding: 0 3px;
 }
@@ -52,6 +52,11 @@ pre {
 
 pre code.hljs {
     padding: 0;
+}
+
+hr {
+    border-width: 1px 0 0;
+    border-color: rgba(0, 0, 0, .2);
 }
 
 header {
@@ -206,6 +211,20 @@ article:after, .post-content:after {
     clear: both;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+th, tr:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+th, td {
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, .2);
+    padding: 6px;
+}
+
 .pagination {
     list-style-type: none;
     display: inline-block;
@@ -274,20 +293,6 @@ aside > :last-child {
 
 .share-buttons {
     margin-top: 1em;
-    font-size: 1.4em;
-    background-color: rgba(0, 0, 0, .05);
-    padding: 1em;
-}
-
-.share-buttons a {
-    color: inherit;
-    display: inline-block;
-    font-size: .6em;
-    margin-left: 1em;
-}
-
-.share-buttons a:hover {
-    color: black;
 }
 
 .draft-label {
@@ -376,5 +381,26 @@ aside > :last-child {
         float: right;
         width: 30%;
         margin: 0 0 1em 1em;
+    }
+}
+
+@media print {
+    body {
+        zoom: 1;
+        color: black;
+        font-size: 12pt;
+    }
+
+    header {
+        display: none;
+    }
+
+    a:link, a:visited {
+        color: black;
+        text-decoration: underline;
+    }
+
+    h1, h2, h3 {
+        padding-bottom: 3pt;
     }
 }
