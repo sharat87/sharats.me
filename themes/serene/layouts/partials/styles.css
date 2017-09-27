@@ -199,7 +199,7 @@ body > section img, body > article img {
     height: auto;
 }
 
-article:after {
+article:after, .post-content:after {
     content: ' ';
     display: block;
     visibility: hidden;
@@ -302,10 +302,21 @@ aside > :last-child {
 
 .social-buttons {
     text-align: center;
+    margin: 2em 0;
 }
 
-.icon:hover {
-    fill: "#F09";
+.social-buttons a {
+    display: inline-block;
+    padding: 3px 1em;
+    background-color: #369;
+    color: rgba(256, 256, 256, .9);
+    border-radius: 3px;
+    margin: 1em;
+}
+
+.social-buttons a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 730px) {

@@ -46,18 +46,7 @@
   {{ if ne .Type "standalone" }}
   <div class="share-buttons">
     <span>Share article on</span>
-    <a href="#" title="Share on Twitter">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-    <a href="#" title="Share on Facebook">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
+    <p style="color:red">TODO: Add Twitter and Facebook share buttons.</p>
   </div>
 
   {{ partial "pageline.html" . }}
@@ -71,15 +60,13 @@
 
   {{ if $.Scratch.Get "showComments" }}
   <div class="comments">
-    <h1>{{ partial "icon.html" "comments" }}Comments</h1>
+    <h1>Comments</h1>
     {{ template "_internal/disqus.html" . }}
   </div>
   {{ end }}
 
   {{ if .Draft }}<div class="draft-label"
-    title="This page is a draft. It hasn't been published yet.">
-    {{ partial "icon.html" "save" }} DRAFT
-  </div>{{ end }}
+    title="This page is a draft. It hasn't been published yet.">DRAFT</div>{{ end }}
 </article>
 
 {{ partial "footer.html" . }}

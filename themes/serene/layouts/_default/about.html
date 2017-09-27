@@ -4,6 +4,8 @@
 <article class="post">
   <h1>{{ .Title }}</h1>
 
+  <img src="/images/shrikant-sharat-kandula.jpg" class=profile>
+
   <div class="post-content">
     {{- $.Scratch.Set "content" .Content -}}
     {{- range .Site.Params.PostProcess -}}
@@ -12,72 +14,31 @@
     {{- $.Scratch.Get "content" | safeHTML -}}
   </div>
 
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-    <symbol id="envelope" viewBox="0 0 1792 1792">
-      <path d="M1792 710v794q0 66-47 113t-113 47h-1472q-66 0-113-47t-47-113v-794q44 49 101 87 362 246 497 345 57 42 92.5 65.5t94.5 48 110 24.5h2q51 0 110-24.5t94.5-48 92.5-65.5q170-123 498-345 57-39 100-87zm0-294q0 79-49 151t-122 123q-376 261-468 325-10 7-42.5 30.5t-54 38-52 32.5-57.5 27-50 9h-2q-23 0-50-9t-57.5-27-52-32.5-54-38-42.5-30.5q-91-64-262-182.5t-205-142.5q-62-42-117-115.5t-55-136.5q0-78 41.5-130t118.5-52h1472q65 0 112.5 47t47.5 113z"/>
-    </symbol>
-    <symbol id="github-alt" viewBox="0 0 1792 1792">
-      <path d="M704 1216q0 40-12.5 82t-43 76-72.5 34-72.5-34-43-76-12.5-82 12.5-82 43-76 72.5-34 72.5 34 43 76 12.5 82zm640 0q0 40-12.5 82t-43 76-72.5 34-72.5-34-43-76-12.5-82 12.5-82 43-76 72.5-34 72.5 34 43 76 12.5 82zm160 0q0-120-69-204t-187-84q-41 0-195 21-71 11-157 11t-157-11q-152-21-195-21-118 0-187 84t-69 204q0 88 32 153.5t81 103 122 60 140 29.5 149 7h168q82 0 149-7t140-29.5 122-60 81-103 32-153.5zm224-176q0 207-61 331-38 77-105.5 133t-141 86-170 47.5-171.5 22-167 4.5q-78 0-142-3t-147.5-12.5-152.5-30-137-51.5-121-81-86-115q-62-123-62-331 0-237 136-396-27-82-27-170 0-116 51-218 108 0 190 39.5t189 123.5q147-35 309-35 148 0 280 32 105-82 187-121t189-39q51 102 51 218 0 87-27 168 136 160 136 398z"/>
-    </symbol>
-    <symbol id="stack-overflow" viewBox="0 0 1792 1792">
-      <path d="M1417 1632h-1118v-480h-160v640h1438v-640h-160v480zm-942-524l33-157 783 165-33 156zm103-374l67-146 725 339-67 145zm201-356l102-123 614 513-102 123zm397-378l477 641-128 96-477-641zm-718 1471v-159h800v159h-800z"/>
-    </symbol>
-    <symbol id="linkedin" viewBox="0 0 1792 1792">
-      <path d="M477 625v991h-330v-991h330zm21-306q1 73-50.5 122t-135.5 49h-2q-82 0-132-49t-50-122q0-74 51.5-122.5t134.5-48.5 133 48.5 51 122.5zm1166 729v568h-329v-530q0-105-40.5-164.5t-126.5-59.5q-63 0-105.5 34.5t-63.5 85.5q-11 30-11 81v553h-329q2-399 2-647t-1-296l-1-48h329v144h-2q20-32 41-56t56.5-52 87-43.5 114.5-15.5q171 0 275 113.5t104 332.5z"/>
-    </symbol>
-    <symbol id="twitter" viewBox="0 0 1792 1792">
-      <path d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5t-115.5 248.5-184.5 210.5-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5t-114-159.5q33 5 61 5 43 0 85-11-112-23-185.5-111.5t-73.5-205.5v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5t371.5 99.5q-8-38-8-74 0-134 94.5-228.5t228.5-94.5q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"/>
-    </symbol>
-    <symbol id="facebook" viewBox="0 0 1792 1792">
-      <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"/>
-    </symbol>
-  </svg>
-
   <p class="social-buttons">
 
-    <svg width="24em" height="3em">
-      {{- with .Site.Author.email -}}
-      <a target="_blank" href="mailto:{{ . }}">
-        <rect x="0" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#envelope" x=".5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
+    {{- with .Site.Author.email -}}
+    <a target="_blank" href="mailto:{{ . }}">Email</a>
+    {{- end -}}
 
-      {{- with .Site.Author.github -}}
-      <a target="_blank" href="https://github.com/{{ . }}">
-        <rect x="4em" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#github-alt" x="4.5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
+    {{- with .Site.Author.github -}}
+    <a target="_blank" href="https://github.com/{{ . }}">GitHub</a>
+    {{- end -}}
 
-      {{- with .Site.Author.stackoverflow -}}
-      <a target="_blank" href="https://stackoverflow.com/users/{{ . }}">
-        <rect x="8em" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#stack-overflow" x="8.5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
+    {{- with .Site.Author.stackoverflow -}}
+    <a target="_blank" href="https://stackoverflow.com/users/{{ . }}">Stack Overflow</a>
+    {{- end -}}
 
-      {{- with .Site.Author.linkedin -}}
-      <a target="_blank" href="https://www.linkedin.com/in/{{ . }}">
-        <rect x="12em" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#linkedin" x="12.5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
+    {{- with .Site.Author.linkedin -}}
+    <a target="_blank" href="https://www.linkedin.com/in/{{ . }}">LinkedIn</a>
+    {{- end -}}
 
-      {{- with .Site.Author.twitter -}}
-      <a target="_blank" href="https://twitter.com/{{ . }}">
-        <rect x="16em" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#twitter" x="16.5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
+    {{- with .Site.Author.twitter -}}
+    <a target="_blank" href="https://twitter.com/{{ . }}">Twitter</a>
+    {{- end -}}
 
-      {{- with .Site.Author.facebook -}}
-      <a target="_blank" href="https://www.facebook.com/{{ . }}">
-        <rect x="20em" y="0" width="3em" height="3em" fill="transparent" />
-        <use class="icon" xlink:href="#facebook" x="20.5em" y=".5em" width="2em" height="2em" />
-      </a>
-      {{- end -}}
-    </svg>
+    {{- with .Site.Author.facebook -}}
+    <a target="_blank" href="https://www.facebook.com/{{ . }}">Facebook</a>
+    {{- end -}}
 
 </article>
 
