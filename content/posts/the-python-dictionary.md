@@ -3,6 +3,7 @@ title: The Python Dictionary
 date: 2017-09-20T07:50:28+05:30
 publishDate: 2017-09-28
 tags: ['python', 'data-structures']
+draft: true
 ---
 
 [Dictionaries][] in Python are a key--value style data structures that are tightly integrated with
