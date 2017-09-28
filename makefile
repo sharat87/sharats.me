@@ -1,11 +1,8 @@
-build: public
-	hugo # --cleanDestinationDir removes the `.git` file.
-	echo sharats.me > public/CNAME
-	touch public/.nojekyll
+build: | public
+	hugo --cleanDestinationDir
 
 public:
-	git worktree prune
-	git worktree add public gh-pages
+	mkdir public
 
 serve:
 	hugo --buildDrafts server --bind 0.0.0.0
