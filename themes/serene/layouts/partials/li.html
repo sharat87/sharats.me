@@ -2,9 +2,7 @@
   <a class="post-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
 
   <p class="post-footnote">
-    {{ with .Date.Format "2006-01-02T15:04:05Z07:00" }}
-    <time datetime="{{ . }}" title="{{ . }}" class="timeago">{{ . }}</time>
-    {{ end }}
+    {{ partial "time.html" . }}
 
     {{ if or .Params.tags .Params.categories }}&mdash;{{ end }}
 

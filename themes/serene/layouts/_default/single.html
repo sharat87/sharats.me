@@ -5,9 +5,8 @@
   <h1>{{ .Title }}</h1>
 
   {{ if ne .Type "standalone" }}
-  <em class="footnote">
-    {{ $isoDate :=  .Date.Format "2006-01-02T15:04:05Z07:00" }}
-    <time datetime="{{ $isoDate }}" class="timeago">{{ $isoDate }}</time>
+  <em>
+    {{ partial "time.html" . }}
 
     <span class="sep">&middot;</span>
     {{ .ReadingTime }} mins

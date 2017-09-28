@@ -154,8 +154,11 @@ for file_name in sys.argv[1:]:
 
 Yeah, didn't have the patience to do it with `awk` this time.
 
-I initially considered rebuilding my current theme as a Hugo theme, but while browsing existing
-themes for examples on how to do it, I fell in love with the **nofancy** theme. So, I started
-modifying it until I arrived at the current look.
+# The Theme
+
+I tried the themes over at the [Hugo themes page](http://themes.gohugo.io/), but just as I thought,
+none of them were to my liking. I found the **nofancy** theme to be easy to get started and modify
+to what I want, so that's what happened. Hugo's documentation is very good. I have to say, the
+documentation is one of the reasons I'm loving Hugo.
 
 Hope to be writing more articles in the coming weeks.
