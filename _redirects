@@ -1,4 +1,0 @@
-/about.html    /about/
-/labs.html     /labs/
-/archives.html /posts/
-/*.html        /posts/:splat/

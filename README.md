@@ -26,3 +26,8 @@ Start a live server with:
 Build static site with:
 
     make build
+
+## Deployment
+
+Site is deployed on Netlify. The environment variable `HUGO_VERSION` should be set to the correct
+Hugo version. Build command used is `make`.
