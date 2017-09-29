@@ -1,10 +1,11 @@
-baseURL: http://sharats.me/
+baseURL: http://www.sharats.me/
 languageCode: en-us
 title: "The Sharat's"
 theme: serene
 
 disqusShortname: sharats-me
 googleAnalytics: UA-105705354-1
+enableRobotsTXT: true
 
 Paginate: 6
 rssLimit: 10
@@ -25,23 +26,18 @@ menu:
   main:
     - name: Blog
       url: /posts/
-      pre: pencil
       weight: 10
     - name: Labs
       url: /labs/
-      pre: flask
       weight: 20
     - name: Résumé
       url: /shrikant-sharat-kandula-resume.pdf
-      pre: paper-plane
       weight: 30
     - name: RSS
       url: /posts/index.xml
-      pre: rss
       weight: 40
     - name: About
       url: /about/
-      pre: id-card
       weight: 50
 
 
