@@ -1,7 +1,5 @@
 setInterval(updateTimes, 60000);
 updateTimes();
-hljs.configure({languages: []}); // Disable language-detection.
-hljs.initHighlighting();
 
 document.getElementById('nav-toggle-btn').addEventListener('click', function (e) {
     e.preventDefault();
