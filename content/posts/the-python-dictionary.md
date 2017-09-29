@@ -1,18 +1,17 @@
 ---
 title: The Python Dictionary
 date: 2017-09-20T07:50:28+05:30
-publishDate: 2017-09-28
+publishDate: 2017-09-29
 tags: ['python', 'data-structures']
-draft: true
 ---
 
-[Dictionaries][] in Python are a key--value style data structures that are tightly integrated with
-the language syntax and semantics. Understanding them well can help you utilize them better and
-investigate subtle problems more efficiently.
+The Python [Dictionary][] is a key--value style data structure that is tightly integrated with the
+language syntax and semantics. Understanding them well can help us use them better and investigate
+subtle problems more efficiently.
 
-This is my attempt to document this topic in more depth. Though I have included a small section
-about the syntax and basic usage of dictionaries, I expect the reader to have some beginner level
-knowledge of Python.
+This is my attempt to document this topic in more depth. Though I included a small section about the
+syntax and basic usage of dictionaries, it'll be helpful if you have some beginner--intermediate
+level experience with Python.
 
 This article is written for Python 3.6 installed via Anaconda on Xubuntu. Here's the platform
 details:
@@ -22,19 +21,19 @@ details:
     $ uname -isro
     Linux 4.10.0-33-generic x86_64 GNU/Linux
 
-Note: This is not intended as a substitute for official documentation. The official
-documentation has been a reference and you will find some overlap. This document is intended as a
-supplement that covers more depth and practical nuances.
+Note: This is not intended as a substitute for official documentation. The official documentation is
+a reference and there will be some overlap. This document is intended as a supplement that covers
+more depth and practical nuances.
 
 {{% toc %}}
 
 # Introduction
 
 Dictionaries (type `dict`) are a very powerful data structure, not just in Python. They are present
-in almost every modern high level language with various names like maps, hashes or associative
-arrays. Python's syntax for dictionaries inspired the syntax of the JSON serialization format.
+in almost every modern high level language, sometimes called maps, hashes or associative arrays.
+Python's syntax for dictionaries inspired the syntax of the JSON serialization format.
 
-Dictionaries are a fundamental part of Python language and integrates tightly with the semantics and
+Dictionaries are a fundamental part of Python language and integrate tightly with the semantics and
 APIs of the standard library. This can be seen in the fact that we have a special syntax just to
 create these data structures.
 
@@ -80,6 +79,10 @@ country_currencies.setdefault('France', 'Franc')
 
 # Contents
 
+The contents of dictionaries are made up two components. The keys and the values. The keys form the
+index using which we can retrieve the values. Each key uniquely identifies a value within the
+dictionary.
+
 ## Key Types
 
 The keys form the index of the dictionary. In most practical cases, keys tend to be strings. Tuples
@@ -90,8 +93,8 @@ full detail of what it is and what are considered hashable. Simply put, if passi
 `hash` builtin function doesn't raise an exception, the object is hashable and *can* be used as a
 key in a dictionary.
 
-However, in practice, we should avoid using mutable objects as keys. Especially, if mutation changes
-the hash of the object.
+However, in practice, we should avoid using mutable objects as keys (even if they are hashable).
+Especially, if mutation changes the hash of the object.
 
 For example, consider the following `User` class.
 
@@ -118,7 +121,7 @@ If you try the above code, you might see a different number. That's because Pyth
 algorithm includes a random salt.
 {{% /aside %}}
 
-As you can see, the hash value did not change even though the object was modified. These `User`
+As seen above, the hash value did not change even though the object was modified. These `User`
 objects can be used as keys for a dictionary since they meet the requirement, but it should be kept
 in mind that they are mutable.
 
@@ -132,8 +135,25 @@ in mind that they are mutable.
 123
 ```
 
-However, if someone later decides to customize the hashing of this class by adding the following
-method:
+If that doesn't seem confusing, try this:
+
+```python
+>>> robb = ned
+>>> ned = User('Ned', 'Start')
+>>> robb.first_name
+'Robb'
+>>> robb in d  # Robb isn't in our dictionary!
+True
+>>> ned.first_name
+'Ned'
+>>> ned in d  # We gave Ned Stark a value right?
+False
+```
+
+This can quickly cause headaches and hard-to-find problems.
+
+To *fix* this, if someone later decides to customize the hashing of this class by adding the
+following method:
 
 ```python
     def __hash__(self):
@@ -151,7 +171,7 @@ Now, the hash of the object changes when we change the `first_name`.
 -7890115541605828979
 ```
 
-Using these objects as keys is a bad idea:
+Using these objects as keys can be confusing as well:
 
 ```python
 >>> ned = User('Ned', 'Stark')
@@ -168,22 +188,23 @@ KeyError: <__main__.User object at 0x7fd60e7c5828>
 123
 ```
 
-So, to avoid these potential problems, it's best to use numbers, strings or tuples of numbers or
-strings as keys for dictionaries. If you *have* to use other types, keep the hashing semantics in
-mind and document the reasons well.
+In essence, using mutable types as keys in a dictionary can lead to confusing results in a fairly
+large codebase.
+
+So, to avoid these potential problems, it's best to use numbers, strings or tuples (containing
+numbers or strings) as keys for dictionaries. If you **have** to use other types, keep the hashing
+semantics in mind and document the reasons well.
 
 ## Retrieving Keys
 
 Dictionaries have a [`.keys`][.keys] method that returns an object of type [`dict_keys`][views]
-which is an iterable of the keys of the dictionary. Note that this method used to return an ordinary
-`list` in Python 2.
+which is an iterable (technically, a *view*) of the keys of the dictionary. Note that this method
+used to return an ordinary `list` in Python 2.
 
 ```python
 >>> countries = country_currencies.keys()
 >>> countries
 dict_keys(['India', 'Russia', 'USA', 'Japan'])
->>> type(countries)
-<class 'dict_keys'>
 >>> import collections
 >>> isinstance(countries, collections.Iterable)
 True
@@ -191,7 +212,7 @@ True
 
 Note that the order of the keys is not retained/defined. Don't rely on the order even if they seem
 predictable. It might vary across Python implementations and versions even. Use an `OrderedDict`
-when you need ordering. More on this in later sections.
+when ordering is needed. More on this in a later section.
 
 {{% aside %}}
 It should be noted that starting in Python 3.6, order of keys *is* preserved. This is an unintended
@@ -211,8 +232,8 @@ dict_keys(['India', 'Russia', 'USA', 'Japan', 'France'])
 ```
 
 See? The `dict_keys` object is a *view* of the keys of the original dictionary object. When the
-dictionary's keys change, so does the keys view. Of course, you can make a set of currently
-available keys by calling `set`. This set would be independent of the dictionary.
+dictionary's keys change, so does the keys view. Of course, we can make a set of currently
+available keys by passing it to `set` builtin. This set would be independent of the dictionary.
 
 ```python
 >>> set(countries)
@@ -253,16 +274,15 @@ Here's a quick example of using tuples as keys in a dictionary:
 ```
 
 Note that only tuples that contain hashable types (or further such tuples) can be used as keys.
-Lists, on the other hand, cannot be used since they are not hashable and immutable.
+Lists or dictionaries, on the other hand, cannot be used since they are not hashable.
 
 ## Retrieving Values
 
-Values are the contents of a dictionary. These are what the keys are indexing. Naturally, values
-don't have to be unique, unlike keys. There's no restrictions on what types can be used as values in
-a dictionary.
+Values are what the keys index. Naturally, values don't have to be unique, unlike keys. There's no
+restrictions on what types can be used as values in a dictionary.
 
-We can get a sequence of values in a `dict` with the `.values` method. This returns a `dict_values`
-object.
+We can get a sequence of values in a `dict` with the [`.values`][.values] method. This returns a
+[`dict_values`][views] object.
 
 ```python
 >>> currencies = country_currencies.values()
@@ -287,7 +307,8 @@ since unlike the keys, values don't have to be unique or hashable.
 
 ## Items Collection
 
-Dictionaries have a `.items` method that returns all the key--value pairs as a sequence of 2-tuples.
+Dictionaries also provide a [`.items`][.items] method that returns all the key--value pairs as a
+sequence of 2-tuples.
 
 ```python
 >>> pairs = country_currencies.items()
@@ -352,16 +373,16 @@ TypeError: unhashable type: 'list'
 ```
 
 As the error says, `list` is not hashable. So, although the `isinstance` tells us that this is a
-`Set`, whether you can actually use it as a set depends on it's contents. This is *not incorrect*,
+`Set`, whether it can actually be used as such, depends on it's contents. This is *not incorrect*,
 actually, I feel it's just a consequence of Python's dynamic nature.
 
 # Typing
 
 Dictionaries in Python are what I call a *homogeneous* data structure. What that means is that they
-are best used by keeping all the keys and values of the same data type. This is enforced in
-comparable data structures in statically typed languages like Java's `Map` or Haskell's `HashMap`.
-But since Python is a dynamic language, such restrictions are not placed. You can have keys / values
-of several different types within the same dictionary.
+are best used by having all the keys be of the same type and similarly for values. This is enforced
+in comparable data structures in statically typed languages like Java's `Map` or Haskell's
+`HashMap`. But since Python is a dynamic language, such restrictions are not placed. We can have
+keys / values of several different types within the same dictionary.
 
 ```python
 data = {
@@ -373,8 +394,8 @@ data = {
 
 This is still a valid dictionary, although an extremely sad and ugly one (totally my opinion :D).
 
-Additionally, we can use Python's syntax for type annotations to declare the type signature of
-dictionaries. We use [`typing.Dict`][typing.Dict] for this purpose as illustrated below.
+If using homogeneous dictionaries, the type annotations syntax can be used to declare the type
+signatures. We use [`typing.Dict`][typing.Dict] for this purpose as illustrated below.
 
 ```python
 from typing import Dict, Tuple
@@ -397,8 +418,8 @@ that maps string keys to integer values.
 Note that these type annotations are not checked at runtime. They're mere help to IDEs, static
 checkers and human readers. Python's dynamic nature is not affected by these annotations.
 
-If you have such type annotations declared, you could use a static analyzer like [mypy][] to perform
-type checks. I won't be discussing that here.
+However, if such type annotations are declared, you could use a static analyzer like [mypy][] to
+perform type checks. I won't be discussing that here.
 
 # Creating Dictionaries
 
@@ -406,7 +427,7 @@ There are a few other ways to create dictionaries besides the `{}` syntax. Here'
 
 ## Calling `dict`
 
-The `dict` callable can be used to create dictionaries from a list of tuples or by passing the keys
+The `dict` callable can be used to create dictionaries from a list of tuples or bypassing the keys
 and values as keyword arguments.
 
 ```python
@@ -414,7 +435,7 @@ and values as keyword arguments.
 {'Chromium': 24, 'Phosphorus': 15, 'Silver': 47}
 ```
 
-This is obviously more convenient that the dictionary syntax *only* if we already have such a list.
+This is obviously more convenient than the dictionary syntax *only* if we already have such a list.
 If we have the keys and corresponding values in different lists, we can `zip` them up and pass the
 result to `dict`.
 
@@ -457,7 +478,7 @@ comprehension is more succinct and makes the intent clearer.
 
 # Public Appearance
 
-Unsurprisingly, Dictionaries pop up in a lot of places in Python. Here's a few ones.
+Unsurprisingly, dictionaries pop up in a lot of places in Python. Here's a few ones.
 
 ## Keyword Arguments
 
@@ -466,27 +487,27 @@ a dictionary.
 
 ```python
 >>> def construct(**counts):
-...     print(type(counts), len(counts))
 ...     print(counts)
+...     print(len(counts), type(counts))
 ...
 >>> construct(a=1, b=2, c=3)
-<class 'dict'> 3
 {'a': 1, 'b': 2, 'c': 3}
+3 <class 'dict'>
 ```
 
-Of course, you can pass a dictionary's data as keyword arguments to a function using similar syntax.
+Of course, we can pass a dictionary's data as keyword arguments to a function using similar syntax.
 
 ```python
 >>> kw_args = {'a': 1, 'b': 2, 'c': 3}
 >>> construct(**kw_args)
-<class 'dict'> 3
 {'a': 1, 'b': 2, 'c': 3}
+3 <class 'dict'>
 ```
 
 ## Namespaces
 
 The `globals` builtin function gives a dictionary of all names and their values in the current
-global namespace. You can modify this dictionary to define new names or delete existing ones,
+global namespace. We can modify this dictionary to define new names or delete existing ones,
 although that's probably a bad idea.
 
 ```python
@@ -506,23 +527,24 @@ The `locals` builtin returns a dictionary of names and values from the local sco
 private local scope inside of a function or method.
 
 The `vars` builtin takes an object as an argument and returns the names available as properties on
-this objects. Specifically, it returns the `__dict__` property's value of the given object. If this
-argument omitted, then it returns names and values from the local scope. In other words, `vars() is
-locals()` return `True`.
+this objects. Specifically, it returns the `__dict__` property's value of the given object. When
+called without any arguments, then it returns names and values from the local scope. In other words,
+`vars() is locals()` return `True`.
 
 # Serialization
 
 Dictionaries, being key--value data structures, extend naturally to be stored into key--value
-databases and other NoSQL data stores. However, we'll look at forms of serializing them into text
-and binary forms for transmission or for saving to disk.
+databases and other NoSQL data stores. However, here we'll look at forms of serializing them into
+text and binary forms for transmission or for saving to disk.
 
 ## JSON
 
-Nowadays, the thought of serializing a python dictionary is usually followed by using the `json`
-module to `dump` and `load` using the [JSON format][json]. No surprise since there's quality parsers
-and writers for almost every programming language today and they are extremely convenient. The
-syntax as well, although not too convenient to write by hand, is still very simple, lightweight and
-easy to read. It helps that the syntax is quite close to Python's own syntax for dictionaries.
+Nowadays, the thought of serializing a python dictionary is usually followed by using the
+[`json`][json-mod] module to [`dump`][json.dump] and [`load`][json.load] using the [JSON
+format][json]. No surprise since it's extremely convenient and there's quality parsers and writers
+for almost every programming language today. The syntax as well, although not too convenient to
+write by hand, is still very simple, lightweight and easy to read. It helps that the syntax is quite
+close to Python's own syntax for dictionaries.
 
 Here's a quick example:
 
@@ -534,7 +556,7 @@ Here's a quick example:
 True
 ```
 
-In short, these four points are enough to know the basic usage.
+In short, these four functions from `json` module are enough to know the basic usage.
 
 Method           | Description
 ---------------- | -----------
@@ -544,17 +566,17 @@ Method           | Description
 `.loads(data)`   | Parse `data` as a valid JSON string and return the resulting object.
 
 As convenient as this is, it is important to know the changes to data types that will result because
-of this. JSON only supports numbers, strings and booleans as primary data types as well as arrays
-and maps made up of primary data types (with support for nesting). As a result of this, if you have
-tuples somewhere in your dictionary, then they will be turned into lists when you serialize and
-deserialize them with JSON. A similar situation occurs for dates and any other data type not
-directly supported by the JSON spec.
+of this. JSON only supports numbers, strings and booleans as primary data types and arrays & maps as
+analogues to `list`s and `dict`s. As a result of this, if there are tuples somewhere in the
+dictionary, then they will be turned into lists when the `dict` is serialized and deserialized with
+JSON. A similar situation occurs for dates and any other data type not directly supported by the
+JSON spec.
 
 ## Pickling
 
-Unlike the above, pickling (using the `pickle` module) serializes objects into binary data and can
-handle a much wider range of data types. For this reason, pickled data can only be loaded by Python,
-not other languages (well, not yet at least).
+Unlike the above, pickling (using the [`pickle`][pickle-mod] module) serializes objects into binary
+data and can handle a much wider range of data types. For this reason, pickled data can only be
+loaded by Python, not other languages (well, not yet at least).
 
 The `pickle` module has similar `dump`, `dumps`, `load` and `loads` methods just like for the above
 discussed `json` module.
@@ -569,7 +591,7 @@ data.__getitem__(key)
 ```
 
 But obviously, we'd prefer the square bracket syntax. But understanding that underneath the syntax,
-it's just a method call, let's us implement the `__getitem__` method in our own classes and get the
+it's just a method call, lets us implement the `__getitem__` method in our own classes and get the
 item syntax on our objects.
 
 Here's a simple example:
@@ -593,8 +615,9 @@ data.__setitem__(key, value)
 ```
 
 Note that this should be used responsibly. This feature gets into borderline operator overloading
-category. In almost all cases, using a normal method on your classes should be a better option than
-overriding the item syntax. Since a normal method would have a name which makes the intent clear.
+category. In almost all cases (including the above example), using a normal named method on your
+classes should be a better option than overriding the item syntax. Since a normal method would have
+a name which makes the intent clearer.
 
 # Flavors
 
@@ -605,9 +628,9 @@ The following are subclasses of `dict` and have all the features of Python's dic
 
 ## The `OrderedDict`
 
-The [`collections.OrderedDict`][OrderedDict] is a dictionary that remember the order in which keys
-are *inserted*. The order remembered is the *insertion* order. So, if you add a new key to the dict,
-it will be at the front of the key sequence. But if you change the value of an existing key, it's
+The [`collections.OrderedDict`][OrderedDict] is a dictionary that remembers the order in which keys
+are *inserted*. The order remembered is the *insertion* order. So, if we add a new key to the dict,
+it will be at the end of the key sequence. But if we change the value of an existing key, it's
 position in the ordering is unchanged.
 
 Create a new `OrderedDict`:
@@ -635,6 +658,9 @@ OrderedDict([('Mercury', 0),
              ('Uranus', 27),
              ('Neptune', 14)])
 ```
+
+Note that we use the [`pprint`][pprint] function to show the `OrderedDict` objects in a convenient
+way.
 
 They are just dictionaries under the hood.
 
@@ -671,12 +697,12 @@ see it renamed to `default_dict` or even `DefaultDict`, but it's probably easier
 it.
 {{% /aside %}}
 
-A `defaultdict` is clever, in that it can understand how to initialize new keys. Consider the
-following code. Here, we have a piece of text and we want a dictionary mapping each letter in the
-text to it's count of occurrences.
+A `defaultdict` can understand how to initialize new keys. Consider the following code. Here, we
+have a piece of text and we want a dictionary mapping each letter in the text to it's count of
+occurrences.
 
 ```python
-text = 'nalfjiadvanelfjsdlkgjaehfkasdflajef'
+text = 'lorem ipsum dolor sit amet'
 counts = {}
 for letter in text:
     if letter not in counts:
@@ -690,14 +716,14 @@ Of course, there's better ways to do this, but for the sake of example, let's be
 implementation.
 {{% /aside %}}
 
-Notice how we check if the letter is not already there in the dict and if it so, we initialize it to
+Notice how we check if the letter is not already present in the dict and if so, we initialize it to
 zero. A `defaultdict` can learn this method of initialization. It takes a function as its first
 argument which returns the value of a new key when accessed. So, we can replace the above code to
 use `defaultdict` like:
 
 ```python
 from collections import defaultdict
-text = 'nalfjiadvanelfjsdlkgjaehfkasdflajef'
+text = 'lorem ipsum dolor sit amet'
 counts = defaultdict(int)
 for letter in text:
     counts[letter] += 1
@@ -705,7 +731,7 @@ print(counts)
 ```
 
 When we try to get the value of a letter from `counts`, and that letter doesn't already exist in
-`counts`, `defaultdict` will call `int`, with no arguments, and sets the return value to
+`counts`, `defaultdict` will call `int`, with no arguments, and puts the return value into
 `counts[letter]`. Precisely what we were doing in our previous example. So, what does `int` return
 when called with no arguments? You guessed it, zero!
 
@@ -728,13 +754,14 @@ set()
 
 As illustrated above, calling the data type builtins with no arguments return the falsy value of
 that data type. We can use this fact and pass these builtins to `defaultdict` constructor depending
-on the need.
+on the need. If we wanted a different initial value, say `42`, we could use a lambda function like
+`lambda: 42` instead.
 
 ## The `ChainMap`
 
-The `ChainMap` is a chain of dictionaries in order of precedence. It holds a list of dictionaries
-and when a key is indexed, each of these dictionaries (in order) are searched for this key and the
-value of the first match is returned.
+The `ChainMap` is an abstraction over a chain of dictionaries in order of precedence. Essentially,
+it holds a list of dictionaries and when a key is indexed, each of these dictionaries are searched
+for this key and the value of the first match is returned.
 
 This is better illustrated with an example. Let's create a `ChainMap` with dummy data:
 
@@ -776,7 +803,7 @@ ChainMap({'a': 91, 'b': 2, 'c': 3, 'e': 951}, {'c': 30, 'd': 40, 'e': 50})
 ChainMap({'a': 91, 'b': 2, 'c': 93, 'e': 951}, {'c': 30, 'd': 40, 'e': 50})
 ```
 
-Of course, if you explicitly want to modify the last dictionary, you can get it directly:
+Of course, if we explicitly want to modify the last dictionary, it can be indexed directly:
 
 ```python
 >>> data.maps[-1]['c'] = 999
@@ -791,16 +818,16 @@ similar to the following:
 ChainMap(user_settings, default_settings)
 ```
 
-You can have multiple tiers depending the situation. The user can modify the dictionary as they fit
+We can have multiple tiers depending the situation. The user can modify the dictionary as they fit
 and all writes and updates will be made only on the first dictionary, `user_settings`. Whereas, when
-one tries to get the value of a configuration parameters, it automatically falls back to the
+one tries to get the value of a configuration parameter, it automatically falls back to
 `default_settings` if it isn't present in `user_settings`.
 
 ## The `Counter`
 
 `Counter` dictionaries can be used to keep counts of any (hashable) objects. The keys are these
 hashable objects and the values are their counts. The [official docs][Counter] on this gives some
-clever examples and uses so I recommend you go read this up there, instead of duplicating it here.
+clever examples and uses so I recommend you go read this up there, instead of redoing it here.
 
 ## Custom Flavor
 
@@ -825,7 +852,7 @@ class CaselessDict(UserDict):
         self.data[name.lower()] = value
 ```
 
-As you can see, the `UserDict` class provides a `.data` attribute that can be used as the underlying
+As seen above, the `UserDict` class provides a `.data` attribute that can be used as the underlying
 store dictionary.
 
 Let's try it out.
@@ -881,30 +908,37 @@ length of the dict as an argument. This is also explained best from the docs,
 
 # Conclusion
 
-Firstly, thanks for reading. Please let me know what you think and what Python related topics you'd
-like me to write about for my next article.
-
 Dictionaries in Python (or any other language for that matter) are a very powerful multi-purpose
 data structure and are extremely handy and easy to use in Python. I hoped to put the things I
 learned about them in this article. If you see any inaccuracies or if there's something that makes
 for a good addition to this article, let me know in the comments below.
+
+Thank you for reading. Please let me know what you think. If you have any topics you'd like me to
+cover in a future article, put in a comment.
 
 # References
 
 The official documentation, mostly. Wikipedia for data used in examples.
 
 
-[Dictionaries]: https://docs.python.org/3.6/tutorial/datastructures.html#dictionaries
+[Dictionary]: https://docs.python.org/3.6/tutorial/datastructures.html#dictionaries
 [hash]: https://docs.python.org/3/reference/datamodel.html#object.__hash__
 [views]: https://docs.python.org/3.6/library/stdtypes.html#dictionary-view-objects
 [.keys]: https://docs.python.org/3.6/library/stdtypes.html#dict.keys
+[.values]: https://docs.python.org/3.6/library/stdtypes.html#dict.values
+[.items]: https://docs.python.org/3.6/library/stdtypes.html#dict.items
 [set-abc]: https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set
 [typing.Dict]: https://docs.python.org/3/library/typing.html#typing.Dict
 [mypy]: http://www.mypy-lang.org/
 [PEP 274]: https://www.python.org/dev/peps/pep-0274/
+[json-mod]: https://docs.python.org/3/library/json.html
+[json.dump]: https://docs.python.org/3/library/json.html#json.dump
+[json.load]: https://docs.python.org/3/library/json.html#json.load
 [json]: http://json.org/
+[pickle-mod]: https://docs.python.org/3/library/pickle.html
 [collections]: https://docs.python.org/3/library/collections.html
 [OrderedDict]: https://docs.python.org/3/library/collections.html#collections.OrderedDict
+[pprint]: https://docs.python.org/3/library/pprint.html#pprint.pprint
 [dis]: https://docs.python.org/3/library/dis.html#dis.dis
 [BUILD_MAP]: https://docs.python.org/3/library/dis.html#opcode-BUILD_MAP
 [BUILD_CONST_KEY_MAP]: https://docs.python.org/3/library/dis.html#opcode-BUILD_CONST_KEY_MAP

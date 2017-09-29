@@ -293,6 +293,12 @@ aside > :last-child {
 
 .share-buttons {
     margin-top: 1em;
+    background-color: rgba(0, 0, 0, .1);
+    padding: 1em;
+}
+
+.share-buttons p {
+    margin-top: 0;
 }
 
 .draft-label {

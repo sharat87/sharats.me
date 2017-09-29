@@ -43,21 +43,21 @@
   </div>
 
   {{ if ne .Type "standalone" }}
+  {{ partial "pageline.html" . }}
+
   <div class="share-buttons">
+    <p>Share this article &darr;</p>
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large"
-      {{- with .Site.Author.twitter }} data-via="{{ . }}" {{ end -}}
-      >Tweet</a>
-    <script>window.twttr = (function(d, s) {
-      var js = d.createElement(s), t = window.twttr || {};
+      {{- with .Site.Author.twitter }} data-via="{{ . }}" {{ end -}}>Tweet</a>
+    <script>window.twttr = (function(d) {
+      var js = d.createElement('script'), t = window.twttr || {};
       js.src = 'https://platform.twitter.com/widgets.js';
       d.body.appendChild(js);
       t._e = [];
       t.ready = function(f) { t._e.push(f) };
       return t;
-    }(document, 'script'))</script>
+    }(document))</script>
   </div>
-
-  {{ partial "pageline.html" . }}
   {{ end }}
 
   {{ if isset .Params "comments" }}
