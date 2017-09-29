@@ -15,13 +15,13 @@
 {{- end }}
 
 <!-- Other possible body fonts: Libre Franklin, Montserrat, Roboto, Lato, Cabin. -->
-<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400|Lato:400,400i,700,700i"
+<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Lato:400,400i,700,700i"
     rel="stylesheet">
 
 <style>
   /* Styles for highlight.js */
-  {{- partialCached "atom-one-light.min.css" . | safeCSS }}
-  {{ partialCached "styles.css" . | safeCSS -}}
+  {{- partialCached "tango-hl.css" . | safeCSS -}}
+  {{- partialCached "styles.css" . | replaceRE "\\s+" " " | safeCSS -}}
 </style>
 
 <body>

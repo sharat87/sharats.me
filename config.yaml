@@ -9,6 +9,9 @@ googleAnalytics: UA-105705354-1
 Paginate: 6
 rssLimit: 10
 
+pygmentsCodeFences: true
+pygmentsUseClasses: true
+
 author:
   name: Shrikant Sharat Kandula
   email: shrikantsharat.k@gmail.com
