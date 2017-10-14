@@ -7,16 +7,27 @@ type: standalone
 This is a list of my public projects and experiments. You can follow me on Github for updates on my
 current work and future experiments.
 
-# Antigen
+## ThreaDance
 
-[*Project Page*](http://github.com/zsh-users/antigen)
+*Oct 2017* &middot; [*Project Page*](https://github.com/sharat87/tda)
+
+A Java thread dump analyser that works entirely in the browser. I built this to help analysing
+thread dumps taken at regular intervals and finding the root causes for performance problems in Java
+applications. It handles dumps with ~800 threads per dump gracefully but starts to slightly lag
+after that.
+
+Developed using the Vue.js library.
+
+## Antigen
+
+*May 2012* &middot; [*Project Page*](https://github.com/zsh-users/antigen)
 
 A plugin manager for zsh, inspired by oh-my-zsh and vundle. This is one of the first of it's kind
 and has inspired many alternative plugin managers for zsh as well as other popular shells.
 
 This is currently being maintained by the community, the zsh-users organizations on Github.
 
-# Other Experiments
+## Other Experiments
 
 [ti &mdash; Time Tracker](http://github.com/sharat87/ti)
 : A simple light weight command line time tracker (currently in under 150 lines of bash).
