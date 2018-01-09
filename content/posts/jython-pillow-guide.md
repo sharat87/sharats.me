@@ -1,7 +1,6 @@
 ---
 title: The Jython Pillow Guide
-date: 2017-12-30T17:38:09+05:30
-draft: true
+date: 2018-01-09T19:06:58+05:30
 tags: ['python', 'jython', 'java']
 ---
 
