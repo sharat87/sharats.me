@@ -1,0 +1,6 @@
+{% extends 'base.tmpl' %}
+
+{% block main %}
+	<h1>{{ title|e }}</h1>
+	{% include 'post_list_partial.html' %}
+{% endblock %}

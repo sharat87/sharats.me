@@ -1,0 +1,21 @@
+{% if posts %}
+<ul class=post-list>
+	{% set posts = sort_posts(posts, '-date') %}
+
+	{% if limit_posts %}
+	{% set posts = posts[:limit_posts] %}
+	{% endif %}
+
+	{% for post in posts %}
+		<li>
+		<a href="{{ post.permalink() }}" class=title>{{ post.title() | e }}</a>
+		&mdash;
+		<date>{{ post.formatted_date('MMM dd, yyyy') | e }}</date>
+		<span class=tags>{% for tag in post.tags %} <a href="{{ _link('tag', tag) }}">#{{ tag | e }}</a>{% endfor %}</span>
+	{% endfor %}
+</ul>
+
+{% else %}
+	<p>There's no posts yet.</p>
+
+{% endif %}

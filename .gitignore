@@ -1,1 +1,4 @@
-/public
+__pycache__
+/cache
+/output
+/.doit.*

@@ -1,0 +1,13 @@
+{% extends 'base.tmpl' %}
+
+{% block main %}
+
+	<h1>Recent articles</h1>
+
+	{% with limit_posts = 6 %}
+		{% include 'post_list_partial.html' %}
+	{% endwith %}
+
+	<p><a href=/archive.html>Visit the posts' archive &rarr;</a></p>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+nikola
+
+# For supporting jinja2 themes.
+jinja2
+
+# For YAML metadata support.
+ruamel.yaml
+
+# Needed for nikola's auto command.
+aiohttp
+watchdog

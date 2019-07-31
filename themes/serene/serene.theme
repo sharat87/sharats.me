@@ -1,0 +1,7 @@
+[Theme]
+engine = jinja
+parent = base-jinja
+author = Shrikant Sharat Kandula
+author_url = https://sharats.me
+based_on = Libretto
+license = MIT

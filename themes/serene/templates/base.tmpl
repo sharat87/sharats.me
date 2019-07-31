@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<meta charset="UTF-8">
+{% if blog_title in title -%}
+	<title>{{ title|e }}</title>
+{%- else -%}
+	<title>{{ title|e }} | {{ blog_title|e }}</title>
+{%- endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ title }}">
+<meta name="author" content="{{ blog_author }}">
+
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro&display=swap">
+<link rel=stylesheet href="/assets/styles.css">
+
+<header>
+	<h1><a href=/ rel=home>{{ blog_title|e }}</a></h1>
+	<nav>
+		{%- for url, text in navigation_links[lang] -%}
+			<a href="{{ url }}">{{ text | e }}</a>
+		{%- endfor -%}
+	</nav>
+</header>
+
+<main>{% block main %}{% endblock %}</main>
+
+<footer role="contentinfo">{{ content_footer }}</footer>

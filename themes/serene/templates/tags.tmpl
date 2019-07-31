@@ -1,0 +1,14 @@
+{% extends 'base.tmpl' %}
+
+{% block main %}
+
+	{% if items %}
+		{% for text, link in items %}
+			<li><a href="{{ link }}">{{ text|e }}</a>
+		{% endfor %}
+	{% else %}
+		<p>There's nothing to show here.</p>
+	{% endif %}
+
+{% endblock %}
+

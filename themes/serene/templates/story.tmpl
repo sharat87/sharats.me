@@ -1,0 +1,45 @@
+{% extends 'base.tmpl' %}
+
+{% block main %}
+	<h1><a href="{{ post.permalink() }}" rel="bookmark">{{ post.title() | e }}</a></h1>
+
+	<em>Posted on <date>{{ post.formatted_date('MMM dd, yyyy') | e }}</date>.</em>
+	{% if post.tags %}
+		<span class="tag-list">
+			Tagged:
+			{% for tag in post.tags %} <a href="{{ _link('tag', tag) }}">#{{ tag | e }}</a>{% endfor %}.
+		</span>
+	{% endif %}
+
+	<article> {{ post.text() }} </article>
+
+	<div class="comments">
+		<h1>Comments</h1>
+		<div id="disqus_thread"></div>
+		<script type="application/javascript">
+	var disqus_config = function () {};
+	(function() {
+		if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+			document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+			return;
+		}
+		var d = document, s = d.createElement('script'); s.async = true;
+		s.src = '//' + "sharats-me" + '.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+	<script type="application/javascript">
+	var doNotTrack = false;
+	if (!doNotTrack) {
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-105705354-1', 'auto');
+		
+		ga('send', 'pageview');
+	}
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+{% endblock %}

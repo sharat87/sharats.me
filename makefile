@@ -1,7 +1,5 @@
 build:
-	hugo --cleanDestinationDir
+	nikola build
 
-serve:
-	hugo --buildDrafts server --bind 0.0.0.0
-
-.PHONY: build serve
+watch:
+	nikola auto --port 8010

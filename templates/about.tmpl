@@ -1,0 +1,18 @@
+{% extends 'post.tmpl' %}
+
+{% block main %}
+	<h1><a href="{{ post.permalink() }}" rel="bookmark">{{ post.title() | e }}</a></h1>
+
+	<img src="/images/shrikant-sharat-kandula.jpg" class=profile>
+
+	<article> {{ post.text() }} </article>
+
+	<p class=social>
+	    <a target=_blank href="mailto:{{ blog_email }}">Email</a>
+		<a target=_blank href="https://github.com/sharat87">GitHub</a>
+	    <a target=_blank href="https://stackoverflow.com/users/sharat87">Stack Overflow</a>
+	    <a target=_blank href="https://www.linkedin.com/in/sharat87">LinkedIn</a>
+	    <a target=_blank href="https://twitter.com/sharat87">Twitter</a>
+	    <a target=_blank href="https://www.facebook.com/sharat87">Facebook</a>
+	</p>
+{% endblock %}
