@@ -1,11 +1,5 @@
----
 title: The ever useful and neat subprocess module
-date: 2012-04-29
-tags: ['python', 'python-subprocess', 'tutorial']
-disqus_url: http://sharats.me/the-ever-useful-and-neat-subprocess-module.html
-reddit: true
-flattr: true
----
+tags: python, python-subprocess, tutorial
 
 Python's [subprocess][] module is one of my favourite modules in the standard library. If you have
 ever done some decent amount of coding in python, you might have encountered it. This module is used

@@ -1,9 +1,5 @@
----
 title: A tasty vim configuration setup with Vimpire and Pathogen
-date: 2010-12-14
-tags: ['vim', 'vim-plugins', 'vimpire', 'pathogen']
-expiryDate: 2011-12-14
----
+tags: vim, vim-plugins, vimpire, pathogen
 
 
 Managing vim plugins has always been a hassle. Until pathogen came along. If

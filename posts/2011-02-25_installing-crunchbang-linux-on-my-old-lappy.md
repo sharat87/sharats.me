@@ -1,8 +1,5 @@
----
 title: Installing Crunchbang Linux on my old lappy
-date: 2011-02-25
-tags: ['crunchbang', 'linux']
----
+tags: crunchbang, linux
 
 
 I managed to install Crunchbang linux, the recently released Stetler, after

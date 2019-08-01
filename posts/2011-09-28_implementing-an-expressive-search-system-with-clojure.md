@@ -1,9 +1,4 @@
----
 title: Implementing an expressive search system with clojure
-date: 2011-09-28
-reddit: true
-draft: true
----
 
 ## Backstory
 

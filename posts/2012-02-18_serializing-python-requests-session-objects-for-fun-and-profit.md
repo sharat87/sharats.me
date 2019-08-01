@@ -1,9 +1,5 @@
----
 title: Serializing python-requests' Session objects for fun and profit
-date: 2012-02-18
-tags: ['python', 'python-requests', 'python-pickle']
-reddit: true
----
+tags: python, python-requests, python-pickle
 
 # Prepare
 

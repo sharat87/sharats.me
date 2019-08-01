@@ -1,7 +1,12 @@
-build:
-	hugo --cleanDestinationDir
+.ONESHELL:
 
-serve:
-	hugo --buildDrafts server --bind 0.0.0.0
+build: clean
+	python build.py
+
+clean:
+	rm -rf output
+
+serve: build
+	cd output; python -m http.server --port 8010
 
 .PHONY: build serve

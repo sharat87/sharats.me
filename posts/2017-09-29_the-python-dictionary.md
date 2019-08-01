@@ -1,9 +1,5 @@
----
 title: The Python Dictionary
-date: 2017-09-20T07:50:28+05:30
-publishDate: 2017-09-29
-tags: ['python', 'data-structures']
----
+tags: python, data-structures
 
 The Python [Dictionary][] is a key--value style data structure that is tightly integrated with the
 language syntax and semantics. Understanding them well can help us use them better and investigate
