@@ -1,5 +1,6 @@
 title: The ever useful and neat subprocess module
 tags: python, python-subprocess, tutorial
+disqus_url: http://sharats.me/the-ever-useful-and-neat-subprocess-module.html
 
 Python's [subprocess][] module is one of my favourite modules in the standard library. If you have
 ever done some decent amount of coding in python, you might have encountered it. This module is used
@@ -14,7 +15,7 @@ I am going to put my notes and experiences about this module here. Please note, 
 Python 2.7 in mind. Things **are** slightly different in other versions (even 2.6). If you find any
 errors or suggestions, please let me know.
 
-{{% toc %}}
+<!-- TOC -->
 
 # A simple usage
 

@@ -1,0 +1,21 @@
+{% if posts %}
+<ul class=post-list>
+	{% if limit_posts %}
+	{% set posts = posts[:limit_posts] %}
+	{% endif %}
+
+	{% for post in posts %}
+		<li>
+		<a href="{{ post.link }}" class=title>{{ post.title }}</a>
+		&mdash;
+		<date>{{ post.date_display }}</date>
+		{% if post.tags %}
+		<span class=tags>{% for tag in post.tags %} <a href="/tags/{{ tag }}.html">#{{ tag }}</a>{% endfor %}</span>
+		{% endif %}
+	{% endfor %}
+</ul>
+
+{% else %}
+	<p>There's no posts yet.</p>
+
+{% endif %}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang=en>
+<meta charset=utf-8>
+<title>{% if title %}{{ title|e }} | {% endif %}{{ config.site_title }}</title>
+<meta name=viewport content="width=device-width, initial-scale=1.0">
+<meta name=author content="{{ config.author }}">
+
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro&display=swap">
+<link rel=stylesheet href="/styles.css">
+
+<header>
+	<h1><a href=/ rel=home>{{ config.site_title }}</a></h1>
+	<nav>
+		<a href="/archive.html">Archive</a>
+		<a href="/labs.html">Labs</a>
+		<a href="/shrikant-sharat-kandula-resume.pdf">Resume</a>
+		<a href="javascript:alert('WIP')">RSS</a>
+		<a href="/about.html">About</a>
+	</nav>
+</header>
+
+<main>{% block main %}{% endblock %}</main>
+
+<footer>
+<p>Copyright &copy; 2010-19, {{ config.author }}. Content licensed using CC-BY, unless otherwise specified.</p>
+</footer>
+
+<script>
+	setInterval(updateTimes, 60000);
+	updateTimes();
+
+	for (const el of document.querySelectorAll('a[rel="footnote"]')) {
+		const target = document.getElementById(el.getAttribute('href').slice(1));
+		el.setAttribute('title', target.firstChild.textContent.trim());
+	}
+
+	function updateTimes() {
+		var times = document.getElementsByTagName('time');
+		for (var i = times.length; i-- > 0;) {
+			if (!times[i].title)
+				times[i].title = times[i].textContent;
+			times[i].textContent = timeSince(Date.parse(times[i].getAttribute('datetime')));
+		}
+	}
+
+	function timeSince(date) {
+		var seconds = Math.floor((new Date() - date) / 1000),
+			interval = Math.floor(seconds / 31536000);
+		if (interval > 1)
+			return interval + ' years ago';
+		interval = Math.floor(seconds / 2592000);
+		if (interval > 1)
+			return interval + ' months ago';
+		interval = Math.floor(seconds / 86400);
+		if (interval > 1)
+			return interval + ' days ago';
+		return 'Today';
+	}
+
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-105705354-1', 'auto');
+	ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>

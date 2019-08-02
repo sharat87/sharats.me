@@ -1,8 +1,4 @@
----
 title: Labs
-date: 2017-08-26
-type: standalone
----
 
 This is a list of my public projects and experiments. You can follow me on Github for updates on my
 current work and future experiments.

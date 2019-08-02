@@ -1,8 +1,13 @@
-<!doctype html>
-<html lang=en>
-<meta charset=utf-8>
-<title>The Sharat's</title>
+{% extends 'base.html' %}
 
-{% for post in posts %}
-<p>{{ post.title }}</p>
-{% endfor %}
+{% block main %}
+
+	<h1>Recent articles</h1>
+
+	{% with limit_posts = 6 %}
+		{% include 'post-list-partial.html' %}
+	{% endwith %}
+
+	<p><a href=/archive.html>Visit the posts' archive &rarr;</a></p>
+
+{% endblock %}

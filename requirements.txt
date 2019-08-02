@@ -1,2 +1,5 @@
 mistune
+mistune_contrib
 Jinja2
+Pygments
+feedgen

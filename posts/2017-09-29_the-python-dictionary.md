@@ -21,7 +21,7 @@ Note: This is not intended as a substitute for official documentation. The offic
 a reference and there will be some overlap. This document is intended as a supplement that covers
 more depth and practical nuances.
 
-{{% toc %}}
+<!-- TOC -->
 
 # Introduction
 
