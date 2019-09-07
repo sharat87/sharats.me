@@ -33,22 +33,14 @@ OUTPUT_DIR = ROOT_LOC / 'output'
 
 env = jinja2.Environment(
     loader=jinja2.PackageLoader(__name__),
-    autoescape=jinja2.select_autoescape(['html']),
+    autoescape=jinja2.select_autoescape(['html', 'xml']),
 )
 
 
-class Post:
+class Page:
     def __init__(self, path):
         self.path = path
-
-        match = re.fullmatch(r'((?P<date>\d{4}-\d{2}-\d{2})_)?(?P<slug>[-\w]+)\.md', path.name)
-        if match.group('date'):
-            self.date = datetime.datetime.fromisoformat(match.group('date')).date()
-        else:
-            self.date = None
-
-        self.slug = match.group('slug')
-
+        self.slug = path.stem
         body = self.path.read_text()
         self.meta = {}
 
@@ -58,12 +50,15 @@ class Post:
                 break
             body = body[match.end():]
             key, value = match.group(1), match.group(2)
-            self.meta[key] = value.strip()
+            self.meta[key.lower()] = value.strip()
 
-        self.title = self.meta.pop('title') or self.slug.title()
         self.tags = [v for v in map(str.strip, self.meta.pop('tags', '').split(',')) if v]
         self.body = body
         self.html_body = md_to_html(body)
+
+    @property
+    def title(self):
+        return self.meta.get('title') or self.slug.title()
 
     @property
     def link(self):
@@ -81,10 +76,27 @@ class Post:
     def date_iso(self):
         return self.date.isoformat()
 
+    @property
+    def output_path(self):
+        return self.slug + '.html'
+
     def __str__(self):
-        return f'<Post {self.slug}>'
+        return f'<{self.__class__.__name__} {self.slug}>'
 
     __repr__ = __str__
+
+
+class Post(Page):
+    def __init__(self, path):
+        super().__init__(path)
+
+        match = re.fullmatch(r'((?P<date>\d{4}-\d{2}-\d{2})_)?(?P<slug>[-\w]+)', self.slug)
+        self.date = datetime.datetime.fromisoformat(match.group('date')).date()
+        self.slug = match.group('slug')
+
+    @property
+    def output_path(self):
+        return 'posts/' + super().output_path
 
 
 class Markdown(TocMixin, HighlightMixin, mistune.Renderer):
@@ -98,14 +110,15 @@ def md_to_html(md_content):
 
     Markdown._md.renderer.reset_toc()
     html = Markdown._md(md_content)
-    if Markdown._md.renderer.toc_tree:
+    if Markdown._md.renderer.toc_tree and '<!-- TOC -->' in html:
         html = html.replace('<!-- TOC -->', Markdown._md.renderer.render_toc(level=3))
 
     return html
 
 
 def render(target, template, **kwargs):
-    (OUTPUT_DIR / target).write_text(env.get_template(template).render(config=Config, **kwargs))
+    markup = env.get_template(template).render(config=Config, **kwargs)
+    (OUTPUT_DIR / target).write_text(markup, encoding='utf-8')
 
 
 def main():
@@ -119,11 +132,7 @@ def main():
     (OUTPUT_DIR / 'posts').mkdir(parents=True, exist_ok=True)
     (OUTPUT_DIR / 'tags').mkdir(parents=True, exist_ok=True)
 
-    posts = []
-    for post_path in list((ROOT_LOC / 'posts').glob('*.md')):
-        posts.append(Post(post_path))
-
-    posts.sort(key=lambda p: p.date, reverse=True)
+    posts = sorted((Post(p) for p in (ROOT_LOC / 'posts').glob('*.md')), key=lambda p: p.date, reverse=True)
     log.info('posts is `%s`.', repr(posts))
 
     for entry in (ROOT_LOC / 'static').iterdir():
@@ -138,16 +147,24 @@ def main():
     log.info('Rendering archive page.')
     render('archive.html', 'post-list.html', title='Archive', posts=posts)
 
-    for page_path in list((ROOT_LOC / 'pages').glob('*.md')):
-        page = Post(page_path)
-        log.info('Rendering page %s.', repr(page))
-        render(page.slug + '.html', page.meta.get('template', 'post.html'), post=page)
+    render_pages(map(Page, (ROOT_LOC / 'pages').glob('*.md')))
+    render_pages(posts)
+    render_tags(posts)
 
+    generate_feed(posts[:6], '/posts/index.xml')
+    log.info('Finished')
+
+
+def render_pages(pages):
+    for page in pages:
+        log.info('Rendering page %s.', repr(page))
+        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
+
+
+def render_tags(posts):
     tagged_posts = defaultdict(list)
 
     for post in posts:
-        log.info('Rendering `%s`.', repr(post))
-        render('posts/' + (post.slug + '.html'), 'post.html', post=post)
         for tag in post.tags:
             tagged_posts[tag].append(post)
 
@@ -155,21 +172,23 @@ def main():
         log.info('Rendering tag page for `#%s`.', tag)
         render('tags/' + (tag + '.html'), 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
 
+
+def generate_feed(posts, path):
     fg = FeedGenerator()
     fg.id(Config.site_url)
     fg.title(Config.site_title)
     fg.author({'name': Config.author, 'email': Config.email})
-    fg.link(href='https://www.sharats.me/posts/index.xml', rel='self')
+    fg.link(href=Config.site_url + path, rel='self')
     fg.language('en')
     fg.description('Blog by Shrikant')
 
-    for post in posts[:6]:
+    for post in posts:
         fe = fg.add_entry()
         fe.id(post.permalink)
         fe.title(post.title)
         fe.description(post.body.split('\n\n', 1)[0])
 
-    fg.rss_file(str(OUTPUT_DIR / 'posts' / 'index.xml'))
+    fg.rss_file(str(OUTPUT_DIR / path.lstrip('/')))
 
 
 if __name__ == '__main__':
