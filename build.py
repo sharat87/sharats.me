@@ -1,20 +1,22 @@
+"""
+Build my blog site. No command line arguments. Just run `python build.py`.
+
+For math support, checkout mistune_contrib's math mixin at
+https://github.com/lepture/mistune-contrib/blob/master/mistune_contrib/math.py
+"""
+
+from collections import defaultdict
 from pathlib import Path
+import datetime
 import logging
 import re
-import datetime
-import jinja2
-from collections import defaultdict
 import shutil
 
+import jinja2
 import mistune
-from mistune_contrib.toc import TocMixin
-from mistune_contrib.highlight import HighlightMixin
 from feedgen.feed import FeedGenerator
-
-
-"""
-For math support, checkout mistune_contrib's math mixin at https://github.com/lepture/mistune-contrib/blob/master/mistune_contrib/math.py
-"""
+from mistune_contrib.highlight import HighlightMixin
+from mistune_contrib.toc import TocMixin
 
 
 class Config:
@@ -31,10 +33,10 @@ SCRIPT_LOC = Path(__file__).resolve()
 ROOT_LOC = SCRIPT_LOC.parent
 OUTPUT_DIR = ROOT_LOC / 'output'
 
-env = jinja2.Environment(
-    loader=jinja2.PackageLoader(__name__),
-    autoescape=jinja2.select_autoescape(['html', 'xml']),
-)
+env = jinja2.Environment(loader=jinja2.PackageLoader(__name__), autoescape=jinja2.select_autoescape(['html', 'xml']))
+
+markdown = mistune.Markdown(renderer=type('Renderer', (TocMixin, HighlightMixin, mistune.Renderer), {})())
+markdown.renderer.options.update(inlinestyles=False, linenos=False)
 
 
 class Page:
@@ -69,14 +71,6 @@ class Page:
         return Config.site_url + self.link
 
     @property
-    def date_display(self):
-        return self.date.strftime('%b %d, %Y')
-
-    @property
-    def date_iso(self):
-        return self.date.isoformat()
-
-    @property
     def output_path(self):
         return self.slug + '.html'
 
@@ -95,24 +89,23 @@ class Post(Page):
         self.slug = match.group('slug')
 
     @property
+    def date_display(self):
+        return self.date.strftime('%b %d, %Y')
+
+    @property
+    def date_iso(self):
+        return self.date.isoformat()
+
+    @property
     def output_path(self):
         return 'posts/' + super().output_path
 
 
-class Markdown(TocMixin, HighlightMixin, mistune.Renderer):
-    _md = None
-
-
-def md_to_html(md_content):
-    if Markdown._md is None:
-        Markdown._md = mistune.Markdown(renderer=Markdown())
-        Markdown._md.renderer.options.update(inlinestyles=False, linenos=False)
-
-    Markdown._md.renderer.reset_toc()
-    html = Markdown._md(md_content)
-    if Markdown._md.renderer.toc_tree and '<!-- TOC -->' in html:
-        html = html.replace('<!-- TOC -->', Markdown._md.renderer.render_toc(level=3))
-
+def md_to_html(md_content: str):
+    markdown.renderer.reset_toc()
+    html = markdown(md_content)
+    if markdown.renderer.toc_tree and '<!-- TOC -->' in html:
+        html = html.replace('<!-- TOC -->', markdown.renderer.render_toc(level=3))
     return html
 
 
