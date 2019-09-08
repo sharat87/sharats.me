@@ -35,26 +35,18 @@
 	}
 
 	function updateTimes() {
-		var times = document.getElementsByTagName('time');
-		for (var i = times.length; i-- > 0;) {
-			if (!times[i].title)
-				times[i].title = times[i].textContent;
-			times[i].textContent = timeSince(Date.parse(times[i].getAttribute('datetime')));
+		for (const el of document.getElementsByTagName('time')) {
+			el.title = el.title || el.textContent;
+			el.textContent = timeSince(Date.parse(el.getAttribute('datetime')));
 		}
 	}
 
 	function timeSince(date) {
-		var seconds = Math.floor((new Date() - date) / 1000),
-			interval = Math.floor(seconds / 31536000);
-		if (interval > 1)
-			return interval + ' years ago';
-		interval = Math.floor(seconds / 2592000);
-		if (interval > 1)
-			return interval + ' months ago';
-		interval = Math.floor(seconds / 86400);
-		if (interval > 1)
-			return interval + ' days ago';
-		return 'today';
+		let i, u, s = Math.round((new Date() - date) / 100000);
+		if ((i = Math.round(s / 315360)) >= 1) u = 'year';
+		else if ((i = Math.round(s / 25920)) >= 1) u = 'month';
+		else if ((i = Math.round(s / 864)) >= 1) u = 'day';
+		return u ? `~${i} ${u}${i > 1 ? 's' : ''} ago` : 'today';
 	}
 
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
