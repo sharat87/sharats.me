@@ -5,9 +5,9 @@
 html {
 	--body-text-color: #222;
 	--link-color: #06A;
-	--font-body: 'Source Sans Pro', sans-serif;
-	--font-head: 'Source Serif Pro', serif;
-	--font-mono: 'Source Code Pro', monospace;
+	--font-body: 'Fira Sans', sans-serif;
+	--font-head: 'Fira Sans', serif;
+	--font-mono: 'Fira Mono', monospace;
 }
 
 html, body {
