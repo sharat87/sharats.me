@@ -84,7 +84,7 @@ class Post(Page):
     def __init__(self, path):
         super().__init__(path)
 
-        match = re.fullmatch(r'((?P<date>\d{4}-\d{2}-\d{2})_)?(?P<slug>[-\w]+)', self.slug)
+        match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', self.slug)
         self.date = datetime.datetime.fromisoformat(match.group('date')).date()
         self.slug = match.group('slug')
 
