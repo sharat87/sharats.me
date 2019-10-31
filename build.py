@@ -116,6 +116,7 @@ def render(target, template, **kwargs):
 
 def main():
     log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     for entry in OUTPUT_DIR.iterdir():
         if entry.is_file():
             entry.unlink()
