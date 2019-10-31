@@ -123,8 +123,8 @@ def main():
         else:
             shutil.rmtree(entry)
 
-    (OUTPUT_DIR / 'posts').mkdir(parents=True, exist_ok=True)
-    (OUTPUT_DIR / 'tags').mkdir(parents=True, exist_ok=True)
+    (OUTPUT_DIR / 'posts').mkdir()
+    (OUTPUT_DIR / 'tags').mkdir()
 
     posts = sorted((Post(p) for p in (ROOT_LOC / 'posts').glob('*.md')), key=lambda p: p.date, reverse=True)
     log.info('posts is `%s`.', repr(posts))
