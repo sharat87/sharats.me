@@ -1,5 +1,10 @@
 .ONESHELL:
 
+default: info build
+
+info:
+	python --version
+
 build:
 	python build.py
 
@@ -11,4 +16,4 @@ serve: build
 	cd output
 	python -m http.server 8010
 
-.PHONY: build clean serve
+.PHONY: default info build clean serve
