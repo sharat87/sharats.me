@@ -130,10 +130,7 @@ def main():
     log.info('posts is `%s`.', repr(posts))
 
     for entry in (ROOT_LOC / 'static').iterdir():
-        if entry.is_file():
-            shutil.copy(entry, OUTPUT_DIR)
-        else:
-            raise NotImplementedError('Copying static directories is WIP.')
+        (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
     log.info('Rendering index page.')
     render('index.html', 'index.html', posts=posts)
