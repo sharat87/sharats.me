@@ -1,4 +1,5 @@
 title: Labs
+no_comments: 1
 
 This is a list of my public projects and experiments. You can follow me on Github for updates on my
 current work and future experiments.
@@ -54,4 +55,3 @@ This is currently being maintained by the community, the zsh-users organizations
 
 [PypMsg](http://github.com/sharat87/PypMsg)
 : A simple cross-platform LAN file sharing utility. Inspired by ipmsg.
-

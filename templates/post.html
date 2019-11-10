@@ -19,6 +19,7 @@
 
 	<article> {{ post.html_body | safe }} </article>
 
+	{% if not post.meta.no_comments %}
 	<div class=comments>
 		<h1>Comments</h1>
 		<div id=disqus_thread></div>
@@ -39,5 +40,6 @@
 		</script>
 		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 	</div>
+	{% endif %}
 
 {% endblock %}
