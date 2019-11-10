@@ -2,12 +2,54 @@
 
 {% block main %}
 
-	<h1>Recent articles</h1>
+	<h1 id=posts>Recent articles</h1>
 
 	{% with limit_posts = 6 %}
 		{% include 'post-list-partial.html' %}
 	{% endwith %}
 
-	<p><a href=/archive.html>Visit the posts' archive &rarr;</a></p>
+	<p><a href=/archive.html>Archive &rarr;</a></p>
+
+	<h1 id=labs>Labs</h1>
+
+	<h3 class=lab-title>
+		<span>Just-a-calendar</span>
+		<a href='https://calendar.sharats.me/' target=just-a-calendar>calendar.sharats.me</a>
+	</h3>
+
+	<p>
+		An easily reachable endpoint to have a calendar to look at. No signup, no setup, no
+		downloads, no flash and very little features. Perfect when you want to show a calendar and
+		talk about dates when sharing your screen in a presentation or meeting.
+	</p>
+
+	<ul>
+		<li>Mark dates with four different colors.</li>
+		<li>Marked dates are saved in your browser's local storage, so they survive restarts.</li>
+		<li>Right click on a date to quickly copy the data in several useful formats.</li>
+		<li>Dark mode, for the rest of you guys.</li>
+		<li>Hotkeys for common actions. Hit <kbd>?</kbd> for quick help.</li>
+		<li>Remove all marks with a single click.</li>
+	</ul>
+
+	<h3 class=lab-title>
+		<span>Timezoner</span>
+		<a href='http://tz.sharats.me' target=timezoner>tz.sharats.me</a>
+	</h3>
+
+	<p>
+		A simple UI to help convert times in various time zones. Powered by moment.js, so is aware
+		of all changes to timezones, DST updates etc. No signup, no setup, no downloads, no flash
+		and very little features. Perfect when you want to discuss time zones with a global team and
+		sharing your screen in a presentation or meeting.
+	</p>
+
+	<ul>
+		<li>Click on a number in the time of any time zone and hit up/down arrows to step.</li>
+		<li>Changing the time/date of one time zone updates all the other times.</li>
+		<li>Time zone list is saved in your browser's local storage so survives restarts.</li>
+	</ul>
+
+	<p><a href=/labs.html>More &rarr;</a></p>
 
 {% endblock %}
