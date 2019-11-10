@@ -73,6 +73,7 @@ h6 {
 .lab-title {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
 
 .lab-title a {
