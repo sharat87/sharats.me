@@ -290,7 +290,7 @@ footer {
 }
 
 footer p {
-	margin: 12px;
+	margin: .5em 0 1em;
 }
 
 @media only screen and (max-width: 600px) {
