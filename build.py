@@ -33,6 +33,7 @@ log = logging.getLogger(__name__)
 SCRIPT_LOC = Path(__file__).resolve()
 ROOT_LOC = SCRIPT_LOC.parent
 OUTPUT_DIR = ROOT_LOC / 'output'
+CONTENT_DIR = ROOT_LOC / 'content'
 
 env = jinja2.Environment(loader=jinja2.PackageLoader(__name__), autoescape=jinja2.select_autoescape(['html', 'xml']))
 
@@ -46,6 +47,7 @@ class Page:
         self.slug = path.stem
         self.meta = {}
         self.tags = set()
+        self.date = None
 
         body = self.path.read_text()
 
@@ -57,6 +59,11 @@ class Page:
 
         self.body = body
         self.html_body = md_to_html(body)
+
+        match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', self.slug)
+        if match:
+            self.date = datetime.datetime.fromisoformat(match.group('date')).date()
+            self.slug = match.group('slug')
 
     @property
     def title(self):
@@ -72,33 +79,20 @@ class Page:
 
     @property
     def output_path(self):
-        return self.slug + '.html'
+        return self.path.relative_to(CONTENT_DIR).with_suffix('.html')
+
+    @property
+    def date_display(self):
+        return self.date.strftime('%b %d, %Y') if self.date else ''
+
+    @property
+    def date_iso(self):
+        return self.date.isoformat() if self.date else ''
 
     def __str__(self):
         return f'<{self.__class__.__name__} {self.slug}>'
 
     __repr__ = __str__
-
-
-class Post(Page):
-    def __init__(self, path):
-        super().__init__(path)
-
-        match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', self.slug)
-        self.date = datetime.datetime.fromisoformat(match.group('date')).date()
-        self.slug = match.group('slug')
-
-    @property
-    def date_display(self):
-        return self.date.strftime('%b %d, %Y')
-
-    @property
-    def date_iso(self):
-        return self.date.isoformat()
-
-    @property
-    def output_path(self):
-        return 'posts/' + super().output_path
 
 
 def md_to_html(md_content: str):
@@ -111,7 +105,9 @@ def md_to_html(md_content: str):
 
 def render(target, template, **kwargs):
     markup = env.get_template(template).render(config=Config, **kwargs)
-    (OUTPUT_DIR / target).write_text(markup, encoding='utf-8')
+    dest = OUTPUT_DIR / target
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(markup, encoding='utf-8')
 
 
 def main():
@@ -123,14 +119,15 @@ def main():
         else:
             shutil.rmtree(entry)
 
-    (OUTPUT_DIR / 'posts').mkdir()
-    (OUTPUT_DIR / 'tags').mkdir()
-
-    posts = sorted((Post(p) for p in (ROOT_LOC / 'posts').glob('*.md')), key=lambda p: p.date, reverse=True)
-    log.info('posts is `%s`.', repr(posts))
-
     for entry in (ROOT_LOC / 'static').iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
+
+    all_pages = [Page(p) for p in CONTENT_DIR.glob('**/*.md')]
+    for page in all_pages:
+        log.info('Rendering page %s.', repr(page))
+        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
+
+    posts = sorted((p for p in all_pages if p.date), key=lambda p: p.date, reverse=True)
 
     log.info('Rendering index page.')
     render('index.html', 'index.html', posts=posts)
@@ -138,18 +135,10 @@ def main():
     log.info('Rendering archive page.')
     render('archive.html', 'post-list.html', title='Archive', posts=posts)
 
-    render_pages(map(Page, (ROOT_LOC / 'pages').glob('*.md')))
-    render_pages(posts)
     render_tags(posts)
 
     generate_feed(posts[:6], '/posts/index.xml')
     log.info('Finished')
-
-
-def render_pages(pages):
-    for page in pages:
-        log.info('Rendering page %s.', repr(page))
-        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
 
 
 def render_tags(posts):
