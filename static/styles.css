@@ -3,10 +3,10 @@
 }
 
 html {
-	--body-text-color: #222;
+	--body-text-color: #333;
 	--link-color: #06A;
-	--font-body: 'Fira Sans', sans-serif;
-	--font-head: 'Fira Sans', sans-serif;
+	--font-body: 'Source Sans Pro', sans-serif;
+	--font-head: 'Source Sans Pro', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 }
 
@@ -16,7 +16,7 @@ html, body {
 }
 
 body {
-	background: #FCFCFC;
+	background: #FFF;
 	color: var(--body-text-color);
 	display: flex;
 	flex-direction: column;
@@ -120,6 +120,7 @@ pre {
 
 pre, code, kbd, tt, var {
 	font-family: var(--font-mono);
+	font-size: .95em;
 	background-color: rgba(0, 0, 0, .04);
 }
 
@@ -160,7 +161,7 @@ main {
 }
 
 header {
-	background: rgba(0, 0, 0, .05);
+	background: rgba(0, 0, 0, .02);
 	border-bottom: 2px solid rgba(0, 0, 0, .1);
 	width: 100%;
 	display: flex;
