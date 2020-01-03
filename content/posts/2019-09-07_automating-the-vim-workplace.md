@@ -1,6 +1,7 @@
 ---
 title: Automating the ViM workplace
 tags: [python, vim]
+publish: no
 ---
 
 My primary workstation is GViM running on Windows and I mostly work with Python, Markdown,

@@ -7,7 +7,7 @@ https://github.com/lepture/mistune-contrib/blob/master/mistune_contrib/math.py
 
 from collections import defaultdict
 from pathlib import Path
-import datetime
+import datetime as dt
 import logging
 import re
 import shutil
@@ -53,7 +53,7 @@ class Page:
 
         if body.startswith('---\n'):
             meta_block, body = body[4:].split('\n---\n', 1)
-            self.meta = yaml.load(meta_block)
+            self.meta = yaml.safe_load(meta_block)
             if 'tags' in self.meta:
                 self.tags.update(self.meta.pop('tags'))
 
@@ -62,32 +62,29 @@ class Page:
 
         match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', self.slug)
         if match:
-            self.date = datetime.datetime.fromisoformat(match.group('date')).date()
+            self.date = dt.datetime.fromisoformat(match.group('date')).date()
             self.slug = match.group('slug')
 
-    @property
     def title(self):
         return self.meta.get('title') or self.slug.title()
 
-    @property
     def link(self):
         return f'/posts/{self.slug}.html'
 
-    @property
     def permalink(self):
-        return Config.site_url + self.link
+        return Config.site_url + self.link()
 
-    @property
     def output_path(self):
         return self.path.relative_to(CONTENT_DIR).with_suffix('.html')
 
-    @property
     def date_display(self):
         return self.date.strftime('%b %d, %Y') if self.date else ''
 
-    @property
     def date_iso(self):
         return self.date.isoformat() if self.date else ''
+
+    def should_publish(self):
+        return self.meta.get('publish', True) and (self.date is None or self.date <= dt.date.today())
 
     def __str__(self):
         return f'<{self.__class__.__name__} {self.slug}>'
@@ -122,10 +119,10 @@ def main():
     for entry in (ROOT_LOC / 'static').iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
-    all_pages = [Page(p) for p in CONTENT_DIR.glob('**/*.md')]
+    all_pages = [p for p in map(Page, CONTENT_DIR.glob('**/*.md')) if p.should_publish()]
     for page in all_pages:
         log.info('Rendering page %s.', repr(page))
-        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
+        render(page.output_path(), page.meta.get('template', 'post.html'), post=page)
 
     posts = sorted((p for p in all_pages if p.date), key=lambda p: p.date, reverse=True)
 
@@ -164,9 +161,11 @@ def generate_feed(posts, path):
 
     for post in posts:
         fe = fg.add_entry()
-        fe.id(post.permalink)
-        fe.title(post.title)
+        fe.id(post.permalink())
+        fe.title(post.title())
         fe.description(post.body.split('\n\n', 1)[0])
+        if post.date:
+            fe.published(dt.datetime(post.date.year, post.date.month, post.date.day, tzinfo=dt.timezone.utc))
 
     fg.rss_file(str(OUTPUT_DIR / path.lstrip('/')))
 
