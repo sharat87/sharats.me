@@ -8,6 +8,7 @@ html {
 	--font-body: 'Source Sans Pro', sans-serif;
 	--font-head: 'Source Sans Pro', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
+	--bold-weight: 600;
 }
 
 html, body {
@@ -37,9 +38,13 @@ a img {
 	border: 0;
 }
 
+b, strong {
+	font-weight: var(--bold-weight);
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-head);
-	font-weight: normal;
+	font-weight: var(--bold-weight);
 }
 
 h1 {
@@ -171,11 +176,11 @@ header {
 }
 
 header h1 {
-	font-size: 2em;
-	font-weight: normal;
+	font-size: 1.8em;
+	font-weight: var(--bold-weight);
 	line-height: 1;
 	margin: 0;
-	padding: 12px;
+	padding: 6px 12px;
 }
 
 header a {
@@ -261,6 +266,7 @@ main article {
 
 .post-list li {
 	margin-bottom: .5em;
+	padding: .3em 0;
 }
 
 .post-list .title {
@@ -312,6 +318,31 @@ footer p {
 		margin-right: 1em;
 	}
 
+}
+
+.toc {
+	background-color: #F3F3F3;
+	border-radius: 3px;
+	box-shadow: inset 0 3px 6px rgba(0, 0, 0, .1);
+	padding: .5em;
+}
+
+.toc:before {
+	content: 'Contents';
+	margin-bottom: 6px;
+}
+
+.toc ul {
+	margin: 0;
+	padding-left: 1.5em;
+}
+
+.toc a {
+	text-decoration: none;
+}
+
+.toc a:hover {
+	text-decoration: underline;
 }
 
 

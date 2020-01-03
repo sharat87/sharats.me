@@ -105,7 +105,7 @@ def md_to_html(md_content: str):
     markdown.renderer.reset_toc()
     html = markdown(md_content)
     if markdown.renderer.toc_tree and '<!-- TOC -->' in html:
-        html = html.replace('<!-- TOC -->', markdown.renderer.render_toc(level=3))
+        html = html.replace('<!-- TOC -->', '<div class=toc>' + markdown.renderer.render_toc(level=3) + '</div>')
     return html
 
 
