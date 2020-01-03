@@ -1,5 +1,7 @@
+---
 title: Privacy Policy
 no_comments: 1
+---
 
 Your privacy is taken very seriously on this website and we intend to be transparent about how your
 information is used.

@@ -1,5 +1,7 @@
+---
 title: Dependency graph of all installed gems
-tags: ruby, gem, graphviz, bash, tips
+tags: [ruby, gem, graphviz, bash, tips]
+---
 
 
 Every other application written using ruby these days seem to come with this

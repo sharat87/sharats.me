@@ -1,5 +1,5 @@
-mistune
-mistune_contrib
-Jinja2
-Pygments
-feedgen
+mistune==0.8.4
+mistune-contrib==0.1
+Jinja2==2.10.3
+Pygments==2.5.2
+feedgen==0.8.0

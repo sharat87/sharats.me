@@ -12,6 +12,7 @@ import logging
 import re
 import shutil
 
+import yaml
 import jinja2
 import mistune
 from feedgen.feed import FeedGenerator
@@ -43,18 +44,17 @@ class Page:
     def __init__(self, path):
         self.path = path
         self.slug = path.stem
-        body = self.path.read_text()
         self.meta = {}
+        self.tags = set()
 
-        while True:
-            match = re.match(r'(\w+):\s*(.*?)\n', body)
-            if match is None:
-                break
-            body = body[match.end():]
-            key, value = match.group(1), match.group(2)
-            self.meta[key.lower()] = value.strip()
+        body = self.path.read_text()
 
-        self.tags = [v for v in map(str.strip, self.meta.pop('tags', '').split(',')) if v]
+        if body.startswith('---\n'):
+            meta_block, body = body[4:].split('\n---\n', 1)
+            self.meta = yaml.load(meta_block)
+            if 'tags' in self.meta:
+                self.tags.update(self.meta.pop('tags'))
+
         self.body = body
         self.html_body = md_to_html(body)
 

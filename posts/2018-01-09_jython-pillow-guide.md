@@ -1,5 +1,7 @@
+---
 title: The Jython Pillow Guide
-tags: python, jython, java
+tags: [python, jython, java]
+---
 
 This is a document with tips and usage details about Jython that I've come across. I intend to
 document handy features of Python as well as some clever inter-op facilities provided by Jython.

@@ -1,5 +1,7 @@
+---
 title: Serializing python-requests' Session objects for fun and profit
-tags: python, python-requests, python-pickle
+tags: [python, python-requests, python-pickle]
+---
 
 # Prepare
 

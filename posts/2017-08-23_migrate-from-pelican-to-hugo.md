@@ -1,5 +1,7 @@
+---
 title: Migrate from Pelican to Hugo
-tags: hugo, meta, awk, python
+tags: [hugo, meta, awk, python]
+---
 
 I recently got around to resurrecting my blog up after around five years of death. As part of that,
 I chose to migrate my blog to Hugo, from the current Pelican builder. The first post after
@@ -11,7 +13,7 @@ being lazy. Hopefully, that won't happen agian.
 # Why Hugo
 
 When I decided to start writing again, I couldn't remember who I was building the site. That's
-probably entirely my fault fot not documenting it for myself, but I ended up being almost new to
+probably entirely my fault for not documenting it for myself, but I ended up being almost new to
 Pelican. So, instead of directly going to Pelican's homepage, I checked out
 [StaticGen](https://www.staticgen.com/) to see the current landscape of static site generators. The
 most popular (measure by GitHub stars) is obvious, Jekyll. Then came [Hugo](https://gohugo.io), a

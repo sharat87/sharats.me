@@ -1,4 +1,7 @@
+---
 title: Implementing an expressive search system with clojure
+tags: [clojure]
+---
 
 ## Backstory
 

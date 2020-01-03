@@ -1,5 +1,7 @@
+---
 title: Vim undo breaks with auto-close plugins
-tags: vim, vim-plugins
+tags: [vim, vim-plugins]
+---
 
 # Prelude
 
