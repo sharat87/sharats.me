@@ -65,24 +65,35 @@ class Page:
             self.date = dt.datetime.fromisoformat(match.group('date')).date()
             self.slug = match.group('slug')
 
+    @property
     def title(self):
         return self.meta.get('title') or self.slug.title()
 
+    @property
     def link(self):
         return f'/posts/{self.slug}.html'
 
+    @property
     def permalink(self):
-        return Config.site_url + self.link()
+        return Config.site_url + self.link
 
+    @property
     def output_path(self):
         return self.path.relative_to(CONTENT_DIR).with_suffix('.html')
 
+    @property
+    def depth(self):
+        return len(self.path.relative_to(CONTENT_DIR).parts)
+
+    @property
     def date_display(self):
         return self.date.strftime('%b %d, %Y') if self.date else ''
 
+    @property
     def date_iso(self):
         return self.date.isoformat() if self.date else ''
 
+    @property
     def should_publish(self):
         return self.meta.get('publish', True) and (self.date is None or self.date <= dt.date.today())
 
@@ -119,10 +130,10 @@ def main():
     for entry in (ROOT_LOC / 'static').iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
-    all_pages = [p for p in map(Page, CONTENT_DIR.glob('**/*.md')) if p.should_publish()]
+    all_pages = [p for p in map(Page, CONTENT_DIR.glob('**/*.md')) if p.should_publish]
     for page in all_pages:
         log.info('Rendering page %s.', repr(page))
-        render(page.output_path(), page.meta.get('template', 'post.html'), post=page)
+        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
 
     posts = sorted((p for p in all_pages if p.date), key=lambda p: p.date, reverse=True)
 
@@ -133,6 +144,8 @@ def main():
     render('archive.html', 'post-list.html', title='Archive', posts=posts)
 
     render_tags(posts)
+
+    render('sitemap.html', 'sitemap.html', page_groups=page_tree(all_pages))
 
     generate_feed(posts[:6], '/posts/index.xml')
     log.info('Finished')
@@ -150,6 +163,25 @@ def render_tags(posts):
         render('tags/' + (tag + '.html'), 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
 
 
+def page_tree(pages):
+    groups = []
+    prev_depth = 0
+
+    for page in sorted(pages, key=lambda p: p.path):
+        if page.depth > prev_depth:
+            if prev_depth > 0:
+                groups.append(('text', page.path.parent.stem.title()))
+            groups.append(('open', page))
+        elif page.depth < prev_depth:
+            groups.append(('close', page))
+        else:
+            groups.append(('link', page))
+
+        prev_depth = page.depth
+
+    return groups
+
+
 def generate_feed(posts, path):
     fg = FeedGenerator()
     fg.id(Config.site_url)
@@ -161,8 +193,8 @@ def generate_feed(posts, path):
 
     for post in posts:
         fe = fg.add_entry()
-        fe.id(post.permalink())
-        fe.title(post.title())
+        fe.id(post.permalink)
+        fe.title(post.title)
         fe.description(post.body.split('\n\n', 1)[0])
         if post.date:
             fe.published(dt.datetime(post.date.year, post.date.month, post.date.day, tzinfo=dt.timezone.utc))
