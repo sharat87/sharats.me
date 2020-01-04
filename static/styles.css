@@ -305,6 +305,20 @@ main article {
 	margin-left: 6px;
 }
 
+.note {
+	background-color: #DEF;
+	padding: .3em;
+	border-radius: 3px;
+}
+
+@media (min-width: 768px) {
+	.note {
+		margin-left: 1em;
+		margin-right: 1em;
+		padding: 1em;
+	}
+}
+
 footer {
 	text-align: center;
 	border-top: 1px solid rgba(0, 0, 0, .3);
