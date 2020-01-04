@@ -1,12 +1,8 @@
 .ONESHELL:
 
-default: info build
-
-info:
-	python --version
-
 build:
-	python build.py
+	python --version
+	python manage.py build
 
 clean:
 	mkdir -p output

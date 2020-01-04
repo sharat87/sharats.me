@@ -5,6 +5,7 @@ For math support, checkout mistune_contrib's math mixin at
 https://github.com/lepture/mistune-contrib/blob/master/mistune_contrib/math.py
 """
 
+import sys
 from collections import defaultdict
 from pathlib import Path
 import datetime as dt
@@ -35,7 +36,7 @@ ROOT_LOC = SCRIPT_LOC.parent
 OUTPUT_DIR = ROOT_LOC / 'output'
 CONTENT_DIR = ROOT_LOC / 'content'
 
-env = jinja2.Environment(loader=jinja2.PackageLoader(__name__), autoescape=jinja2.select_autoescape(['html', 'xml']))
+env = jinja2.Environment(loader=jinja2.PackageLoader(__name__))
 
 markdown = mistune.Markdown(renderer=type('Renderer', (TocMixin, HighlightMixin, mistune.Renderer), {})())
 markdown.renderer.options.update(inlinestyles=False, linenos=False)
@@ -67,7 +68,8 @@ class Page:
 
     @property
     def title(self):
-        return self.meta.get('title') or self.slug.title()
+        raw = self.meta.get('title') or self.slug.title()
+        return md_to_html(raw)[3:-5]  # Strip the <p> tag.
 
     @property
     def link(self):
@@ -79,7 +81,7 @@ class Page:
 
     @property
     def output_path(self):
-        return self.path.relative_to(CONTENT_DIR).with_suffix('.html')
+        return self.path.relative_to(CONTENT_DIR).with_name(self.slug + '.html')
 
     @property
     def depth(self):
@@ -118,7 +120,7 @@ def render(target, template, **kwargs):
     dest.write_text(markup, encoding='utf-8')
 
 
-def main():
+def action_build():
     log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     for entry in OUTPUT_DIR.iterdir():
@@ -200,6 +202,10 @@ def generate_feed(posts, path):
             fe.published(dt.datetime(post.date.year, post.date.month, post.date.day, tzinfo=dt.timezone.utc))
 
     fg.rss_file(str(OUTPUT_DIR / path.lstrip('/')))
+
+
+def main(action=None):
+    globals()['action_' + (action or sys.argv[1])]()
 
 
 if __name__ == '__main__':

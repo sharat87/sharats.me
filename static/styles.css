@@ -129,8 +129,8 @@ pre, code, kbd, tt, var {
 	background-color: rgba(0, 0, 0, .04);
 }
 
-pre > code {
-	background: transparent;
+code {
+	padding: 0 2px;
 }
 
 hr {
@@ -204,6 +204,11 @@ header nav a {
 header nav a:hover {
 	background-color: var(--link-color);
 	color: white;
+}
+
+h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+	font-weight: 400;
+	font-size: .85em;
 }
 
 .profile {
