@@ -103,7 +103,15 @@ class Page:
 
 
 def md_to_html(md_content: str) -> str:
-    return markdown(md_content, extensions=['extra', 'admonition', 'codehilite', 'sane_lists', 'smarty', 'toc'])
+    return markdown(
+        md_content,
+        extensions=['extra', 'admonition', 'codehilite', 'sane_lists', 'smarty', 'toc'],
+        extension_configs={
+            'codehilite': {
+                'guess_lang': False,
+            },
+        },
+    )
 
 
 def render(target, template, **kwargs):
