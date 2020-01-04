@@ -12,6 +12,7 @@ import datetime as dt
 import logging
 import re
 import shutil
+import time
 
 import yaml
 import jinja2
@@ -204,7 +205,39 @@ def generate_feed(posts, path):
     fg.rss_file(str(OUTPUT_DIR / path.lstrip('/')))
 
 
+def files_to_watch():
+    for path in [CONTENT_DIR, ROOT_LOC / 'templates', ROOT_LOC / 'static']:
+        yield from (file for file in path.glob('**/*') if file.is_file())
+
+
+def action_watch():
+    mtimes = {}
+    for file in files_to_watch():
+        mtimes[file] = file.stat().st_mtime
+
+    log.info('Watching %r files ...O_O...', len(mtimes))
+    while True:
+        changed_files = set()
+        missing_files = set(mtimes.keys())
+        for file in files_to_watch():
+            if file not in mtimes or file.stat().st_mtime > mtimes[file]:
+                changed_files.add(file)
+                mtimes[file] = file.stat().st_mtime
+            missing_files.remove(file)
+
+        if changed_files or missing_files:
+            log.info('changed_files %r', changed_files)
+            log.info('missing_files %r', missing_files)
+            action_build()
+            for f in missing_files:
+                del mtimes[f]
+            log.info('Back to watching %r files ...O_O...', len(mtimes))
+
+        time.sleep(1)
+
+
 def main(action=None):
+    log.info(sys.version)
     globals()['action_' + (action or sys.argv[1])]()
 
 
