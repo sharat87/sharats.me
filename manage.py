@@ -124,11 +124,7 @@ def render(target, template, **kwargs):
 def action_build():
     log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    for entry in OUTPUT_DIR.iterdir():
-        if entry.is_file():
-            entry.unlink()
-        else:
-            shutil.rmtree(entry)
+    action_clean()
 
     for entry in (ROOT_LOC / 'static').iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
@@ -228,12 +224,24 @@ def action_watch():
         if changed_files or missing_files:
             log.info('changed_files %r', changed_files)
             log.info('missing_files %r', missing_files)
+
             action_build()
+
             for f in missing_files:
                 del mtimes[f]
+
             log.info('Back to watching %r files ...O_O...', len(mtimes))
 
         time.sleep(1)
+
+
+def action_clean():
+    if OUTPUT_DIR.is_dir():
+        for entry in OUTPUT_DIR.iterdir():
+            if entry.is_file():
+                entry.unlink()
+            else:
+                shutil.rmtree(entry)
 
 
 def main(action=None):
