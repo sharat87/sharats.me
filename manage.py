@@ -16,7 +16,7 @@ import time
 
 import yaml
 import jinja2
-from markdown import markdown
+import markdown
 from feedgen.feed import FeedGenerator
 from mistune_contrib.highlight import HighlightMixin
 from mistune_contrib.toc import TocMixin
@@ -66,7 +66,7 @@ class Page:
 
     @property
     def title(self):
-        return md_to_html(self.meta.get('title') or self.slug.title())[3:-5]  # Strip the <p> tag.
+        return md_to_html(self.meta.get('title') or self.slug.title())[3:-4]  # Strip the <p> tag.
 
     @property
     def link(self):
@@ -102,14 +102,31 @@ class Page:
     __repr__ = __str__
 
 
+class ParagraphClasses(markdown.treeprocessors.Treeprocessor):
+    def run(self, doc):
+        pass
+        # print(doc.tag, doc.text, doc.attrib)
+        # for p in doc.findall('.//p'):
+        #     if p.text and p.text.startswith('!'):
+        #         print(p, p.text)
+
+
+class MdExt(markdown.extensions.Extension):
+    def extendMarkdown(self, md):
+        md.treeprocessors.register(ParagraphClasses(md), 'paragraph_classes', 10)
+
+
 def md_to_html(md_content: str) -> str:
-    return markdown(
+    return markdown.markdown(
         md_content,
-        extensions=['extra', 'admonition', 'codehilite', 'sane_lists', 'smarty', 'toc'],
+        extensions=['extra', 'admonition', 'codehilite', 'sane_lists', 'smarty', 'toc', MdExt()],
         extension_configs={
             'codehilite': {
                 'guess_lang': False,
             },
+            'toc': {
+                'permalink': True,
+            }
         },
     )
 
@@ -211,7 +228,9 @@ def action_watch():
     for file in files_to_watch():
         mtimes[file] = file.stat().st_mtime
 
+    action_build()
     log.info('Watching %r files ...O_O...', len(mtimes))
+
     while True:
         changed_files = set()
         missing_files = set(mtimes.keys())

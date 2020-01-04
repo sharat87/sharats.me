@@ -207,8 +207,20 @@ header nav a:hover {
 }
 
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
-	font-weight: 400;
+	font-weight: 600;
 	font-size: .85em;
+}
+
+.headerlink {
+	font-size: .5em;
+	margin-left: 1em;
+	display: none;
+	text-decoration: none;
+	font-family: var(--font-mono);
+}
+
+h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .headerlink, h5:hover .headerlink {
+	display: inline-block;
 }
 
 .profile {
