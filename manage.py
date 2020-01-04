@@ -16,7 +16,7 @@ import time
 
 import yaml
 import jinja2
-import mistune
+from markdown import markdown
 from feedgen.feed import FeedGenerator
 from mistune_contrib.highlight import HighlightMixin
 from mistune_contrib.toc import TocMixin
@@ -38,9 +38,6 @@ OUTPUT_DIR = ROOT_LOC / 'output'
 CONTENT_DIR = ROOT_LOC / 'content'
 
 env = jinja2.Environment(loader=jinja2.PackageLoader(__name__))
-
-markdown = mistune.Markdown(renderer=type('Renderer', (TocMixin, HighlightMixin, mistune.Renderer), {})())
-markdown.renderer.options.update(inlinestyles=False, linenos=False)
 
 
 class Page:
@@ -69,8 +66,7 @@ class Page:
 
     @property
     def title(self):
-        raw = self.meta.get('title') or self.slug.title()
-        return md_to_html(raw)[3:-5]  # Strip the <p> tag.
+        return md_to_html(self.meta.get('title') or self.slug.title())[3:-5]  # Strip the <p> tag.
 
     @property
     def link(self):
@@ -106,12 +102,8 @@ class Page:
     __repr__ = __str__
 
 
-def md_to_html(md_content: str):
-    markdown.renderer.reset_toc()
-    html = markdown(md_content)
-    if markdown.renderer.toc_tree and '<!-- TOC -->' in html:
-        html = html.replace('<!-- TOC -->', '<div class=toc>' + markdown.renderer.render_toc(level=3) + '</div>')
-    return html
+def md_to_html(md_content: str) -> str:
+    return markdown(md_content, extensions=['extra', 'admonition', 'codehilite', 'sane_lists', 'smarty', 'toc'])
 
 
 def render(target, template, **kwargs):

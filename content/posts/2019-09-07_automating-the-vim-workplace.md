@@ -24,7 +24,7 @@ just in ViM.
 Please note that all that I share below is what I'm using with ViM. I don't use NeoVim (yet) and I
 can't speak for any of the below for NeoVim.
 
-<!-- TOC -->
+[TOC]
 
 ## Warm-up: Little things
 

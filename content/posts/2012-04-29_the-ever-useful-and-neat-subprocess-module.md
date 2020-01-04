@@ -17,7 +17,7 @@ I am going to put my notes and experiences about this module here. Please note, 
 Python 2.7 in mind. Things **are** slightly different in other versions (even 2.6). If you find any
 errors or suggestions, please let me know.
 
-<!-- TOC -->
+[TOC]
 
 # A simple usage
 
