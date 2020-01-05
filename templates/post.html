@@ -23,25 +23,23 @@
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>
+		<button type=button onclick='loadComments(event)'>Load comments</button>
+		<noscript><p>Comments require JavaScript to be enabled.</p></noscript>
 	</section>
-
 	<script>
 	function disqus_config() {
 		this.page.url = '{% if post.meta.disqus_url %}{{ post.meta.disqus_url }}{% else %}{{ post.permalink }}{%- endif %}';
 	}
-	const el = document.getElementById('disqus_thread');
-	if (location.hostname.match(/localhost/)) {
-		el.innerHTML = 'Disqus disabled for <b>' + location.hostname + '</b>.';
-	} else {
+	function loadComments(event) {
+		event.target.remove();
+		document.getElementById('disqus_thread').innerText = 'Loading comments...';
 		const s = document.createElement('script');
 		s.async = true;
 		s.src = '//sharats-me.disqus.com/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
-		el.insertAdjacentHTML('afterEnd',
-			`<script async src='//sharats-me.disqus.com/embed.js' data-timestamp=${+new Date}></` + `script>`);
+		document.body.appendChild(s);
 	}
 	</script>
-	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 	{% endif %}
 
 {% endblock %}
