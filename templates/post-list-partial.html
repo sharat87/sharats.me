@@ -6,7 +6,7 @@
 
 	{% for post in posts %}
 		<li>
-		<a href="{{ post.link }}" class=title>{{ post.title }}</a>
+		<a href="{{ post.link }}" class=title>{{ post.title | safe }}</a>
 		&mdash;
 		<date>{{ post.date_display }}</date>
 		{% if post.tags %}

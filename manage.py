@@ -36,8 +36,12 @@ SCRIPT_LOC = Path(__file__).resolve()
 ROOT_LOC = SCRIPT_LOC.parent
 OUTPUT_DIR = ROOT_LOC / 'output'
 CONTENT_DIR = ROOT_LOC / 'content'
+TEMPLATES_DIR = ROOT_LOC / 'templates'
 
-env = jinja2.Environment(loader=jinja2.PackageLoader(__name__))
+env = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
+    autoescape=jinja2.select_autoescape(['html', 'xml']),
+)
 
 
 class Page:
@@ -119,7 +123,7 @@ class MdExt(markdown.extensions.Extension):
 def md_to_html(md_content: str) -> str:
     return markdown.markdown(
         md_content,
-        extensions=['extra', 'codehilite', 'sane_lists', 'smarty', 'toc', MdExt()],
+        extensions=['extra', 'codehilite', 'sane_lists', 'toc', MdExt()],
         extension_configs={
             'codehilite': {
                 'guess_lang': False,
@@ -220,7 +224,7 @@ def generate_feed(posts, path):
 
 
 def files_to_watch():
-    for path in [CONTENT_DIR, ROOT_LOC / 'templates', ROOT_LOC / 'static']:
+    for path in [CONTENT_DIR, TEMPLATES_DIR, ROOT_LOC / 'static']:
         yield from (file for file in path.glob('**/*') if file.is_file())
 
 
