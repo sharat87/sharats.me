@@ -1,6 +1,6 @@
 ---
 title: About
-no_comments: 1
+comments: no
 ---
 
 <img src="/shrikant-sharat-kandula.jpg" class=profile>

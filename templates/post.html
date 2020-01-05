@@ -19,7 +19,7 @@
 
 	<article> {{ post.html_body | safe }} </article>
 
-	{% if not post.meta.no_comments %}
+	{% if post.meta.get('comments', True) %}
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>

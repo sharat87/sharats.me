@@ -223,9 +223,12 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 	display: inline-block;
 }
 
+input, textarea, button {
+	font: inherit;
+}
+
 button {
 	cursor: pointer;
-	font: inherit;
 	border: 0;
 	background-color: var(--link-color);
 	color: white;
@@ -340,6 +343,15 @@ footer {
 
 footer p {
 	margin: .5em 0 1em;
+}
+
+footer .links {
+	display: flex;
+	justify-content: center;
+}
+
+footer .links a + a {
+	margin-left: 1em;
 }
 
 footer a {

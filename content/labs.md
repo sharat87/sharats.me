@@ -1,6 +1,6 @@
 ---
 title: Labs
-no_comments: 1
+comments: no
 ---
 
 This is a list of my public projects and experiments. You can follow me on Github for updates on my

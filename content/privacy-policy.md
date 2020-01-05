@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy
-no_comments: 1
+comments: no
 ---
 
 Your privacy is taken very seriously on this website and we intend to be transparent about how your
@@ -8,6 +8,8 @@ information is used.
 
 This privacy policy document outlines the types of personal information is received and collected by
 sharats.me and how it is used.
+
+If you have any additional questions, please use the [contact page](/contact.html) to contact us.
 
 ## Log Files
 
@@ -53,5 +55,7 @@ If you wish to disable cookies, you may do so through your browser options. More
 information about cookie management with specific web browsers can be found at the browsers'
 respective websites.
 
-If you require any more information or have any questions about our privacy policy, please feel free
-to contact us by email at admin@sharats.me.
+## Consent
+
+By using our website, you hereby consent to our Privacy Policy and agree to its Terms and
+Conditions.
