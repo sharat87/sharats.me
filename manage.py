@@ -139,6 +139,7 @@ def render(target, template, **kwargs):
 
 
 def action_build():
+    start_time = time.time()
     log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     action_clean()
@@ -164,7 +165,7 @@ def action_build():
     render('sitemap.html', 'sitemap.html', page_groups=page_tree(all_pages))
 
     generate_feed(posts[:6], '/posts/index.xml')
-    log.info('Finished')
+    log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))
 
 
 def render_tags(posts):
