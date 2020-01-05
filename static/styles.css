@@ -323,12 +323,21 @@ footer {
 	text-align: center;
 	border-top: 1px solid rgba(0, 0, 0, .3);
 	margin-top: 2em;
+	margin-bottom: 2em;
 	width: 100%;
 	max-width: 960px;
 }
 
 footer p {
 	margin: .5em 0 1em;
+}
+
+footer a {
+	text-decoration: none;
+}
+
+footer a:hover {
+	text-decoration: underline;
 }
 
 @media only screen and (max-width: 600px) {

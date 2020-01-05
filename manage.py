@@ -1,8 +1,5 @@
 """
-Build my blog site. No command line arguments. Just run `python build.py`.
-
-For math support, checkout mistune_contrib's math mixin at
-https://github.com/lepture/mistune-contrib/blob/master/mistune_contrib/math.py
+Build my blog site. Just run `python manage.py build`.
 """
 
 import sys
@@ -18,8 +15,6 @@ import yaml
 import jinja2
 import markdown
 from feedgen.feed import FeedGenerator
-from mistune_contrib.highlight import HighlightMixin
-from mistune_contrib.toc import TocMixin
 
 
 class Config:
