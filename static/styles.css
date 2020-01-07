@@ -97,10 +97,6 @@ h6 {
 	content: ' \29c9';
 }
 
-time {
-	border-bottom: 1px dotted var(--body-text-color);
-}
-
 blockquote {
 	font-style: italic;
 	background-color: rgba(0, 0, 0, .05);
@@ -283,9 +279,22 @@ a, a:visited {
 	color: var(--link-color);
 }
 
-.tag-list a {
+.title-subtext {
+	display: flex;
+}
+
+.title-subtext a {
 	display: inline-block;
-	padding-left: 6px;
+	text-decoration: none;
+	background-color: #DEF;
+	padding: 2px 6px;
+	border-radius: 2px;
+	margin: 0 0 0 6px;
+}
+
+.title-subtext a:hover {
+	background-color: var(--link-color);
+	color: white;
 }
 
 main h1:first-child {
