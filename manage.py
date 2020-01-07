@@ -203,9 +203,10 @@ def generate_feed(posts, path):
     fg.id(Config.site_url)
     fg.title(Config.site_title)
     fg.author({'name': Config.author, 'email': Config.email})
-    fg.link(href=Config.site_url + path, rel='self')
+    fg.link(href=Config.site_url + '/archive.html', rel='self')
     fg.language('en')
-    fg.description('Blog by Shrikant')
+    fg.description('A blog about software and non-software.')
+    fg.copyright('Copyright 2010-2020, Shrikant Sharat Kandula')
 
     for post in posts:
         fe = fg.add_entry()

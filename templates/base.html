@@ -46,7 +46,9 @@
 setInterval(updateTimes, 60000);
 updateTimes();
 
-if (!document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/))
+if (document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/))
+	cookiesOkSave();  // Save again for it to expire in seven days from now.
+else
 	document.getElementById('cookiesOkBox').style.display = 'block';
 
 for (const el of document.querySelectorAll('sup.footnote-ref a'))

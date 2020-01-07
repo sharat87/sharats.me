@@ -122,12 +122,11 @@ address {
 }
 
 pre {
-	margin-bottom: 1.5em;
 	max-width: 100%;
 	padding: 12px;
-	white-space: pre;
-	white-space: pre-wrap;
-	overflow-x: auto;
+	overflow: auto;
+	word-wrap: normal;
+	word-break: normal;
 }
 
 pre, code, kbd, tt, var {
@@ -419,7 +418,6 @@ footer a:hover {
 	padding: 24px;
 	background: #333;
 	color: white;
-	overflow: hidden;
 	position: fixed;
     bottom: 30px;
 	right: 30px;
