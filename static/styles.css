@@ -52,6 +52,7 @@ b, strong {
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-head);
 	font-weight: var(--bold-weight);
+	margin: 1em 0 .5em;
 }
 
 h1 {
@@ -117,18 +118,18 @@ address {
 	margin: 0 0 1.5em;
 }
 
+pre, code, kbd, tt, var {
+	font-family: var(--font-mono);
+	font-size: .95em;
+	background-color: rgba(0, 0, 0, .04);
+}
+
 pre {
 	max-width: 100%;
 	padding: 12px;
 	overflow: auto;
 	word-wrap: normal;
 	word-break: normal;
-}
-
-pre, code, kbd, tt, var {
-	font-family: var(--font-mono);
-	font-size: .95em;
-	background-color: rgba(0, 0, 0, .04);
 }
 
 code {
@@ -453,7 +454,6 @@ footer a:hover {
 
 /* Pygments styles */
 .codehilite .hll { background-color: #ffffcc }
-.codehilite  { background: #f8f8f8; }
 .codehilite .c { color: #8f5902 } /* Comment */
 .codehilite .err { color: #a40000; outline: 1px solid #ef2929 } /* Error */
 .codehilite .g { color: #000000 } /* Generic */

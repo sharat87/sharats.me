@@ -15,6 +15,9 @@ import yaml
 import jinja2
 import markdown
 from feedgen.feed import FeedGenerator
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.formatters import HtmlFormatter
 
 
 class Config:
@@ -103,22 +106,57 @@ class Page:
 
 class ParagraphClasses(markdown.treeprocessors.Treeprocessor):
     def run(self, doc):
-        pass
-        # print(doc.tag, doc.text, doc.attrib)
-        # for p in doc.findall('.//p'):
-        #     if p.text and p.text.startswith('!'):
-        #         print(p, p.text)
+        for block in doc.iter('pre'):
+            if len(block) == 1 and block[0].tag == 'code':
+                self.highlight_code(block)
+
+    def highlight_code(self, block):
+        src = block[0].text
+        line_nums = lang = None
+
+        match = re.match(r'^(:::|#!)(\w+)\n', src)
+        if match:
+            line_nums = match.group(1) == '#!'
+            lang = match.group(2)
+            src = src.split('\n', 1)[1]
+
+        lexer = get_lexer_by_name(lang or 'text')
+        formatter = HtmlFormatter(
+            linenos=line_nums,
+            cssclass='codehilite',
+            noclasses=False,
+            # hl_lines=self.hl_lines,
+            wrapcode=False,
+        )
+
+        html = highlight(self.code_unescape(src), lexer, formatter)
+
+        placeholder = self.md.htmlStash.store(html)
+        # Clear codeblock in etree instance
+        block.clear()
+        # Change to p element which will later
+        # be removed when inserting raw html
+        block.tag = 'p'
+        block.text = placeholder
+
+    def code_unescape(self, text):
+        """Unescape code."""
+        text = text.replace("&amp;", "&")
+        text = text.replace("&lt;", "<")
+        text = text.replace("&gt;", ">")
+        return text
 
 
 class MdExt(markdown.extensions.Extension):
     def extendMarkdown(self, md):
-        md.treeprocessors.register(ParagraphClasses(md), 'paragraph_classes', 10)
+        md.treeprocessors.register(ParagraphClasses(md), 'paragraph_classes', 31)
+        md.registerExtension(self)
 
 
 def md_to_html(md_content: str) -> str:
     return markdown.markdown(
         md_content,
-        extensions=['extra', 'codehilite', 'sane_lists', 'toc', MdExt()],
+        extensions=['extra', 'sane_lists', 'toc', MdExt()],
         extension_configs={
             'codehilite': {
                 'guess_lang': False,
