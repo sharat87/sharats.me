@@ -26,6 +26,7 @@ class Config:
     site_title = "The Sharat's"
     author = 'Shrikant Sharat Kandula'
     email = 'shrikantsharat.k@gmail.com'
+    feedburner_url = 'http://feeds.feedburner.com/sharats-me'
     dev_mode = bool(os.getenv('DEV'))
 
 
@@ -41,6 +42,13 @@ env = jinja2.Environment(
     loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
     autoescape=jinja2.select_autoescape(['html', 'xml']),
 )
+
+
+def filter_en_join(items):
+    return ', '.join(items[:-1]) + ((' and ' + items[-1]) if len(items) > 1 else '')
+
+
+env.filters['en_join'] = filter_en_join
 
 
 class Page:

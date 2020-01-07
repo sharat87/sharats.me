@@ -39,6 +39,7 @@ table {
 
 th {
 	text-align: left;
+	background-color: rgba(0, 0, 0, .04);
 }
 
 a img {
@@ -310,6 +311,10 @@ main h1:first-child a {
 
 main article {
 	margin-top: 2em;
+}
+
+.post-list {
+	padding-left: 1em;
 }
 
 .post-list li {

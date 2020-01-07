@@ -4,6 +4,15 @@
 <title>{% if title %}{{ title|e }} | {% endif %}{{ config.site_title }}</title>
 <meta name=viewport content="width=device-width, initial-scale=1.0">
 <meta name=author content="{{ config.author }}">
+
+{%- if post and post.meta and post.meta.desc %}
+<meta name=description content='{{ post.meta.desc }}'>
+{%- elif post and post.tags %}
+<meta name=description content='An article about {{ post.tags | en_join }}.'>
+{%- else %}
+<meta name=description content='An blog/article about Python, JavaScript, ViM and other software stuff.'>
+{%- endif %}
+
 <script data-ad-client="ca-pub-1813617733171441" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i|Fira+Code:400,600&display=swap">
 <link rel=stylesheet href="/styles.css">
@@ -11,11 +20,11 @@
 <header>
 	<h1><a href=/ rel=home>{{ config.site_title }}</a></h1>
 	<nav>
-		<a href="/archive.html">Archive</a>
-		<a href="/labs.html">Labs</a>
-		<a href="/shrikant-sharat-kandula-resume.pdf">Résumé</a>
-		<a href="/posts/index.xml">RSS</a>
-		<a href="/about.html">About</a>
+		<a href='/archive.html'>Archive</a>
+		<a href='/labs.html'>Labs</a>
+		<a href='/shrikant-sharat-kandula-resume.pdf'>Résumé</a>
+		<a href='{{ config.feedburner_url }}'>RSS</a>
+		<a href='/about.html'>About</a>
 	</nav>
 </header>
 
