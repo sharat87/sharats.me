@@ -1,6 +1,6 @@
 ---
 title: Python's `map` builtin function
-tags: [programming, python, map, reduce]
+tags: [programming, python]
 ---
 
 In this article, we'll take a look at Python's stream processing utility function, `map`. This

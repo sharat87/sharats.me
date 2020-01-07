@@ -287,10 +287,10 @@ a, a:visited {
 .title-subtext a {
 	display: inline-block;
 	text-decoration: none;
-	background-color: #DEF;
+	background-color: #EFF;
 	padding: 2px 6px;
 	border-radius: 2px;
-	margin: 0 0 0 6px;
+	margin: 0 0 0 9px;
 }
 
 .title-subtext a:hover {
@@ -304,6 +304,7 @@ main h1:first-child {
 
 main h1:first-child a {
 	text-decoration: none;
+	color: inherit;
 }
 
 main article {

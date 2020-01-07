@@ -16,7 +16,7 @@ import jinja2
 import markdown
 from feedgen.feed import FeedGenerator
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
 
@@ -104,28 +104,37 @@ class Page:
     __repr__ = __str__
 
 
-class ParagraphClasses(markdown.treeprocessors.Treeprocessor):
+class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
+    """
+    Originally taken from the official *codehilite* extension.
+    """
+
     def run(self, doc):
         for block in doc.iter('pre'):
+            print(block, block[0], block[0].text)
             if len(block) == 1 and block[0].tag == 'code':
+                print('after check', block, block[0], block[0].text)
                 self.highlight_code(block)
 
     def highlight_code(self, block):
         src = block[0].text
         line_nums = lang = None
+        cfg = {}
 
-        match = re.match(r'^(:::|#!)(\w+)\n', src)
-        if match:
-            line_nums = match.group(1) == '#!'
-            lang = match.group(2)
-            src = src.split('\n', 1)[1]
+        if src.startswith((':::', '#!')):
+            spec, src = src.split('\n', 1)
+            match = re.match(r'^(?P<marker>:::|#!)(?P<lang>\w+)(\s+(?P<cfg>.+))?', spec)
+            line_nums = match.group('marker') == '#!'
+            lang = match.group('lang')
+            if match.group('cfg'):
+                cfg.update(yaml.load(match.group('cfg')))
 
         lexer = get_lexer_by_name(lang or 'text')
         formatter = HtmlFormatter(
-            linenos=line_nums,
+            linenos=cfg.get('linenos', line_nums),
             cssclass='codehilite',
             noclasses=False,
-            # hl_lines=self.hl_lines,
+            hl_lines=cfg.get('hl_lines') or [],
             wrapcode=False,
         )
 
@@ -147,20 +156,73 @@ class ParagraphClasses(markdown.treeprocessors.Treeprocessor):
         return text
 
 
+class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
+    FENCED_BLOCK_RE = re.compile(r'''
+(?P<fence>^(?:~{3,}|`{3,}))[ ]*         # Opening ``` or ~~~
+(\{?\.?(?P<lang>[\w#.+-]*))?[ ]*        # Optional {, and lang
+# Optional highlight lines, single- or double-quote-delimited
+(hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?[ ]*
+}?[ ]*\n                                # Optional closing }
+(?P<code>.*?)(?<=\n)
+(?P=fence)[ ]*$''', re.MULTILINE | re.DOTALL | re.VERBOSE)
+
+    def run(self, lines):
+        """ Match and store Fenced Code Blocks in the HtmlStash. """
+
+        text = "\n".join(lines)
+        while 1:
+            m = self.FENCED_BLOCK_RE.search(text)
+            if m:
+                lang = m.group('lang')
+                lexer = get_lexer_by_name(lang or 'text')
+                formatter = HtmlFormatter(
+                    # linenos=cfg.get('linenos', line_nums),
+                    cssclass='codehilite',
+                    noclasses=False,
+                    # hl_lines=cfg.get('hl_lines') or [],
+                    wrapcode=False,
+                )
+
+                code = highlight(m.group('code'), lexer, formatter)
+
+                placeholder = self.md.htmlStash.store(code)
+                text = '%s\n%s\n%s' % (text[:m.start()],
+                                       placeholder,
+                                       text[m.end():])
+            else:
+                break
+        return text.split("\n")
+
+    def _escape(self, txt):
+        """ basic html escaping """
+        txt = txt.replace('&', '&amp;')
+        txt = txt.replace('<', '&lt;')
+        txt = txt.replace('>', '&gt;')
+        txt = txt.replace('"', '&quot;')
+        return txt
+
+
 class MdExt(markdown.extensions.Extension):
     def extendMarkdown(self, md):
-        md.treeprocessors.register(ParagraphClasses(md), 'paragraph_classes', 31)
+        md.treeprocessors.register(CodeHighlighter(md), 'code_highlighter', 30)
+        md.preprocessors.register(CodeHighlighterFence(md), 'code_highlighter_fence', 25)
         md.registerExtension(self)
 
 
 def md_to_html(md_content: str) -> str:
     return markdown.markdown(
         md_content,
-        extensions=['extra', 'sane_lists', 'toc', MdExt()],
+        extensions=[
+            'abbr',
+            'attr_list',
+            'def_list',
+            'footnotes',
+            'tables',
+            'sane_lists',
+            'toc',
+            MdExt(),
+        ],
         extension_configs={
-            'codehilite': {
-                'guess_lang': False,
-            },
             'toc': {
                 'permalink': True,
             }
