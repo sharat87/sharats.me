@@ -111,9 +111,7 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
 
     def run(self, doc):
         for block in doc.iter('pre'):
-            print(block, block[0], block[0].text)
             if len(block) == 1 and block[0].tag == 'code':
-                print('after check', block, block[0], block[0].text)
                 self.highlight_code(block)
 
     def highlight_code(self, block):
@@ -127,7 +125,7 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
             line_nums = match.group('marker') == '#!'
             lang = match.group('lang')
             if match.group('cfg'):
-                cfg.update(yaml.load(match.group('cfg')))
+                cfg.update(yaml.safe_load(match.group('cfg')))
 
         lexer = get_lexer_by_name(lang or 'text')
         formatter = HtmlFormatter(
@@ -158,40 +156,41 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
 
 class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
     FENCED_BLOCK_RE = re.compile(r'''
-(?P<fence>^(?:~{3,}|`{3,}))[ ]*         # Opening ``` or ~~~
-(\{?\.?(?P<lang>[\w#.+-]*))?[ ]*        # Optional {, and lang
-# Optional highlight lines, single- or double-quote-delimited
-(hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?[ ]*
-}?[ ]*\n                                # Optional closing }
-(?P<code>.*?)(?<=\n)
-(?P=fence)[ ]*$''', re.MULTILINE | re.DOTALL | re.VERBOSE)
+            (?P<fence>^(?:~{3}|`{3}))      # Opening ``` or ~~~
+            (?P<lang>\w*)                  # Optional lang
+            (?:[ ]+(?P<cfg>.+))?[ ]*\n     # Optional config
+            (?P<code>.*?)(?<=\n)
+            (?P=fence)$''',
+        re.MULTILINE | re.DOTALL | re.VERBOSE,
+    )
 
     def run(self, lines):
         """ Match and store Fenced Code Blocks in the HtmlStash. """
 
-        text = "\n".join(lines)
-        while 1:
-            m = self.FENCED_BLOCK_RE.search(text)
-            if m:
-                lang = m.group('lang')
-                lexer = get_lexer_by_name(lang or 'text')
-                formatter = HtmlFormatter(
-                    # linenos=cfg.get('linenos', line_nums),
-                    cssclass='codehilite',
-                    noclasses=False,
-                    # hl_lines=cfg.get('hl_lines') or [],
-                    wrapcode=False,
-                )
+        text = '\n'.join(lines)
 
-                code = highlight(m.group('code'), lexer, formatter)
+        for m in re.finditer(self.FENCED_BLOCK_RE, text):
+            lang = m.group('lang')
 
-                placeholder = self.md.htmlStash.store(code)
-                text = '%s\n%s\n%s' % (text[:m.start()],
-                                       placeholder,
-                                       text[m.end():])
-            else:
-                break
-        return text.split("\n")
+            cfg = {}
+            if m.group('cfg'):
+                cfg.update(yaml.safe_load(m.group('cfg')))
+
+            lexer = get_lexer_by_name(lang or 'text')
+            formatter = HtmlFormatter(
+                linenos=cfg.get('linenos'),
+                cssclass='codehilite',
+                noclasses=False,
+                hl_lines=cfg.get('hl_lines') or [],
+                wrapcode=False,
+            )
+
+            code = highlight(m.group('code'), lexer, formatter)
+            placeholder = self.md.htmlStash.store(code)
+
+            text = '\n'.join([text[:m.start()], placeholder, text[m.end():]])
+
+        return text.split('\n')
 
     def _escape(self, txt):
         """ basic html escaping """
