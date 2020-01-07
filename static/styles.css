@@ -26,6 +26,13 @@ body {
 	font-size: 16px;
 }
 
+.noscript-warning {
+	background-color: maroon;
+	color: white;
+	padding: 3px 6px;
+	border-radius: 3px;
+}
+
 table {
 	border-collapse: collapse;
 }
@@ -64,7 +71,7 @@ h3 {
 }
 
 h4 {
-	font-size: 1.6px;
+	font-size: 1.6em;
 }
 
 h5 {
@@ -405,6 +412,35 @@ footer a:hover {
 
 .toc a:hover {
 	text-decoration: underline;
+}
+
+#cookiesOkBox {
+	width: 350px;
+	padding: 24px;
+	background: #333;
+	color: white;
+	overflow: hidden;
+	position: fixed;
+    bottom: 30px;
+	right: 30px;
+	border-radius: 2px;
+	box-shadow: 6px 6px 24px rgba(0, 0, 0, .6);
+}
+
+#cookiesOkBox h4 {
+	margin: 0;
+}
+
+#cookiesOkBox a {
+	color: inherit;
+}
+
+@media (max-width: 767px) {
+	#cookiesOkBox {
+		bottom: 0px !important;
+		left: 0px !important;
+		width: 100%  !important;
+	}
 }
 
 

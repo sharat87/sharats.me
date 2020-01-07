@@ -19,6 +19,11 @@
 	</nav>
 </header>
 
+<noscript>
+	<p class=noscript-warning>This website requires JavaScript to operate correctly. Functionality
+	may be limited when it's turned off.</p>
+</noscript>
+
 <main>{% block main %}{% endblock %}</main>
 
 <footer>
@@ -30,39 +35,55 @@
 	</p>
 </footer>
 
+<div id=cookiesOkBox style='display:none'>
+	<h4>This website uses cookies</h4>
+	<p>By using this website, you automatically accept that we use cookies.
+		<a href=/privacy-policy.html target=_blank title='Privacy Policy'>What for?</a></p>
+	<p><button onclick='cookiesOkSave()'>I Understand</button></p>
+</div>
+
 <script>
-	setInterval(updateTimes, 60000);
-	updateTimes();
+setInterval(updateTimes, 60000);
+updateTimes();
 
-	for (const el of document.querySelectorAll('sup.footnote-ref a')) {
-		const target = document.getElementById(el.getAttribute('href').slice(1));
-		el.setAttribute('title', target.firstChild.textContent.trim());
-	}
+if (!document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/))
+	document.getElementById('cookiesOkBox').style.display = 'block';
 
-	function updateTimes() {
-		for (const el of document.getElementsByTagName('time')) {
-			el.title = el.title || el.textContent;
-			el.textContent = timeSince(Date.parse(el.getAttribute('datetime')));
-		}
-	}
+for (const el of document.querySelectorAll('sup.footnote-ref a'))
+	el.setAttribute('title',
+		document.getElementById(el.getAttribute('href').slice(1)).firstChild.textContent.trim());
 
-	function timeSince(date) {
-		let i, u, s = Math.round((new Date() - date) / 100000);
-		if ((i = Math.round(s / 315360)) >= 1) u = 'year';
-		else if ((i = Math.round(s / 25920)) >= 1) u = 'month';
-		else if ((i = Math.round(s / 864)) >= 1) u = 'day';
-		return u ? `~${i} ${u}${i > 1 ? 's' : ''} ago` : 'today';
+function updateTimes() {
+	for (const el of document.getElementsByTagName('time')) {
+		el.title = el.title || el.textContent;
+		el.textContent = timeSince(Date.parse(el.getAttribute('datetime')));
 	}
+}
 
-	if (!localStorage.noga && !location.hostname.match(/localhost/)) {
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-105705354-1');
-		var s = document.createElement('script');
-		s.async = true;
-		s.src = '//www.googletagmanager.com/gtag/js?id=UA-105705354-1';
-		s.setAttribute('data-timestamp', +new Date());
-		document.body.appendChild(s);
-	}
+function timeSince(date) {
+	let i, u, s = Math.round((new Date() - date) / 100000);
+	if ((i = Math.round(s / 315360)) >= 1) u = 'year';
+	else if ((i = Math.round(s / 25920)) >= 1) u = 'month';
+	else if ((i = Math.round(s / 864)) >= 1) u = 'day';
+	return u ? `~${i} ${u}${i > 1 ? 's' : ''} ago` : 'today';
+}
+
+if (!localStorage.noga && !location.hostname.match(/localhost/)) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'UA-105705354-1');
+	var s = document.createElement('script');
+	s.async = true;
+	s.src = '//www.googletagmanager.com/gtag/js?id=UA-105705354-1';
+	s.setAttribute('data-timestamp', +new Date());
+	document.body.appendChild(s);
+}
+
+function cookiesOkSave() {
+	const date = new Date();
+	date.setTime(date.getTime() + (7*24*60*60*1000));
+	document.cookie = 'cookiesOk=1; expires=' + date.toUTCString() + "; path=/";
+	document.getElementById('cookiesOkBox').style.display = 'none';
+}
 </script>
