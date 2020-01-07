@@ -47,7 +47,7 @@ class Page:
         self.path = path
         self.slug = path.stem
         self.meta = {}
-        self.tags = set()
+        self.tags = []  # This should conceptually be a set, but we use list so the order of the tags is predictable.
         self.date = None
 
         body = self.path.read_text()
@@ -56,7 +56,7 @@ class Page:
             meta_block, body = body[4:].split('\n---\n', 1)
             self.meta = yaml.safe_load(meta_block)
             if 'tags' in self.meta:
-                self.tags.update(self.meta.pop('tags'))
+                self.tags.extend(self.meta.pop('tags'))
 
         self.body = body
         self.html_body = md_to_html(body)
@@ -169,7 +169,11 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
 
         text = '\n'.join(lines)
 
-        for m in re.finditer(self.FENCED_BLOCK_RE, text):
+        while 1:
+            m = self.FENCED_BLOCK_RE.search(text)
+            if not m:
+                break
+
             lang = m.group('lang')
 
             cfg = {}
