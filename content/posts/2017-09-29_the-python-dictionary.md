@@ -25,7 +25,7 @@ more depth and practical nuances.
 
 [TOC]
 
-# Introduction
+## Introduction
 
 Dictionaries (type `dict`) are a very powerful data structure, not just in Python. They are present
 in almost every modern high level language, sometimes called maps, hashes or associative arrays.
@@ -35,9 +35,9 @@ Dictionaries are a fundamental part of Python language and integrate tightly wit
 APIs of the standard library. This can be seen in the fact that we have a special syntax just to
 create these data structures.
 
-# Usage
+## Usage
 
-## Syntax
+### Syntax
 
 As a quick primer, here's the syntax for defining a dictionary:
 
@@ -50,7 +50,7 @@ country_currencies = {
 }
 ```
 
-## API
+### API
 
 Again, we quickly run down the common operations on dictionaries.
 
@@ -75,13 +75,13 @@ country_currencies.get('USA')
 country_currencies.setdefault('France', 'Franc')
 ```
 
-# Contents
+## Contents
 
 The contents of dictionaries are made up two components. The keys and the values. The keys form the
 index using which we can retrieve the values. Each key uniquely identifies a value within the
 dictionary.
 
-## Key Types
+### Key Types
 
 The keys form the index of the dictionary. In most practical cases, keys tend to be strings. Tuples
 are often used as well. In fact, values of any immutable, hashable types can be used as keys.
@@ -114,10 +114,9 @@ Let's inspect the hash values of `User` objects.
 8784834659087
 ```
 
-{{% aside %}}
 If you try the above code, you might see a different number. That's because Python default hashing
 algorithm includes a random salt.
-{{% /aside %}}
+{: .note }
 
 As seen above, the hash value did not change even though the object was modified. These `User`
 objects can be used as keys for a dictionary since they meet the requirement, but it should be kept
@@ -193,7 +192,7 @@ So, to avoid these potential problems, it's best to use numbers, strings or tupl
 numbers or strings) as keys for dictionaries. If you **have** to use other types, keep the hashing
 semantics in mind and document the reasons well.
 
-## Retrieving Keys
+### Retrieving Keys
 
 Dictionaries have a [`.keys`][.keys] method that returns an object of type [`dict_keys`][views]
 which is an iterable (technically, a *view*) of the keys of the dictionary. Note that this method
@@ -212,12 +211,11 @@ Note that the order of the keys is not retained/defined. Don't rely on the order
 predictable. It might vary across Python implementations and versions even. Use an `OrderedDict`
 when ordering is needed. More on this in a later section.
 
-{{% aside %}}
 It should be noted that starting in Python 3.6, order of keys *is* preserved. This is an unintended
 side affect of using a more efficient `dict` implementation. As such, the Python documentation
 explicitly states that this is an implementation detail and should not be relied upon. [Read
 more](https://docs.python.org/3/whatsnew/3.6.html#whatsnew36-pep468).
-{{% /aside %}}
+{: .note }
 
 So, what's special about `dict_keys`, as opposed to a `list`? Look look!
 
@@ -238,12 +236,11 @@ available keys by passing it to `set` builtin. This set would be independent of 
 {'Japan', 'USA', 'Russia', 'India', 'France'}
 ```
 
-{{% aside %}}
 Most people would suggest and use `list` here, instead of `set`. I personally feel a `set` is
 semantically more correct since a `list` indicates the contents have a specific ordering and does
 not convey that the contents are hashable, immutable, and more importantly, *unique*. A `set` shares
 these features of dictionary keys.
-{{% /aside %}}
+{: .note }
 
 Additionally, the `dict_keys` objects are themselves `set`-like. They implement the [`Set`][set-abc]
 abstraction. So, we don't need to convert them to a `set` in order to do set operations on them. For
@@ -256,7 +253,7 @@ True
 {'India'}
 ```
 
-## Using Tuples for Keys
+### Using Tuples for Keys
 
 Here's a quick example of using tuples as keys in a dictionary:
 
@@ -274,7 +271,7 @@ Here's a quick example of using tuples as keys in a dictionary:
 Note that only tuples that contain hashable types (or further such tuples) can be used as keys.
 Lists or dictionaries, on the other hand, cannot be used since they are not hashable.
 
-## Retrieving Values
+### Retrieving Values
 
 Values are what the keys index. Naturally, values don't have to be unique, unlike keys. There's no
 restrictions on what types can be used as values in a dictionary.
@@ -303,7 +300,7 @@ dict_values(['Rupee', 'Ruble', 'Dollar', 'Yen'])
 This can be passed to `list` to get a list of values. Using `set` here is probably not a good idea
 since unlike the keys, values don't have to be unique or hashable.
 
-## Items Collection
+### Items Collection
 
 Dictionaries also provide a [`.items`][.items] method that returns all the key--value pairs as a
 sequence of 2-tuples.
@@ -325,12 +322,11 @@ for country, currency in country_currencies:
     print(f"{country}'s currency is {currency}.")
 ```
 
-{{% aside %}}
 The above code uses [f-strings][] introduced in Python 3.6. In older versions of Python, the
 `.format` method or the modulo (`%`) operator should be used.
 
 [f-strings]: https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings
-{{% /aside %}}
+{: .note }
 
 The `dict_items` object also implements the `Set` abstraction.
 
@@ -374,7 +370,7 @@ As the error says, `list` is not hashable. So, although the `isinstance` tells u
 `Set`, whether it can actually be used as such, depends on it's contents. This is *not incorrect*,
 actually, I feel it's just a consequence of Python's dynamic nature.
 
-# Typing
+## Typing
 
 Dictionaries in Python are what I call a *homogeneous* data structure. What that means is that they
 are best used by having all the keys be of the same type and similarly for values. This is enforced
@@ -402,13 +398,12 @@ number_map: Dict[int, int] = {1: 10, 2: 20, 3: 30}
 data_map: Dict[Tuple[str, int], str] = {('a', 1): 'a1', ('a', 2): 'a2'}
 ```
 
-{{% aside %}}
 This is new in Python 3.6. Before 3.6, annotations are only supported for function arguments. [Read
 more](https://docs.python.org/3/whatsnew/3.6.html#pep-526-syntax-for-variable-annotations).
 
 Additionally, the `typing` module itself is new in Python 3.5. [Read
 more](https://docs.python.org/3/whatsnew/3.5.html#whatsnew-pep-484).
-{{% /aside %}}
+{: .note }
 
 The general structure is `Dict[<key-type>, <value-type>]`. So, `Dict[str, int]` denotes a dictionary
 that maps string keys to integer values.
@@ -419,11 +414,11 @@ checkers and human readers. Python's dynamic nature is not affected by these ann
 However, if such type annotations are declared, you could use a static analyzer like [mypy][] to
 perform type checks. I won't be discussing that here.
 
-# Creating Dictionaries
+## Creating Dictionaries
 
 There are a few other ways to create dictionaries besides the `{}` syntax. Here's a few of them.
 
-## Calling `dict`
+### Calling `dict`
 
 The `dict` callable can be used to create dictionaries from a list of tuples or bypassing the keys
 and values as keyword arguments.
@@ -459,7 +454,7 @@ future reader, and, *slightly* faster[^1] as well.
 
 [^1]: I read the proof for this a long time ago, but I don't remember where :).
 
-## Comprehensions
+### Comprehensions
 
 Python 3 (and 2.7) added support for dict comprehensions which are very similar to list
 comprehensions, but with a small variation in syntax.
@@ -474,11 +469,11 @@ comprehensions, but with a small variation in syntax.
 The above two examples create the same dictionary. However, as pointed out in [PEP 274][], the dict
 comprehension is more succinct and makes the intent clearer.
 
-# Public Appearance
+## Public Appearance
 
 Unsurprisingly, dictionaries pop up in a lot of places in Python. Here's a few ones.
 
-## Keyword Arguments
+### Keyword Arguments
 
 When defining a function that takes arbitrary keyword arguments, they are passed to the function as
 a dictionary.
@@ -502,7 +497,7 @@ Of course, we can pass a dictionary's data as keyword arguments to a function us
 3 <class 'dict'>
 ```
 
-## Namespaces
+### Namespaces
 
 The `globals` builtin function gives a dictionary of all names and their values in the current
 global namespace. We can modify this dictionary to define new names or delete existing ones,
@@ -529,13 +524,13 @@ this objects. Specifically, it returns the `__dict__` property's value of the gi
 called without any arguments, then it returns names and values from the local scope. In other words,
 `vars() is locals()` return `True`.
 
-# Serialization
+## Serialization
 
 Dictionaries, being key--value data structures, extend naturally to be stored into key--value
 databases and other NoSQL data stores. However, here we'll look at forms of serializing them into
 text and binary forms for transmission or for saving to disk.
 
-## JSON
+### JSON
 
 Nowadays, the thought of serializing a python dictionary is usually followed by using the
 [`json`][json-mod] module to [`dump`][json.dump] and [`load`][json.load] using the [JSON
@@ -570,7 +565,7 @@ dictionary, then they will be turned into lists when the `dict` is serialized an
 JSON. A similar situation occurs for dates and any other data type not directly supported by the
 JSON spec.
 
-## Pickling
+### Pickling
 
 Unlike the above, pickling (using the [`pickle`][pickle-mod] module) serializes objects into binary
 data and can handle a much wider range of data types. For this reason, pickled data can only be
@@ -579,7 +574,7 @@ loaded by Python, not other languages (well, not yet at least).
 The `pickle` module has similar `dump`, `dumps`, `load` and `loads` methods just like for the above
 discussed `json` module.
 
-# The Item Syntax
+## The Item Syntax
 
 The syntax used to get an item from a dictionary, given it's index, is `data[key]`. This is mostly
 equivalent to calling the `__getitem__` method, like the following:
@@ -617,14 +612,14 @@ category. In almost all cases (including the above example), using a normal name
 classes should be a better option than overriding the item syntax. Since a normal method would have
 a name which makes the intent clearer.
 
-# Flavors
+## Flavors
 
 Python's standard library comes with a few flavors of dictionaries that provide some nice additional
 functionality. These data structures are all available in the [`collections`][collections] module.
 
 The following are subclasses of `dict` and have all the features of Python's dictionaries.
 
-## The `OrderedDict`
+### The `OrderedDict`
 
 The [`collections.OrderedDict`][OrderedDict] is a dictionary that remembers the order in which keys
 are *inserted*. The order remembered is the *insertion* order. So, if we add a new key to the dict,
@@ -687,13 +682,12 @@ OrderedDict([('Neptune', 14),
 The results of `.keys` and `.values` methods also retain the ordering. Refer to the official
 documentation linked above for full details.
 
-## The `defaultdict`
+### The `defaultdict`
 
-{{% aside %}}
 The name `defaultdict` is unfortunate as it doesn't adhere to any naming conventions. I'd love to
 see it renamed to `default_dict` or even `DefaultDict`, but it's probably easier to just live with
 it.
-{{% /aside %}}
+{: .note }
 
 A `defaultdict` can understand how to initialize new keys. Consider the following code. Here, we
 have a piece of text and we want a dictionary mapping each letter in the text to it's count of
@@ -709,10 +703,9 @@ for letter in text:
 print(counts)
 ```
 
-{{% aside %}}
 Of course, there's better ways to do this, but for the sake of example, let's bear with this
 implementation.
-{{% /aside %}}
+{: .note }
 
 Notice how we check if the letter is not already present in the dict and if so, we initialize it to
 zero. A `defaultdict` can learn this method of initialization. It takes a function as its first
@@ -755,7 +748,7 @@ that data type. We can use this fact and pass these builtins to `defaultdict` co
 on the need. If we wanted a different initial value, say `42`, we could use a lambda function like
 `lambda: 42` instead.
 
-## The `ChainMap`
+### The `ChainMap`
 
 The `ChainMap` is an abstraction over a chain of dictionaries in order of precedence. Essentially,
 it holds a list of dictionaries and when a key is indexed, each of these dictionaries are searched
@@ -821,13 +814,13 @@ and all writes and updates will be made only on the first dictionary, `user_sett
 one tries to get the value of a configuration parameter, it automatically falls back to
 `default_settings` if it isn't present in `user_settings`.
 
-## The `Counter`
+### The `Counter`
 
 `Counter` dictionaries can be used to keep counts of any (hashable) objects. The keys are these
 hashable objects and the values are their counts. The [official docs][Counter] on this gives some
 clever examples and uses so I recommend you go read this up there, instead of redoing it here.
 
-## Custom Flavor
+### Custom Flavor
 
 Although rarely needed in practice, we can create our own flavors of dictionary types. One way to
 achieve this would be to extend the `dict` type directly, but usually the easier way to deal with
@@ -865,7 +858,7 @@ Let's try it out.
 'application/json'
 ```
 
-# Disassembling
+## Disassembling
 
 Now, let's disassemble a few common operations on dictionaries. I won't be going into the details of
 how to interpret the disassembled instructions in this article. We use the [`dis`][dis] function
@@ -904,7 +897,7 @@ length of the dict as an argument. This is also explained best from the docs,
 > The version of `BUILD_MAP` specialized for constant keys. *count* values are consumed from the
 > stack. The top element on the stack contains a tuple of keys.
 
-# Conclusion
+## Conclusion
 
 Dictionaries in Python (or any other language for that matter) are a very powerful multi-purpose
 data structure and are extremely handy and easy to use in Python. I hoped to put the things I
@@ -914,7 +907,7 @@ for a good addition to this article, let me know in the comments below.
 Thank you for reading. Please let me know what you think. If you have any topics you'd like me to
 cover in a future article, put in a comment.
 
-# References
+## References
 
 The official documentation, mostly. Wikipedia for data used in examples.
 

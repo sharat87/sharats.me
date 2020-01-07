@@ -3,7 +3,7 @@ title: Vim undo breaks with auto-close plugins
 tags: [vim, vim-plugins]
 ---
 
-# Prelude
+## Prelude
 
 If you've used IDEs or other heavy editors ever in your life, you'd know how
 nice it is to have parentheses and brackets to get auto-closed. If you don't
@@ -38,7 +38,7 @@ If instead, you see a closing brace dangling in the second line, your undo is
 broken. MUHAHAHAHAHA! You can't rely on undo anymore until you get rid of that
 one plugin!
 
-# What's going on?
+## What's going on?
 
 So, experimenting with many auto-close plugins and reading the source of at
 least 3 of those, I say there are basically two different implementations of
@@ -64,11 +64,11 @@ There is no dark sorcery here that is immediately apparent. The real sorcery is
 your current line to contain the parentheses text at the cursor. Doesn't make
 sense?  Don't worry, you'll get it soon enough.
 
-# Which plugins? Name them!
+## Which plugins? Name them!
 
 Here are a few ones that break undo:
 
-## Beasts
+### Beasts
 
 * https://github.com/vim-scripts/AutoClose
 * https://github.com/Raimondi/delimitMate
@@ -76,7 +76,7 @@ Here are a few ones that break undo:
 
 and these don't break undo
 
-## Critters
+### Critters
 
 * https://github.com/vim-scripts/ClosePairs
 * https://github.com/vim-scripts/simple-pairs
@@ -92,7 +92,7 @@ In the beasts, typing a brace does not start a new undo action, but it does in
 the critters (like hitting a `<C-g>u`). This might actually be playing a role in
 why undo breaks in beasts only, but the exact reason escapes me.
 
-# A reproducible test case
+## A reproducible test case
 
 I wanted to reproduce this problem with a vanilla vim with no custom
 configuration (except for `nocompatible`). So, I checked out the latest version
@@ -141,7 +141,7 @@ For all I know, its the call to `setline()` that's making all the difference.
 But I could be entirely wrong with that. I say this because that is the major
 difference between the two classes of implementations.
 
-# Next?
+## Next?
 
 I use persistent-undo in vim73 and heavily depend on it. Combined with the
 [gundo][1] plugin by [Steve Losh][2], I get a kind of nicely visualized version

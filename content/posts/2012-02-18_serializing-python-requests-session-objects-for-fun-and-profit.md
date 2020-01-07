@@ -3,7 +3,7 @@ title: Serializing python-requests' Session objects for fun and profit
 tags: [python, python-requests, python-pickle]
 ---
 
-# Prepare
+## Prepare
 
 If you haven't checked out @kennethreitz's excellent [python-requests][]
 library yet, I suggest you go do that immediately. Go on, I'll wait for you.
@@ -96,7 +96,7 @@ $ python test.py
 Success
 ```
 
-# Serializing
+## Serializing
 
 Now, to implement the functions in `serializer.py`. A simple one, would be to
 use pickle. Lets try
@@ -284,7 +284,7 @@ Success
 
 All the code is on a [gist][].
 
-# Update: Pickling can also work
+## Update: Pickling can also work
 
 As *Daslch* pointed out in his [comment][] on reddit, by implementing the pickle
 protocol on the Session class, we can get pickling to work. From the

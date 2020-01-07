@@ -10,7 +10,7 @@ resurrection will be about the migration.
 If you're wondering why the long break, well, I could blame it on life and work, but it was just me
 being lazy. Hopefully, that won't happen agian.
 
-# Why Hugo
+## Why Hugo
 
 When I decided to start writing again, I couldn't remember who I was building the site. That's
 probably entirely my fault for not documenting it for myself, but I ended up being almost new to
@@ -27,13 +27,13 @@ doesn't force a blog-like website or a documentation-like website. That's up to 
 bridge between your markdown files and the output HTML files. The structure of the output is a
 mirror image of your source files and the `config.toml` file (or `config.yaml`).
 
-# Migration
+## Migration
 
-## A new site
+### A new site
 
 Issued the command `hugo new site sharats.me`.
 
-## Configuration
+### Configuration
 
 Hugo's default configuration is of the [TOML](https://github.com/toml-lang/toml) format. I read the
 README and wasn't convinced. Thankfully, Hugo supports configuration in [YAML](http://yaml.org/).
@@ -48,7 +48,7 @@ title: "The Sharat's"
 
 The current `config.yaml` is much longer and can be viewed on the github repo of this site.
 
-## Change metadata format
+### Change metadata format
 
 The article metadata in my Pelican site looks like the following:
 
@@ -96,7 +96,7 @@ c { print; next }
 }
 ```
 
-## Change code blocks
+### Change code blocks
 
 All my code blocks were of the following format:
 
@@ -153,7 +153,7 @@ for file_name in sys.argv[1:]:
 
 Yeah, didn't have the patience to do it with `awk` this time.
 
-# The Theme
+## The Theme
 
 I tried the themes over at the [Hugo themes page](http://themes.gohugo.io/), but just as I thought,
 none of them were to my liking. I found the **nofancy** theme to be easy to get started and modify

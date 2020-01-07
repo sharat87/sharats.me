@@ -19,7 +19,7 @@ errors or suggestions, please let me know.
 
 [TOC]
 
-# A simple usage
+## A simple usage
 
 For the sake of providing context, lets run the `ls` command from subprocess and get its output
 
@@ -49,7 +49,7 @@ Here, the `ls` command gets its first command as `|` and I have no idea what ls 
 Perhaps complain that no such file exists. So, instead, we have to use the `shell` boolean argument.
 More later down in the article.
 
-# Popen class
+## Popen class
 
 If there's just one thing in the subprocess module that you should be concerned with, its the
 [`Popen`][Popen] class. The other functions like [`call`][call], [`check_output`][check_output], and
@@ -64,7 +64,7 @@ class subprocess.Popen(args, bufsize=0, executable=None, stdin=None,
 
 I suggest you read the docs for this class. As with all python docs, its really good.
 
-# Running via the shell
+## Running via the shell
 
 Subprocess can also run command-line instructions via a shell program. This is usually `dash`/`bash`
 on Linux and `cmd` on windows.
@@ -143,7 +143,7 @@ $ /bin/sh -c ls
 
 since `/bin/sh` takes just the argument next to `-c` as the command line to execute.
 
-# Getting the return code (aka exit status)
+## Getting the return code (aka exit status)
 
 If you want to run an external command and its return code is all you're concerned with, the
 [`call`][call] and [`check_call`][check_call] functions are what you're looking for. They both
@@ -194,7 +194,7 @@ The reason for this is the `returncode` is not automatically set when a process 
 call `.wait` or [`.poll`][.poll] to realize if the program is done and set the `returncode`
 attribute.
 
-# IO Streams
+## IO Streams
 
 The simplest way to get the output of a command, as seen previously, is to use the
 [`check_output`][check_output] function.
@@ -210,7 +210,7 @@ This may not always be the best solution to get the output from a command. If yo
 `CalledProcessError` from this function call, unless you have the contents of `stderr` you probably
 have little idea what went wrong. You'll want to know what's written to the command's `stderr`.
 
-## Reading error stream
+### Reading error stream
 
 There are two ways to get the error output. First is redirecting `stderr` to `stdout` and only being
 concerned with `stdout`. This can be done by setting the `stderr` argument to
@@ -222,7 +222,7 @@ object. There is also a convenience method on `Popen` class, called `.communicat
 takes a string to be sent to the process's `stdin` and returns a tuple of `(stdout_content,
 stderr_content)`.
 
-## Watching both `stdout` and `stderr`
+### Watching both `stdout` and `stderr`
 
 However, all of these assume that the command runs for some time, prints out a couple of lines of
 output and exits, so you can get the output(s) in strings. This is sometimes not the case. If you
@@ -287,7 +287,7 @@ Fair bit of code. This is a typical producer-consumer thing. Two threads produci
 (one each from `stdout` and `stderr`) and pushing them into a queue. One thread watching the queue
 and printing the lines until the process itself finishes.
 
-# Passing an environment
+## Passing an environment
 
 The `env` argument to `Popen` (and others) lets you customize the environment of the command being
 run. If it is not set, or is set to `None`, the current process's environment is used, just as
@@ -296,7 +296,7 @@ documented.
 You might not agree with me, but I feel there are some subtleties with this argument that should
 have been mentioned in the documentation.
 
-## Merge with current environment
+### Merge with current environment
 
 One is that if you provide a mapping to `env`, whatever is in this mapping is all that's available
 to the command being run. For example, if you don't give a `TOP_ARG` in the `env` mapping, the
@@ -308,7 +308,7 @@ p = Popen('command', env=dict(os.environ, my_env_prop='value'))
 
 This makes sense once you realize it, but I wish it were at least *hinted at* in the documentation.
 
-## Unicode
+### Unicode
 
 Another one, is to do with Unicode (Surprise surprise!). And windows. If you use `unicode`s in the
 `env` mapping, you get an error saying you can *only* use strings in the environment mapping. The
@@ -324,7 +324,7 @@ from __future__ import unicode_literals
 That line is present in all my python source files. The error message doesn't even bother to mention
 that you have `unicode`s in your `env` so it's very hard to understand what's going wrong.
 
-# Execute in a different working directory
+## Execute in a different working directory
 
 This is handled by the `cwd` argument. You set the location of the directory which you want as the
 working directory of the program you are launching.
@@ -349,7 +349,7 @@ subprocess.call('./ls')
 So, if you are giving something explicitly to `cwd` and are using a relative path for the
 executable, this is something to keep in mind.
 
-# Killing and dieing
+## Killing and dying
 
 A simple
 
@@ -357,16 +357,16 @@ A simple
 proc.terminate()
 ```
 
-or for some dramatic umphh!
+Or for some dramatic umphh!
 
 ```python
 proc.kill()
 ```
 
-will do the trick to end the process. As noted in the documentation, the former sends a `SIGTERM`
+Will do the trick to end the process. As noted in the documentation, the former sends a `SIGTERM`
 and later sends a `SIGKILL` on unix, but both do some native windows-y thing on windows.
 
-## Auto-kill on death
+### Auto-kill on death
 
 The processes you start in your python program, stay running even after your program exits. This is
 *usually* what you want, but when you want all your sub processes killed automatically on exit with
@@ -384,7 +384,7 @@ def kill_subprocesses():
 And add all the `Popen` objects created to the `procs` list. This is the only solution I found that
 works best.
 
-# Launch commands in a terminal emulator
+## Launch commands in a terminal emulator
 
 On one occasion, I had to write a script that would launch multiple svn checkouts and then run many
 ant builds (~20-35) on the checked out projects. In my opinion, the best and easiest way to do this
@@ -392,7 +392,7 @@ is to fire up multiple terminal emulator windows each running an individual chec
 allows us to monitor each process and even cancel any of them by simply closing the corresponding
 terminal emulator window.
 
-## Linux
+### Linux
 
 This is pretty trivial actually. On Linux, you can use `xterm` for this.
 
@@ -400,7 +400,7 @@ This is pretty trivial actually. On Linux, you can use `xterm` for this.
 Popen(['xterm', '-e', 'sleep 3s'])
 ```
 
-## Windows
+### Windows
 
 On windows, its not as straight forward. The first solution for this would be
 
@@ -438,7 +438,7 @@ This. A new `mintty` console window opens up running the command and it closes a
 the command exits with zero status (that's what `--hold error` does). Otherwise, it stays on. Very
 useful.
 
-# Conclusion
+## Conclusion
 
 The subprocess module is a very useful thing. Spend some time understanding it better. This is my
 attempt at helping people with it, and turned out to be way longer than I'd expected. If there are
