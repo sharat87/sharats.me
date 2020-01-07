@@ -30,8 +30,7 @@ class Config:
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
-SCRIPT_LOC = Path(__file__).resolve()
-ROOT_LOC = SCRIPT_LOC.parent
+ROOT_LOC = Path(__file__).resolve().parent
 OUTPUT_DIR = ROOT_LOC / 'output'
 CONTENT_DIR = ROOT_LOC / 'content'
 TEMPLATES_DIR = ROOT_LOC / 'templates'

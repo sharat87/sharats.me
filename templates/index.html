@@ -2,7 +2,13 @@
 
 {% block main %}
 
-	<h1 id=posts>Recent articles</h1>
+	<h1>Hi there!</h1>
+
+	<p>I am Shrikant. This is my blog/website where I write stuff about the work I do and things
+	I've learnt. Feel free to browse and <a href='/contact.html'>reach out</a> if you want to say
+	hello.</p>
+
+	<h1 id=posts>Recent writings</h1>
 
 	{% with limit_posts = 6 %}
 		{% include 'post-list-partial.html' %}
