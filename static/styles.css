@@ -465,6 +465,16 @@ footer a:hover {
 		bottom: 0px !important;
 		left: 0px !important;
 		width: 100%  !important;
+		border-radius: 0;
+		padding: 6px;
+	}
+
+	#cookiesOkBox :last-child {
+		margin-bottom: 0;
+	}
+
+	#cookiesOkBox p {
+		margin: .5em 0;
 	}
 }
 
