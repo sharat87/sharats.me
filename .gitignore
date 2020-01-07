@@ -1,1 +1,4 @@
 /output
+/.idea
+*.iml
+__pycache__
