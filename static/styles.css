@@ -43,6 +43,7 @@ th {
 
 a img {
 	border: 0;
+	vertical-align: middle;
 }
 
 b, strong {
@@ -422,6 +423,21 @@ footer a:hover {
 
 .toc a:hover {
 	text-decoration: underline;
+}
+
+.post-author {
+	margin: 3em 1em 1em;
+	padding: .5em;
+	background-color: #FED;
+	border-radius: 3px;
+}
+
+.post-author > :first-child {
+	margin-top: 0;
+}
+
+.post-author .support-links {
+	text-align: center;
 }
 
 #cookiesOkBox {

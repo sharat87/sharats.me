@@ -3,6 +3,7 @@ Build my blog site. Just run `python manage.py build`.
 """
 
 import sys
+import os
 from collections import defaultdict
 from pathlib import Path
 import datetime as dt
@@ -25,6 +26,7 @@ class Config:
     site_title = "The Sharat's"
     author = 'Shrikant Sharat Kandula'
     email = 'shrikantsharat.k@gmail.com'
+    dev_mode = bool(os.getenv('DEV'))
 
 
 logging.basicConfig(level=logging.INFO)
