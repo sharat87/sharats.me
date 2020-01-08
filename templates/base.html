@@ -1,7 +1,14 @@
 <!doctype html>
 <html lang=en>
 <meta charset=utf-8>
-<title>{% if title %}{{ title|e }} | {% endif %}{{ config.site_title }}</title>
+<title>
+	{%- if title -%}
+	{{ title + " | " }}
+	{%- elif post and post.meta.title -%}
+	{{ post.meta.title + ' | ' }}
+	{%- endif -%}
+	{{ config.site_title -}}
+</title>
 <meta name=viewport content="width=device-width, initial-scale=1.0">
 <meta name=author content="{{ config.author }}">
 

@@ -1,6 +1,7 @@
 {
-	"name": "",
-	"short_name": "",
+	"name": "The Sharat's",
+	"short_name": "The Sharat's",
+	"description": "A blog about software and non-software by Shrikant.",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
@@ -13,7 +14,7 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#ffffff",
+	"theme_color": "#0066aa",
 	"background_color": "#ffffff",
 	"display": "standalone"
 }

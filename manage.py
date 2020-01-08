@@ -281,7 +281,7 @@ def action_build():
 
     render_tags(posts)
 
-    render('sitemap.html', 'sitemap.html', page_groups=page_tree(all_pages))
+    render('sitemap.html', 'sitemap.html', title='Sitemap', page_groups=page_tree(all_pages))
     render('sitemap.xml', 'sitemap.xml', pages=all_pages)
     if not Config.dev_mode:
         sp.run(['gzip', '-k', 'sitemap.xml'], cwd=str(OUTPUT_DIR))
@@ -297,7 +297,7 @@ def render_tags(posts):
         for tag in post.tags:
             tagged_posts[tag].append(post)
 
-    render('tags/index.html', 'tag-list.html', tagged_posts=tagged_posts)
+    render('tags/index.html', 'tag-list.html', title='Tags', tagged_posts=tagged_posts)
     for tag, tag_posts in tagged_posts.items():
         log.info('Rendering tag page for `#%s`.', tag)
         render('tags/' + tag + '/index.html', 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
