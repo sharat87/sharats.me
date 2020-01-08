@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1>Tags</h1>
+
+<ul>
+	{%- for tag, posts in tagged_posts.items() %}
+	<li><a href='/tags/{{ tag }}/'>{{ tag }}</a> &mdash; {{ posts | length }} post(s)</li>
+	{%- endfor %}
+</ul>
+{% endblock %}

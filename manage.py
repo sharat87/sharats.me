@@ -293,6 +293,7 @@ def render_tags(posts):
         for tag in post.tags:
             tagged_posts[tag].append(post)
 
+    render('tags/index.html', 'tag-list.html', tagged_posts=tagged_posts)
     for tag, tag_posts in tagged_posts.items():
         log.info('Rendering tag page for `#%s`.', tag)
         render('tags/' + tag + '/index.html', 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
