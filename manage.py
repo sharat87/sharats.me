@@ -130,7 +130,8 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
 
     def highlight_code(self, block):
         src = block[0].text
-        line_nums = lang = None
+        lang = 'text'
+        line_nums = None
         cfg = {}
 
         if src.startswith((':::', '#!')):
@@ -141,7 +142,7 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
             if match.group('cfg'):
                 cfg.update(yaml.safe_load(match.group('cfg')))
 
-        lexer = get_lexer_by_name(lang or 'text')
+        lexer = get_lexer_by_name(lang)
         formatter = HtmlFormatter(
             linenos=cfg.get('linenos', line_nums),
             cssclass='codehilite',
@@ -151,6 +152,7 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
         )
 
         html = highlight(self.code_unescape(src), lexer, formatter)
+        html = html.replace('<div ', '<div data-lang=%r ' % lang, 1)
 
         placeholder = self.md.htmlStash.store(html)
         # Clear codeblock in etree instance
@@ -188,13 +190,13 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
             if not m:
                 break
 
-            lang = m.group('lang')
+            lang = m.group('lang') or 'text'
 
             cfg = {}
             if m.group('cfg'):
                 cfg.update(yaml.safe_load(m.group('cfg')))
 
-            lexer = get_lexer_by_name(lang or 'text')
+            lexer = get_lexer_by_name(lang)
             formatter = HtmlFormatter(
                 linenos=cfg.get('linenos'),
                 cssclass='codehilite',
@@ -203,8 +205,9 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
                 wrapcode=False,
             )
 
-            code = highlight(m.group('code'), lexer, formatter)
-            placeholder = self.md.htmlStash.store(code)
+            html = highlight(m.group('code'), lexer, formatter)
+            html = html.replace('<div ', '<div data-lang=%r ' % lang, 1)
+            placeholder = self.md.htmlStash.store(html)
 
             text = '\n'.join([text[:m.start()], placeholder, text[m.end():]])
 
@@ -280,7 +283,8 @@ def action_build():
 
     render('sitemap.html', 'sitemap.html', page_groups=page_tree(all_pages))
     render('sitemap.xml', 'sitemap.xml', pages=all_pages)
-    sp.run(['gzip', '-k', 'sitemap.xml'], cwd=str(OUTPUT_DIR))
+    if not Config.dev_mode:
+        sp.run(['gzip', '-k', 'sitemap.xml'], cwd=str(OUTPUT_DIR))
 
     generate_feed(posts[:6], '/posts/index.xml')
     log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))
