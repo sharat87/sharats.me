@@ -331,7 +331,7 @@ def generate_feed(posts, path):
     for post in posts:
         fe = fg.add_entry()
         fe.id(post.permalink)
-        fe.title(post.title)
+        fe.title(re.sub(r'</?\w+>', '', post.title))
         fe.description(post.body.split('\n\n', 1)[0])
         if post.date:
             fe.published(dt.datetime(post.date.year, post.date.month, post.date.day, tzinfo=dt.timezone.utc))
