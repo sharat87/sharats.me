@@ -11,6 +11,7 @@ import logging
 import re
 import shutil
 import time
+import subprocess as sp
 
 import yaml
 import jinja2
@@ -106,6 +107,10 @@ class Page:
     @property
     def should_publish(self):
         return self.meta.get('publish', True) and (self.date is None or self.date <= dt.date.today())
+
+    @property
+    def last_mod(self):
+        return self.meta.get('modified_date', self.date)
 
     def __str__(self):
         return f'<{self.__class__.__name__} {self.slug}>'
@@ -274,6 +279,8 @@ def action_build():
     render_tags(posts)
 
     render('sitemap.html', 'sitemap.html', page_groups=page_tree(all_pages))
+    render('sitemap.xml', 'sitemap.xml', pages=all_pages)
+    sp.run(['gzip', '-k', 'sitemap.xml'], cwd=str(OUTPUT_DIR))
 
     generate_feed(posts[:6], '/posts/index.xml')
     log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))

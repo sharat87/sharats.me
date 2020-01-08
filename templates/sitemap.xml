@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	{#- https://www.sitemaps.org/protocol.html #}
+	{%- for page in pages if page.meta.get('include_in_sitemap', True) %}
+	<url>
+		<loc>{{ page.permalink }}</loc>
+		<changefreq>weekly</changefreq>
+		<lastmod>{{ page.last_mod }}</lastmod>
+		{%- if page.meta.page_priority %}
+		<priority>{{ page.meta.page_priority }}</priority>
+		{%- endif %}
+	</url>
+	{%- endfor %}
+</urlset>
