@@ -26,7 +26,7 @@
 
 <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i|Fira+Code:400,600&display=swap">
 <link rel=stylesheet href="/styles.css">
-<style>.hide{display:none}</style>
+<style>.hide{display:none !important}</style>
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -52,19 +52,20 @@
 <main>{% block main %}{% endblock %}</main>
 
 <footer>
+	<div class=content>
 	<p>Copyright &copy; 2010-2020, {{ config.author }}. This website serves third-party ads.</p>
 	<p class=links>
 		<a href=/about/>About</a>
 		<a href=/contact/>Contact</a>
 		<a href=/privacy-policy/>Privacy Policy</a>
 	</p>
+	</div>
 </footer>
 
 <div id=cookiesOkBox class=hide>
-	<h4>This website uses cookies</h4>
-	<p>By using this website, you automatically accept that we use cookies.
-		<a href=/privacy-policy.html target=_blank title='Privacy Policy'>What for?</a></p>
-	<p><button onclick='cookiesOkSave()'>I Understand</button></p>
+	<p>This website uses cookies. By continuing to use this website, you agree to our use of
+	cookies. <a href=/privacy-policy.html target=_blank title='Privacy Policy'>Know more</a>.</p>
+	<p><button onclick='cookiesOkSave()'>Okay</button></p>
 </div>
 
 {% if config.dev_mode %}
@@ -78,7 +79,7 @@ updateTimes();
 if (document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/))
 	cookiesOkSave();  // Save again for it to expire in seven days from now.
 else
-	document.getElementById('cookiesOkBox').style.display = 'block';
+	document.getElementById('cookiesOkBox').classList.remove('hide');
 
 for (const el of document.querySelectorAll('sup.footnote-ref a'))
 	el.setAttribute('title',
@@ -115,6 +116,6 @@ function cookiesOkSave() {
 	const date = new Date();
 	date.setTime(date.getTime() + (7*24*60*60*1000));
 	document.cookie = 'cookiesOk=1; expires=' + date.toUTCString() + "; path=/";
-	document.getElementById('cookiesOkBox').style.display = 'none';
+	document.getElementById('cookiesOkBox').classList.add('hide');
 }
 </script>

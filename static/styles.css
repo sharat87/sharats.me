@@ -356,10 +356,17 @@ main article {
 }
 
 footer {
-	text-align: center;
-	border-top: 1px solid rgba(0, 0, 0, .3);
+	border-top: 1px solid rgba(0, 0, 0, .06);
+	background-color: rgba(0, 0, 0, .02);
 	margin-top: 2em;
-	margin-bottom: 2em;
+	padding: 1em 0 2em;
+	width: 100%;
+}
+
+footer .content {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
 	width: 100%;
 	max-width: 960px;
 }
@@ -446,7 +453,7 @@ footer a:hover {
 }
 
 #cookiesOkBox {
-	width: 350px;
+	width: 650px;
 	padding: 24px;
 	background: #333;
 	color: white;
@@ -455,10 +462,16 @@ footer a:hover {
 	right: 30px;
 	border-radius: 2px;
 	box-shadow: 6px 6px 24px rgba(0, 0, 0, .6);
+	display: flex;
+	align-items: center;
 }
 
-#cookiesOkBox h4 {
-	margin: 0;
+#cookiesOkBox > * {
+	margin: 0 24px 0 0;
+}
+
+#cookiesOkBox > :last-child {
+	margin-right: 0;
 }
 
 #cookiesOkBox a {
@@ -471,15 +484,12 @@ footer a:hover {
 		left: 0px !important;
 		width: 100%  !important;
 		border-radius: 0;
-		padding: 6px;
+		padding: 12px 6px;
+		align-items: stretch;
 	}
 
-	#cookiesOkBox :last-child {
-		margin-bottom: 0;
-	}
-
-	#cookiesOkBox p {
-		margin: .5em 0;
+	#cookiesOkBox button {
+		height: 100%;
 	}
 }
 
