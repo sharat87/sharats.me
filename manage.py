@@ -392,9 +392,26 @@ def action_clean():
                 shutil.rmtree(entry)
 
 
-def main(action=None):
-    log.info(sys.version)
-    globals()['action_' + (action or sys.argv[1])]()
+def action_serve():
+    import http.server
+    from functools import partial
+    http.server.test(
+        HandlerClass=partial(http.server.SimpleHTTPRequestHandler, directory=str(OUTPUT_DIR)),
+        port=8010,
+        bind='',
+    )
+
+
+def action_develop():
+    """Watch and serve"""
+    from threading import Thread
+    Thread(target=action_watch, name='watcher', daemon=True).start()
+    action_serve()
+
+
+def main():
+    log.info('Python %s', sys.version)
+    globals()['action_' + sys.argv[1]]()
 
 
 if __name__ == '__main__':

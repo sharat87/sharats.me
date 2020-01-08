@@ -10,9 +10,7 @@ clean: warn
 	python manage.py clean
 
 serve:
-	python manage.py build
-	cd output
-	python -m http.server 8010
+	python manage.py serve
 
 warn:
 	echo 'Using makefile for this task is deprecated. Run manage.py directly.'
