@@ -1,6 +1,7 @@
+---
 title: Installing Crunchbang Linux on my old lappy
-tags: crunchbang, linux
-
+tags: [crunchbang, linux]
+---
 
 I managed to install Crunchbang linux, the recently released Stetler, after
 reading quite a positive review (I don't remember where). I am really liking
