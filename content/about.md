@@ -20,5 +20,4 @@ templates. Source for the site along with the templates and content can be acces
 <a target=_blank href="https://stackoverflow.com/users/sharat87">Stack Overflow</a>
 <a target=_blank href="https://www.linkedin.com/in/sharat87">LinkedIn</a>
 <a target=_blank href="https://twitter.com/sharat87">Twitter</a>
-<a target=_blank href="https://www.facebook.com/sharat87">Facebook</a>
 </p>

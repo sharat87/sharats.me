@@ -366,6 +366,7 @@ footer {
 footer .content {
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 	margin: 0 auto;
 	width: 100%;
 	max-width: 960px;
@@ -380,7 +381,7 @@ footer .links {
 	justify-content: center;
 }
 
-footer .links a + a {
+footer .links * + * {
 	margin-left: 1em;
 }
 
