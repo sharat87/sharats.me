@@ -31,7 +31,11 @@ class Config:
     dev_mode = bool(os.getenv('DEV'))
 
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(clientip)s %(user)-8s %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)d %(message)s',
+)
 log = logging.getLogger(__name__)
 
 ROOT_LOC = Path(__file__).resolve().parent
