@@ -9,7 +9,7 @@
 		<time datetime='{{ post.date_iso }}'>{{ post.date_display }}</time>
 		{% endif %}
 		{% for tag in post.tags %}
-		<a href='/tags/{{ tag }}.html' title='Posts tagged with #{{ tag }}'>{{ tag }}</a>
+		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}'>{{ tag }}</a>
 		{% endfor %}
 	</span>
 	{% endif %}
@@ -21,7 +21,7 @@
 		<h2>About the author</h2>
 		<p>Hello! I am Shrikant! I love programming and quantitative financial topics. I mostly
 		write about Python, JavaScript and ViM following my work and experiences. Thank you for
-		checking out my blog! <a href='/contact.html'>Say hello!</a></p>
+		checking out my blog! <a href='/contact/'>Say hello!</a></p>
 		<p class=support-links>Support my work &rarr; <a
 		   href='https://www.buymeacoffee.com/sharat87' target=_blank title='No signup
 		   required'><img src='/bmac.png' alt='Buy me a coffee!'></a></p>

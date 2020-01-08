@@ -10,7 +10,7 @@
 		&mdash;
 		<date>{{ post.date_display }}</date>
 		{% if post.tags %}
-		<span class=tags>{% for tag in post.tags %} <a href="/tags/{{ tag }}.html">#{{ tag }}</a>{% endfor %}</span>
+		<span class=tags>{% for tag in post.tags %} <a href="/tags/{{ tag }}/">#{{ tag }}</a>{% endfor %}</span>
 		{% endif %}
 	{% endfor %}
 </ul>
