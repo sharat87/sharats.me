@@ -81,16 +81,16 @@ class Page:
         return md_to_html(self.meta.get('title') or self.slug.title())[3:-4]  # Strip the <p> tag.
 
     @property
-    def link(self):
-        return f'/posts/{self.slug}.html'
+    def link(self) -> str:
+        return '/' + str(self.output_path.parent).replace('\\', '/').strip('/') + '/'
 
     @property
-    def permalink(self):
+    def permalink(self) -> str:
         return Config.site_url + self.link
 
     @property
-    def output_path(self):
-        return self.path.relative_to(CONTENT_DIR).with_name(self.slug + '.html')
+    def output_path(self) -> Path:
+        return self.path.relative_to(CONTENT_DIR).with_name(self.slug) / 'index.html'
 
     @property
     def depth(self):
@@ -274,7 +274,7 @@ def action_build():
     render('index.html', 'index.html', posts=posts)
 
     log.info('Rendering archive page.')
-    render('archive.html', 'post-list.html', title='Archive', posts=posts)
+    render('archive/index.html', 'post-list.html', title='Archive', posts=posts)
 
     render_tags(posts)
 
@@ -295,7 +295,7 @@ def render_tags(posts):
 
     for tag, tag_posts in tagged_posts.items():
         log.info('Rendering tag page for `#%s`.', tag)
-        render('tags/' + (tag + '.html'), 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
+        render('tags/' + tag + '/index.html', 'post-list.html', title='Posts tagged #' + tag, tag=tag, posts=tag_posts)
 
 
 def page_tree(pages):
