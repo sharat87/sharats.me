@@ -21,6 +21,7 @@ from feedgen.feed import FeedGenerator
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+from bs4 import BeautifulSoup
 
 
 class Config:
@@ -160,25 +161,32 @@ def highlight_code_block(src, cfg):
     lexer = get_lexer_by_name(cfg['lang'])
     formatter = HtmlFormatter(
         linenos=cfg.get('linenos', False),
-        cssclass='codehilite',
-        noclasses=False,
+        cssclass='hl',
         hl_lines=cfg.get('hl_lines') or [],
-        wrapcode=False,
+        filename=cfg.get('filename'),
+        wrapcode=True,  # Wrap code in <code> tags, as recommended by HTML5 spec.
     )
 
-    markup = highlight(html_unescape(src), lexer, formatter)
+    soup = BeautifulSoup(highlight(html_unescape(src), lexer, formatter), 'html.parser')
 
     # Add a `data-lang` attribute with the language used for highlighting.
-    markup = markup.replace('<div ', '<div data-lang=%r ' % cfg['lang'], 1)
+    for div in soup.find_all('div', class_='hl'):
+        div.attrs['data-lang'] = cfg['lang']
 
-    return markup
+    # Convert code blocks with line numbers from tables to a pair of `div` elements.
+    for table in soup.find_all('table', class_='hltable'):
+        new_root = soup.new_tag('div', attrs={'class': 'hltable'})
+        new_root.extend([d.extract() for d in table.find_all('div')])
+        table.replace_with(new_root)
+
+    return str(soup)
 
 
 class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
     FENCED_BLOCK_RE = re.compile(r'''
             (?P<fence>^(?:~{3}|`{3}))      # Opening ``` or ~~~
             (?P<lang>\w*)                  # Optional lang
-            (?:[ ]+(?P<cfg>.+))?[ ]*\n     # Optional config
+            (?:[ ]+(?P<cfg>.+?))?[ ]*\n     # Optional config
             (?P<code>.*?)(?<=\n)
             (?P=fence)$''',
         re.MULTILINE | re.DOTALL | re.VERBOSE,
@@ -216,16 +224,7 @@ class MdExt(markdown.extensions.Extension):
 def md_to_html(md_content: str) -> str:
     return markdown.markdown(
         md_content,
-        extensions=[
-            'abbr',
-            'attr_list',
-            'def_list',
-            'footnotes',
-            'tables',
-            'sane_lists',
-            'toc',
-            MdExt(),
-        ],
+        extensions=['abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'sane_lists', 'toc', MdExt()],
         extension_configs={
             'toc': {
                 'permalink': True,
