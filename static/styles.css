@@ -499,6 +499,10 @@ footer a:hover {
 	margin: 1em 0;
 }
 
+.hltable pre {
+	margin: 0;
+}
+
 .hltable .hl {
 	display: flex;
 	flex-grow: 1;
@@ -516,6 +520,22 @@ footer a:hover {
 	border-bottom-left-radius: 0;
 	flex-grow: 1;
 	width: 100px;
+}
+
+.hl {
+	position: relative;
+}
+
+.copy-btn {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	font-weight: bold;
+	display: none;
+}
+
+.hl:hover .copy-btn {
+	display: block;
 }
 
 /* Pygments styles */
