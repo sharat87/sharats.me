@@ -3,20 +3,24 @@
 {% block main %}
 	<h1><a href='{{ post.permalink }}' rel=bookmark>{{ post.title | safe }}</a></h1>
 
-	{% if post.date or post.tags %}
+	{%- if not post.meta.publish %}
+	<p class=warning>This post has `publish` set to `false` in it's metadata.</p>
+	{%- endif %}
+
+	{%- if post.date or post.tags %}
 	<span class=title-subtext>
 		{% if post.date %}
 		<time datetime='{{ post.date_iso }}'>{{ post.date_display }}</time>
 		{% endif %}
 		{% for tag in post.tags %}
-		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}'>{{ tag }}</a>
+		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag>{{ tag }}</a>
 		{% endfor %}
 	</span>
-	{% endif %}
+	{%- endif %}
 
-	<article> {{ post.html_body | safe }} </article>
+	<article>{{ post.html_body | safe }}</article>
 
-	{% if config.dev_mode %}
+	{%- if config.dev_mode %}
 	<section class=post-author>
 		<h2>About the author</h2>
 		<p>Hello, I am Shrikant! I love programming and quantitative financial topics. I mostly
@@ -28,7 +32,7 @@
 	</section>
 	{% endif %}
 
-	{% if post.meta.get('comments', True) %}
+	{% if post.meta.comments %}
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>

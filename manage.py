@@ -62,7 +62,10 @@ class Page:
     def __init__(self, path):
         self.path = path
         self.slug = path.stem
-        self.meta = {}
+        self.meta = {
+            'publish': True,
+            'comments': True,
+        }
         self.tags = []  # This should conceptually be a set, but we use list so the order of the tags is predictable.
         self.date = None
 
@@ -70,7 +73,7 @@ class Page:
 
         if body.startswith('---\n'):
             meta_block, body = body[4:].split('\n---\n', 1)
-            self.meta = yaml.safe_load(meta_block)
+            self.meta.update(yaml.safe_load(meta_block))
             if 'tags' in self.meta:
                 self.tags.extend(self.meta.pop('tags'))
 
@@ -112,7 +115,7 @@ class Page:
 
     @property
     def should_publish(self):
-        return self.meta.get('publish', True) and (self.date is None or self.date <= dt.date.today())
+        return Config.dev_mode or (self.meta['publish'] and (self.date is None or self.date <= dt.date.today()))
 
     @property
     def last_mod(self):
