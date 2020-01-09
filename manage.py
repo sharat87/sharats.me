@@ -24,6 +24,11 @@ from pygments.formatters import HtmlFormatter
 from bs4 import BeautifulSoup
 
 
+def read_env(name, default):
+    val = os.getenv(name, '')
+    return bool(int(val)) if val.isdigit() else default
+
+
 class Config:
     site_url = 'https://www.sharats.me'
     site_title = "The Sharat's"
@@ -31,9 +36,9 @@ class Config:
     email = 'shrikantsharat.k@gmail.com'
     feedburner_url = 'http://feeds.feedburner.com/sharats-me'
 
-    dev_mode = bool(os.getenv('DEV'))
+    dev_mode = read_env('DEV', False)
 
-    adsense = bool(os.getenv('ADSENSE', True))
+    adsense = read_env'ADSENSE', True)
 
 
 # logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(clientip)s %(user)-8s %(message)s')
