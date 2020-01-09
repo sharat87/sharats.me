@@ -30,7 +30,10 @@ class Config:
     author = 'Shrikant Sharat Kandula'
     email = 'shrikantsharat.k@gmail.com'
     feedburner_url = 'http://feeds.feedburner.com/sharats-me'
+
     dev_mode = bool(os.getenv('DEV'))
+
+    adsense = bool(os.getenv('ADSENSE', True))
 
 
 # logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(clientip)s %(user)-8s %(message)s')

@@ -20,7 +20,7 @@
 <meta name=description content='An blog/article about Python, JavaScript, ViM and other software stuff.'>
 {%- endif %}
 
-{%- if not config.dev_mode %}
+{%- if not config.dev_mode and config.adsense %}
 <script data-ad-client="ca-pub-1813617733171441" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 {%- endif %}
 
@@ -53,7 +53,8 @@
 
 <footer>
 	<div class=content>
-	<p>Copyright &copy; 2010-2020, {{ config.author }}. This website serves third-party ads.</p>
+		<p>Copyright &copy; 2010-2020, {{ config.author }}.
+		{% if config.adsense %}This website serves third-party ads.{% endif %}</p>
 	<p class=links>
 		<a href=/about/>About</a>
 		<a href=/contact/>Contact</a>
