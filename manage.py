@@ -38,7 +38,7 @@ class Config:
 
     dev_mode = read_env('DEV', False)
 
-    adsense = read_env'ADSENSE', True)
+    adsense = read_env('ADSENSE', True)
 
 
 # logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(clientip)s %(user)-8s %(message)s')
@@ -225,10 +225,21 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
         return text.split('\n')
 
 
+class TableWrapper(markdown.treeprocessors.Treeprocessor):
+    def run(self, doc):
+        indices = {v: i for i, v in enumerate(doc)}
+        for table in doc.iter('table'):
+            doc.remove(table)
+            wrapper = doc.makeelement('div', {'class': 'table-wrapper'})
+            wrapper.insert(0, table)
+            doc.insert(indices[table], wrapper)
+
+
 class MdExt(markdown.extensions.Extension):
     def extendMarkdown(self, md):
         md.treeprocessors.register(CodeHighlighter(md), 'code_highlighter', 30)
         md.preprocessors.register(CodeHighlighterFence(md), 'code_highlighter_fence', 25)
+        md.treeprocessors.register(TableWrapper(md), 'table_wrapper', 76)
         md.registerExtension(self)
 
 

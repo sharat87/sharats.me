@@ -33,6 +33,10 @@ body {
 	border-radius: 3px;
 }
 
+.table-wrapper {
+	overflow-x: auto;
+}
+
 table {
 	border-collapse: collapse;
 }
@@ -167,7 +171,7 @@ table {
 
 th, td {
 	border: 1px solid #BBB;
-	padding: 3px 6px;
+	padding: 6px;
 }
 
 main {
