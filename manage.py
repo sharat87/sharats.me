@@ -12,6 +12,7 @@ import re
 import shutil
 import time
 import subprocess as sp
+from html import unescape as html_unescape
 
 import yaml
 import jinja2
@@ -134,44 +135,43 @@ class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
 
     def highlight_code(self, block):
         src = block[0].text
-        lang = 'text'
-        line_nums = None
-        cfg = {}
+        cfg = {'lang': 'text', 'linenos': False}
 
         if src.startswith((':::', '#!')):
             spec, src = src.split('\n', 1)
             match = re.match(r'^(?P<marker>:::|#!)(?P<lang>\w+)(\s+(?P<cfg>.+))?', spec)
-            line_nums = match.group('marker') == '#!'
-            lang = match.group('lang')
+            cfg['linenos'] = match.group('marker') == '#!'
+            cfg['lang'] = match.group('lang')
             if match.group('cfg'):
                 cfg.update(yaml.safe_load(match.group('cfg')))
 
-        lexer = get_lexer_by_name(lang)
-        formatter = HtmlFormatter(
-            linenos=cfg.get('linenos', line_nums),
-            cssclass='codehilite',
-            noclasses=False,
-            hl_lines=cfg.get('hl_lines') or [],
-            wrapcode=False,
-        )
+        markup = highlight_code_block(src, cfg)
 
-        html = highlight(self.code_unescape(src), lexer, formatter)
-        html = html.replace('<div ', '<div data-lang=%r ' % lang, 1)
-
-        placeholder = self.md.htmlStash.store(html)
+        placeholder = self.md.htmlStash.store(markup)
         # Clear codeblock in etree instance
         block.clear()
         # Change to p element which will later
-        # be removed when inserting raw html
+        # be removed when inserting raw markup
         block.tag = 'p'
         block.text = placeholder
 
-    def code_unescape(self, text):
-        """Unescape code."""
-        text = text.replace("&amp;", "&")
-        text = text.replace("&lt;", "<")
-        text = text.replace("&gt;", ">")
-        return text
+
+def highlight_code_block(src, cfg):
+    lexer = get_lexer_by_name(cfg['lang'])
+    formatter = HtmlFormatter(
+        linenos=cfg.get('linenos', False),
+        cssclass='codehilite',
+        noclasses=False,
+        hl_lines=cfg.get('hl_lines') or [],
+        wrapcode=False,
+    )
+
+    markup = highlight(html_unescape(src), lexer, formatter)
+
+    # Add a `data-lang` attribute with the language used for highlighting.
+    markup = markup.replace('<div ', '<div data-lang=%r ' % cfg['lang'], 1)
+
+    return markup
 
 
 class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
@@ -190,40 +190,20 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
         text = '\n'.join(lines)
 
         while 1:
-            m = self.FENCED_BLOCK_RE.search(text)
-            if not m:
+            match = self.FENCED_BLOCK_RE.search(text)
+            if not match:
                 break
 
-            lang = m.group('lang') or 'text'
+            cfg = {'lang': match.group('lang') or 'text'}
+            if match.group('cfg'):
+                cfg.update(yaml.safe_load(match.group('cfg')))
 
-            cfg = {}
-            if m.group('cfg'):
-                cfg.update(yaml.safe_load(m.group('cfg')))
+            markup = highlight_code_block(match.group('code'), cfg)
+            placeholder = self.md.htmlStash.store(markup)
 
-            lexer = get_lexer_by_name(lang)
-            formatter = HtmlFormatter(
-                linenos=cfg.get('linenos'),
-                cssclass='codehilite',
-                noclasses=False,
-                hl_lines=cfg.get('hl_lines') or [],
-                wrapcode=False,
-            )
-
-            html = highlight(m.group('code'), lexer, formatter)
-            html = html.replace('<div ', '<div data-lang=%r ' % lang, 1)
-            placeholder = self.md.htmlStash.store(html)
-
-            text = '\n'.join([text[:m.start()], placeholder, text[m.end():]])
+            text = '\n'.join([text[:match.start()], placeholder, text[match.end():]])
 
         return text.split('\n')
-
-    def _escape(self, txt):
-        """ basic html escaping """
-        txt = txt.replace('&', '&amp;')
-        txt = txt.replace('<', '&lt;')
-        txt = txt.replace('>', '&gt;')
-        txt = txt.replace('"', '&quot;')
-        return txt
 
 
 class MdExt(markdown.extensions.Extension):
