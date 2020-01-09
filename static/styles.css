@@ -286,7 +286,7 @@ a, a:visited {
 	display: flex;
 }
 
-.title-subtext a {
+.tag {
 	display: inline-block;
 	text-decoration: none;
 	background-color: #EFF;
@@ -295,7 +295,7 @@ a, a:visited {
 	margin: 0 0 0 9px;
 }
 
-.title-subtext a:hover {
+.tag:hover {
 	background-color: var(--link-color);
 	color: white;
 }
@@ -320,25 +320,19 @@ main article {
 .post-list li {
 	margin-bottom: .5em;
 	padding: .3em 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .post-list .title {
-	font-size: 1.3em;
+	font-size: 1.2em;
 	margin-right: .5em;
 }
 
-.post-list date {
-	margin-left: .5em;
+.post-list .subtext {
 	font-size: .8em;
-}
-
-.post-list .tags {
-	font-size: .8em;
+	margin-top: 3px;
 	opacity: .8;
-}
-
-.post-list .tags a {
-	margin-left: 6px;
 }
 
 .note {
