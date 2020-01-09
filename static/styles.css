@@ -221,6 +221,43 @@ header nav a:hover {
 	color: white;
 }
 
+header .compact {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.nav-toggle {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	header, header nav {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	header nav {
+		display: none;
+	}
+
+	input.nav-toggle:checked ~ nav {
+		display: flex;
+	}
+
+	input.nav-toggle:checked ~ .compact label.nav-toggle {
+		background-color: rgba(0, 0, 0, .2);
+	}
+
+	label.nav-toggle {
+		display: block;
+		margin: 0 12px 0 0;
+		padding: 3px 12px;
+		border: 1px solid rgba(0, 0, 0, .4);
+		border-radius: 3px;
+	}
+}
+
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 	font-weight: 600;
 	font-size: .85em;
@@ -458,7 +495,7 @@ footer a:hover {
 }
 
 #cookiesOkBox {
-	width: 650px;
+	width: 500px;
 	padding: 24px;
 	background: #333;
 	color: white;
@@ -483,7 +520,7 @@ footer a:hover {
 	color: inherit;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
 	#cookiesOkBox {
 		bottom: 0px !important;
 		left: 0px !important;
