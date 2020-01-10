@@ -58,18 +58,18 @@
 <footer>
 	<div class=content>
 		<p>Copyright &copy; 2010-2020, {{ config.author }}.
-		{% if config.adsense %}This website serves third-party ads.{% endif %}</p>
-	<p class=links>
-		<a href=/about/>About</a>
-		<a href=/contact/>Contact</a>
-		<a href=/privacy-policy/>Privacy Policy</a>
-	</p>
-	<p class=links>
-		<span>Find me:</span>
-		<a target=_blank href='https://twitter.com/sharat87'>Twitter</a>
-		<a target=_blank href='https://github.com/sharat87'>GitHub</a>
-		<a target=_blank href='https://www.linkedin.com/in/sharat87'>LinkedIn</a>
-	</p>
+			{% if config.adsense %}This website serves third-party ads.{% endif %}</p>
+		<p class=links>
+			<a href=/about/>About</a>
+			<a href=/contact/>Contact</a>
+			<a href=/privacy-policy/>Privacy Policy</a>
+		</p>
+		<p class=links>
+			<span>Find me:</span>
+			<a target=_blank href='https://twitter.com/sharat87'>Twitter</a>
+			<a target=_blank href='https://github.com/sharat87'>GitHub</a>
+			<a target=_blank href='https://www.linkedin.com/in/sharat87'>LinkedIn</a>
+		</p>
 	</div>
 </footer>
 
@@ -97,8 +97,14 @@ for (const el of document.querySelectorAll('sup.footnote-ref a'))
 	el.setAttribute('title',
 		document.getElementById(el.getAttribute('href').slice(1)).firstChild.textContent.trim());
 
-for (const el of document.querySelectorAll('.hl'))
-	el.insertAdjacentHTML('beforeEnd', '<button type=button class=copy-btn>Copy</button>');
+for (const el of document.querySelectorAll('.hl')) {
+	const buttons = [];
+	if (el.dataset.lang == 'pycon')
+		buttons.push(`<button type=button class=pycon-toggle-btn
+			title="Hide output and '&gt;&gt;&gt;' prompt">&gt;&gt;&gt;</button>`);
+	buttons.push('<button type=button class=copy-btn>Copy</button>');
+	el.insertAdjacentHTML('beforeEnd', '<div class=btns>' + buttons.join('\n') + '</div>');
+}
 
 if (!localStorage.noga && !location.hostname.match(/localhost/)) {
 	window.dataLayer = window.dataLayer || [];
@@ -137,15 +143,22 @@ function cookiesOkSave() {
 function onBodyClick(event) {
 	if (event.target.classList.contains('copy-btn'))
 		copyCodeBlock(event.target);
+	else if (event.target.classList.contains('pycon-toggle-btn'))
+		togglePyconOutput(event.target);
 }
 
 function copyCodeBlock(btn) {
-	const preEl = btn.closest('.hl').querySelector('pre');
+	const codeEl = btn.closest('.hl').querySelector('pre code').cloneNode(true);
+	for (const el of codeEl.querySelectorAll('.hide'))
+		el.remove();
+	let text = codeEl.textContent.trim();
+	if (text.includes('\n'))
+		text += '\n';
 
 	const te = document.createElement('textarea');
 	te.style = 'position: fixed; top: 0; left: 0; width: 1px; height: 1px';
 	document.body.appendChild(te);
-	te.value = preEl.textContent;
+	te.value = text;
 	te.select();
 	document.execCommand('copy');
 	te.remove();
@@ -157,5 +170,11 @@ function copyCodeBlock(btn) {
 		btn.innerText = prevText;
 		btn.removeAttribute('disabled');
 	}, 1000);
+}
+
+function togglePyconOutput(btn) {
+	const preEl = btn.closest('.hl').querySelector('pre');
+	for (const el of preEl.querySelectorAll('span.gp, span.go'))
+		el.classList.toggle('hide');
 }
 </script>

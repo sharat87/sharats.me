@@ -569,15 +569,20 @@ footer a:hover {
 	position: relative;
 }
 
-.copy-btn {
+.hl .btns {
 	position: absolute;
 	top: 3px;
 	right: 3px;
 	font-weight: bold;
+	font-family: var(--font-mono);
 	display: none;
 }
 
-.hl:hover .copy-btn {
+.hl button {
+	padding: 3px 6px;
+}
+
+.hl:hover .btns {
 	display: block;
 }
 
