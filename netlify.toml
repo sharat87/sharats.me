@@ -1,6 +1,6 @@
 [build]
   publish = "output/"
-  command = "make"
+  command = "python manage.py build"
 
 [build.processing]
   skip_processing = false

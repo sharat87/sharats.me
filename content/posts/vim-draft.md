@@ -127,12 +127,6 @@ is fired just before a file is saved, to call the function `s:MkNonExDir`. In th
 check for the buffer being a normal buffer (see `:h buftype`) and if it is, create it's parent
 directory. Simple, non-intrusive, and effective.
 
-TODO: Mapping for `<C-n>` for intelligently switching to alt buffer.
-
-TODO: The `<Leader>g` map for running git commands.
-
-TODO: Project configs and loading.
-
 TODO: After scripts.
 
 TODO: Notes plugin.
