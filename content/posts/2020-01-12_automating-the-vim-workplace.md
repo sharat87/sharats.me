@@ -1,6 +1,6 @@
 ---
 title: Automating the ViM workplace
-tags: [python, vim]
+tags: [vim]
 desc: >
     Learn to identify actions in your ViM workflow and automate them, and improve your productivity!
 ---
