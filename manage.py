@@ -281,8 +281,8 @@ def action_build():
     log.info('Rendering index page.')
     render('index.html', 'index.html', posts=posts)
 
-    log.info('Rendering archive page.')
-    render('archive/index.html', 'post-list.html', title='Archive', posts=posts)
+    log.info('Rendering all posts page.')
+    render('posts/index.html', 'post-list.html', title='All Posts', posts=posts)
 
     render_tags(posts)
 
@@ -332,7 +332,7 @@ def generate_feed(posts, path):
     fg.id(Config.site_url)
     fg.title(Config.site_title)
     fg.author({'name': Config.author, 'email': Config.email})
-    fg.link(href=Config.site_url + '/archive.html', rel='self')
+    fg.link(href=Config.site_url + '/posts/', rel='self')
     fg.language('en')
     fg.description('A blog about software and non-software.')
     fg.copyright('Copyright 2010-2020, Shrikant Sharat Kandula')

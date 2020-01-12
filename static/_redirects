@@ -12,8 +12,9 @@
 
 /about.html         /about/
 /labs.html          /labs/
-/archives.html      /archive/
-/archive.html       /archive/
+/archives.html      /posts/
+/archive.html       /posts/
+/archive/           /posts/
 /tags.html          /tags/
 /feeds/all.atom.xml /posts/index.xml
 

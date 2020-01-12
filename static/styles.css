@@ -573,7 +573,6 @@ footer a:hover {
 	position: absolute;
 	top: 3px;
 	right: 3px;
-	font-weight: bold;
 	font-family: var(--font-mono);
 	display: none;
 }
