@@ -55,8 +55,8 @@ your own.
 Of course, now we need a quick way to open our vimrc file so we can add this mapping and then get
 back to whatever we are doing. Well,
 
-	:::vim
-	nnoremap cv :e $USERPROFILE/vimfiles/vimrc<CR>
+    :::vim
+    nnoremap cv :e $USERPROFILE/vimfiles/vimrc<CR>
 
 The `cv` is a mnemonic for *change vimrc*.
 
@@ -98,13 +98,12 @@ As another example, I wanted GViM to start maximized when I open it. On way to d
 the Maximized checkbox in the GViM shortcut's properties. But that won't work when I start GViM from
 a command line. The solution that worked even better:
 
-```vim
-" Maximize gVim window.
-let s:iswin = has('win32') || has('win64')
-if exists(':simalt') > 0 && s:iswin
-  autocmd GUIEnter * simalt ~x
-endif
-```
+    :::vim
+    " Maximize gVim window.
+    let s:iswin = has('win32') || has('win64')
+    if exists(':simalt') > 0 && s:iswin
+      autocmd GUIEnter * simalt ~x
+    endif
 
 ## Save All Buffers
 
@@ -114,9 +113,8 @@ in vertical splits where I dump random pieces of copied text and thoughts. So, I
 following hotkey that will execute the `:wa` command and, if that error comes up, shows a message
 instead.
 
-```vim
-nnoremap <silent> <C-m> :try\|wa\|catch /\<E141\>/\|echomsg 'Not all files saved!'\|endtry<CR>
-```
+    :::vim
+    nnoremap <silent> <C-m> :try\|wa\|catch /\<E141\>/\|echomsg 'Not all files saved!'\|endtry<CR>
 
 This doesn't look like an ideal solution, but it hasn't failed me yet. The idea is not to create an
 perfect solution, but just one that works well with you.
@@ -133,11 +131,10 @@ way to do this would be something like `"+yap` in normal mode, or `"+y` in visua
 annoying, not because it's three keys, but more because they are hard to type in order and they are
 (almost) all with the same hand. So I solved it with the following keys:
 
-```vim
-xnoremap <C-c> "+y
-nnoremap <silent> cp "+y
-nnoremap <silent> cpp "+yy
-```
+    :::vim
+    xnoremap <C-c> "+y
+    nnoremap <silent> cp "+y
+    nnoremap <silent> cpp "+yy
 
 With this, `<C-c>` in visual mode copies selection to clipboard and `cp` can be used with text
 objects. Much easier to hit.
@@ -147,19 +144,18 @@ objects. Much easier to hit.
 I often edit new files like `:e css/styles.css`, without realizing that I have to create the `css`
 folder before saving this. But that's not productive, my tool should do that automatically.
 
-```vim {linenos: yes}
-" Create file's directory before saving, if it doesn't exist.
-" Original: https://stackoverflow.com/a/4294176/151048
-augroup BWCCreateDir
-  autocmd!
-  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-augroup END
-fun! s:MkNonExDir(file, buf)
-  if empty(getbufvar(a:buf, '&buftype')) && a:file !~# '\v^\w+\:\/'
-    call mkdir(fnamemodify(a:file, ':h'), 'p')
-  endif
-endfun
-```
+    :::vim {linenos: yes}
+    " Create file's directory before saving, if it doesn't exist.
+    " Original: https://stackoverflow.com/a/4294176/151048
+    augroup BWCCreateDir
+      autocmd!
+      autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+    augroup END
+    fun! s:MkNonExDir(file, buf)
+      if empty(getbufvar(a:buf, '&buftype')) && a:file !~# '\v^\w+\:\/'
+        call mkdir(fnamemodify(a:file, ':h'), 'p')
+      endif
+    endfun
 
 Let's see what's going on here. Firstly, we define an `autocmd` for the `BufWritePre` event, which
 is fired just before a file is saved, to call the function `s:MkNonExDir`. In this function, we
@@ -311,6 +307,7 @@ to have nonetheless.
 This is very similar to the above. Instead of sorting, I'm reversing the lines. Unfortunately, we
 don't have a `:reverse` command like `:sort`, so this one is more DIY.
 
+    :::vim {linenos: yes}
     " Reverse lines, selected or over motion.
     nnoremap <silent> gr :set opfunc=ReverseLines<CR>g@
     vnoremap <silent> gr :<C-u>call ReverseLines('vis')<CR>
