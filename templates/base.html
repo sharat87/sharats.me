@@ -12,12 +12,13 @@
 <meta name=viewport content="width=device-width, initial-scale=1.0">
 <meta name=author content="{{ config.author }}">
 
-{%- if post and post.meta and post.meta.desc %}
+{%- if post and post.meta.desc %}
 <meta name=description content='{{ post.meta.desc }}'>
 {%- elif post and post.tags %}
 <meta name=description content='An article about {{ post.tags | en_join }}.'>
 {%- else %}
-<meta name=description content='An blog/article about Python, JavaScript, ViM and other software stuff.'>
+<meta name=description content='{% if post %}An article{% else %}A website{% endif %} about Python,
+JavaScript, ViM and other software stuff.'>
 {%- endif %}
 
 {%- if not config.dev_mode and config.adsense %}
@@ -49,8 +50,8 @@
 </header>
 
 <noscript>
-	<p class=warning>This website requires JavaScript to operate correctly. Functionality
-	may be limited when it's turned off.</p>
+	<p class=warning>This website requires JavaScript to operate correctly. Functionality may be
+	limited when it's turned off.</p>
 </noscript>
 
 <main>{% block main %}{% endblock %}</main>
