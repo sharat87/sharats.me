@@ -233,6 +233,10 @@ header .compact {
 	display: none;
 }
 
+.nav-toggle [role="img"] {
+	vertical-align: middle;
+}
+
 @media (max-width: 600px) {
 	header, header nav {
 		flex-direction: column;
@@ -254,7 +258,7 @@ header .compact {
 	label.nav-toggle {
 		display: block;
 		margin: 0 12px 0 0;
-		padding: 3px 12px;
+		padding: 3px 6px;
 		border: 1px solid rgba(0, 0, 0, .4);
 		border-radius: 3px;
 	}
