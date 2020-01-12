@@ -17,21 +17,20 @@ these.
 Most of my text editing involves working with Python, Markdown, and JavaScript source files. When
 I'm spending as much time as I am with ViM, it ceases to be just a tool in my mind. It becomes a
 state of mind where I'm able to translate my thoughts into actions much faster than it/I can do with
-something else. It becomes my workplace.
+something else (besides being an excuse to be fancy with words). It becomes my workplace.
 
-Just like organizing one's desk or toolbox for maximum efficiency, treating ViM this way can help us
-do something similar with our ViM. For that reason, I try to notice things that I do often, that
-take more than 3-4 seconds of thought and then a few more seconds of hitting hotkeys or commands.
-These are the ones I try to create a command or a hotkey. In my world, this is borderline
-automation.
+Just like organizing one's desk or toolbox for maximum efficiency, we can mold ViM to help us
+achieve something similar with it. I try to notice things that I do often, that take more than 3-4
+seconds of thought and then a few more seconds of hitting hotkeys or commands. These are the ones I
+try to create a command or a mapping. In my world, this is borderline automation.
 
-Note that what I'm sharing here is stuff I created/scavenged from years out of identifying patterns
-*very specific* to my work style. My goal is not to share nice tidbits of ViM configuration. It is
-to encourage you to identify your work style and work towards optimising it, before you go find a
-plugin and *learn* the plugin's work style. Your own style of working deserves the first chance, and
-not just in ViM.
+What I'm sharing here is stuff I created/scavenged through years of identifying patterns *very
+specific* to my work style. My goal is not to share nice tidbits of ViM configuration. It is to
+encourage you to identify your work style and work towards optimising it, before you go find a
+plugin and *learn* the plugin's work style. As such, I don't expect you to resonate with the tips I
+shared here. Your own style of working deserves the first chance, let ViM learn it.
 
-Please note that all that I share below is what I'm using with ViM. I don't use NeoVim (yet) and I
+Side note: that all that I share below is what I'm using with ViM. I don't use NeoVim (yet) and I
 can't speak for any of the below for NeoVim.
 
 ## Switching to Normal Mode
@@ -42,17 +41,17 @@ mode, we usually use one single key. My preference for this is `<C-l>`, since `l
 and the help pages already sort-of indicate that hitting it would go to the normal mode (if
 `'insertmode'` is set, but well, it's unused otherwise, See `:h i_CTRL-l`).
 
-	:::vim
-	inoremap <C-l> <Esc>
+    :::vim
+    inoremap <C-l> <Esc>
 
 This is a topic that often brings up an uncontrollable urge to be vocal about one's own choice of
 keys to go to normal mode. I've used several of them over the years, `jj`, `<CapsLock>` as `<ESC>`,
-`<C-[>`, even `<C-k>`, *xcape* in the background, etc. All of them felt haphazard, and `<C-l>`
-worked the best for me. As I said, this article is about what worked best to *my* workflow. Discover
-your own.
+`<C-[>`, `<C-c>`, mapping `<C-k>`, *xcape* in the background, etc. All of them felt haphazard, and
+`<C-l>` worked the best for me. As I said, this article is about what worked best to *my* workflow.
+Go discover your own.
 {: .note }
 
-Of course, now we need a quick way to open our vimrc file so we can add this mapping and then get
+Of course, now we need a quick way to open our `vimrc` file so we can add this mapping and then get
 back to whatever we are doing. Well,
 
     :::vim
@@ -213,13 +212,13 @@ the command line with the following pre-filled:
     :::vim
     :ter git --no-pager
 
-Then I just hit `st<Enter>`, which will open a new terminal within ViM which runs `git status`
-command asynchronously.
+Then I just hit `st<Enter>`, which will open a new terminal within ViM which runs `git st` command
+asynchronously (which is an alias to `git status`).
 
 After seeing the output I noticed that I immediately issued another `,gdiff<Enter>`, which opens up
 another terminal split to run the `git diff` command. Such multiple splits quickly got annoying
-again. I need this mapping to *not* open a new split if I'm already in a `git` output terminal
-window. Here's what I'm using currently:
+again. Yeah, I'm easily annoyed. I need this mapping to *not* open a new split if I'm already in a
+`git` output terminal window. Here's what I'm using currently:
 
     :::vim
     nnoremap <Leader>g :ter <C-r>=&buftype == 'terminal' && job_info(term_getjob('%')).cmd[0] ==? 'git' ? '++curwin ' : ''
@@ -231,12 +230,12 @@ open the terminal in the current window instead of opening up a new split.
 ## Non-undo-able Insert Mode Commands
 
 In insert mode, `<C-u>` deletes everything from start of current line to cursor position (this is
-not *exactly* true, read `:h i_CTRL-U` for the exact behaviour). This is quite convenient and I use
-it a lot more than I like to admit. Often, when I start a statement in a new line, I have second
-thoughts middle of the line and I quickly hit `<C-u>` and start typing in the idea from my second
-though. But then of course, I realize that what I was doing originally was the right way. Now if I
-try to undo what's done by `<C-u>`, I can't. Since it's all treated as one insert operation, it's
-all one undo step.
+not *exactly* true, read `:h i_CTRL-U` for the exact behaviour, I won't repeat it here). This is
+quite convenient and I use it a lot more than I like to admit. Often, when I start a statement in a
+new line, I have second thoughts middle of the line and I quickly hit `<C-u>` and start typing in
+the idea from my second thought. But then of course, I realize that what I was doing originally was
+the right way. Now if I try to undo what's done by `<C-u>`, I can't. Since it's all treated as one
+insert operation, it's all one undo step.
 
 This is why I got this:
 
@@ -245,7 +244,7 @@ This is why I got this:
     inoremap <C-u> <C-g>u<C-u>
 
 I don't recall the source of this but I found this after a bit of searching online for a solution
-and it works!
+and it works! Whoever came up with this, thank you!
 
 ## Quickly Open `ftplugin`
 
@@ -254,7 +253,7 @@ handy. I use the `$VIMFILES/after/ftplugin` directory to put in my custom settin
 types. These files usually don't just contain changes in settings like indentation, but also
 `commentstring` and often some command that makes editing that specific `filetype` a bit easier.
 
-These mappings let me open the plugin file in that directory for the `filetype` I'm currently
+These commands let me open the plugin file in that directory for the `filetype` I'm currently
 working with.
 
     :::vim
@@ -270,8 +269,8 @@ The same thing for syntax plugin:
                 \ exe 'keepj vsplit $VIMFILES/after/syntax/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim'
     command -nargs=? -complete=filetype Esy EditSyntaxPlugin <args>
 
-If you haven't realized it already, these commands are obviously inspired by the
-`:EditUltiSnipsFile` command from the [UltiSnips][] plugin.
+These commands are obviously heavily inspired by the `:EditUltiSnipsFile` command from the
+[UltiSnips][] plugin (which is great at automation by the way).
 
 [UltiSnips]: https://github.com/sirver/UltiSnips
 
@@ -281,9 +280,9 @@ ViM comes with the `:sort` command that sorts the range of lines provided. So, f
 the whole file, we'd do `:%sort`. To sort the first ten lines, something like `:1,10sort` should do.
 The range of lines given will be replaced with the sorted lines.
 
-This is convenient, but I'd always wanted a way to sort over a motion, like *sort this paragraph* or
-*sort inside braces* etc. So, after some searching online and digging the ViM documentation, I have
-the following in my `vimrc`:
+This is convenient, but not very handy. But I'd always wanted a way to sort over a motion, like
+*sort this paragraph* or *sort inside braces* etc. So, after some searching online and digging the
+ViM documentation, I have the following in my `vimrc`:
 
     :::vim
     " Sort lines, selected or over motion.
@@ -294,7 +293,7 @@ the following in my `vimrc`:
     endfun
 
 With this, hitting `gsip` would sort the lines *inside* the current paragraph. Similarly, `gsiB`
-would sort lines inside the braces closest to the cursor. If you have the
+would sort lines inside the braces closest to the cursor (try this one in CSS!). If you have the
 [vim-indent-object](https://github.com/michaeljsmith/vim-indent-object/) plugin, you could also do
 `gsii` to sort lines in current indent block.
 
