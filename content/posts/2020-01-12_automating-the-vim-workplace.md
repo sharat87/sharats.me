@@ -1,8 +1,8 @@
 ---
-title: Automating the ViM workplace
+title: Automating the Vim workplace
 tags: [vim]
 desc: >
-    Learn to identify actions in your ViM workflow and automate them, and improve your productivity!
+    Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
 ---
 
 I majorly use two tools for my coding workflow and one of them is GViM (on Windows). It's my primary
@@ -15,22 +15,22 @@ these.
 ## Motivation
 
 Most of my text editing involves working with Python, Markdown, and JavaScript source files. When
-I'm spending as much time as I am with ViM, it ceases to be just a tool in my mind. It becomes a
+I'm spending as much time as I am with Vim, it ceases to be just a tool in my mind. It becomes a
 state of mind where I'm able to translate my thoughts into actions much faster than it/I can do with
 something else (besides being an excuse to be fancy with words). It becomes my workplace.
 
-Just like organizing one's desk or toolbox for maximum efficiency, we can mold ViM to help us
+Just like organizing one's desk or toolbox for maximum efficiency, we can mold Vim to help us
 achieve something similar with it. I try to notice things that I do often, that take more than 3-4
 seconds of thought and then a few more seconds of hitting hotkeys or commands. These are the ones I
 try to create a command or a mapping. In my world, this is borderline automation.
 
 What I'm sharing here is stuff I created/scavenged through years of identifying patterns *very
-specific* to my work style. My goal is not to share nice tidbits of ViM configuration. It is to
+specific* to my work style. My goal is not to share nice tidbits of Vim configuration. It is to
 encourage you to identify your work style and work towards optimising it, before you go find a
 plugin and *learn* the plugin's work style. As such, I don't expect you to resonate with the tips I
-shared here. Your own style of working deserves the first chance, let ViM learn it.
+shared here. Your own style of working deserves the first chance, let Vim learn it.
 
-Side note: that all that I share below is what I'm using with ViM. I don't use NeoVim (yet) and I
+Side note: that all that I share below is what I'm using with Vim. I don't use NeoVim (yet) and I
 can't speak for any of the below for NeoVim.
 
 ## Switching to Normal Mode
@@ -167,7 +167,7 @@ Simple, non-intrusive, and effective.
 
 The default key-binding for `<C-^>` (or `<C-6>`, `:h CTRL-6`) lets us quickly switch back-and-forth
 between two buffers. This is extremely handy and is likely one of my most used functionality for
-switching buffers within ViM.
+switching buffers within Vim.
 
 There's some annoying quirks to this mapping though. For example, if there's files in your buffer
 list, but no *alternate* buffer, we'll get an error saying "No alternate buffer". Which is not
@@ -192,14 +192,14 @@ mapping will not navigate to a buffer that's been `Delete`-ed.
 
 ## Run Git Commands in `:terminal`
 
-Running git commands is another thing I often do, while working in ViM. Most of the time, it just a
+Running git commands is another thing I often do, while working in Vim. Most of the time, it just a
 `status` or `diff`, so I needed something quicker than switching to a terminal and running the
 command.
 
 I initially used [fugitive][], but it felt slow on Windows (very likely because of the required
 anti-virus). It works fine when I'm on Linux, but on Windows, it's not productive for me. Besides,
 it does a lot of things I don't usually need. The following is the mapping that serves *most* of
-what I need from within ViM.
+what I need from within Vim.
 
 [fugitive]: https://github.com/tpope/vim-fugitive
 
@@ -212,7 +212,7 @@ the command line with the following pre-filled:
     :::vim
     :ter git --no-pager
 
-Then I just hit `st<Enter>`, which will open a new terminal within ViM which runs `git st` command
+Then I just hit `st<Enter>`, which will open a new terminal within Vim which runs `git st` command
 asynchronously (which is an alias to `git status`).
 
 After seeing the output I noticed that I immediately issued another `,gdiff<Enter>`, which opens up
@@ -276,13 +276,13 @@ These commands are obviously heavily inspired by the `:EditUltiSnipsFile` comman
 
 ## Sorting over Motion
 
-ViM comes with the `:sort` command that sorts the range of lines provided. So, for example, to sort
+Vim comes with the `:sort` command that sorts the range of lines provided. So, for example, to sort
 the whole file, we'd do `:%sort`. To sort the first ten lines, something like `:1,10sort` should do.
 The range of lines given will be replaced with the sorted lines.
 
 This is convenient, but not very handy. But I'd always wanted a way to sort over a motion, like
 *sort this paragraph* or *sort inside braces* etc. So, after some searching online and digging the
-ViM documentation, I have the following in my `vimrc`:
+Vim documentation, I have the following in my `vimrc`:
 
     :::vim
     " Sort lines, selected or over motion.
@@ -325,19 +325,19 @@ don't have a `:reverse` command like `:sort`, so this one is more DIY.
 
 I mapped reversing to `gr`, which works similar to the `gs` from previous section, but instead of
 sorting, the lines will be reversed. Everything in the above snippet can be looked up with `:h`
-command within ViM. I'll leave the understanding-it's-working part as an exercise to the reader, if
+command within Vim. I'll leave the understanding-it's-working part as an exercise to the reader, if
 inclined.
 
 ## Conclusion
 
-This articles looks an awful lot like a list of ViM tips, but I implore you to see further. I picked
-these specific things from my ViM setup (which is a lot bigger than this) to illustrate the idea of
+This articles looks an awful lot like a list of Vim tips, but I implore you to see further. I picked
+these specific things from my Vim setup (which is a lot bigger than this) to illustrate the idea of
 identifying and then automating. Of course, these snippets I shared above, in my opinion are too
 small for a full blown plugin, yet not too insignificant to not be shared. I intend to follow up
 with more ideas from my configuration, so stay tuned.
 
-I also encourage you to go over the ViM help pages often. They contain some awesome tips and ideas
+I also encourage you to go over the Vim help pages often. They contain some awesome tips and ideas
 that serve as great starter points to improve your workflow. So, just, you know, while that really
-long build is running, grab a coffee and open the ViM docs!
+long build is running, grab a coffee and open the Vim docs!
 
 Identify, optimize, repeat.
