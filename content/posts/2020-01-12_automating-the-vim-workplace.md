@@ -34,7 +34,7 @@ not just in ViM.
 Please note that all that I share below is what I'm using with ViM. I don't use NeoVim (yet) and I
 can't speak for any of the below for NeoVim.
 
-## Switching to normal mode
+## Switching to Normal Mode
 
 Probably the action that is done most often is switching to normal & insert modes. Switching to
 insert mode is usually with several different keys (`i`, `a`, `o` etc.), but for switching to normal
@@ -92,7 +92,7 @@ moves ahead by two characters. Still working on getting it to work well.
 
 It's a never ending process of learning and experimenting.
 
-## Start GViM maximized, in Windows
+## Start GViM Maximized, in Windows
 
 As another example, I wanted GViM to start maximized when I open it. On way to do this was to check
 the Maximized checkbox in the GViM shortcut's properties. But that won't work when I start GViM from
@@ -106,7 +106,7 @@ if exists(':simalt') > 0 && s:iswin
 endif
 ```
 
-## Save all buffers
+## Save All Buffers
 
 I often use the `:wa` command to save all my open buffers. But it has the nasty habit of throwing an
 error when it's not able to save all buffers. This is annoying because I often have scratch buffers
@@ -126,7 +126,7 @@ If you're using the above mapping, note that mapping to `<C-m>` is almost the sa
 mapping. Just something to keep in mind.
 {: .note }
 
-## Copy to system clipboard
+## Copy to System Clipboard
 
 I often have to copy stuff to system clipboard to paste into chat channels and emails. The standard
 way to do this would be something like `"+yap` in normal mode, or `"+y` in visual mode. This is
@@ -142,7 +142,7 @@ nnoremap <silent> cpp "+yy
 With this, `<C-c>` in visual mode copies selection to clipboard and `cp` can be used with text
 objects. Much easier to hit.
 
-## Ensure directory of file exists, before saving
+## Ensure Directory Exists, Before Saving
 
 I often edit new files like `:e css/styles.css`, without realizing that I have to create the `css`
 folder before saving this. But that's not productive, my tool should do that automatically.
