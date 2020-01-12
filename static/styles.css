@@ -237,33 +237,6 @@ header .compact {
 	vertical-align: middle;
 }
 
-@media (max-width: 600px) {
-	header, header nav {
-		flex-direction: column;
-		align-items: stretch;
-	}
-
-	header nav {
-		display: none;
-	}
-
-	input.nav-toggle:checked ~ nav {
-		display: flex;
-	}
-
-	input.nav-toggle:checked ~ .compact label.nav-toggle {
-		background-color: rgba(0, 0, 0, .2);
-	}
-
-	label.nav-toggle {
-		display: block;
-		margin: 0 12px 0 0;
-		padding: 3px 6px;
-		border: 1px solid rgba(0, 0, 0, .4);
-		border-radius: 3px;
-	}
-}
-
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 	font-weight: 600;
 	font-size: .85em;
@@ -589,7 +562,7 @@ footer a:hover {
 	display: block;
 }
 
-/* Pygments styles */
+/* pygments styles BEGIN */
 .hl .hll { background-color: #ffffcc }
 .hl .c { color: #8f5902 } /* Comment */
 .hl .err { color: #a40000; outline: 1px solid #ef2929 } /* Error */
@@ -666,3 +639,46 @@ footer a:hover {
 .hl .vi { color: #000000 } /* Name.Variable.Instance */
 .hl .vm { color: #000000 } /* Name.Variable.Magic */
 .hl .il { color: #0000cf } /* Literal.Number.Integer.Long */
+/* pygments styles END */
+
+@media (max-width: 600px) {
+	header, header nav {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	header nav {
+		display: none;
+	}
+
+	input.nav-toggle:checked ~ nav {
+		display: flex;
+	}
+
+	input.nav-toggle:checked ~ .compact label.nav-toggle {
+		background-color: rgba(0, 0, 0, .2);
+	}
+
+	label.nav-toggle {
+		display: block;
+		margin: 0 12px 0 0;
+		padding: 3px 6px;
+		border: 1px solid rgba(0, 0, 0, .4);
+		border-radius: 3px;
+	}
+
+	article > .hl, .hltable, .note {
+		margin-left: -6px;
+		margin-right: -6px;
+	}
+
+	pre {
+		border-width: 1px 0;
+		border-style: solid;
+		border-color: rgba(0, 0, 0, .06);
+	}
+
+	.note {
+		border-radius: 0;
+	}
+}
