@@ -252,6 +252,11 @@ This is why I got this:
 I don't recall the source of this but I found this after a bit of searching online for a solution
 and it works! Whoever came up with this, thank you!
 
+> Thanks to this [kind person's
+> hint](https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe3973i), I was
+> able to find the source of this. It's actually in the `defaults.vim` file that is shipped with
+> Vim.
+
 ## Quickly Open `ftplugin`
 
 This is one that I don't use *as often* as some of the above, but when I do need it, it's extremely
