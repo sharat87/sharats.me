@@ -55,9 +55,15 @@ Of course, now we need a quick way to open our `vimrc` file so we can add this m
 back to whatever we are doing. Well,
 
     :::vim
-    nnoremap cv :e $USERPROFILE/vimfiles/vimrc<CR>
+    nnoremap cv :e $MYVIMRC<CR>
 
 The `cv` is a mnemonic for *change vimrc*.
+
+> This mapping was originally defined as `:e $USERPROFILE/vimfiles/vimrc<CR>`. Thanks to the helpful
+> community at [r/vim][] and a comment here, I realized `$MYVIMRC` is a better fit here. Thank you
+> folks!
+
+[r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0
 
 This is what I'm talking about when I say identify things that you often do. Even if you don't sit
 down to automate it right away, put it on a sticky near your desk. Spend a few minutes thinking
