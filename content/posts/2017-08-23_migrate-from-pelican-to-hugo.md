@@ -1,6 +1,8 @@
 ---
 title: Migrate from Pelican to Hugo
 tags: [hugo, meta, awk, python]
+desc: >
+    A writeup on my experience migrating this blog website from Pelican to Hugo.
 ---
 
 I recently got around to resurrecting my blog up after around five years of death. As part of that,
@@ -8,7 +10,7 @@ I chose to migrate my blog to Hugo, from the current Pelican builder. The first 
 resurrection will be about the migration.
 
 If you're wondering why the long break, well, I could blame it on life and work, but it was just me
-being lazy. Hopefully, that won't happen agian.
+being lazy. Hopefully, that won't happen again.
 
 ## Why Hugo
 

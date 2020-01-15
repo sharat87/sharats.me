@@ -667,18 +667,18 @@ footer a:hover {
 		border-radius: 3px;
 	}
 
-	article > .hl, .hltable, .note, blockquote {
+	article > .hl, .hltable, .note, blockquote, .toc {
 		margin-left: -6px;
 		margin-right: -6px;
 	}
 
-	pre {
+	pre, .toc {
 		border-width: 1px 0;
 		border-style: solid;
 		border-color: rgba(0, 0, 0, .06);
 	}
 
-	.note {
+	.note, .toc {
 		border-radius: 0;
 	}
 }

@@ -1,6 +1,9 @@
 ---
 title: The Python Dictionary
-tags: [python, data-structures]
+tags: [python, programming, data-structures, reference]
+desc: >
+    An extensive write up on dictionaries in Python, with examples and explanations, serving as a
+    supplementary reference for the official documentation.
 ---
 
 The Python [Dictionary][] is a key--value style data structure that is tightly integrated with the
