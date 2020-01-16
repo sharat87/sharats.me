@@ -36,6 +36,9 @@ class Config:
     email = 'shrikantsharat.k@gmail.com'
     feedburner_url = 'http://feeds.feedburner.com/sharats-me'
 
+    twitter_user = 'sharat87'
+    facebook_app_id = None
+
     dev_mode = read_env('DEV', False)
 
     adsense = read_env('ADSENSE', True)

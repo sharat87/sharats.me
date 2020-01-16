@@ -175,7 +175,7 @@ def deserialize_session(data):
 
 And let's try this out
 
-```python
+```
 $ python test.py
 Traceback (most recent call last):
     File "test.py", line 12, in <module>

@@ -471,8 +471,32 @@ footer a:hover {
 	margin-top: 0;
 }
 
-.post-author .support-links {
+.support-links, .share-links {
 	text-align: center;
+}
+
+.share-links a {
+	display: inline-block;
+	padding: 2px 6px;
+	background-color: rgba(0, 0, 0, .1);
+	border-radius: 2px;
+	text-decoration: none;
+	color: inherit;
+}
+
+fieldset {
+	border: 2px solid var(--link-color);
+	border-radius: 3px;
+	margin-top: 1em;
+}
+
+.post-author fieldset {
+	border-color: #E95;
+}
+
+fieldset legend {
+	padding: 0 9px;
+	font-weight: var(--bold-weight);
 }
 
 #cookiesOkBox {
@@ -653,6 +677,10 @@ footer a:hover {
 		display: none;
 	}
 
+	header nav a {
+		border-radius: 0;
+	}
+
 	input.nav-toggle:checked ~ nav {
 		display: flex;
 	}
@@ -669,18 +697,15 @@ footer a:hover {
 		border-radius: 3px;
 	}
 
-	article > .hl, .hltable, .note, blockquote, .toc {
+	article > .hl, .hltable, .note, blockquote, .toc, .post-author {
 		margin-left: -6px;
 		margin-right: -6px;
+		border-radius: 0;
 	}
 
 	pre, .toc {
 		border-width: 1px 0;
 		border-style: solid;
 		border-color: rgba(0, 0, 0, .06);
-	}
-
-	.note, .toc {
-		border-radius: 0;
 	}
 }

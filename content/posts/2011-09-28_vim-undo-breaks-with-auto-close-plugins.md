@@ -70,17 +70,17 @@ Here are a few ones that break undo:
 
 ### Beasts
 
-* https://github.com/vim-scripts/AutoClose
-* https://github.com/Raimondi/delimitMate
-* https://github.com/Townk/vim-autoclose
+- <https://github.com/vim-scripts/AutoClose>
+- <https://github.com/Raimondi/delimitMate>
+- <https://github.com/Townk/vim-autoclose>
 
 and these don't break undo
 
 ### Critters
 
-* https://github.com/vim-scripts/ClosePairs
-* https://github.com/vim-scripts/simple-pairs
-* https://github.com/vim-scripts/Auto-Pairs
+- <https://github.com/vim-scripts/ClosePairs>
+- <https://github.com/vim-scripts/simple-pairs>
+- <https://github.com/vim-scripts/Auto-Pairs>
 
 An initial look at them and you can tell, the ones that break undo are actually
 more popular and have a relatively larger code base. So why doesn't anyone
@@ -153,4 +153,4 @@ history that is centric to every file, which is quite handy in its own right.
 So, if there are others who have faced this, have a fix for it, perhaps a patch
 to vim, or if there is already a bug in vim's bug database on this, let me know.
 
-Thanks for reading.
+Thank you for reading.
