@@ -5,7 +5,7 @@ desc: >
     Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
 ---
 
-I majorly use two tools for my coding workflow and one of them is GViM (on Windows). It's my primary
+I majorly use two tools for my coding workflow and one of them is GVim (on Windows). It's my primary
 choice for editing text for ten years now and in that time, I've picked up several habits and tricks
 that made me very productive. I'm hoping to do several articles in the coming weeks to share some of
 these.
@@ -97,10 +97,10 @@ moves ahead by two characters. Still working on getting it to work well.
 
 It's a never ending process of learning and experimenting.
 
-## Start GViM Maximized, in Windows
+## Start GVim Maximized, in Windows
 
-As another example, I wanted GViM to start maximized when I open it. On way to do this was to check
-the Maximized checkbox in the GViM shortcut's properties. But that won't work when I start GViM from
+As another example, I wanted GVim to start maximized when I open it. On way to do this was to check
+the Maximized checkbox in the GVim shortcut's properties. But that won't work when I start GVim from
 a command line. The solution that worked even better:
 
     :::vim
