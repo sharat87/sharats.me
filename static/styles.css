@@ -225,7 +225,7 @@ header nav a:hover {
 
 header .compact {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 	justify-content: space-between;
 }
 
@@ -238,7 +238,7 @@ header .compact {
 }
 
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
-	font-weight: 600;
+	font-weight: 500;
 	font-size: .85em;
 }
 
@@ -458,6 +458,14 @@ footer a:hover {
 
 .toc a:hover {
 	text-decoration: underline;
+}
+
+.post-end-mark {
+	margin: 1em 0;
+	font-size: 3em;
+	text-align: center;
+	opacity: .6;
+	text-shadow: 0 0 6px rgba(0, 0, 0, .8);
 }
 
 .post-author {
@@ -690,11 +698,9 @@ fieldset legend {
 	}
 
 	label.nav-toggle {
-		display: block;
-		margin: 0 12px 0 0;
-		padding: 3px 6px;
-		border: 1px solid rgba(0, 0, 0, .4);
-		border-radius: 3px;
+		display: flex;
+		align-items: center;
+		padding: 0 12px 0 2em;
 	}
 
 	article > .hl, .hltable, .note, blockquote, .toc, .post-author {

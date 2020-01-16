@@ -266,6 +266,7 @@ def render(target, template, **kwargs):
 
 
 def action_build():
+    # The *ducttape* static site generator.
     start_time = time.time()
     log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
