@@ -310,6 +310,8 @@ a, a:visited {
 
 .title-subtext {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 }
 
 .tag {
@@ -318,7 +320,7 @@ a, a:visited {
 	background-color: #EFF;
 	padding: 2px 6px;
 	border-radius: 2px;
-	margin: 0 0 0 9px;
+	margin: 3px 0 3px 9px;
 }
 
 .tag:hover {
