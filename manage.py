@@ -265,6 +265,16 @@ def render(target, template, **kwargs):
     dest.write_text(markup, encoding='utf-8')
 
 
+def render_pages(pages):
+    for page in pages:
+        log.info('Rendering page %s.', repr(page))
+        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
+
+
+def sort_by_date(pages):
+    pages.sort(key=lambda p: (p.date or dt.date(2000, 1, 1)))
+
+
 def action_build():
     # The *ducttape* static site generator.
     start_time = time.time()
@@ -276,10 +286,20 @@ def action_build():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
     all_pages = [p for p in map(Page, CONTENT_DIR.glob('**/*.md')) if p.should_publish]
-    for page in all_pages:
-        log.info('Rendering page %s.', repr(page))
-        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
 
+    processors = [
+        sort_by_date,
+        render_pages,
+        render_site_level_pages,
+    ]
+
+    for fn in processors:
+        fn(all_pages)
+
+    log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))
+
+
+def render_site_level_pages(all_pages):
     posts = sorted((p for p in all_pages if p.date), key=lambda p: p.date, reverse=True)
 
     log.info('Rendering index page.')
@@ -296,7 +316,6 @@ def action_build():
         sp.run(['gzip', '-k', 'sitemap.xml'], cwd=str(OUTPUT_DIR))
 
     generate_feed(posts[:6], '/posts/index.xml')
-    log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))
 
 
 def render_tags(posts):
