@@ -7,7 +7,7 @@
 	<p class=warning>This post has `publish` set to `false` in it's metadata.</p>
 	{%- endif %}
 
-	{%- if post.date or post.tags %}
+	{%- if post.layout != 'page' and (post.date or post.tags) %}
 	<div class=title-subtext>
 		{% if post.date %}
 		<time datetime='{{ post.date_iso }}'>{{ post.date_display }}</time>
@@ -20,9 +20,11 @@
 
 	<article>{{ post.html_body | safe }}</article>
 
+	{%- if post.layout == 'post' %}
 	<section class=post-end-mark>&#x1f64f;</section>
+	{%- endif %}
 
-	{%- if config.dev_mode %}
+	{%- if post.layout == 'post' and config.dev_mode %}
 	<section class=post-author>
 		<h2>About the author</h2>
 		<p>Hello, I am Shrikant! I love programming and quantitative financial topics. I mostly

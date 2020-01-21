@@ -71,8 +71,8 @@ env.filters['en_join'] = filter_en_join
 
 class Page:
     def __init__(self, path):
-        self.path = path
-        self.slug = path.stem
+        self.path = path.resolve()
+        self.slug = self.path.stem
         self.meta = {
             'publish': True,
             'comments': True,
@@ -132,8 +132,24 @@ class Page:
     def last_mod(self):
         return self.meta.get('modified_date', self.date)
 
+    @property
+    def layout(self):
+        layout = self.meta.get('layout')
+        if layout:
+            return layout
+
+        folder_name = self.path.relative_to(CONTENT_DIR).parent.name
+        if folder_name:
+            if folder_name.endswith('es'):
+                return folder_name[:-2]
+            elif folder_name.endswith('s'):
+                return folder_name[:-1]
+            return folder_name
+
+        return 'page'
+
     def __str__(self):
-        return f'<{self.__class__.__name__} {self.slug}>'
+        return f'<{self.__class__.__name__} {self.slug} {self.layout}>'
 
     __repr__ = __str__
 
@@ -309,7 +325,7 @@ def action_build():
 
 
 def render_site_level_pages(all_pages):
-    posts = sorted((p for p in all_pages if p.date), key=lambda p: p.date, reverse=True)
+    posts = sorted((p for p in all_pages if p.layout == 'post'), key=lambda p: p.date, reverse=True)
 
     log.info('Rendering index page.')
     render('index.html', 'index.html', posts=posts)
