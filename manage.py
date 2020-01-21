@@ -293,7 +293,7 @@ def render(target, template, **kwargs):
 def render_pages(pages):
     for page in pages:
         log.info('Rendering page %s.', repr(page))
-        render(page.output_path, page.meta.get('template', 'post.html'), post=page)
+        render(page.output_path, page.meta.get('template', 'page.html'), page=page)
 
 
 def sort_by_date(pages):

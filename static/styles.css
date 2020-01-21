@@ -469,7 +469,7 @@ footer a:hover {
 	text-decoration: underline;
 }
 
-.post-end-mark {
+.page-end-mark {
 	margin: 1em 0;
 	font-size: 3em;
 	text-align: center;
@@ -477,14 +477,14 @@ footer a:hover {
 	text-shadow: 0 0 6px rgba(0, 0, 0, .4);
 }
 
-.post-author {
+.page-author {
 	margin: 3em 1em 1em;
 	padding: .5em;
 	background-color: #FED;
 	border-radius: 3px;
 }
 
-.post-author > :first-child {
+.page-author > :first-child {
 	margin-top: 0;
 }
 
@@ -507,7 +507,7 @@ fieldset {
 	margin-top: 1em;
 }
 
-.post-author fieldset {
+.page-author fieldset {
 	border-color: #E95;
 }
 
@@ -724,7 +724,7 @@ fieldset legend {
 		padding: 0 12px 0 2em;
 	}
 
-	article > .hl, .hltable, .note, blockquote, .toc, .post-author {
+	article > .hl, .hltable, .note, blockquote, .toc, .page-author {
 		margin-left: -6px;
 		margin-right: -6px;
 		border-radius: 0;

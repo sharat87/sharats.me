@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 
 {% block main %}
-	<h1><a href='{{ post.permalink }}' rel=bookmark>{{ post.title | safe }}</a></h1>
+	<h1><a href='{{ page.permalink }}' rel=bookmark>{{ page.title | safe }}</a></h1>
 
-	{%- if not post.meta.publish %}
-	<p class=warning>This post has `publish` set to `false` in it's metadata.</p>
+	{%- if not page.meta.publish %}
+	<p class=warning>This page has `publish` set to `false` in it's metadata.</p>
 	{%- endif %}
 
-	{%- if post.layout != 'page' and (post.date or post.tags) %}
+	{%- if page.layout != 'page' and (page.date or page.tags) %}
 	<div class=title-subtext>
-		{% if post.date %}
-		<time datetime='{{ post.date_iso }}'>{{ post.date_display }}</time>
+		{% if page.date %}
+		<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
 		{% endif %}
-		{% for tag in post.tags %}
+		{% for tag in page.tags %}
 		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
 		{% endfor %}
 	</div>
 	{%- endif %}
 
-	<article>{{ post.html_body | safe }}</article>
+	<article>{{ page.html_body | safe }}</article>
 
-	{%- if post.layout == 'post' %}
-	<section class=post-end-mark>&#x1f64f;</section>
+	{%- if page.layout == 'post' %}
+	<section class=page-end-mark>&#x1f64f;</section>
 	{%- endif %}
 
-	{%- if post.layout == 'post' and config.dev_mode %}
-	<section class=post-author>
+	{%- if page.layout == 'post' and config.dev_mode %}
+	<section class=page-author>
 		<h2>About the author</h2>
 		<p>Hello, I am Shrikant! I love programming and quantitative financial topics. I mostly
 		write about Python, JavaScript and ViM following my work and experiences. Thank you for
@@ -39,20 +39,20 @@
 			</p>
 		</fieldset>
 
-		{%- if post %}
+		{%- if page %}
 		<fieldset>
 			<legend>Share this article</legend>
 			<p class=share-links>
-			<a href='https://twitter.com/intent/tweet?url={{ post.permalink }}&text={{ post.title }}
+			<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title }}
 				{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
-				{%- if post.tags %}&hashtags={{ post.tags | join(', ') }}{% endif -%}'
+				{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'
 				target=_blank title='Share on Twitter'>Twitter</a>
 			{%- if config.facebook_app_id %}
-			<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ post.permalink }}&redirect_uri={{ post.permalink }}'
+			<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ page.permalink }}&redirect_uri={{ page.permalink }}'
 				target=_blank title='Share on Facebook'>Facebook</a>
 			{%- endif %}
-			<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ post.permalink }}&title={{ post.title }}
-				{%- if post.meta.desc %}&summary={{ post.meta.desc }}{% endif -%}'
+			<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title }}
+				{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
 				target=_blank title='Share on LinkedIn'>LinkedIn</a>
 			</p>
 		</fieldset>
@@ -61,7 +61,7 @@
 	</section>
 	{% endif %}
 
-	{% if post.meta.comments %}
+	{% if page.meta.comments %}
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>
@@ -71,7 +71,7 @@
 	</section>
 	<script>
 	function disqus_config() {
-		this.page.url = '{% if post.meta.disqus_url %}{{ post.meta.disqus_url }}{% else %}{{ post.permalink }}{%- endif %}';
+		this.page.url = '{% if page.meta.disqus_url %}{{ page.meta.disqus_url }}{% else %}{{ page.permalink }}{%- endif %}';
 	}
 	function loadComments(event) {
 		event.target.remove();
