@@ -228,26 +228,15 @@ class CodeHighlighterFence(markdown.preprocessors.Preprocessor):
         return text.split('\n')
 
 
-class TableWrapper(markdown.treeprocessors.Treeprocessor):
-    def run(self, doc):
-        indices = {v: i for i, v in enumerate(doc)}
-        for table in doc.iter('table'):
-            doc.remove(table)
-            wrapper = doc.makeelement('div', {'class': 'table-wrapper'})
-            wrapper.insert(0, table)
-            doc.insert(indices[table], wrapper)
-
-
 class MdExt(markdown.extensions.Extension):
     def extendMarkdown(self, md):
         md.treeprocessors.register(CodeHighlighter(md), 'code_highlighter', 30)
         md.preprocessors.register(CodeHighlighterFence(md), 'code_highlighter_fence', 25)
-        md.treeprocessors.register(TableWrapper(md), 'table_wrapper', 76)
         md.registerExtension(self)
 
 
 def md_to_html(md_content: str) -> str:
-    return markdown.markdown(
+    html = markdown.markdown(
         md_content,
         extensions=['abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'sane_lists', 'toc', MdExt()],
         extension_configs={
@@ -256,6 +245,26 @@ def md_to_html(md_content: str) -> str:
             }
         },
     )
+
+    soup = BeautifulSoup(html, 'html.parser')
+
+    # For all external pointing links, add `target=_blank`.
+    for link in soup.find_all('a'):
+        href = link.attrs['href']
+        if href.startswith(('http://', 'https://')) and 'sharats.me' not in href and 'target' not in link:
+            link.attrs['target'] = '_blank'
+
+    # Add a h2 for table of contents, if any.
+    for toc_box in soup.find_all('div', class_='toc'):
+        h2 = soup.new_tag('h2')
+        h2.string = 'Table of Contents'
+        toc_box.insert(0, h2)
+
+    # Tables need to be wrapped in a div so they can be horizontally scrolled on smaller screens.
+    for table in soup.find_all('table'):
+        table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
+
+    return str(soup)
 
 
 def render(target, template, **kwargs):

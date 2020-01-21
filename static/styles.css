@@ -38,6 +38,15 @@ body {
 	overflow-x: auto;
 }
 
+.table-wrapper code {
+	white-space: pre;
+}
+
+ol > li > ul {
+	/* Second level `ul` under an `ol` can have discs, instead of hollow circles. */
+	list-style: disc;
+}
+
 table {
 	border-collapse: collapse;
 }
@@ -141,6 +150,7 @@ pre {
 
 code {
 	padding: 0 2px;
+	white-space: pre;
 }
 
 pre > code {
@@ -442,9 +452,8 @@ footer a:hover {
 	padding: .5em;
 }
 
-.toc:before {
-	content: 'Contents';
-	margin-bottom: 6px;
+.toc h2 {
+	margin-top: 0;
 }
 
 .toc ul {
@@ -566,7 +575,7 @@ fieldset legend {
 .hltable .linenodiv pre {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	border-right: 0;
+	border-right: 1px solid rgba(0, 0, 0, .06);
 }
 
 .hltable .hl pre {
@@ -676,6 +685,18 @@ fieldset legend {
 /* pygments styles END */
 
 @media (max-width: 600px) {
+	ol, ul {
+		padding-left: 2em;
+	}
+
+	li ol, li ul {
+		padding-left: 1.5em;
+	}
+
+	pre {
+		padding: 6px;
+	}
+
 	header, header nav {
 		flex-direction: column;
 		align-items: stretch;
