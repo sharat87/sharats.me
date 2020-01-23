@@ -38,12 +38,12 @@
 	<div class=compact>
 		<h1><a href=/ rel=home>{{ config.site_title }}</a></h1>
 		<label class=nav-toggle for=nav-toggle>
-			<svg width="20" height="20" role="img">
+			<svg width="25" height="20" role="img">
 				<title>Toggle navigation menu</title>
 				<g stroke="black" stroke-width="2" stroke-linecap="round">
-					<line x1="4" y1="4" x2="16" y2="4" />
-					<line x1="4" y1="10" x2="16" y2="10" />
-					<line x1="4" y1="16" x2="16" y2="16" />
+					<line x1="4" y1="4"  x2="21" y2="4" />
+					<line x1="4" y1="10" x2="21" y2="10" />
+					<line x1="4" y1="16" x2="21" y2="16" />
 				</g>
 			</svg>
 		</label>
@@ -106,7 +106,7 @@ for (const el of document.querySelectorAll('sup.footnote-ref a'))
 	el.setAttribute('title',
 		document.getElementById(el.getAttribute('href').slice(1)).firstChild.textContent.trim());
 
-for (const el of document.querySelectorAll('.hl')) {
+for (const el of document.querySelectorAll('div.hl')) {
 	const buttons = [];
 	if (el.dataset.lang == 'pycon')
 		buttons.push(`<button type=button class=pycon-toggle-btn

@@ -721,7 +721,7 @@ fieldset legend {
 	label.nav-toggle {
 		display: flex;
 		align-items: center;
-		padding: 0 12px 0 2em;
+		padding: 0 18px;
 	}
 
 	article > .hl, .hltable, .note, blockquote, .toc, .page-author {

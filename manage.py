@@ -80,7 +80,7 @@ class Page:
         self.tags = []  # This should conceptually be a set, but we use list so the order of the tags is predictable.
         self.date = None
 
-        body = self.path.read_text()
+        body = self.path.read_text('utf8', 'strict')
 
         if body.startswith('---\n'):
             meta_block, body = body[4:].split('\n---\n', 1)
@@ -254,11 +254,14 @@ class MdExt(markdown.extensions.Extension):
 def md_to_html(md_content: str) -> str:
     html = markdown.markdown(
         md_content,
-        extensions=['abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'sane_lists', 'toc', MdExt()],
+        extensions=['abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'sane_lists', 'toc', 'smarty', MdExt()],
         extension_configs={
             'toc': {
                 'permalink': True,
-            }
+            },
+            'smarty': {
+                'smart_quotes': False,
+            },
         },
     )
 
@@ -280,6 +283,25 @@ def md_to_html(md_content: str) -> str:
     for table in soup.find_all('table'):
         table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
 
+    # Syntax highlighting for inline code blocks.
+    # for code in soup.find_all('code'):
+    #     if not code.string:
+    #         continue
+
+    #     lexer = get_lexer_by_name('python')
+    #     formatter = HtmlFormatter(
+    #         cssclass='hl',
+    #         wrapcode=False,
+    #     )
+
+    #     hl_soup = BeautifulSoup(highlight(html_unescape(code.string), lexer, formatter), 'html.parser')
+    #     code.clear()
+    #     for child in list(hl_soup.pre.contents):
+    #         code.append(child)
+    #     if code.contents[-1].endswith('\n'):
+    #         code.contents[-1].replace_with(code.contents[-1].rstrip('\n'))
+    #     code['class'] = 'hl'
+
     return str(soup)
 
 
@@ -288,6 +310,9 @@ def render(target, template, **kwargs):
     dest = OUTPUT_DIR / target
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(markup, encoding='utf-8')
+    # if 'python-strings' in str(target):
+    #     import weasyprint
+    #     weasyprint.HTML(filename=str(target)).write_pdf(target.with_suffix('.pdf'))
 
 
 def render_pages(pages):

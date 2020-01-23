@@ -34,3 +34,8 @@ I'm doing and would like to support my work, please consider the following optio
 <a target=_blank href="https://www.linkedin.com/in/sharat87">LinkedIn</a>
 <a target=_blank href="https://twitter.com/sharat87">Twitter</a>
 </p>
+
+## Warning
+
+This website is rumored to contain stuff that's not entirely unlike garbage from outer space that
+would jump out of your device unless you know where your towel is.
