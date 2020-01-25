@@ -79,22 +79,7 @@ class Page:
         }
         self.tags = []  # This should conceptually be a set, but we use list so the order of the tags is predictable.
         self.date = None
-
-        body = self.path.read_text('utf8', 'strict')
-
-        if body.startswith('---\n'):
-            meta_block, body = body[4:].split('\n---\n', 1)
-            self.meta.update(yaml.safe_load(meta_block))
-            if 'tags' in self.meta:
-                self.tags.extend(self.meta.pop('tags'))
-
-        self.body = body
-        self.html_body = md_to_html(body)
-
-        match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', self.slug)
-        if match:
-            self.date = dt.datetime.fromisoformat(match.group('date')).date()
-            self.slug = match.group('slug')
+        self.content = None
 
     @property
     def title(self):
@@ -126,7 +111,7 @@ class Page:
 
     @property
     def should_publish(self):
-        return Config.dev_mode or (self.meta['publish'] and (self.date is None or self.date <= dt.date.today()))
+        return self.meta['publish'] and (self.date is None or self.date <= dt.date.today())
 
     @property
     def last_mod(self):
@@ -305,6 +290,34 @@ def md_to_html(md_content: str) -> str:
     return str(soup)
 
 
+def load_page(page):
+    page.body = page.path.read_text('utf8', 'strict')
+
+    if page.body.startswith('---\n'):
+        meta_block, page.body = page.body[4:].split('\n---\n', 1)
+        page.meta.update(yaml.safe_load(meta_block))
+        if 'tags' in page.meta:
+            page.tags.extend(page.meta.pop('tags'))
+
+    page.html_body = md_to_html(page.body)
+
+    match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', page.slug)
+    if match:
+        page.date = dt.datetime.fromisoformat(match.group('date')).date()
+        page.slug = match.group('slug')
+
+
+def foreach(fn):
+    return lambda ps: list(map(fn, ps))
+
+
+def filter_by(fn):
+    def proc(pages):
+        for i in reversed([i for i, p in enumerate(pages) if not fn(p)]):
+            del pages[i]
+    return proc
+
+
 def render(target, template, **kwargs):
     markup = env.get_template(template).render(config=Config, **kwargs)
     dest = OUTPUT_DIR / target
@@ -315,38 +328,49 @@ def render(target, template, **kwargs):
     #     weasyprint.HTML(filename=str(target)).write_pdf(target.with_suffix('.pdf'))
 
 
-def render_pages(pages):
-    for page in pages:
-        log.info('Rendering page %s.', repr(page))
-        render(page.output_path, page.meta.get('template', 'page.html'), page=page)
+def render_page(page):
+    log.info('Rendering page %r.', page)
+    page.content = env.get_template(page.meta.get('template', 'page.html')).render(config=Config, page=page)
 
 
 def sort_by_date(pages):
     pages.sort(key=lambda p: (p.date or dt.date(2000, 1, 1)))
 
 
+def write_all(pages):
+    for page in pages:
+        if page.content:
+            log.info('Writing page to %r.', page.output_path)
+            dest = OUTPUT_DIR / page.output_path
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(page.content, encoding='utf8')
+
+
 def action_build():
     # The *ducttape* static site generator.
     start_time = time.time()
-    log.info('OUTPUT_DIR is `%s`.', OUTPUT_DIR)
+    log.info('OUTPUT_DIR is %r.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     action_clean()
 
     for entry in (ROOT_LOC / 'static').iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
-    all_pages = [p for p in map(Page, CONTENT_DIR.glob('**/*.md')) if p.should_publish]
-
     processors = [
+        foreach(load_page),
+        None if Config.dev_mode else filter_by(lambda p: p.should_publish),
         sort_by_date,
-        render_pages,
+        foreach(render_page),
         render_site_level_pages,
+        write_all,
     ]
 
+    all_pages = [Page(p) for p in CONTENT_DIR.glob('**/*.md')]
     for fn in processors:
-        fn(all_pages)
+        if fn is not None:
+            fn(all_pages)
 
-    log.info('Build finished in {:.2f} seconds.'.format(time.time() - start_time))
+    log.info('Built %d pages in %.2f seconds.', len(all_pages), time.time() - start_time)
 
 
 def render_site_level_pages(all_pages):
@@ -423,7 +447,7 @@ def generate_feed(posts, path):
 
 def files_to_watch():
     for path in [CONTENT_DIR, TEMPLATES_DIR, ROOT_LOC / 'static']:
-        yield from (file for file in path.glob('**/*') if file.is_file())
+        yield from filter(Path.is_file, path.glob('**/*'))
 
 
 def action_watch():
