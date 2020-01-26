@@ -187,7 +187,7 @@ th, td {
 
 main {
 	width: 100%;
-	max-width: 960px;
+	max-width: 720px;
 	padding: 0 6px;
 	flex-grow: 1;
 }
@@ -324,20 +324,6 @@ a, a:visited {
 	align-items: center;
 }
 
-.tag {
-	display: inline-block;
-	text-decoration: none;
-	background-color: #EFF;
-	padding: 2px 6px;
-	border-radius: 2px;
-	margin: 3px 0 3px 9px;
-}
-
-.tag:hover {
-	background-color: var(--link-color);
-	color: white;
-}
-
 main h1:first-child {
 	margin-bottom: 0;
 }
@@ -379,6 +365,20 @@ main article {
 	font-size: .8em;
 	margin-top: 3px;
 	opacity: .8;
+}
+
+.tag {
+	display: inline-block;
+	text-decoration: none;
+	background-color: #EFF;
+	padding: 2px 6px;
+	border-radius: 2px;
+	margin: 3px 0 3px 9px;
+}
+
+.tag:hover {
+	background-color: var(--link-color);
+	color: white;
 }
 
 .note {

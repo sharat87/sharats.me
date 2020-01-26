@@ -111,7 +111,7 @@ class Page:
 
     @property
     def should_publish(self):
-        return self.meta['publish'] and (self.date is None or self.date <= dt.date.today())
+        return self.meta['publish'] and (self.date is None or self.date <= today())
 
     @property
     def last_mod(self):
@@ -346,9 +346,15 @@ def write_all(pages):
             dest.write_text(page.content, encoding='utf8')
 
 
+def today() -> dt.date:
+    return dt.datetime.utcnow().date()
+
+
 def action_build():
     # The *ducttape* static site generator.
     start_time = time.time()
+    log.info('PYTHON VERSION: %s', sys.version)
+    log.info('DATE: %r', today())
     log.info('OUTPUT_DIR is %r.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     action_clean()
