@@ -348,17 +348,14 @@ main article {
 	flex-wrap: wrap;
 }
 
-.post-list a {
-	text-decoration: none;
-}
-
-.post-list a:hover {
-	text-decoration: underline;
-}
-
 .post-list .title {
 	font-size: 1.2em;
 	margin-right: .5em;
+	text-decoration: none;
+}
+
+.post-list .title:hover {
+	text-decoration: underline;
 }
 
 .post-list .subtext {

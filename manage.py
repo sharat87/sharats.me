@@ -103,7 +103,7 @@ class Page:
 
     @property
     def date_display(self):
-        return self.date.strftime('%b %d, %Y') if self.date else ''
+        return self.date.strftime('%b %d, %Y').replace(' 0', ' ') if self.date else ''
 
     @property
     def date_iso(self):
@@ -268,6 +268,15 @@ def md_to_html(md_content: str) -> str:
     for table in soup.find_all('table'):
         table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
 
+    for para in soup.find_all('p'):
+        if not (para.string and para.string.lstrip().startswith(('TODO:', 'FIXME:', 'XXX:'))):
+            continue
+
+        if not Config.dev_mode:
+            raise ValueError('TODO marker found')
+
+        para['style'] = 'background: yellow; color: maroon; font-weight: bold; padding: .3em; font-size: 1.3em;'
+
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):
     #     if not code.string:
@@ -353,8 +362,7 @@ def today() -> dt.date:
 def action_build():
     # The *ducttape* static site generator.
     start_time = time.time()
-    log.info('PYTHON VERSION: %s', sys.version)
-    log.info('DATE: %r', today())
+    log.info('BUILD DATE: %r', today())
     log.info('OUTPUT_DIR is %r.', OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     action_clean()
@@ -457,6 +465,9 @@ def files_to_watch():
 
 
 def action_watch():
+    log.info('Overriding `dev_mode` to True.')
+    Config.dev_mode = True
+
     mtimes = {}
     for file in files_to_watch():
         mtimes[file] = file.stat().st_mtime
@@ -471,7 +482,8 @@ def action_watch():
             if file not in mtimes or file.stat().st_mtime > mtimes[file]:
                 changed_files.add(file)
                 mtimes[file] = file.stat().st_mtime
-            missing_files.remove(file)
+            else:
+                missing_files.remove(file)
 
         if changed_files or missing_files:
             log.info('changed_files %r', changed_files)

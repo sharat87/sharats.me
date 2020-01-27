@@ -9,12 +9,12 @@
 
 	{%- if page.layout != 'page' and (page.date or page.tags) %}
 	<div class=title-subtext>
-		{% if page.date %}
+		{%- if page.date %}
 		<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
-		{% endif %}
-		{% for tag in page.tags %}
+		{%- endif %}
+		{%- for tag in page.tags %}
 		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
-		{% endfor %}
+		{%- endfor %}
 	</div>
 	{%- endif %}
 
