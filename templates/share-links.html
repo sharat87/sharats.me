@@ -1,5 +1,5 @@
-<div class=share-links>
-	<strong>Share:</strong>
+<div class='share-links {{ cls }}'>
+	<strong>{{ label | default('Share:') }}</strong>
 	<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title }}
 			{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
 			{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'

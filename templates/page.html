@@ -26,31 +26,24 @@
 
 	{%- if page.layout == 'post' %}
 	<section class=page-end-mark>&#x1f64f;</section>
-	{%- include 'share-links.html' %}
+	{%- with cls='note', label='Share this article:' %}
+	{%- include 'share-links.html' with context %}
+	{%- endwith%}
 	{%- endif %}
 
 	{%- if page.layout == 'post' and config.dev_mode %}
 	<section class=page-author>
 		<h2>About the author</h2>
-		<p>Hello, I am Shrikant! I love programming and quantitative financial topics. I mostly
-		write about Python, JavaScript and ViM following my work and experiences. Thank you for
-		checking out my blog! <a href='/contact/'>Say hello!</a></p>
+		<p>Hello, I am <a href='/about/'>Shrikant</a>! I love programming and quantitative financial
+		topics. I mostly write about Python, JavaScript and ViM following my work and experiences.
+		Thank you for checking out my blog! <a href='/contact/'>Say hello!</a></p>
 
 		<p>Please share your thoughts and feedback in the comments below. Thanks!</p>
 
-		<fieldset>
-			<legend>Support my work</legend>
-			<p class=support-links>
-			<a href='https://www.buymeacoffee.com/sharat87' target=_blank title='No signup required'>
-				<img src='/bmac.png' alt='Buy me a coffee!'></a>
-			</p>
-		</fieldset>
-
-		{%- if page %}
-		<fieldset>
-			<legend>Share this article</legend>
-		</fieldset>
-		{%- endif %}
+		<p class=support-links>
+		<a href='https://www.buymeacoffee.com/sharat87' target=_blank title='No signup required'>
+			<img src='/bmac.png' alt='Buy me a coffee!'></a>
+		</p>
 
 	</section>
 	{% endif %}

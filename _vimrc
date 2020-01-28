@@ -1,5 +1,4 @@
-nnoremap <Leader>e :vertical terminal python manage.py build<CR>
-set wildignore+=*/output/*
+set wildignore+=*/output/*,*.iml,.idea/*
 set guioptions-=b
 
 aug sharats_me

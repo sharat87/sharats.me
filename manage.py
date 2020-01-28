@@ -525,6 +525,11 @@ def action_develop():
     action_serve()
 
 
+def action_check_deps():
+    """Check if the dependencies from requirements.txt are the latest versions."""
+    raise NotImplementedError
+
+
 def main():
     log.info('Python %s', sys.version)
     globals()['action_' + sys.argv[1]]()
