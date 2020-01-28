@@ -18,6 +18,14 @@ with Jinja2 templates. None of the existing static site generators provided what
 lot of customization. The effort to configure and customize them was about the same as building
 something that worked *just* for me, *just* right.
 
+This website runs the way it does thanks to (in a good way) these excellent open source projects:
+
+1. [Python](https://python.org)
+1. [Python-Markdown](https://python-markdown.github.io/)
+1. [Feather Icons](https://feathericons.com/)
+
+All source material has been created, edited, cursed at with the [Vim](https://www.vim.org/) editor.
+
 ## What's in here?
 
 Dragons. Obviously.

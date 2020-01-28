@@ -12,7 +12,7 @@
 {% endif %}
 
 {% if page.link %}
-<li><a href='{{ page.link }}'>{{ page.title }}</a></li>
+<li><a href='{{ page.link }}'>{{ page.title | safe }}</a></li>
 {% else %}
 <li>{{ page }}</li>
 {% endif %}

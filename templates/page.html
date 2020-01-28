@@ -7,16 +7,33 @@
 	<p class=warning>This page has `publish` set to `false` in it's metadata.</p>
 	{%- endif %}
 
-	{%- if page.layout != 'page' and (page.date or page.tags) %}
-	<div class=title-subtext>
-		{%- if page.date %}
-		<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
+	<div class=title-meta>
+		{%- if page.layout != 'page' and (page.date or page.tags) %}
+		<div class=title-subtext>
+			{%- if page.date %}
+			<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
+			{%- endif %}
+			{%- for tag in page.tags %}
+			<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
+			{%- endfor %}
+		</div>
 		{%- endif %}
-		{%- for tag in page.tags %}
-		<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
-		{%- endfor %}
+
+		<div class=share-links>
+			<strong>Share:</strong>
+			<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title }}
+					{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
+					{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'
+			   target=_blank title='Share on Twitter'>{% include 'icons/twitter.svg' %}</a>
+			{%- if config.facebook_app_id %}
+			<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ page.permalink }}&redirect_uri={{ page.permalink }}'
+			   target=_blank title='Share on Facebook'>{% include 'icons/facebook.svg' %}</a>
+			{%- endif %}
+			<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title }}
+			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
+			   target=_blank title='Share on LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
+		</div>
 	</div>
-	{%- endif %}
 
 	<article>{{ page.html_body | safe }}</article>
 
@@ -44,19 +61,6 @@
 		{%- if page %}
 		<fieldset>
 			<legend>Share this article</legend>
-			<p class=share-links>
-			<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title }}
-				{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
-				{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'
-				target=_blank title='Share on Twitter'>Twitter</a>
-			{%- if config.facebook_app_id %}
-			<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ page.permalink }}&redirect_uri={{ page.permalink }}'
-				target=_blank title='Share on Facebook'>Facebook</a>
-			{%- endif %}
-			<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title }}
-				{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
-				target=_blank title='Share on LinkedIn'>LinkedIn</a>
-			</p>
 		</fieldset>
 		{%- endif %}
 

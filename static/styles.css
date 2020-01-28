@@ -492,8 +492,13 @@ footer a:hover {
 	margin-top: 0;
 }
 
-.support-links, .share-links {
+.support-links {
 	text-align: center;
+}
+
+.share-links {
+	display: flex;
+	align-items: center;
 }
 
 .share-links a {
@@ -503,6 +508,17 @@ footer a:hover {
 	border-radius: 2px;
 	text-decoration: none;
 	color: inherit;
+	margin-left: 6px;
+}
+
+.share-links a:hover {
+	background-color: var(--link-color);
+	color: white;
+	opacity: 1;
+}
+
+.title-meta {
+	margin: 1em 0;
 }
 
 fieldset {
