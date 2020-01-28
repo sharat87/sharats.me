@@ -27,6 +27,10 @@ body {
 	font-size: 16px;
 }
 
+summary {
+	cursor: pointer;
+}
+
 .warning {
 	background-color: maroon;
 	color: white;
@@ -375,7 +379,7 @@ main article {
 .tag {
 	display: inline-block;
 	text-decoration: none;
-	background-color: #EFF;
+	background-color: rgba(0, 0, 0, .06);
 	padding: 2px 6px;
 	border-radius: 2px;
 	margin: 3px 0 3px 9px;
@@ -388,16 +392,10 @@ main article {
 
 .note {
 	background-color: #DEF;
-	padding: .3em;
 	border-radius: 3px;
-}
-
-@media (min-width: 768px) {
-	.note {
-		margin-left: 1em;
-		margin-right: 1em;
-		padding: 1em;
-	}
+	padding: 1em;
+	margin-left: 1em;
+	margin-right: 1em;
 }
 
 footer {
@@ -451,11 +449,9 @@ footer a:hover {
 }
 
 @media only screen and (min-width: 960px) {
-
 	header nav a {
 		margin-right: 1em;
 	}
-
 }
 
 .toc {
@@ -466,9 +462,8 @@ footer a:hover {
 }
 
 .toc h2 {
-	margin-top: 0;
+	margin: 0;
 	display: inline-block;
-	cursor: pointer;
 }
 
 .toc ul {
@@ -514,7 +509,7 @@ footer a:hover {
 .share-links a {
 	display: inline-block;
 	padding: 2px 6px;
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(0, 0, 0, .06);
 	border-radius: 2px;
 	text-decoration: none;
 	color: inherit;
@@ -524,7 +519,6 @@ footer a:hover {
 .share-links a:hover {
 	background-color: var(--link-color);
 	color: white;
-	opacity: 1;
 }
 
 .share-links svg {
