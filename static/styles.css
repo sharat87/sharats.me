@@ -531,8 +531,8 @@ footer a:hover {
 	vertical-align: middle
 }
 
-.title-meta {
-	margin: 1em 0;
+.post-footer > * + *, .title-meta > * + * {
+	margin-top: 6px;
 }
 
 fieldset {

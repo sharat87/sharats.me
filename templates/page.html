@@ -8,27 +8,37 @@
 	{%- endif %}
 
 	<div class=title-meta>
-		{%- if page.layout != 'page' and (page.date or page.tags) %}
+		{%- if page.layout != 'page' %}
 		<div class=title-subtext>
 			{%- if page.date %}
 			<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
 			{%- endif %}
-			{%- for tag in page.tags %}
-			<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
-			{%- endfor %}
 		</div>
-		{%- endif %}
 
 		{%- include 'share-links.html' %}
+		{%- endif %}
 	</div>
 
 	<article>{{ page.html_body | safe }}</article>
 
 	{%- if page.layout == 'post' %}
 	<section class=page-end-mark>&#x1f64f;</section>
-	{%- with cls='note', label='Share this article:' %}
-	{%- include 'share-links.html' with context %}
-	{%- endwith%}
+
+	<div class='note post-footer'>
+		{%- if page.tags %}
+		<div>
+			<strong>Post tagged with</strong>
+			{%- for tag in page.tags %}
+			<a href='/tags/{{ tag }}/' title='Posts tagged with #{{ tag }}' class=tag rel=tag>{{ tag }}</a>
+			{%- endfor %}
+		</div>
+		{%- endif %}
+
+		{%- with label='Share this article:' %}
+		{%- include 'share-links.html' with context %}
+		{%- endwith%}
+	</div>
+
 	{%- endif %}
 
 	{%- if page.layout == 'post' and config.dev_mode %}
