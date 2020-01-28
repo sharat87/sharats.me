@@ -635,6 +635,11 @@ fieldset legend {
 	display: block;
 }
 
+::selection {
+	background: var(--link-color);
+	color: white;
+}
+
 /* pygments styles BEGIN */
 .hl .hll { background-color: #ffffcc }
 .hl .c { color: #8f5902 } /* Comment */
