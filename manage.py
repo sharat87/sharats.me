@@ -87,7 +87,7 @@ class Page:
 
     @property
     def title(self):
-        return md_to_html(self.meta.get('title') or self.slug.title())[3:-4]  # Strip the <p> tag.
+        return jinja2.Markup(md_to_html(self.meta.get('title') or self.slug.title())[3:-4])  # Strip the <p> tag.
 
     @property
     def link(self) -> str:
