@@ -7,7 +7,7 @@ html {
 	--link-color: #06A;
 	--font-body: 'Source Sans Pro', sans-serif;
 	--font-head: 'Source Sans Pro', sans-serif;
-	--font-mono: 'Fira Mono', monospace;
+	--font-mono: 'Fira Code', monospace;
 	--bold-weight: 600;
 }
 
@@ -248,7 +248,7 @@ header .compact {
 }
 
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
-	font-weight: 500;
+	font-weight: var(--bold-weight);
 	font-size: .85em;
 }
 
@@ -257,7 +257,15 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 	display: none;
 	text-decoration: none;
 	font-family: var(--font-mono);
-	transform: scale(.5);
+	font-size: .5em;
+	vertical-align: super;
+	padding: 0 3px;
+	border-radius: 1px;
+}
+
+.headerlink:hover {
+	background-color: var(--link-color);
+	color: white;
 }
 
 h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .headerlink, h5:hover .headerlink {
