@@ -13,6 +13,7 @@ import shutil
 import time
 import subprocess as sp
 from html import unescape as html_unescape
+import functools
 
 import yaml
 import jinja2
@@ -22,6 +23,9 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from bs4 import BeautifulSoup
+
+
+BeautifulSoup = functools.partial(BeautifulSoup, features='html.parser')
 
 
 def read_env(name, default):
@@ -182,17 +186,11 @@ def highlight_code_block(src, cfg):
         wrapcode=True,  # Wrap code in <code> tags, as recommended by HTML5 spec.
     )
 
-    soup = BeautifulSoup(highlight(html_unescape(src), lexer, formatter), 'html.parser')
+    soup = BeautifulSoup(highlight(html_unescape(src), lexer, formatter))
 
     # Add a `data-lang` attribute with the language used for highlighting.
     for div in soup.find_all('div', class_='hl'):
         div.attrs['data-lang'] = cfg['lang']
-
-    # Convert code blocks with line numbers from tables to a pair of `div` elements.
-    for table in soup.find_all('table', class_='hltable'):
-        new_root = soup.new_tag('div', attrs={'class': 'hltable'})
-        new_root.extend([d.extract() for d in table.find_all('div')])
-        table.replace_with(new_root)
 
     return str(soup)
 
@@ -250,7 +248,7 @@ def md_to_html(md_content: str) -> str:
         },
     )
 
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html)
 
     # For all external pointing links, add `target=_blank`.
     for link in soup.find_all('a'):
@@ -259,10 +257,10 @@ def md_to_html(md_content: str) -> str:
             link.attrs['target'] = '_blank'
 
     # Add a h2 for table of contents, if any.
-    for toc_box in soup.find_all('div', class_='toc'):
-        h2 = soup.new_tag('h2')
-        h2.string = 'Table of Contents'
-        toc_box.insert(0, h2)
+    for toc in soup.find_all('div', class_='toc'):
+        toc.name = 'details'
+        toc['open'] = ''
+        toc.insert(0, BeautifulSoup('<summary><h2>Table of Contents</h2></summary>'))
 
     # Tables need to be wrapped in a div so they can be horizontally scrolled on smaller screens.
     for table in soup.find_all('table'):
@@ -276,6 +274,12 @@ def md_to_html(md_content: str) -> str:
             raise ValueError('TODO marker found')
 
         para['style'] = 'background: yellow; color: maroon; font-weight: bold; padding: .3em; font-size: 1.3em;'
+
+    # Convert code blocks with line numbers from tables to a pair of `div` elements.
+    for table in soup.find_all('table', class_='hltable'):
+        new_root = soup.new_tag('div', attrs={'class': 'hltable'})
+        new_root.extend([d.extract() for d in table.find_all('div')])
+        table.replace_with(new_root)
 
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):

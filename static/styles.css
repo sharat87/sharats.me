@@ -467,6 +467,8 @@ footer a:hover {
 
 .toc h2 {
 	margin-top: 0;
+	display: inline-block;
+	cursor: pointer;
 }
 
 .toc ul {
