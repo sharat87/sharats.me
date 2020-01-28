@@ -183,13 +183,12 @@ def sort_by_date(pages):
     pages.sort(key=lambda p: (p.date or dt.date(2000, 1, 1)))
 
 
-def write_all(pages):
-    for page in pages:
-        if page.content:
-            log.info('Writing page to %r.', page.output_path)
-            dest = OUTPUT_DIR / page.output_path
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_text(page.content, encoding='utf8')
+def write_page(page):
+    if page.content:
+        log.info('Writing page to %r.', page.output_path)
+        dest = OUTPUT_DIR / page.output_path
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(page.content, encoding='utf8')
 
 
 def today() -> dt.date:
@@ -213,7 +212,7 @@ def action_build():
         sort_by_date,
         foreach(render_page),
         render_site_level_pages,
-        write_all,
+        foreach(write_page),
     ]
 
     all_pages = [Page(p) for p in CONTENT_DIR.glob('**/*.md')]
