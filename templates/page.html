@@ -19,26 +19,14 @@
 		</div>
 		{%- endif %}
 
-		<div class=share-links>
-			<strong>Share:</strong>
-			<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title }}
-					{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
-					{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'
-			   target=_blank title='Share on Twitter'>{% include 'icons/twitter.svg' %}</a>
-			{%- if config.facebook_app_id %}
-			<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ page.permalink }}&redirect_uri={{ page.permalink }}'
-			   target=_blank title='Share on Facebook'>{% include 'icons/facebook.svg' %}</a>
-			{%- endif %}
-			<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title }}
-			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
-			   target=_blank title='Share on LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
-		</div>
+		{%- include 'share-links.html' %}
 	</div>
 
 	<article>{{ page.html_body | safe }}</article>
 
 	{%- if page.layout == 'post' %}
 	<section class=page-end-mark>&#x1f64f;</section>
+	{%- include 'share-links.html' %}
 	{%- endif %}
 
 	{%- if page.layout == 'post' and config.dev_mode %}
