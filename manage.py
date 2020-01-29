@@ -137,6 +137,7 @@ class Page:
 
 
 def load_page(page):
+    log.info('Loading page %r.', page)
     page.raw_body = page.path.read_text('utf8', 'strict')
     page.body = env.from_string(page.raw_body).render(config=Config)
 
@@ -153,9 +154,46 @@ def load_page(page):
         page.date = dt.datetime.fromisoformat(match.group('date')).date()
         page.slug = match.group('slug')
 
+    log.info('Loaded page %r.', page)
 
-def foreach(fn):
-    return lambda ps: list(map(fn, ps))
+
+def foreach(fn, max_threads=0):
+    """
+    Returns a function that taks a list of pages and calles `fn` on each page. If `max_threads` is non-zero, that many
+    threads will be spawned to do the work instead.
+    """
+
+    if not max_threads:
+        return lambda ps: list(map(fn, ps))
+
+    from threading import Thread
+    from queue import Queue, Empty
+
+    def thread_target(q, results):
+        while True:
+            try:
+                results.append(fn(q.get(False)))
+            except Empty:
+                return
+
+    def processor(all_pages):
+        page_q = Queue()
+        for page in all_pages:
+            page_q.put(page)
+
+        threads = []
+        results = []
+        for _ in range(max_threads):
+            th = Thread(target=thread_target, args=(page_q, results))
+            threads.append(th)
+            th.start()
+
+        for th in threads:
+            th.join()
+
+        return results
+
+    return processor
 
 
 def filter_by(fn):
@@ -208,7 +246,7 @@ def action_build():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
     processors = [
-        foreach(load_page),
+        foreach(load_page, 3),
         None if Config.dev_mode else filter_by(lambda p: p.should_publish),
         sort_by_date,
         foreach(render_page),
