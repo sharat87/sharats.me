@@ -157,6 +157,8 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
         new_root.extend([d.extract() for d in table.find_all('div')])
         table.replace_with(new_root)
 
+    fix_toc_markups(soup)
+
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):
     #     if not code.string:
@@ -184,3 +186,11 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
 def check_attr_paragraphs(soup):
     if soup.find_all('p', string=re.compile('^{: ')):
         raise ValueError('Messed up attr specifiers. Failing build.')
+
+
+def fix_toc_markups(soup):
+    # If the headers contain any `code` or `i` sub-elements, they are removed in the TOC links. I want them to be there,
+    # so we copy the markup from headers back into the TOC links.
+    for anchor in soup.select('.toc a'):
+        anchor.clear()
+        anchor.append(BeautifulSoup(soup.select(anchor['href'])[0].decode_contents()))
