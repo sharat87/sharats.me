@@ -208,14 +208,20 @@ def render(target, template, **kwargs):
     dest = OUTPUT_DIR / target
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(markup, encoding='utf-8')
-    # if 'python-strings' in str(target):
-    #     import weasyprint
-    #     weasyprint.HTML(filename=str(target)).write_pdf(target.with_suffix('.pdf'))
 
 
 def render_page(page):
     log.info('Rendering page %r.', page)
     page.content = env.get_template(page.meta.get('template', 'page.html')).render(config=Config, page=page)
+    if 'working-with-strings' in str(page.path):
+        import weasyprint
+        os.environ['PATH'] += r';C:\tools\GTK3-Runtime\bin'
+        html_file = OUTPUT_DIR / page.output_path
+        html_file.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            weasyprint.HTML(string=page.content).write_pdf(html_file.with_suffix('.pdf'))
+        except:
+            pass
 
 
 def sort_by_date(pages):

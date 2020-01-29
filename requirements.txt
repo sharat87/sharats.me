@@ -4,3 +4,4 @@ Pygments==2.5.2
 feedgen==0.8.0
 PyYAML==5.1.1
 beautifulsoup4==4.7.1
+weasyprint==51
