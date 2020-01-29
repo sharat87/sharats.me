@@ -327,9 +327,9 @@ for country, currency in country_currencies:
 
 The above code uses [f-strings][] introduced in Python 3.6. In older versions of Python, the
 `.format` method or the modulo (`%`) operator should be used.
+{: .note }
 
 [f-strings]: https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings
-{: .note }
 
 The `dict_items` object also implements the `Set` abstraction.
 
