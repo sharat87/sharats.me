@@ -330,10 +330,30 @@ a, a:visited {
 	color: var(--link-color);
 }
 
-.title-subtext {
+.subtext {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+}
+
+.subtext a {
+	display: none;
+}
+
+.subtext a.first {
+	display: inline-block;
+}
+
+.subtext label {
+	cursor: pointer;
+}
+
+.subtext .toggler:checked ~ a {
+	display: inline-block;
+}
+
+.subtext .toggler:checked ~ label {
+	display: none;
 }
 
 main h1:first-child {

@@ -1,6 +1,6 @@
 ---
 title: Python's `map` builtin function
-tags: [programming, python, reference]
+tags: [python, programming, reference]
 desc: >
     An article with examples and explanations of Python's map builtin function, supplementing the
     official documentation on this topic.

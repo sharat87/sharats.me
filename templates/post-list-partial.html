@@ -9,7 +9,16 @@
 		<a href='{{ post.link }}' class=title>{{ post.title | safe }}</a>
 		<span class=subtext>
 			<date>{{ post.date_display }}</date>
-			{% for tag in post.tags %} <a href='/tags/{{ tag }}/' class=tag>{{ tag }}</a>{% endfor %}
+			{%- set id=loop.index %}
+			<input type=checkbox name='tagsToggler{{ id }}' id='tagsToggler{{ id }}' class='toggler hide'>
+			{%- for tag in post.tags %}
+			{%- if loop.first %}
+			<a href='/tags/{{ tag }}/' class='tag first'>{{ tag }}</a>
+			<label class=tag for='tagsToggler{{ id }}' title='Show more tags'>&hellip;</label>
+			{%- else %}
+			<a href='/tags/{{ tag }}/' class=tag>{{ tag }}</a>
+			{%- endif %}
+			{%- endfor %}
 		</span>
 	{% endfor %}
 </ul>
