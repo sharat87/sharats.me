@@ -176,4 +176,11 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
     #         code.contents[-1].replace_with(code.contents[-1].rstrip('\n'))
     #     code['class'] = 'hl'
 
+    check_attr_paragraphs(soup)
+
     return str(soup)
+
+
+def check_attr_paragraphs(soup):
+    if soup.find_all('p', string=re.compile('^{: ')):
+        raise ValueError('Messed up attr specifiers. Failing build.')
