@@ -43,15 +43,14 @@ I'm doing and would like to support my work, please consider the following optio
 <a href='https://www.buymeacoffee.com/sharat87' target=_blank title='No signup required'>
 <img src='/bmac.png' alt='Buy me a coffee!'></a>
 
-## Where to find me?
+## Get in touch!
 
-<p class=social>
-<a target=_blank href="mailto:shrikantsharat.k@gmail.com">Email</a>
-<a target=_blank href="https://github.com/sharat87">GitHub</a>
-<a target=_blank href="https://stackoverflow.com/users/sharat87">Stack Overflow</a>
-<a target=_blank href="https://www.linkedin.com/in/sharat87">LinkedIn</a>
-<a target=_blank href="https://twitter.com/sharat87">Twitter</a>
-</p>
+<a href="mailto:shrikantsharat.k@gmail.com" title='Email me'>{% include 'icons/mail.svg' %}</a>
+<a href="https://github.com/sharat87" title='GitHub'>{% include 'icons/github.svg' %}</a>
+<a href="https://stackoverflow.com/users/sharat87" title='StackOverflow'>{% include 'icons/stackoverflow.svg' %}</a>
+<a href="https://www.linkedin.com/in/sharat87" title='LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
+<a href="https://twitter.com/sharat87" title='Twitter'>{% include 'icons/twitter.svg' %}</a>
+{: .social }
 
 ## Warning
 

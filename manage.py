@@ -137,7 +137,8 @@ class Page:
 
 
 def load_page(page):
-    page.body = page.path.read_text('utf8', 'strict')
+    page.raw_body = page.path.read_text('utf8', 'strict')
+    page.body = env.from_string(page.raw_body).render(config=Config)
 
     if page.body.startswith('---\n'):
         meta_block, page.body = page.body[4:].split('\n---\n', 1)
