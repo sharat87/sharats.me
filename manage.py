@@ -27,7 +27,7 @@ def read_env(name, default):
 
 
 class Config:
-    site_url = 'https://www.sharats.me'
+    site_url = 'https://sharats.me'
     site_title = "The Sharat's"
     author = 'Shrikant Sharat Kandula'
     email = 'shrikantsharat.k@gmail.com'
@@ -213,15 +213,38 @@ def render(target, template, **kwargs):
 def render_page(page):
     log.info('Rendering page %r.', page)
     page.content = env.get_template(page.meta.get('template', 'page.html')).render(config=Config, page=page)
-    if 'working-with-strings' in str(page.path):
-        import weasyprint
-        os.environ['PATH'] += r';C:\tools\GTK3-Runtime\bin'
-        html_file = OUTPUT_DIR / page.output_path
-        html_file.parent.mkdir(parents=True, exist_ok=True)
-        try:
-            weasyprint.HTML(string=page.content).write_pdf(html_file.with_suffix('.pdf'))
-        except:
-            pass
+
+
+def render_pdf(page):
+    if not page.meta.get('pdf', False):
+        return
+
+    os.environ['PATH'] += r';C:\tools\GTK3-Runtime\bin'
+    import weasyprint
+    html_file = OUTPUT_DIR / page.output_path
+    html_file.parent.mkdir(parents=True, exist_ok=True)
+
+    def url_fetcher(url):
+        if url.startswith('http'):
+            return {'string': b''}
+        if url.startswith('file://'):
+            # Strip `file://`.
+            url = url[len('file://'):]
+            # Turn it into an absolute path.
+            url = (OUTPUT_DIR / url[1:]) if url.startswith('/') else (html_file.parent / url)
+            # Add `file://` after turning into a Linux-style absolute path. Yeah, that's needed.
+            url = 'file://' + str(url).split(':')[-1].replace('\\', '/')
+        return weasyprint.default_url_fetcher(url)
+
+    try:
+        doc = weasyprint.HTML(
+            string=page.content + '\n' + '<style>' + Path('pdf.css').read_text('utf8', 'strict') + '</style>',
+            base_url=str(OUTPUT_DIR),
+            url_fetcher=url_fetcher,
+        )
+        doc.write_pdf(html_file.parent.with_suffix('.pdf'))
+    except:
+        pass
 
 
 def sort_by_date(pages):
@@ -258,6 +281,7 @@ def action_build():
         foreach(render_page),
         render_site_level_pages,
         foreach(write_page),
+        foreach(render_pdf),
     ]
 
     all_pages = [Page(p) for p in CONTENT_DIR.glob('**/*.md')]

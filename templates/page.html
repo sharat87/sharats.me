@@ -7,16 +7,23 @@
 	<p class=warning>This page has `publish` set to `false` in it's metadata.</p>
 	{%- endif %}
 
-	<div class=title-meta>
-		{%- if page.layout != 'page' %}
-		<div class=title-subtext>
-			{%- if page.date %}
-			<time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time>
-			{%- endif %}
+	{%- if page.date %}
+	<div class=title-subtext>
+		{%- if page.date %}
+		<div class=screen-only><time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time></div>
+		<div class=print-only>
+			<b>Published:</b> {{ page.date_display }}<br>
+			<b>Author:</b> Shrikant Sharat Kandula<br>
+			<b>Source:</b> <a href='{{ page.permalink }}'>{{ page.permalink }}</a>
+			<div class=print-msg>
+				Thank you for printing from <a href='https://sharats.me'>sharats.me</a>. Do check
+				back regularly for more such awesome content. Subscribe to
+				<a href='https://sharats.me/posts/index.xml'>our feed</a>.
+			</div>
 		</div>
-		{# {%- include 'share-links.html' %} #}
 		{%- endif %}
 	</div>
+	{%- endif %}
 
 	<article>{{ page.html_body | safe }}</article>
 
@@ -61,8 +68,9 @@
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>
-		<button type=button onclick='loadComments(event)'>Load comments</button>
-		<noscript><p>Comments require JavaScript to be enabled.
+		<button type=button onclick='loadComments(event)' class=screen-only>Load comments</button>
+		<p class=print-only>View comments at <a href='{{ page.permalink }}#comments'>{{ page.permalink }}#comments</a>
+		<noscript class=screen-only><p>Comments require JavaScript to be enabled.
 			<a href='http://enable-javascript.com'>Learn how to do this for your browser</a>.</p></noscript>
 	</section>
 	<script>

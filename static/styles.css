@@ -644,11 +644,6 @@ fieldset legend {
 	display: block;
 }
 
-::selection {
-	background: var(--link-color);
-	color: white;
-}
-
 /* pygments styles BEGIN */
 .hl .hll { background-color: #ffffcc }
 .hl .c { color: #8f5902 } /* Comment */
@@ -778,5 +773,33 @@ fieldset legend {
 		border-width: 1px 0;
 		border-style: solid;
 		border-color: rgba(0, 0, 0, .06);
+	}
+}
+
+@media screen {
+	::selection {
+		background: var(--link-color);
+		color: white;
+	}
+
+	.print-only {
+		display: none;
+	}
+}
+
+@media print {
+	.screen-only {
+		display: none;
+	}
+
+	.title-subtext {
+		font-style: italic;
+	}
+
+	.print-msg {
+		margin: 1em;
+		padding: 6px 12px;
+		border: 1px solid #777;
+		border-radius: 3px;
 	}
 }
