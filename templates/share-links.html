@@ -2,29 +2,29 @@
 	<strong>{{ label | default('Share:') }}</strong>
 
 	<a href='mailto:?subject={{ page.title | striptags }}&body={{ page.title | striptags }} -- {{ page.permalink }}'
-		target=_blank title='Share by Email'>{% include 'icons/mail.svg' %}</a>
+		target=_blank rel=noopener title='Share by Email'>{% include 'icons/mail.svg' %}</a>
 
 	<a href='https://twitter.com/intent/tweet?url={{ page.permalink }}&text={{ page.title | striptags }}
 			{%- if config.twitter_user %}&via={{ config.twitter_user }}{% endif -%}
 			{%- if page.tags %}&hashtags={{ page.tags | join(', ') }}{% endif -%}'
-		target=_blank title='Share on Twitter'>{% include 'icons/twitter.svg' %}</a>
+		target=_blank rel=noopener title='Share on Twitter'>{% include 'icons/twitter.svg' %}</a>
 
 	{%- if config.facebook_app_id %}
 	<a href='https://www.facebook.com/dialog/share?app_id={{ config.facebook_app_id }}&display=page&href={{ page.permalink }}&redirect_uri={{ page.permalink }}'
-		target=_blank title='Share on Facebook'>{% include 'icons/facebook.svg' %}</a>
+		target=_blank rel=noopener title='Share on Facebook'>{% include 'icons/facebook.svg' %}</a>
 	{%- endif %}
 
 	<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title | striptags }}
 			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
-		target=_blank title='Share on LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
+		target=_blank rel=noopener title='Share on LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
 
 	<a href='https://getpocket.com/edit.php?url={{ page.permalink }}&title={{ page.title | striptags }}'
-		target=_blank title='Save to Pocket'>{% include 'icons/pocket.svg' %}</a>
+		target=_blank rel=noopener title='Save to Pocket'>{% include 'icons/pocket.svg' %}</a>
 
 	{# TODO: Prepare an Instapaper icon
 	<a href='https://instapaper.com/edit?url={{ page.permalink }}&title={{ page.title | striptags }}
 			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
-		target=_blank title='Save to Instapaper'>Instapaper</a>
+		target=_blank rel=noopener title='Save to Instapaper'>Instapaper</a>
 	#}
 
 </div>

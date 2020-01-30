@@ -137,7 +137,8 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
     for link in soup.find_all('a'):
         href = link.attrs['href']
         if href.startswith(('http://', 'https://')) and 'sharats.me' not in href and 'target' not in link:
-            link.attrs['target'] = '_blank'
+            # Why `rel=noopener`? See <https://web.dev/external-anchors-use-rel-noopener/>.
+            link.attrs.update(target='_blank', rel='noopener')
 
     # Add a h2 for table of contents, if any.
     for toc in soup.find_all('div', class_='toc'):

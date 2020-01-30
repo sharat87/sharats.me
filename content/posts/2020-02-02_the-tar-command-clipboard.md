@@ -9,7 +9,8 @@ Recently, while doing an experiment with my blog's rendered output with a VPS in
 transfer it to the server over SSH. While doing that, I experimented with archiving the folder a
 bit, so I'm putting the outcome of that experience here, should I need it again in the future.
 
-All notes below assume GNU `tar v1.26`. That is the output of `tar --version | head -1` gives:
+All notes below assume GNU `tar v1.26`. More specifically, the output of `tar --version | head -1`
+gives:
 
     tar (GNU tar) 1.26
 
