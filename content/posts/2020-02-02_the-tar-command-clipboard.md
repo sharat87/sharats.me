@@ -17,6 +17,10 @@ I'm only listing the arguments and use-cases that I think are most frequently us
 and the ones I'm most likely to need in the future. Please complement this with a healthy serving of
 `man tar` to keep your sanity.
 
+Check out this neat little tool to help generate often-used `tar` commands:
+[cligen.sharats.me](https://cligen.sharats.me). Thanks!
+{: .note }
+
 [TOC]
 
 ## Creating Archives

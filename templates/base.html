@@ -17,7 +17,7 @@
 {%- elif page and page.tags %}
 <meta name=description content='An article about {{ page.tags | en_join }}.'>
 {%- else %}
-<meta name=description content='{% if page %}An article{% else %}A website{% endif %} about Python, JavaScript, ViM and other software stuff.'>
+<meta name=description content='{% if page %}An article{% else %}A website/blog{% endif %} about software development using Python, JavaScript, Vim and several other technologies.'>
 {%- endif %}
 
 {%- if not config.dev_mode and config.adsense %}

@@ -1,2 +1,4 @@
+Sitemap: https://sharats.me/sitemap.xml
+
 User-agent: *
 Disallow:
