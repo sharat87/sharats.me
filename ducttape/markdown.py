@@ -156,7 +156,7 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
         if not dev_mode:
             raise ValueError('TODO marker found')
 
-        para['style'] = 'background: yellow; color: maroon; font-weight: bold; padding: .3em; font-size: 1.3em;'
+        para['style'] = 'background: #FFA; color: #C00; font-weight: 600; font-size: 1.3em;'
 
     # Convert code blocks with line numbers from tables to a pair of `div` elements.
     for table in soup.find_all('table', class_='hltable'):

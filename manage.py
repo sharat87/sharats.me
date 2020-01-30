@@ -80,7 +80,7 @@ class Page:
 
     @property
     def title(self):
-        soup = markdown.to_soup(self.meta.get('title') or self.slug.title(), Config.dev_mode)
+        soup = markdown.to_soup(self.meta['title'], Config.dev_mode)
         soup.p.name = 'span'
         return soup
 

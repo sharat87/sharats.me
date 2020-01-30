@@ -4,20 +4,20 @@
 <title>
 	{%- if title -%}
 	{{ title + " | " }}
-	{%- elif post and post.meta.title -%}
-	{{ post.meta.title + ' | ' }}
+	{%- elif page and page.meta.title -%}
+	{{ page.meta.title + ' | ' }}
 	{%- endif -%}
 	{{ config.site_title -}}
 </title>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=author content="{{ config.author }}">
 
-{%- if post and post.meta.desc %}
-<meta name=description content='{{ post.meta.desc }}'>
-{%- elif post and post.tags %}
-<meta name=description content='An article about {{ post.tags | en_join }}.'>
+{%- if page and page.meta.desc %}
+<meta name=description content='{{ page.meta.desc }}'>
+{%- elif page and page.tags %}
+<meta name=description content='An article about {{ page.tags | en_join }}.'>
 {%- else %}
-<meta name=description content='{% if post %}An article{% else %}A website{% endif %} about Python, JavaScript, ViM and other software stuff.'>
+<meta name=description content='{% if page %}An article{% else %}A website{% endif %} about Python, JavaScript, ViM and other software stuff.'>
 {%- endif %}
 
 {%- if not config.dev_mode and config.adsense %}
@@ -83,7 +83,7 @@
 	</div>
 </footer>
 
-<div id=cookiesOkBox class=hide>
+<div id=cookiesOkBox class='screen-only hide'>
 	<p>This website uses cookies. By continuing to use this website, you agree to our use of
 	cookies. <a href=/privacy-policy.html target=_blank title='Privacy Policy'>Know more</a>.</p>
 	<p><button onclick='cookiesOkSave()'>Okay</button></p>
