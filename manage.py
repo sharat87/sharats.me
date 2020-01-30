@@ -18,7 +18,7 @@ import yaml
 import jinja2
 from feedgen.feed import FeedGenerator
 
-from ducttape.markdown import md_to_html
+from ducttape import markdown
 
 
 def read_env(name, default):
@@ -80,7 +80,9 @@ class Page:
 
     @property
     def title(self):
-        return jinja2.Markup(md_to_html(self.meta.get('title') or self.slug.title(), Config.dev_mode)[3:-4])  # Strip the <p> tag.
+        soup = markdown.to_soup(self.meta.get('title') or self.slug.title(), Config.dev_mode)
+        soup.p.name = 'span'
+        return soup
 
     @property
     def link(self) -> str:
@@ -147,7 +149,7 @@ def load_page(page):
         if 'tags' in page.meta:
             page.tags.extend(page.meta.pop('tags'))
 
-    page.html_body = md_to_html(page.body, Config.dev_mode)
+    page.html_body = markdown.to_soup(page.body, Config.dev_mode)
 
     match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', page.slug)
     if match:
@@ -219,7 +221,6 @@ def render_pdf(page):
     if not page.meta.get('pdf', False):
         return
 
-    os.environ['PATH'] += r';C:\tools\GTK3-Runtime\bin'
     import weasyprint
     html_file = OUTPUT_DIR / page.output_path
     html_file.parent.mkdir(parents=True, exist_ok=True)
@@ -356,7 +357,7 @@ def generate_feed(posts, path):
     for post in posts:
         fe = fg.add_entry()
         fe.id(post.permalink)
-        fe.title(re.sub(r'</?\w+>', '', post.title))
+        fe.title(re.sub(r'</?\w+>', '', str(post.title)))  # Could use `striptags` filter once we move to Jinja2.
         fe.description(post.body.split('\n\n', 1)[0])
         if post.date:
             fe.published(dt.datetime(post.date.year, post.date.month, post.date.day, tzinfo=dt.timezone.utc))

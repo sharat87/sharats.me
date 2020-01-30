@@ -10,13 +10,20 @@ import functools
 
 import yaml
 import markdown
+import jinja2
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from bs4 import BeautifulSoup
 
 
-BeautifulSoup = functools.partial(BeautifulSoup, features='html.parser')
+class MarkupSoup(BeautifulSoup):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('features', 'html.parser')
+        super().__init__(*args, **kwargs)
+
+    def __html__(self):
+        return jinja2.Markup(str(self))
 
 
 class CodeHighlighter(markdown.treeprocessors.Treeprocessor):
@@ -62,7 +69,7 @@ def highlight_code_block(src, cfg):
         wrapcode=True,  # Wrap code in <code> tags, as recommended by HTML5 spec.
     )
 
-    soup = BeautifulSoup(highlight(html_unescape(src), lexer, formatter))
+    soup = MarkupSoup(highlight(html_unescape(src), lexer, formatter))
 
     # Add a `data-lang` attribute with the language used for highlighting.
     for div in soup.find_all('div', class_='hl'):
@@ -110,7 +117,7 @@ class MdExt(markdown.extensions.Extension):
         md.registerExtension(self)
 
 
-def md_to_html(md_content: str, dev_mode=False) -> str:
+def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
     html = markdown.markdown(
         md_content,
         extensions=['abbr', 'attr_list', 'def_list', 'footnotes', 'tables', 'sane_lists', 'toc', 'smarty', MdExt()],
@@ -124,7 +131,7 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
         },
     )
 
-    soup = BeautifulSoup(html)
+    soup = MarkupSoup(html)
 
     # For all external pointing links, add `target=_blank`.
     for link in soup.find_all('a'):
@@ -136,7 +143,7 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
     for toc in soup.find_all('div', class_='toc'):
         toc.name = 'details'
         toc['open'] = ''
-        toc.insert(0, BeautifulSoup('<summary><h2>Table of Contents</h2></summary>'))
+        toc.insert(0, MarkupSoup('<summary><h2>Table of Contents</h2></summary>'))
 
     # Tables need to be wrapped in a div so they can be horizontally scrolled on smaller screens.
     for table in soup.find_all('table'):
@@ -170,7 +177,7 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
     #         wrapcode=False,
     #     )
 
-    #     hl_soup = BeautifulSoup(highlight(html_unescape(code.string), lexer, formatter), 'html.parser')
+    #     hl_soup = MarkupSoup(highlight(html_unescape(code.string), lexer, formatter), 'html.parser')
     #     code.clear()
     #     for child in list(hl_soup.pre.contents):
     #         code.append(child)
@@ -180,7 +187,7 @@ def md_to_html(md_content: str, dev_mode=False) -> str:
 
     check_attr_paragraphs(soup)
 
-    return str(soup)
+    return soup
 
 
 def check_attr_paragraphs(soup):
@@ -193,4 +200,4 @@ def fix_toc_markups(soup):
     # so we copy the markup from headers back into the TOC links.
     for anchor in soup.select('.toc a'):
         anchor.clear()
-        anchor.append(BeautifulSoup(soup.select(anchor['href'])[0].decode_contents()))
+        anchor.append(MarkupSoup(soup.select(anchor['href'])[0].decode_contents()))
