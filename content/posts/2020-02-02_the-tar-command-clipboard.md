@@ -50,6 +50,7 @@ Additional options after `-c`:
 To illustrate the examples, I'll clone one of my public repositories and play around with creating
 archives of it.
 
+    :::console
     $ git clone git@github.com:sharat87/just-a-calendar.git
     $ du -sh just-a-calendar
     248K    just-a-calendar/
@@ -58,6 +59,7 @@ archives of it.
 
 To create a `bz2` archive of a folder:
 
+    :::console
     $ tar -cjf package.tar.bz2 just-a-calendar
     $ file package.tar.bz2
     package.tar.bz2: bzip2 compressed data, block size = 900k
@@ -68,6 +70,7 @@ Since we are specifying the file name here, which includes the `.bz2` part at th
 `tar` to just figure out the compression we want to use. Instead of the `j` argument specifying the
 compression, we'd put in `a` to indicate this.
 
+    :::console
     $ tar -caf package.tar.bz2 just-a-calendar
     $ file package.tar.bz2
     package.tar.bz2: bzip2 compressed data, block size = 900k
@@ -80,6 +83,7 @@ Now, the archive also contains the `.git` directory that was present in our clon
 what that. The `tar` command provides `--exclude*` family of arguments to deal with this. For
 example, as in our case, to ignore the folder `.git`, we could do:
 
+    :::console
     $ tar -caf package.tar.bz2 --exclude=.git just-a-calendar
     $ du -sh package.tar.bz2
     12K     package.tar.bz2
@@ -89,6 +93,7 @@ this particular problem, there's perhaps an even better solution, the `--exclude
 argument will ignore any VCS directories automatically and it knows about `.git`. So our command
 becomes:
 
+    :::console
     $ tar -caf package.tar.bz2 --exclude-vcs just-a-calendar
 
 Another similar useful argument is the `--eclude-backups`, which will **exclude backup and lock
@@ -115,6 +120,7 @@ Additional options after `-t`:
 
 Let's run this on our package archive created in the previous section.
 
+    :::console
     $ tar -tf package.tar.bz2 | wc -l
     6
 
@@ -134,7 +140,8 @@ command is extremely convenient, for this and several other reasons.
 To find out if an archive has a single top-level entry or multiple, the following snippet can be
 used:
 
-    $ tar -tf package.tar.bz2 | cut -d/ -f1 | sort -u
+    :::sh
+    tar -tf package.tar.bz2 | cut -d/ -f1 | sort -u
 
 This will print out one top-level entry per line. If there's only one line in the output, then
 there's only one top-level. How this works is that first, the `cut` command splits the listing with
@@ -162,6 +169,7 @@ This command takes the following arguments:
 
 So, to extract our archive (in a separate location, of course):
 
+    :::console
     $ mkdir spike && cd spike
     $ tar -xaf ../package.tar.bz2
 
@@ -195,6 +203,7 @@ archive will be written to standard out. Similarly, if we don't provide a filena
 (`-x`) command, it will read the archive from standard input. Our solution below will leverage these
 two facts.
 
+    :::sh
     tar -cj just-a-calendar | ssh remote tar -xj
 
 The first command (`tar -cj just-a-calendar`) creates a `bzip2`-compressed archive (we could've used
@@ -223,6 +232,7 @@ being archived/extracted.
 This follows a similar method as in the previous section, but in the other way around. We run the
 archiver `tar` command on the remote host, and the extractor `tar` command on the local machine.
 
+    :::sh
     ssh remote tar -cj just-a-calendar | tar -xj
 
 This will recreate the `just-a-calendar` folder on the remote host, onto the local disk. We could

@@ -167,6 +167,8 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
 
     fix_toc_markups(soup)
 
+    consume_space_after_prompt_strings(soup)
+
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):
     #     if not code.string:
@@ -202,3 +204,11 @@ def fix_toc_markups(soup):
     for anchor in soup.select('.toc a'):
         anchor.clear()
         anchor.append(MarkupSoup(soup.select(anchor['href'])[0].decode_contents()))
+
+
+def consume_space_after_prompt_strings(soup):
+    for gp in soup.select('code span.gp'):
+        match = re.match(r'^\s+', str(gp.next_sibling))
+        if match:
+            gp.string = gp.string + match.group(0)
+            gp.next_sibling.replace_with(str(gp.next_sibling)[match.end():])
