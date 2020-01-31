@@ -1,7 +1,7 @@
 ---
 title: Migrate from Pelican to Hugo
 tags: [hugo, meta, awk, python]
-desc: >
+description: >
     A writeup on my experience migrating this blog website from Pelican to Hugo.
 ---
 

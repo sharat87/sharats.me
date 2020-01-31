@@ -15,7 +15,7 @@
 	{%- endif %}
 
 	<a href='https://www.linkedin.com/shareArticle?mini=true&url={{ page.permalink }}&title={{ page.title | striptags }}
-			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
+			{%- if page.meta.description %}&summary={{ page.meta.description }}{% endif -%}'
 		target=_blank rel=noopener title='Share on LinkedIn'>{% include 'icons/linkedin.svg' %}</a>
 
 	<a href='https://getpocket.com/edit.php?url={{ page.permalink }}&title={{ page.title | striptags }}'
@@ -23,7 +23,7 @@
 
 	{# TODO: Prepare an Instapaper icon
 	<a href='https://instapaper.com/edit?url={{ page.permalink }}&title={{ page.title | striptags }}
-			{%- if page.meta.desc %}&summary={{ page.meta.desc }}{% endif -%}'
+			{%- if page.meta.description %}&summary={{ page.meta.description }}{% endif -%}'
 		target=_blank rel=noopener title='Save to Instapaper'>Instapaper</a>
 	#}
 

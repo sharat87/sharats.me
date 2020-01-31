@@ -12,8 +12,8 @@
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=author content="{{ config.author }}">
 
-{%- if page and page.meta.desc %}
-<meta name=description content='{{ page.meta.desc }}'>
+{%- if page and page.meta.description %}
+<meta name=description content='{{ page.meta.description }}'>
 {%- elif page and page.tags %}
 <meta name=description content='An article about {{ page.tags | en_join }}.'>
 {%- else %}
