@@ -169,6 +169,8 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
 
     consume_space_after_prompt_strings(soup)
 
+    add_image_styles(soup)
+
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):
     #     if not code.string:
@@ -204,6 +206,12 @@ def fix_toc_markups(soup):
     for anchor in soup.select('.toc a'):
         anchor.clear()
         anchor.append(MarkupSoup(soup.select(anchor['href'])[0].decode_contents()))
+
+
+def add_image_styles(soup):
+    for img in soup.select('p > img'):
+        if img.previous_sibling is None and img.next_sibling is None:
+            img.parent['class'] = 'just-image'
 
 
 def consume_space_after_prompt_strings(soup):
