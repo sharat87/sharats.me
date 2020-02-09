@@ -150,6 +150,7 @@ pre {
 	overflow: auto;
 	word-wrap: normal;
 	word-break: normal;
+	font-variant-ligatures: none;
 }
 
 code {
