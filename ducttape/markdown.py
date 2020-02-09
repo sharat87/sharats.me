@@ -14,7 +14,7 @@ import jinja2
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 
 
 class MarkupSoup(BeautifulSoup):
@@ -146,30 +146,23 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
         toc['open'] = ''
         toc.insert(0, MarkupSoup('<summary><h2>Table of Contents</h2></summary>'))
 
-    # Tables need to be wrapped in a div so they can be horizontally scrolled on smaller screens.
-    for table in soup.find_all('table'):
-        table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
-
-    for para in soup.find_all('p'):
-        if not (para.string and para.string.lstrip().startswith(('TODO:', 'FIXME:', 'XXX:'))):
-            continue
-
-        if not dev_mode:
-            raise ValueError('TODO marker found')
-
-        para['style'] = 'background: #FFA; color: #C00; font-weight: 600; font-size: 1.3em;'
-
     # Convert code blocks with line numbers from tables to a pair of `div` elements.
     for table in soup.find_all('table', class_='hltable'):
         new_root = soup.new_tag('div', attrs={'class': 'hltable'})
         new_root.extend([d.extract() for d in table.find_all('div')])
         table.replace_with(new_root)
 
+    # Tables need to be wrapped in a div so they can be horizontally scrolled on smaller screens.
+    for table in soup.find_all('table'):
+        table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
+
     fix_toc_markups(soup)
 
     consume_space_after_prompt_strings(soup)
 
     add_image_styles(soup)
+
+    remove_comments(soup)
 
     # Syntax highlighting for inline code blocks.
     # for code in soup.find_all('code'):
@@ -189,6 +182,8 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
     #     if code.contents[-1].endswith('\n'):
     #         code.contents[-1].replace_with(code.contents[-1].rstrip('\n'))
     #     code['class'] = 'hl'
+
+    check_todo_paras(soup)
 
     check_attr_paragraphs(soup)
 
@@ -212,6 +207,22 @@ def add_image_styles(soup):
     for img in soup.select('p > img'):
         if img.previous_sibling is None and img.next_sibling is None:
             img.parent['class'] = 'just-image'
+
+
+def remove_comments(soup):
+    for comment in soup.find_all(text=lambda t: isinstance(t, Comment)):
+        comment.extract()
+
+
+def check_todo_paras(soup):
+    for para in soup.find_all('p'):
+        if not (para.string and para.string.lstrip().startswith(('TODO:', 'FIXME:', 'XXX:'))):
+            continue
+
+        if not dev_mode:
+            raise ValueError('TODO marker found')
+
+        para['style'] = 'background: #FFA; color: #C00; font-weight: 600; font-size: 1.3em;'
 
 
 def consume_space_after_prompt_strings(soup):
