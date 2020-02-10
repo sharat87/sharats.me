@@ -210,6 +210,7 @@ def add_image_styles(soup):
         if img.previous_sibling is None and img.next_sibling is None:
             img.parent['class'] = 'just-image'
 
+
 def remove_newlines_in_codes(soup):
     for code in soup.find_all('code'):
         if code.parent.name != 'pre' and '\n' in code.string:

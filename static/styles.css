@@ -193,6 +193,11 @@ p.just-image img {
 	display: block;
 }
 
+img[src$=".gif"] {
+	box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+	border-radius: 6px;
+}
+
 figure {
 	margin: 0;
 }
