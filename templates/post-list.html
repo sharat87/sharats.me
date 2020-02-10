@@ -2,5 +2,7 @@
 
 {% block main %}
 	<h1>{{ title }}</h1>
-	{% include 'post-list-partial.html' %}
+	{% with group_by_month = true %}
+		{% include 'post-list-partial.html' %}
+	{% endwith %}
 {% endblock %}

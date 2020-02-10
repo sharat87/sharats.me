@@ -4,7 +4,12 @@
 	{% set posts = posts[:limit_posts] %}
 	{% endif %}
 
+	{% set ns = namespace(prev_month=None) %}
 	{% for post in posts %}
+		{%- if group_by_month and ns.prev_month != post.date.month %}
+			<li><h2>{{ post.date.strftime('%B %Y') }}</h2>
+			{% set ns.prev_month = post.date.month %}
+		{%- endif %}
 		<li>
 		<a href='{{ post.link }}' class=title>{{ post.title | safe }}</a>
 		<span class=subtext>
