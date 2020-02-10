@@ -299,17 +299,25 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 	display: inline-block;
 }
 
-input, textarea, button {
+input, textarea, button, select {
 	font: inherit;
 }
 
-button {
+button, input[type="submit"] {
 	cursor: pointer;
 	border: 0;
 	background-color: var(--link-color);
 	color: white;
 	border-radius: 2px;
 	padding: 6px 1em;
+}
+
+input[type="email"] {
+	background-color: rgba(0, 0, 0, .05);
+	border: 1px solid rgba(0, 0, 0, .7);
+	border-radius: 2px;
+	padding: 3px;
+	color: inherit;
 }
 
 .profile {
@@ -618,6 +626,25 @@ fieldset legend {
 	#cookiesOkBox button {
 		height: 100%;
 	}
+}
+
+form[name="subscribe"] {
+	border: 3px solid var(--link-color);
+	border-radius: 6px;
+	padding: 12px;
+	margin: 1em;
+}
+
+form[name="subscribe"] input[type="email"] {
+	width: 200px;
+}
+
+form :first-child {
+	margin-top: 0;
+}
+
+form :last-child {
+	margin-bottom: 0;
 }
 
 .hltable {

@@ -62,9 +62,11 @@
 		</p>
 
 	</section>
-	{% endif %}
+	{%- endif %}
 
-	{% if page.meta.comments %}
+	{%- include 'email-subscribe-form-partial.html' %}
+
+	{%- if page.meta.comments %}
 	<section class=comments>
 		<h2>Comments</h2>
 		<div id=disqus_thread></div>
