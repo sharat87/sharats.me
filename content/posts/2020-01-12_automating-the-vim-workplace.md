@@ -30,25 +30,28 @@ encourage you to identify your work style and work towards optimising it, before
 plugin and *learn* the plugin's work style. As such, I don't expect you to resonate with the tips I
 shared here. Your own style of working deserves the first chance, let Vim learn it.
 
-Side note: that all that I share below is what I'm using with Vim. I don't use NeoVim (yet) and I
-can't speak for any of the below for NeoVim.
+Please note that all that I share below is what I'm using with Vim (more specifically, GVim on
+Windows). I don't use Neovim (yet) and I can't speak for any of the below for Neovim.
+{: .note }
 
 ## Switching to Normal Mode
 
 Probably the action that is done most often is switching to normal & insert modes. Switching to
-insert mode is usually with several different keys (`i`, `a`, `o` etc.), but for switching to normal
-mode, we usually use one single key. My preference for this is `<C-l>`, since `l` is on the home row
-and the help pages already sort-of indicate that hitting it would go to the normal mode (if
-`'insertmode'` is set, but well, it's unused otherwise, See `:h i_CTRL-l`).
+insert mode is usually with several different keys (<kbd>i</kbd>, <kbd>a</kbd>, <kbd>o</kbd> etc.),
+but for switching to normal mode, we usually use one single key. My preference for this is
+<kbd>&lt;C-l&gt;</kbd>, since <kbd>l</kbd> is on the home row and the help pages already sort-of
+indicate that hitting it would go to the normal mode (if [`'insertmode'`][insertmode] is set, but
+well, it's unused otherwise, See [`:h i_CTRL-l`][i_ctrl-l]).
 
     :::vim
     inoremap <C-l> <Esc>
 
 This is a topic that often brings up an uncontrollable urge to be vocal about one's own choice of
-keys to go to normal mode. I've used several of them over the years, `jj`, `<CapsLock>` as `<ESC>`,
-`<C-[>`, `<C-c>`, mapping `<C-k>`, *xcape* in the background, etc. All of them felt haphazard, and
-`<C-l>` worked the best for me. As I said, this article is about what worked best to *my* workflow.
-Go discover your own.
+keys to go to normal mode. I've used several of them over the years, <kbd>jj</kbd>,
+<kbd>&lt;CapsLock&gt;</kbd> as <kbd>&lt;ESC&gt;</kbd>, <kbd>&lt;C-[&gt;</kbd>,
+<kbd>&lt;C-c&gt;</kbd>, mapping <kbd>&lt;C-k&gt;</kbd>, *xcape* in the background, etc. All of them
+felt haphazard, and <kbd>&lt;C-l&gt;</kbd> worked the best for me. As I said, this article is about
+what worked best to *my* workflow. Go discover your own.
 {: .note }
 
 Of course, now we need a quick way to open our `vimrc` file so we can add this mapping and then get
@@ -63,22 +66,21 @@ The `cv` is a mnemonic for *change vimrc*.
 > community at [r/vim][] and a comment here, I realized `$MYVIMRC` is a better fit here. Thank you
 > folks!
 
-[r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0
-
 This is what I'm talking about when I say identify things that you often do. Even if you don't sit
 down to automate it right away, put it on a sticky near your desk. Spend a few minutes thinking
 about it. A few seconds in a time of intense focus is far more dear than a few minutes in slacking.
 
 Note that this mapping is not without it's quirks. It interferes with the line completion mapping,
-`<C-x><C-l>`. It'll still work, but right after triggering `<C-x><C-l>`, if you hit `<C-l>`, you
-won't go to normal mode. You'll merely go to the next selected item in the completion popup. Other
-than this, `<C-l>` for going to normal mode works quite well.
+<kbd>&lt;C-x&gt;&lt;C-l&gt;</kbd>. It'll still work, but right after triggering
+<kbd>&lt;C-x&gt;&lt;C-l&gt;</kbd>, if you hit <kbd>&lt;C-l&gt;</kbd>, you won't go to normal mode.
+You'll merely go to the next selected item in the completion popup. Other than this,
+<kbd>&lt;C-l&gt;</kbd> for going to normal mode works quite well.
 
-Now that the mapping is setup, I can hit `<C-l>` in insert mode to go to normal mode. Then I noticed
-something else in the way I *tried* to use it, subconsciously. I started hitting `<C-l>` in visual
-mode, operator pending mode etc. to go into normal mode. I realized I was using `<C-l>` essentially
-as a replacement of `<ESC>`. But of course it failed because I only created a mapping for insert
-mode.
+Now that the mapping is setup, I can hit <kbd>&lt;C-l&gt;</kbd> in insert mode to go to normal mode.
+Then I noticed something else in the way I *tried* to use it, subconsciously. I started hitting
+<kbd>&lt;C-l&gt;</kbd> in visual mode, operator pending mode etc. to go into normal mode. I realized
+I was using <kbd>&lt;C-l&gt;</kbd> essentially as a replacement of <kbd>&lt;ESC&gt;</kbd>. But of
+course it failed because I only created a mapping for insert mode.
 
 After a few iterations and shower thoughts, this is what I currently use:
 
@@ -89,11 +91,12 @@ After a few iterations and shower thoughts, this is what I currently use:
     onoremap <silent> <C-l> <ESC>
 
 I also wanted this from the command line, but I'm still trying to get it to work. I currently have
-the following but it's not very robust. Every time I hit `<C-l>` in the normal mode, the cursor
-moves ahead by two characters. Still working on getting it to work well.
+the following but it's not very robust. Every time I hit <kbd>&lt;C-l&gt;</kbd> in the normal mode,
+the cursor moves ahead by two characters. Still working on getting it to work well.
 
     :::vim
-    cnoremap <silent> <C-l> <C-c>  " <ESC> doesn't work and even this moves the cursor by two characters.
+    " <ESC> doesn't work and even this moves the cursor by two characters.
+    cnoremap <silent> <C-l> <C-c>
 
 It's a never ending process of learning and experimenting.
 
@@ -124,25 +127,25 @@ instead.
 This doesn't look like an ideal solution, but it hasn't failed me yet. The idea is not to create an
 perfect solution, but just one that works well with you.
 
-If you're using the above mapping, note that mapping to `<C-m>` is almost the same as mapping to the
-`Return` key on your keyboard. So hitting the return key in normal mode will also trigger the above
-mapping. Just something to keep in mind.
+If you're using the above mapping, note that mapping to <kbd>&lt;C-m&gt;</kbd> is almost the same as
+mapping to the <kbd>&lt;Return&gt;</kbd> key on your keyboard. So hitting the return key in normal
+mode will also trigger the above mapping. Just something to keep in mind.
 {: .note }
 
 ## Copy to System Clipboard
 
 I often have to copy stuff to system clipboard to paste into chat channels and emails. The standard
-way to do this would be something like `"+yap` in normal mode, or `"+y` in visual mode. This is
-annoying, not because it's three keys, but more because they are hard to type in order and they are
-(almost) all with the same hand. So I solved it with the following keys:
+way to do this would be something like <kbd>"+yap</kbd> in normal mode, or <kbd>"+y</kbd> in visual
+mode. This is annoying, not because it's three keys, but more because they are hard to type in order
+and they are (almost) all with the same hand. So I solved it with the following keys:
 
     :::vim
     xnoremap <C-c> "+y
     nnoremap <silent> cp "+y
     nnoremap <silent> cpp "+yy
 
-With this, `<C-c>` in visual mode copies selection to clipboard and `cp` can be used with text
-objects. Much easier to hit.
+With this, <kbd>&lt;C-c&gt;</kbd> in visual mode copies selection to clipboard and <kbd>cp</kbd> can
+be used with text objects. Much easier to hit.
 
 ## Ensure Directory Exists, Before Saving
 
@@ -162,27 +165,28 @@ folder before saving this. But that's not productive, my tool should do that aut
       endif
     endfun
 
-Let's see what's going on here. Firstly, we define an `autocmd` for the `BufWritePre` event, which
-is fired just before a file is saved, to call the function `s:MkNonExDir`. In this function, we
-check for the buffer being a normal buffer (see `:h buftype`) and if it is, create it's parent
-directory.
+Let's see what's going on here. Firstly, we define an [`autocmd`][autocmd] for the
+[`BufWritePre`][BufWritePre] event, which is fired just before a file is saved, to call the function
+`s:MkNonExDir`. In this function, we check for the buffer being a normal buffer (see [`:h
+buftype`][buftype]) and if it is, create it's parent directory.
 
 Simple, non-intrusive, and effective.
 
 ## Switching to Alternate Buffer
 
-The default key-binding for `<C-^>` (or `<C-6>`, `:h CTRL-6`) lets us quickly switch back-and-forth
-between two buffers. This is extremely handy and is likely one of my most used functionality for
-switching buffers within Vim.
+The default key-binding for [<kbd>&lt;C-^&gt;</kbd>][key-c-6] (or [<kbd>&lt;C-6&gt;</kbd>][key-c-6])
+lets us quickly switch back-and-forth between two buffers. This is extremely handy and is likely one
+of my most used functionality for switching buffers within Vim.
 
 There's some annoying quirks to this mapping though. For example, if there's files in your buffer
 list, but no *alternate* buffer, we'll get an error saying "No alternate buffer". Which is not
 helpful. So a few years ago I saw a mapping to go to the next buffer if there's no alternate buffer.
 It worked to an extent, but there's more.
 
-When I delete a buffer with `:bd`, I get taken to a different buffer. Now if I hit `<C-6>` again,
-the buffer I just deleted is loaded again and I'm back in it. This may be what one usually wants,
-but for me, I want to be taken to the next buffer that's still *loaded*, not deleted ones.
+When I delete a buffer with `:bd`, I get taken to a different buffer. Now if I hit
+<kbd>&lt;C-6&gt;</kbd> again, the buffer I just deleted is loaded again and I'm back in it. This may
+be what one usually wants, but for me, I want to be taken to the next buffer that's still *loaded*,
+not deleted ones.
 
     :::vim
     " My remapping of <C-^>. If there is no alternate file, and there's no count given, then switch
@@ -190,8 +194,8 @@ but for me, I want to be taken to the next buffer that's still *loaded*, not del
     " deleted buffers, as intended. To get default behaviour, use `bufexists` in it's place.
     nnoremap <silent> <C-n> :<C-u>exe v:count ? v:count . 'b' : 'b' . (bufloaded(0) ? '#' : 'n')<CR>
 
-This is the mapping I use for switching between alternate buffers. I use `<C-n>` as it's easier to
-hit and there's a simpler key for it's default functionality anyway (`j`).
+This is the mapping I use for switching between alternate buffers. I use <kbd>&lt;C-n&gt;</kbd> as
+it's easier to hit and there's a simpler key for it's default functionality anyway (<kbd>j</kbd>).
 
 Additionally if you're using the [eunuch plugin](https://github.com/tpope/vim-eunuch/), this
 mapping will not navigate to a buffer that's been `Delete`-ed.
@@ -207,27 +211,27 @@ anti-virus). It works fine when I'm on Linux, but on Windows, it's not productiv
 it does a lot of things I don't usually need. The following is the mapping that serves *most* of
 what I need from within Vim.
 
-[fugitive]: https://github.com/tpope/vim-fugitive
-
     :::vim
     nnoremap <Leader>g :ter git --no-pager<Space>
 
-So, what does this do? Well, I hit `,g` (because `,` is my `mapleader`) and the cursor is placed in
-the command line with the following pre-filled:
+So, what does this do? Well, I hit <kbd>,g</kbd> (because <kbd>,</kbd> is my
+[`mapleader`][mapleader]) and the cursor is placed in the command line with the following
+pre-filled:
 
     :::vim
     :ter git --no-pager
 
-Then I just hit `st<Enter>`, which will open a new terminal within Vim which runs `git st` command
-asynchronously (which is an alias to `git status`).
+Then I just hit <kbd>st&lt;Enter&gt;</kbd>, which will open a new [terminal][] within Vim which runs
+`git st` command asynchronously (which is an alias to `git status`).
 
-After seeing the output I noticed that I immediately issued another `,gdiff<Enter>`, which opens up
-another terminal split to run the `git diff` command. Such multiple splits quickly got annoying
-again. Yeah, I'm easily annoyed. I need this mapping to *not* open a new split if I'm already in a
-`git` output terminal window. Here's what I'm using currently:
+After seeing the output I noticed that I immediately issued another <kbd>,gdiff&lt;Enter&gt;</kbd>,
+which opens up another terminal split to run the `git diff` command. Such multiple splits quickly
+got annoying again. Yeah, I'm easily annoyed. I need this mapping to *not* open a new split if I'm
+already in a `git` output terminal window. Here's what I'm using currently:
 
     :::vim
-    nnoremap <Leader>g :ter <C-r>=&buftype == 'terminal' && job_info(term_getjob('%')).cmd[0] ==? 'git' ? '++curwin ' : ''
+    nnoremap <Leader>g :ter <C-r>=&buftype == 'terminal'
+                \ && job_info(term_getjob('%')).cmd[0] ==? 'git' ? '++curwin ' : ''
                 \ <CR>git --no-pager<Space>
 
 We check if the current buffer is a terminal and if the command is `git`, if yes, we tell `:ter` to
@@ -235,13 +239,14 @@ open the terminal in the current window instead of opening up a new split.
 
 ## Non-undo-able Insert Mode Commands
 
-In insert mode, `<C-u>` deletes everything from start of current line to cursor position (this is
-not *exactly* true, read `:h i_CTRL-U` for the exact behaviour, I won't repeat it here). This is
-quite convenient and I use it a lot more than I like to admit. Often, when I start a statement in a
-new line, I have second thoughts middle of the line and I quickly hit `<C-u>` and start typing in
-the idea from my second thought. But then of course, I realize that what I was doing originally was
-the right way. Now if I try to undo what's done by `<C-u>`, I can't. Since it's all treated as one
-insert operation, it's all one undo step.
+In insert mode, [<kbd>&lt;C-u&gt;</kbd>][key-i-c-u] deletes everything from start of current line to
+cursor position (this is not *exactly* true, read `:h i_CTRL-U` for the exact behaviour, I won't
+repeat it here). This is quite convenient and I use it a lot more than I like to admit. Often, when
+I start a statement in a new line, I have second thoughts middle of the line and I quickly hit
+<kbd>&lt;C-u&gt;</kbd> and start typing in the idea from my second thought. But then of course, I
+realize that what I was doing originally was the right way. Now if I try to undo what's done by
+<kbd>&lt;C-u&gt;</kbd>, I can't.  Since it's all treated as one insert operation, it's all one undo
+step.
 
 This is why I got this:
 
@@ -262,7 +267,7 @@ and it works! Whoever came up with this, thank you!
 This is one that I don't use *as often* as some of the above, but when I do need it, it's extremely
 handy. I use the `$VIMFILES/after/ftplugin` directory to put in my custom settings for specific file
 types. These files usually don't just contain changes in settings like indentation, but also
-`commentstring` and often some command that makes editing that specific `filetype` a bit easier.
+`commentstring` and often some command(s) that makes editing that specific `filetype` a bit easier.
 
 These commands let me open the plugin file in that directory for the `filetype` I'm currently
 working with.
@@ -280,16 +285,17 @@ The same thing for syntax plugin:
                 \ exe 'keepj vsplit $VIMFILES/after/syntax/' . (empty(<q-args>) ? &filetype : <q-args>) . '.vim'
     command -nargs=? -complete=filetype Esy EditSyntaxPlugin <args>
 
+Note that the `:Eft` and `:Esy` commands act like short aliases for these commands.
+{: .note }
+
 These commands are obviously heavily inspired by the `:EditUltiSnipsFile` command from the
 [UltiSnips][] plugin (which is great at automation by the way).
 
-[UltiSnips]: https://github.com/sirver/UltiSnips
-
 ## Sorting over Motion
 
-Vim comes with the `:sort` command that sorts the range of lines provided. So, for example, to sort
-the whole file, we'd do `:%sort`. To sort the first ten lines, something like `:1,10sort` should do.
-The range of lines given will be replaced with the sorted lines.
+Vim comes with the [`:sort`][sort-cmd] command that sorts the range of lines provided. So, for
+example, to sort the whole file, we'd do `:%sort`. To sort the first ten lines, something like
+`:1,10sort` should do. The range of lines given will be replaced with the sorted lines.
 
 This is convenient, but not very handy. But I'd always wanted a way to sort over a motion, like
 *sort this paragraph* or *sort inside braces* etc. So, after some searching online and digging the
@@ -303,14 +309,14 @@ Vim documentation, I have the following in my `vimrc`:
         '[,']sort i
     endfun
 
-With this, hitting `gsip` would sort the lines *inside* the current paragraph. Similarly, `gsiB`
-would sort lines inside the braces closest to the cursor (try this one in CSS!). If you have the
-[vim-indent-object](https://github.com/michaeljsmith/vim-indent-object/) plugin, you could also do
-`gsii` to sort lines in current indent block.
+With this, hitting <kbd>gsip</kbd> would sort the lines *inside* the current paragraph. Similarly,
+<kbd>gsiB</kbd> would sort lines inside the braces closest to the cursor (try this one in CSS!). If
+you have the [vim-indent-object](https://github.com/michaeljsmith/vim-indent-object/) plugin, you
+could also do <kbd>gsii</kbd> to sort lines in current indent block.
 
-Additionally, we also have an `xnoremap` mapping definition which lets us use `gs` in visual mode to
-sort the highlighted lines. I don't use this as often as the operator version above, but it's nice
-to have nonetheless.
+Additionally, we also have an `xnoremap` mapping definition which lets us use <kbd>gs</kbd> in
+visual mode to sort the highlighted lines. I don't use this as often as the operator version above,
+but it's nice to have nonetheless.
 
 ## Reversing over Motion
 
@@ -334,10 +340,10 @@ don't have a `:reverse` command like `:sort`, so this one is more DIY.
         endfor
     endfun
 
-I mapped reversing to `gr`, which works similar to the `gs` from previous section, but instead of
-sorting, the lines will be reversed. Everything in the above snippet can be looked up with `:h`
-command within Vim. I'll leave the understanding-it's-working part as an exercise to the reader, if
-inclined.
+I mapped reversing to <kbd>gr</kbd>, which works similar to the <kbd>gs</kbd> from previous section,
+but instead of sorting, the lines will be reversed. Everything in the above snippet can be looked up
+with `:h` command within Vim. I'll leave the understanding-it's-working part as an exercise to the
+reader, if inclined.
 
 ## Conclusion
 
@@ -352,3 +358,18 @@ that serve as great starter points to improve your workflow. So, just, you know,
 long build is running, grab a coffee and open the Vim docs!
 
 Identify, optimize, repeat.
+
+
+[insertmode]: http://vimdoc.sourceforge.net/htmldoc/options.html#'insertmode'
+[i_ctrl-l]: http://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-L
+[r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0
+[autocmd]: http://vimdoc.sourceforge.net/htmldoc/autocmd.html#autocmd.txt
+[BufWritePre]: http://vimdoc.sourceforge.net/htmldoc/autocmd.html#BufWritePre
+[buftype]: http://vimdoc.sourceforge.net/htmldoc/options.html#'buftype'
+[key-c-6]: http://vimdoc.sourceforge.net/htmldoc/editing.html#CTRL-6
+[fugitive]: https://github.com/tpope/vim-fugitive
+[mapleader]: http://vimdoc.sourceforge.net/htmldoc/map.html#mapleader
+[terminal]: http://vimdoc.sourceforge.net/htmldoc/term.html
+[key-i-c-u]: http://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-U
+[UltiSnips]: https://github.com/sirver/UltiSnips
+[sort-cmd]: http://vimdoc.sourceforge.net/htmldoc/change.html#:sort

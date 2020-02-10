@@ -162,6 +162,8 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
 
     add_image_styles(soup)
 
+    remove_newlines_in_codes(soup)
+
     remove_comments(soup)
 
     # Syntax highlighting for inline code blocks.
@@ -207,6 +209,11 @@ def add_image_styles(soup):
     for img in soup.select('p > img'):
         if img.previous_sibling is None and img.next_sibling is None:
             img.parent['class'] = 'just-image'
+
+def remove_newlines_in_codes(soup):
+    for code in soup.find_all('code'):
+        if code.parent.name != 'pre' and '\n' in code.string:
+            code.string = code.string.replace('\n', ' ')
 
 
 def remove_comments(soup):

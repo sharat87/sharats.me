@@ -164,6 +164,18 @@ pre > code {
 	font-size: 1em;
 }
 
+kbd {
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, .3);
+	border-radius: 3px;
+	padding: 0 3px;
+}
+
+a > kbd {
+	border-bottom-color: var(--link-color);
+}
+
 hr {
 	background-color: #DDD;
 	border: 0;
