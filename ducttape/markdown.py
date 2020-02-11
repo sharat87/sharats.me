@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup, Comment
 
 class MarkupSoup(BeautifulSoup):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('features', 'html.parser')
+        kwargs.setdefault('features', 'lxml')
         super().__init__(*args, **kwargs)
 
     def __html__(self):
