@@ -31,6 +31,8 @@ class Config:
     twitter_user = 'sharat87'
     facebook_app_id = None
 
+    dev_mode = False
+
 
 # Auto load environment variables like `SCONFIG_DEV_MODE` or `SCONFIG_ADSENSE` etc.
 for key, val in os.environ.items():
