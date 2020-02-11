@@ -60,6 +60,15 @@ th {
 	background-color: rgba(0, 0, 0, .04);
 }
 
+a:link, a:visited {
+	color: var(--link-color);
+}
+
+a:active {
+	background-color: var(--link-color):
+	color: white;
+}
+
 a img {
 	border: 0;
 	vertical-align: middle;
@@ -155,13 +164,14 @@ pre {
 
 code {
 	padding: 0 2px;
-	white-space: pre;
+	white-space: pre-wrap;
 }
 
 pre > code {
 	padding: 0;
 	background: transparent;
 	font-size: 1em;
+	white-space: pre;
 }
 
 kbd {
@@ -776,10 +786,6 @@ form :last-child {
 
 @media (max-width: 600px) {
 	ol, ul {
-		padding-left: 2em;
-	}
-
-	li ol, li ul {
 		padding-left: 1.5em;
 	}
 
