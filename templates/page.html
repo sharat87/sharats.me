@@ -72,7 +72,10 @@
 		<p class=screen-only>
 			<button type=button onclick='loadComments(event)'>Load comments</button>
 			{%- if page and page.meta.reddit_url %}
-			<a class=button target=_blank href='https://www.reddit.com/{{ page.meta.reddit_url }}'>Discuss on Reddit</a>
+			<a class=button target=_blank href='https://www.reddit.com/{{ page.meta.reddit_url }}'>Reddit Discussion</a>
+			{%- endif %}
+			{%- if page and page.meta.hn_id %}
+			<a class=button target=_blank href='https://news.ycombinator.com/item?id={{ page.meta.hn_id }}'>HackerNews Discussion</a>
 			{%- endif %}
 		</p>
 		<p class=print-only>View comments at <a href='{{ page.permalink }}#comments'>{{ page.permalink }}#comments</a>

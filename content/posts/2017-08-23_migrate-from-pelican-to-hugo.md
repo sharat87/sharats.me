@@ -5,6 +5,10 @@ description: >
     A writeup on my experience migrating this blog website from Pelican to Hugo.
 ---
 
+**Update:** I have now moved to using a self-made Python program that compiles my markdown article
+documents into the website you see. I'm keeping this article as a journal of my then experience.
+{: .note }
+
 I recently got around to resurrecting my blog up after around five years of death. As part of that,
 I chose to migrate my blog to Hugo, from the current Pelican builder. The first post after
 resurrection will be about the migration.
@@ -113,7 +117,7 @@ But, I needed them like this:
 
 So, the following little python script did the trick:
 
-```python
+```python {linenos: true}
 #!/usr/bin/env python3
 
 import sys

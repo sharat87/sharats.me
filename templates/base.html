@@ -5,6 +5,7 @@
 {%- if not title %}
 {%- set title = page.meta.title if page else "" %}
 {%- endif %}
+{%- set title_unsuffixed = title or "" %}
 {%- set title = ((title + " | ") if title else "") + config.site_title %}
 <title>{{ title }}</title>
 <meta name=viewport content="width=device-width, initial-scale=1">

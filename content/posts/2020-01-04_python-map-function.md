@@ -4,6 +4,7 @@ tags: [python, programming, reference]
 description: >
     An article with examples and explanations of Python's map builtin function, supplementing the
     official documentation on this topic.
+hn_id: 21960757
 ---
 
 In this article, we'll take a look at Python's stream processing utility function, `map`. This
