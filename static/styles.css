@@ -193,12 +193,12 @@ hr {
 	margin-bottom: 1.5em;
 }
 
-img {
+img, svg, [role="img"] {
 	height: auto;
 	max-width: 100%;
 }
 
-p.just-image img {
+.just-image > img, .just-image > svg, .just-image [role="img"] {
 	margin: 0 auto;
 	display: block;
 }

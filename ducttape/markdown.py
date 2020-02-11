@@ -206,7 +206,7 @@ def fix_toc_markups(soup):
 
 
 def add_image_styles(soup):
-    for img in soup.select('p > img'):
+    for img in soup.select("p > img, p > [role='img'], p > svg"):
         if img.previous_sibling is None and img.next_sibling is None:
             img.parent['class'] = 'just-image'
 
