@@ -69,9 +69,14 @@
 	{%- if page.meta.comments %}
 	<section class=comments>
 		<h2>Comments</h2>
-		<div id=disqus_thread></div>
-		<button type=button onclick='loadComments(event)' class=screen-only>Load comments</button>
+		<p class=screen-only>
+			<button type=button onclick='loadComments(event)'>Load comments</button>
+			{%- if page and page.meta.reddit_url %}
+			<a class=button target=_blank href='https://www.reddit.com/{{ page.meta.reddit_url }}'>Discuss on Reddit</a>
+			{%- endif %}
+		</p>
 		<p class=print-only>View comments at <a href='{{ page.permalink }}#comments'>{{ page.permalink }}#comments</a>
+		<div id=disqus_thread></div>
 		<noscript class=screen-only><p>Comments require JavaScript to be enabled.
 			<a href='http://enable-javascript.com'>Learn how to do this for your browser</a>.</p></noscript>
 	</section>
@@ -81,7 +86,7 @@
 	}
 	function loadComments(event) {
 		event.target.remove();
-		document.getElementById('disqus_thread').innerText = 'Loading comments...';
+		document.getElementById('disqus_thread').innerHTML = 'Loading comments&hellip;';
 		const s = document.createElement('script');
 		s.async = true;
 		s.src = '//sharats-me.disqus.com/embed.js';

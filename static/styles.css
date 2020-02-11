@@ -313,13 +313,14 @@ input, textarea, button, select {
 	font: inherit;
 }
 
-button, input[type="submit"] {
+button, input[type="submit"], a.button {
 	cursor: pointer;
 	border: 0;
 	background-color: var(--link-color);
 	color: white;
 	border-radius: 2px;
 	padding: 6px 1em;
+	text-decoration: none;
 }
 
 input[type="email"] {
