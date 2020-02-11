@@ -61,7 +61,9 @@
 	<nav>
 		<a href='/posts/'>Posts</a>
 		<a href='/labs/'>Labs</a>
+		{%- if config.resume_nav %}
 		<a href='/shrikant-sharat-kandula-resume.pdf'>Résumé</a>
+		{%- endif %}
 		<a href='{{ config.feedburner_url }}'>RSS</a>
 		<a href='/about/'>About</a>
 	</nav>

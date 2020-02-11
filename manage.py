@@ -21,11 +21,6 @@ from feedgen.feed import FeedGenerator
 from ducttape import markdown
 
 
-def read_env(name, default):
-    val = os.getenv(name, '')
-    return bool(int(val)) if val.isdigit() else default
-
-
 class Config:
     site_url = 'https://sharats.me'
     site_title = "The Sharat's"
@@ -36,9 +31,11 @@ class Config:
     twitter_user = 'sharat87'
     facebook_app_id = None
 
-    dev_mode = read_env('DEV', False)
 
-    adsense = read_env('ADSENSE', True)
+# Auto load environment variables like `SCONFIG_DEV_MODE` or `SCONFIG_ADSENSE` etc.
+for key, val in os.environ.items():
+    if key.startswith('SCONFIG_'):
+        setattr(Config, key[len('SCONFIG_'):].lower(), bool(int(val)))
 
 
 # logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(clientip)s %(user)-8s %(message)s')
