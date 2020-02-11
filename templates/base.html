@@ -1,24 +1,31 @@
 <!doctype html>
 <html lang=en>
+<head>
 <meta charset=utf-8>
-<title>
-	{%- if title -%}
-	{{ title + " | " }}
-	{%- elif page and page.meta.title -%}
-	{{ page.meta.title + ' | ' }}
-	{%- endif -%}
-	{{ config.site_title -}}
-</title>
+{%- if not title %}
+{%- set title = page.meta.title if page else "" %}
+{%- endif %}
+{%- set title = ((title + " | ") if title else "") + config.site_title %}
+<title>{{ title }}</title>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=author content="{{ config.author }}">
 
 {%- if page and page.meta.description %}
-<meta name=description content='{{ page.meta.description }}'>
+<meta name=description content="{{ page.meta.description }}">
 {%- elif page and page.tags %}
-<meta name=description content='An article about {{ page.tags | en_join }}.'>
+<meta name=description content="An article about {{ page.tags | en_join }}.">
 {%- else %}
-<meta name=description content='{% if page %}An article{% else %}A website/blog{% endif %} about software development using Python, JavaScript, Vim and several other technologies.'>
+<meta name=description content="{% if page %}An article{% else %}A website/blog{% endif %} about software development using Python, JavaScript, Vim and several other technologies.">
 {%- endif %}
+
+<meta property="og:title" content="{{ title }}">
+{%- if page %}
+<meta property="og:url" content="{{ page.permalink }}">
+{%- endif %}
+{%- if page %}
+<meta property="og:image" content="{{ page.og_image }}">
+{%- endif %}
+{#- TODO: More Opengraph tags at https://www.ogp.me/ #}
 
 {%- if not config.dev_mode and config.adsense %}
 <script data-ad-client='ca-pub-1813617733171441' async src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>
@@ -33,7 +40,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
+</head>
 
+<body>
 <header>
 	<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>
 	<div class=compact>
@@ -90,7 +99,7 @@
 </div>
 
 {% if config.dev_mode %}
-	<p class=warning style='position:fixed;top:3px'>DEV MODE IS ON</p>
+	<p class=warning style='position:fixed;margin:.5em;left:12em'>DEV MODE IS ON</p>
 {% endif %}
 
 <script>
@@ -191,3 +200,6 @@ function toggleConsoleCeremony(btn) {
 		el.classList.toggle('hide');
 }
 </script>
+
+</body>
+</html>
