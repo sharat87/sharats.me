@@ -5,7 +5,9 @@
 	<url>
 		<loc>{{ page.permalink }}</loc>
 		<changefreq>weekly</changefreq>
+		{%- if page.last_mode %}
 		<lastmod>{{ page.last_mod }}</lastmod>
+		{%- endif %}
 		{%- if page.meta.page_priority %}
 		<priority>{{ page.meta.page_priority }}</priority>
 		{%- endif %}
