@@ -384,11 +384,12 @@ def action_watch():
         changed_files = set()
         missing_files = set(mtimes.keys())
         for file in files_to_watch():
-            if file not in mtimes or file.stat().st_mtime > mtimes[file]:
+            cur_mtime = file.stat().st_mtime
+            if cur_mtime > mtimes.get(file, 0):
                 changed_files.add(file)
-                mtimes[file] = file.stat().st_mtime
-            else:
+            if file in missing_files:
                 missing_files.remove(file)
+            mtimes[file] = cur_mtime
 
         if changed_files or missing_files:
             log.info('changed_files %r', changed_files)
