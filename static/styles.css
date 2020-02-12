@@ -534,9 +534,8 @@ footer a:hover {
 }
 
 .page-end-mark {
-	margin: 2em 0;
+	margin: 3em 0;
 	text-align: center;
-	opacity: .6;
 	text-shadow: 0 0 6px rgba(0, 0, 0, .4);
 }
 
