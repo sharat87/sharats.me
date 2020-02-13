@@ -185,7 +185,7 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
     #         code.contents[-1].replace_with(code.contents[-1].rstrip('\n'))
     #     code['class'] = 'hl'
 
-    check_todo_paras(soup)
+    check_todo_paras(soup, dev_mode)
 
     check_attr_paragraphs(soup)
 
@@ -222,7 +222,7 @@ def remove_comments(soup):
         comment.extract()
 
 
-def check_todo_paras(soup):
+def check_todo_paras(soup, dev_mode):
     for para in soup.find_all('p'):
         if not (para.string and para.string.lstrip().startswith(('TODO:', 'FIXME:', 'XXX:'))):
             continue
