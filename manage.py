@@ -140,14 +140,14 @@ class Page:
 def load_page(page):
     log.info('Loading page %r.', page)
     page.raw_body = page.path.read_text('utf8', 'strict')
-    page.body = env.from_string(page.raw_body).render(config=Config)
 
-    if page.body.startswith('---\n'):
-        meta_block, page.body = page.body[4:].split('\n---\n', 1)
+    if page.raw_body.startswith('---\n'):
+        meta_block, page.raw_body = page.raw_body[4:].split('\n---\n', 1)
         page.meta.update(yaml.safe_load(meta_block))
         if 'tags' in page.meta:
             page.tags.extend(page.meta.pop('tags'))
 
+    page.body = env.from_string(page.raw_body).render(config=Config) if page.meta.get('render_content') else page.raw_body
     page.html_body = markdown.to_soup(page.body, Config.dev_mode)
 
     match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', page.slug)

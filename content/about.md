@@ -1,6 +1,7 @@
 ---
 title: About
-comments: no
+comments: false
+render_content: true
 ---
 
 <img src="/shrikant-sharat-kandula.jpg" class=profile>
