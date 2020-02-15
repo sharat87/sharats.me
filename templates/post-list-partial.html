@@ -6,9 +6,9 @@
 
 	{% set ns = namespace(prev_month=None) %}
 	{% for post in posts %}
-		{%- if group_by_month and ns.prev_month != post.date.month %}
-			<li><h2>{{ post.date.strftime('%B %Y') }}</h2>
-			{% set ns.prev_month = post.date.month %}
+		{%- if group_by_month and ns.prev_month != post.date.strftime('%B %Y') %}
+			{% set ns.prev_month = post.date.strftime('%B %Y') %}
+			<li><h2>{{ ns.prev_month }}</h2>
 		{%- endif %}
 		<li>
 		<a href='{{ post.link }}' class=title>{{ post.title | safe }}</a>
