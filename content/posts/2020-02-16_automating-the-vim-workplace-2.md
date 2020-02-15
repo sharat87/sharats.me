@@ -1,5 +1,5 @@
 ---
-title: Automating the Vim workplace -- Chapter II
+title: Automating the Vim workplace -- Chapter Ⅱ
 tags: [vim, productivity]
 description: >
     More ideas and inspiration for identifying repeated actions in your Vim workflow and automate
