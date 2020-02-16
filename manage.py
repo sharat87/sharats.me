@@ -148,12 +148,14 @@ def load_page(page):
             page.tags.extend(page.meta.pop('tags'))
 
     page.body = env.from_string(page.raw_body).render(config=Config) if page.meta.get('render_content') else page.raw_body
-    page.html_body = markdown.to_soup(page.body, Config.dev_mode)
 
     match = re.fullmatch(r'(?P<date>\d{4}-\d{2}-\d{2})_(?P<slug>[-\w]+)', page.slug)
     if match:
         page.date = dt.datetime.fromisoformat(match.group('date')).date()
         page.slug = match.group('slug')
+
+    if page.should_publish:
+        page.html_body = markdown.to_soup(page.body, Config.dev_mode)
 
     log.info('Loaded page %r.', page)
 
