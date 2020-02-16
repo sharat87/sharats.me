@@ -11,6 +11,8 @@ choice for editing text for ten years now and in that time, I've picked up sever
 that made me very productive. I'm hoping to do several articles in the coming weeks to share some of
 these.
 
+Check out [next Chapter][next-article] in this article series, now out!
+
 [TOC]
 
 ## Motivation
@@ -360,7 +362,11 @@ long build is running, grab a coffee and open the Vim docs!
 
 Identify, optimize, repeat.
 
+Read the next article in this series: [Automating the Vim workplace -- Chapter Ⅱ][next-article].
+{: .note }
 
+
+[next-article]: ../automating-the-vim-workplace-2/
 [insertmode]: http://vimdoc.sourceforge.net/htmldoc/options.html#'insertmode'
 [i_ctrl-l]: http://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-L
 [r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0

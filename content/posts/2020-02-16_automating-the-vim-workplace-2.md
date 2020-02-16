@@ -374,7 +374,7 @@ back.
 
 Identify, optimize, repeat.
 
-Visit the previous article in this series: [Automating the Vim workplace][prev-article].
+Read the previous article in this series: [Automating the Vim workplace][prev-article].
 {: .note }
 
 
