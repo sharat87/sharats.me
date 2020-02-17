@@ -154,7 +154,7 @@ def load_page(page):
         page.date = dt.datetime.fromisoformat(match.group('date')).date()
         page.slug = match.group('slug')
 
-    if page.should_publish:
+    if Config.dev_mode or page.should_publish:
         page.html_body = markdown.to_soup(page.body, Config.dev_mode)
 
     log.info('Loaded page %r.', page)
