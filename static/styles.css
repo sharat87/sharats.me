@@ -313,7 +313,7 @@ input, textarea, button, select {
 	font: inherit;
 }
 
-button, input[type="submit"], a.button {
+button, input[type="submit"], a.button, a.button:visited {
 	cursor: pointer;
 	border: 0;
 	background-color: var(--link-color);
