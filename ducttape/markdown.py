@@ -224,7 +224,12 @@ def remove_comments(soup):
 
 def check_todo_paras(soup, dev_mode):
     for para in soup.find_all('p'):
-        if not (para.string and para.string.lstrip().startswith(('TODO:', 'FIXME:', 'XXX:'))):
+        try:
+            first_string = next(para.stripped_strings)
+        except StopIteration:
+            continue
+
+        if not (first_string and first_string.startswith(('TODO:', 'FIXME:', 'XXX:'))):
             continue
 
         if not dev_mode:
