@@ -40,6 +40,29 @@ document.body.addEventListener('click', (event) => {
 		event.preventDefault();
 });
 
+// Collapse large code blocks.
+for (const code of document.querySelectorAll('pre > code')) {
+	const lineCount = code.innerHTML.match(/\n/g).length;
+	if (lineCount < 25)
+		continue;
+	const previewPat = /^([^\n]*\n){20}/;
+	const match = code.innerHTML.match(previewPat);
+	if (!match)
+		continue;
+	code.dataset.fullMarkup = code.innerHTML;
+	code.innerHTML = code.innerHTML.substr(0, match[0].length);
+	code.insertAdjacentHTML('afterEnd',
+		'<button class=show-full-code-btn data-click=showFullCodeBlock>' +
+		`&darr; Show ${lineCount - 20} more lines</button>`);
+
+	const table = code.closest('.hltable');
+	if (table) {
+		const lineNos = table.querySelector('.linenodiv pre');
+		lineNos.dataset.fullMarkup = lineNos.innerHTML;
+		lineNos.innerHTML = lineNos.innerHTML.substr(0, lineNos.innerHTML.match(previewPat)[0].length);
+	}
+}
+
 function updateTimes() {
 	for (const el of document.getElementsByTagName('time')) {
 		el.title = el.title || el.textContent;
@@ -67,6 +90,8 @@ function onBodyClick(event) {
 		copyCodeBlock(event.target);
 	else if (event.target.classList.contains('console-toggle-btn'))
 		toggleConsoleCeremony(event.target);
+	else if (event.target.dataset.click)
+		window[event.target.dataset.click](event);
 }
 
 function copyCodeBlock(btn) {
@@ -98,4 +123,15 @@ function toggleConsoleCeremony(btn) {
 	const preEl = btn.closest('.hl').querySelector('pre');
 	for (const el of preEl.querySelectorAll('span.gp, span.go'))
 		el.classList.toggle('hide');
+}
+
+function showFullCodeBlock(event) {
+	const code = event.target.previousElementSibling;
+	code.innerHTML = code.dataset.fullMarkup;
+	event.target.remove();
+	const table = code.closest('.hltable');
+	if (table) {
+		const lineNos = table.querySelector('.linenodiv pre');
+		lineNos.innerHTML = lineNos.dataset.fullMarkup;
+	}
 }

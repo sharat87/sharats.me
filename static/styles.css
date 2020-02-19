@@ -702,6 +702,13 @@ form :last-child {
 	display: block;
 }
 
+.hl .show-full-code-btn {
+	position: absolute;
+	bottom: 0;
+	left: 1.6em;
+	transform: translateY(50%);
+}
+
 /* pygments styles BEGIN */
 .hl .hll { background-color: #ffffcc }
 .hl .c { color: #8f5902 } /* Comment */
