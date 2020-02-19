@@ -60,13 +60,15 @@ th {
 	background-color: rgba(0, 0, 0, .04);
 }
 
-a:link, a:visited {
+a, a:link, a:visited {
 	color: var(--link-color);
+	word-break: break-word;
 }
 
 a:active {
-	background-color: var(--link-color):
+	background-color: var(--link-color);
 	color: white;
+	border-radius: 2px;
 }
 
 a img {
@@ -374,11 +376,6 @@ textarea {
 .social a:hover {
 	opacity: 1;
 	transform: scale(1.05);
-}
-
-a, a:visited {
-	color: var(--link-color);
-	word-break: break-word;
 }
 
 .subtext {
