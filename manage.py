@@ -51,9 +51,13 @@ ROOT_LOC = Path(__file__).resolve().parent
 OUTPUT_DIR = ROOT_LOC / 'output'
 CONTENT_DIR = ROOT_LOC / 'content'
 TEMPLATES_DIR = ROOT_LOC / 'templates'
+STATIC_DIR = ROOT_LOC / 'static'
 
 env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
+    loader=jinja2.ChoiceLoader([
+        jinja2.FileSystemLoader(str(TEMPLATES_DIR)),
+        jinja2.FileSystemLoader(str(STATIC_DIR)),
+    ]),
     autoescape=jinja2.select_autoescape(['html', 'xml']),
 )
 
@@ -273,7 +277,7 @@ def action_build():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     action_clean()
 
-    for entry in (ROOT_LOC / 'static').iterdir():
+    for entry in STATIC_DIR.iterdir():
         (shutil.copy if entry.is_file() else shutil.copytree)(entry, OUTPUT_DIR / entry.name)
 
     processors = [
