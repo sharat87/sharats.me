@@ -144,6 +144,11 @@ if (!localStorage.noga && !location.hostname.match(/localhost/)) {
 	document.body.appendChild(s);
 }
 
+document.body.addEventListener('click', (event) => {
+	if (event.target.matches('a[href="#"]') || event.target.closest('a[href="#"]') !== null)
+		event.preventDefault();
+});
+
 function updateTimes() {
 	for (const el of document.getElementsByTagName('time')) {
 		el.title = el.title || el.textContent;
