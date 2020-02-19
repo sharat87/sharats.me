@@ -150,6 +150,7 @@ pre, code, kbd, tt, var {
 	font-family: var(--font-mono);
 	font-size: .9em;
 	background-color: rgba(0, 0, 0, .04);
+	font-variant-ligatures: none;
 }
 
 pre {
@@ -159,7 +160,6 @@ pre {
 	overflow: auto;
 	word-wrap: normal;
 	word-break: normal;
-	font-variant-ligatures: none;
 }
 
 code {
@@ -329,6 +329,10 @@ input[type="email"] {
 	border-radius: 2px;
 	padding: 3px;
 	color: inherit;
+}
+
+textarea {
+	background: #F8F8F8;
 }
 
 .profile {
