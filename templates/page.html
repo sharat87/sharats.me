@@ -25,6 +25,15 @@
 	</div>
 	{%- endif %}
 
+	<p>Read Later on
+	<a href='https://getpocket.com/edit.php?url={{ page.permalink }}&title={{ page.title | striptags }}'
+		target=_blank rel=noopener title='Save to Pocket'>Pocket</a> or
+	<a href='https://instapaper.com/edit?url={{ page.permalink }}&title={{ page.title | striptags }}
+			{#- TODO: This summary thing is not working. Figure out Instapaper API here. #}
+			{%- if page.meta.description %}&summary={{ page.meta.description }}{% endif -%}'
+		target=_blank rel=noopener title='Save to Instapaper'>Instapaper</a>.
+	</p>
+
 	<article>{{ page.html_body }}</article>
 
 	{%- if page.layout == 'post' %}
