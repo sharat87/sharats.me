@@ -105,7 +105,7 @@ class Page:
 
     @property
     def date_display(self):
-        return self.date.strftime('%b %d, %Y').replace(' 0', ' ') if self.date else ''
+        return self.date.strftime('%d %b, %Y').lstrip('0') if self.date else ''
 
     @property
     def date_iso(self):
