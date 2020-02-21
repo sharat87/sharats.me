@@ -168,7 +168,11 @@ So, here's the code for this:
 
 The code is not very pretty, but oh well. It works well and I'd rather not touch it.
 
-TODO: Here's a little GIF recording of this at work:
+Here's a little **mute** video recording of this at work:
+
+<video src="/img/autohotkey-select-by-pattern.mp4" muted playsinline preload controls>Your browser
+does not support HTML5 video. Here's <a href="/img/autohotkey-select-by-pattern.mp4">a link to the
+video</a> instead.</video>
 
 ### Batch Rename
 

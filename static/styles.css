@@ -201,14 +201,18 @@ img, svg, [role="img"] {
 	max-width: 100%;
 }
 
-.just-image > img, .just-image > svg, .just-image [role="img"] {
+.just-image > img, .just-image > svg, .just-image [role="img"], video {
 	margin: 0 auto;
 	display: block;
 }
 
-img[src$=".gif"] {
+img[src$=".gif"], video {
 	box-shadow: 0 0 6px rgba(0, 0, 0, .4);
 	border-radius: 6px;
+}
+
+video {
+	max-width: 90%;
 }
 
 figure {
@@ -835,6 +839,10 @@ form :last-child {
 		border-width: 1px 0;
 		border-style: solid;
 		border-color: rgba(0, 0, 0, .06);
+	}
+
+	video {
+		max-width: 100%;
 	}
 }
 
