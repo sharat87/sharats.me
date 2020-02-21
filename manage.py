@@ -305,7 +305,7 @@ def render_site_level_pages(all_pages):
     render('index.html', 'index.html', posts=posts)
 
     log.info('Rendering all posts page.')
-    render('posts/index.html', 'post-list.html', title='All Posts', posts=posts)
+    render('posts/index.html', 'post-list.html', title='Archive', posts=posts)
 
     render_tags(posts)
 

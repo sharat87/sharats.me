@@ -25,6 +25,7 @@ body {
 	align-items: center;
 	font-family: var(--font-body);
 	font-size: 18px;
+	line-height: 1.4;
 }
 
 summary {
