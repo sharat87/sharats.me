@@ -247,7 +247,7 @@ header {
 }
 
 header h1 {
-	font-size: 1.8em;
+	font-size: 1.6em;
 	font-weight: var(--bold-weight);
 	line-height: 1;
 	margin: 0;
@@ -267,7 +267,7 @@ header nav {
 }
 
 header nav a {
-	font-size: 1.4em;
+	font-size: 1.2em;
 	padding: 3px 12px;
 	border-radius: 3px;
 }
@@ -275,6 +275,16 @@ header nav a {
 header nav a:hover {
 	background-color: var(--link-color);
 	color: white;
+}
+
+header nav a + a {
+	margin-left: 3px;
+}
+
+@media only screen and (min-width: 960px) {
+	header nav a + a {
+		margin-left: 1em;
+	}
 }
 
 header .compact {
@@ -506,12 +516,6 @@ footer a {
 
 footer a:hover {
 	text-decoration: underline;
-}
-
-@media only screen and (min-width: 960px) {
-	header nav a {
-		margin-right: 1em;
-	}
 }
 
 .toc {
