@@ -10,7 +10,7 @@
 	{%- if page.date %}
 	<div class=title-subtext>
 		{%- if page.date %}
-		<div class=screen-only><time datetime='{{ page.date_iso }}'>{{ page.date_display }}</time></div>
+		<div class=screen-only><time datetime='{{ page.date_iso }}' data-show-relative>{{ page.date_display }}</time></div>
 		<div class=print-only>
 			<b>Published:</b> {{ page.date_display }}<br>
 			<b>Author:</b> Shrikant Sharat Kandula<br>
@@ -87,13 +87,11 @@
 	</section>
 	{%- endif %}
 
-	{%- include 'email-subscribe-form-partial.html' %}
-
 	{%- if page.meta.comments %}
 	<section class=comments>
 		<h2>Comments</h2>
 		<p class=screen-only>
-			<button type=button onclick='loadComments(event)'>Load comments</button>
+			<button type=button data-click=loadComments>Load comments</button>
 			{%- if page and page.meta.reddit_url %}
 			<a class=button target=_blank href='https://www.reddit.com/{{ page.meta.reddit_url }}'>Reddit Discussion</a>
 			{%- endif %}
@@ -109,15 +107,6 @@
 	<script>
 	function disqus_config() {
 		this.page.url = '{% if page.meta.disqus_url %}{{ page.meta.disqus_url }}{% else %}{{ page.permalink }}{%- endif %}';
-	}
-	function loadComments(event) {
-		event.target.remove();
-		document.getElementById('disqus_thread').innerHTML = 'Loading comments&hellip;';
-		const s = document.createElement('script');
-		s.async = true;
-		s.src = '//sharats-me.disqus.com/embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		document.body.appendChild(s);
 	}
 	</script>
 	{% endif %}

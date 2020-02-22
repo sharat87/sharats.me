@@ -189,6 +189,10 @@ a > kbd {
 	border-bottom-color: var(--link-color);
 }
 
+dd {
+	margin-bottom: .5em;
+}
+
 hr {
 	background-color: #DDD;
 	border: 0;
@@ -648,7 +652,7 @@ form[name="subscribe"] {
 	border: 3px solid var(--link-color);
 	border-radius: 6px;
 	padding: 12px;
-	margin: 1em;
+	margin: 4em 1em 1em;
 }
 
 form[name="subscribe"] input[type="email"] {

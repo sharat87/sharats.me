@@ -13,7 +13,7 @@
 		<li>
 		<a href='{{ post.link }}' class=title>{{ post.title | safe }}</a>
 		<span class=subtext>
-			<date>{{ post.date_display }}</date>
+			<time datetime='{{ post.date_iso }}'>{{ post.date_display }}</time>
 			{%- set id=loop.index %}
 			<input type=checkbox name='tagsToggler{{ id }}' id='tagsToggler{{ id }}' class='toggler hide'>
 			{%- for tag in post.tags %}

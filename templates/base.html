@@ -75,7 +75,10 @@
 	limited when it's turned off.</p>
 </noscript>
 
-<main>{% block main %}{% endblock %}</main>
+<main>
+	{%- block main %}{% endblock %}
+	{%- include 'email-subscribe-form-partial.html' %}
+</main>
 
 <footer>
 	<div class=content>
@@ -99,7 +102,7 @@
 <div id=cookiesOkBox class='screen-only hide'>
 	<p>This website uses cookies. By continuing to use this website, you agree to our use of
 	cookies. <a href=/privacy-policy.html target=_blank rel=noopener title='Privacy Policy'>Know more</a>.</p>
-	<p><button onclick='cookiesOkSave()'>Okay</button></p>
+	<p><button data-click='cookiesOkSave'>Okay</button></p>
 </div>
 
 {% if config.dev_mode %}
