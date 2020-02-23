@@ -353,7 +353,11 @@ input[type="email"] {
 }
 
 textarea {
-	background: #F8F8F8;
+	background-color: rgba(0, 0, 0, .01);
+	color: inherit;
+	border: 2px solid #CCC;
+	border-radius: 3px;
+	box-shadow: inset 0 3px 6px rgba(0, 0, 0, .06);
 }
 
 .profile {
