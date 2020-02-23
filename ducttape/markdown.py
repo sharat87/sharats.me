@@ -156,6 +156,15 @@ def to_soup(md_content: str, dev_mode=False) -> MarkupSoup:
     for table in soup.find_all('table'):
         table.wrap(soup.new_tag('div', attrs={'class': 'table-wrapper'}))
 
+    for span in soup.select('.hl > .filename'):
+        span.parent.parent.insert(0, span)
+        anchor = soup.new_tag('a')
+        anchor.attrs['href'] = 'data:text/plain,' + ''.join(span.parent.code.strings) + '\n'
+        anchor.attrs['download'] = span.string.strip()
+        anchor.attrs['class'] = 'download-btn button'
+        anchor.string = 'Download'
+        span.append(anchor)
+
     fix_toc_markups(soup)
 
     consume_space_after_prompt_strings(soup)
