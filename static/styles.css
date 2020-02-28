@@ -725,7 +725,7 @@ form :last-child {
 	position: absolute;
 	bottom: 0;
 	left: 1.6em;
-	transform: translateY(50%);
+	transform: translateY(30%);
 }
 
 .hltable .filename {
