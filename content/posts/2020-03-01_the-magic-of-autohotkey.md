@@ -74,7 +74,7 @@ and the rest are `#Include`-ed from other AutoHotkey scripts. I include the belo
 script and when I hit <kbd>#+r</kbd>, the changes in `master.ahk` and any included scripts are
 reloaded.
 
-    :::ahk {file: master.ahk}
+    :::ahk
     #+r::Reload
 
 All script snippets discussed here, if and when added to your master script, would start working
