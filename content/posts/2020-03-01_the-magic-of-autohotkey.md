@@ -1,6 +1,7 @@
 ---
 title: The Magic of AutoHotkey
 tags: [autohotkey, productivity, windows, automation, workflow]
+reddit_url: r/AutoHotkey/comments/fbn7vv
 description: >
     My automation stack for day-to-day working, that's built on Autohotkey over six years. Contains
     lots of tips and examples for automating small trivial tasks on Windows with Autohotkey.
