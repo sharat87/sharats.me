@@ -1,117 +1,117 @@
 <!doctype html>
-<html lang=en>
-<head>
-<meta charset=utf-8>
-{%- if not title %}
-{%- set title = page.meta.title if page else "" %}
-{%- endif %}
-{%- set title_unsuffixed = title or "" %}
-{%- set title = ((title + " | ") if title else "") + config.site_title %}
-<title>{{ title }}</title>
-<meta name=viewport content="width=device-width, initial-scale=1">
-<meta name=author content="{{ config.author }}">
+<html lang="en">
 
-{%- if page and page.meta.description %}
-<meta name=description content="{{ page.meta.description }}">
-{%- elif page and page.tags %}
-<meta name=description content="An article about {{ page.tags | en_join }}.">
-{%- else %}
-<meta name=description content="{% if page %}An article{% else %}A website/blog{% endif %} about software development using Python, JavaScript, Vim and several other technologies.">
-{%- endif %}
+	<head>
 
-<meta property="og:title" content="{{ title }}">
-{%- if page %}
-<meta property="og:url" content="{{ page.permalink }}">
-{%- endif %}
-{%- if page %}
-<meta property="og:image" content="{{ page.og_image }}">
-{%- endif %}
-{#- TODO: More Opengraph tags at https://www.ogp.me/ #}
-
-{%- if not config.dev_mode and config.adsense %}
-<script data-ad-client='ca-pub-1813617733171441' async src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>
-{%- endif %}
-
-<link href='https://fonts.gstatic.com' rel=preconnect crossorigin>
-<link rel=stylesheet href='https://fonts.googleapis.com/css?family=Fira+Code:400,600%7CSource+Sans+Pro:400,400i,600,600i&display=swap'>
-<link rel=stylesheet href='/styles.css'>
-<style>.hide,.sr-only{display:none !important}</style>
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-</head>
-
-<body>
-<header>
-	<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>
-	<div class=compact>
-		<h1><a href=/ rel=home>{{ config.site_title }}</a></h1>
-		<label class=nav-toggle for=nav-toggle>
-			<svg width="25" height="20" role="img">
-				<title>Toggle navigation menu</title>
-				<g stroke="black" stroke-width="2" stroke-linecap="round">
-					<line x1="4" y1="4"  x2="21" y2="4" />
-					<line x1="4" y1="10" x2="21" y2="10" />
-					<line x1="4" y1="16" x2="21" y2="16" />
-				</g>
-			</svg>
-		</label>
-	</div>
-	<nav>
-		<a href='/posts/'>Posts</a>
-		<a href='/labs/'>Labs</a>
-		{%- if config.resume_nav %}
-		<a href='/shrikant-sharat-kandula-resume.pdf'>Résumé</a>
+		<meta charset="UTF-8">
+		{%- if not title %}
+		{%- set title = page.meta.title if page else "" %}
 		{%- endif %}
-		<a href='{{ config.feedburner_url }}'>RSS</a>
-		<a href='/about/'>About</a>
-	</nav>
-</header>
+		{%- set title_unsuffixed = title or "" %}
+		{%- set title = ((title + " | ") if title else "") + config.site_title %}
+		<title>{{ title }}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<noscript>
-	<p class=warning>This website requires JavaScript to operate correctly. Functionality may be
-	limited when it's turned off.</p>
-</noscript>
+		{%- if page and page.meta.description %}
+		<meta name="description" content="{{ page.meta.description }}">
+		{%- else %}
+		<meta name="description" content="{{ config.description }}">
+		{%- endif %}
+		<meta name="author" content="{{ config.author }}">
 
-<main>
-	{%- block main %}{% endblock %}
-	{%- include 'email-subscribe-form-partial.html' %}
-</main>
+		<meta property="og:title" content="{{ title }}">
+		{%- if page %}
+		<meta property="og:url" content="{{ page.permalink }}">
+		{%- endif %}
+		{%- if page and page.og_image %}
+		<meta property="og:image" content="{{ page.og_image }}">
+		{%- endif %}
+		{#- TODO: More Opengraph tags at https://www.ogp.me/ #}
 
-<footer>
-	<div class=content>
-		<p>Copyright &copy; 2010-2020, {{ config.author }}. For copying any content from this
-			website, please <a href="/contact/">get in touch</a>.
-			{% if config.adsense %}This website serves third-party ads.{% endif %}</p>
-		<p class=links>
-			<a href=/about/>About</a>
-			<a href=/contact/>Contact</a>
-			<a href=/privacy-policy/>Privacy Policy</a>
-		</p>
-		<p class=links>
-			<span>Find me:</span>
-			<a target=_blank rel=noopener href='https://twitter.com/sharat87'>Twitter</a>
-			<a target=_blank rel=noopener href='https://github.com/sharat87'>GitHub</a>
-			<a target=_blank rel=noopener href='https://www.linkedin.com/in/sharat87'>LinkedIn</a>
-		</p>
-	</div>
-</footer>
+		{%- if not config.dev_mode and config.adsense %}
+		<script data-ad-client='ca-pub-1813617733171441' async src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'></script>
+		{%- endif %}
 
-<div id=cookiesOkBox class='screen-only hide'>
-	<p>This website uses cookies. By continuing to use this website, you agree to our use of
-	cookies. <a href=/privacy-policy.html target=_blank rel=noopener title='Privacy Policy'>Know more</a>.</p>
-	<p><button data-click='cookiesOkSave'>Okay</button></p>
-</div>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:400,600%7CSource+Sans+Pro:400,400i,600,600i&display=swap">
+		<link rel="stylesheet" href="/styles.css">
 
-{% if config.dev_mode %}
-	<p class=warning style='position:fixed;margin:.5em;left:12em'>DEV MODE IS ON</p>
-{% endif %}
+		<link rel="alternate" href="/posts/index.xml" type="application/atom+xml" title="{{ config.site_title }}">
+		<link rel="manifest" href="/site.webmanifest">
 
-<script>
-{% include "main.js" %}
-</script>
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-</body>
+		<style>.hide, .sr-only { display: none !important; }</style>
+
+	</head>
+
+	<body>
+
+		<header>
+			<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>
+			<div class=compact>
+				<h1><a href="/" rel="home">{{ config.site_title }}</a></h1>
+				<label class=nav-toggle for=nav-toggle>
+					<svg width="25" height="20" role="img">
+						<title>Toggle navigation menu</title>
+						<g stroke="black" stroke-width="2" stroke-linecap="round">
+							<line x1="4" y1="4"  x2="21" y2="4" />
+							<line x1="4" y1="10" x2="21" y2="10" />
+							<line x1="4" y1="16" x2="21" y2="16" />
+						</g>
+					</svg>
+				</label>
+			</div>
+			<nav><span><a href="/posts/">Posts</a></span>
+<span><a href="/labs/">Labs</a></span>
+<span><a href="/about/"{% if page and page.permalink.endswith("/about/") %} class="active"{% endif %}>About</a></span></nav>
+		</header>
+
+		<noscript>
+			<p class=warning>This website requires JavaScript to operate correctly. Functionality
+			may be limited when it's turned off.</p>
+		</noscript>
+
+		<main>
+			{%- block main %}{% endblock %}
+			{%- include 'email-subscribe-form-partial.html' %}
+		</main>
+
+		<footer>
+			<div class=content>
+				<p>Copyright &copy; 2010-2020, {{ config.author }}. For copying any content from this
+					website, please <a href="/contact/">get in touch</a>.
+					{% if config.adsense %}This website serves third-party ads.{% endif %}</p>
+				<p class=links>
+					<a href=/about/>About</a>
+					<a href=/contact/>Contact</a>
+					<a href=/privacy-policy/>Privacy Policy</a>
+				</p>
+				<p class=links>
+					<span>Find me:</span>
+					<a target=_blank rel=noopener href='https://twitter.com/sharat87'>Twitter</a>
+					<a target=_blank rel=noopener href='https://github.com/sharat87'>GitHub</a>
+					<a target=_blank rel=noopener href='https://www.linkedin.com/in/sharat87'>LinkedIn</a>
+				</p>
+			</div>
+		</footer>
+
+		<div id=cookiesOkBox class='screen-only hide'>
+			<p>This website uses cookies. By continuing to use this website, you agree to our use of
+			cookies. <a href=/privacy-policy.html target=_blank rel=noopener title='Privacy Policy'>Know more</a>.</p>
+			<p><button data-click='cookiesOkSave'>Okay</button></p>
+		</div>
+
+		{% if config.dev_mode %}
+			<p class=warning style='position:fixed;margin:.5em;left:12em'>DEV MODE IS ON</p>
+		{% endif %}
+
+		<script>
+		{% include "main.js" %}
+		</script>
+
+	</body>
+
 </html>

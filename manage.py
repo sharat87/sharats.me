@@ -26,6 +26,8 @@ class Config:
     site_title = "The Sharat's"
     author = 'Shrikant Sharat Kandula'
     email = 'shrikantsharat.k@gmail.com'
+    description = ('A website about software development using Python, JavaScript, Vim and several other magically'
+            ' unassuming unicorns.')
     feedburner_url = 'http://feeds.feedburner.com/sharats-me'
 
     twitter_user = 'sharat87'
