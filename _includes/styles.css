@@ -243,12 +243,9 @@ main {
 }
 
 header {
-	background: rgba(0, 0, 0, .02);
-	border-bottom: 2px solid rgba(0, 0, 0, .1);
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
 	flex-wrap: wrap;
 }
 
@@ -275,7 +272,7 @@ header nav {
 header nav a {
 	font-size: 1.2em;
 	padding: 3px 12px;
-	border-radius: 3px;
+	border-radius: 0 0 3px 3px;
 }
 
 header nav a:hover {
@@ -283,12 +280,12 @@ header nav a:hover {
 	color: white;
 }
 
-header nav a + a {
+header nav > * {
 	margin-left: 3px;
 }
 
 @media only screen and (min-width: 960px) {
-	header nav a + a {
+	header nav > * {
 		margin-left: 1em;
 	}
 }
