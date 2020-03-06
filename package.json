@@ -1,0 +1,42 @@
+{
+  "name": "sharats-me",
+  "version": "1",
+  "description": "A website about software development using Python, JavaScript, Vim and several other magically unassuming unicorns.",
+  "scripts": {
+    "build": "eleventy",
+    "watch": "eleventy --watch",
+    "serve": "eleventy --serve",
+    "debug": "DEBUG=* eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sharat87/sharats.me.git"
+  },
+  "author": {
+    "name": "Shrikant Sharat Kandula",
+    "email": "shrikantsharat.k@gmail.com",
+    "url": "https://sharats.me/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/11ty/eleventy-base-blog/issues"
+  },
+  "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0",
+    "@11ty/eleventy-navigation": "^0.1.3",
+    "@11ty/eleventy-plugin-rss": "^1.0.7",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
+    "cheerio": "^1.0.0-rc.3",
+    "clean-css": "^4.2.3",
+    "luxon": "^1.21.3",
+    "markdown-it": "^8.4.2",
+    "markdown-it-abbr": "^1.0.4",
+    "markdown-it-anchor": "^5.2.5",
+    "markdown-it-attrs": "^3.0.2",
+    "markdown-it-deflist": "^2.0.3",
+    "markdown-it-footnote": "^3.0.2",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-table-of-contents": "^0.4.4"
+  }
+}

@@ -1,0 +1,86 @@
+---
+layout: layouts/home.njk
+postCount: 6
+---
+
+<h1>Hi there!</h1>
+
+<p>I am Shrikant. This is my blog/website where I write stuff about the work I do and things
+I've learnt. Feel free to browse and <a href='/contact/'>reach out</a> if you want to say
+hello.</p>
+
+<h1>Latest {{ postCount }} posts</h1>
+
+{%- set postslist = collections.posts | head(-postCount) %}
+{%- set postslistCounter = collections.posts | length %}
+{%- include "postslist.njk" %}
+
+<p><a href="{{ '/posts/' | url }}">More &rarr;</a></p>
+
+<h1 id=labs>Labs</h1>
+
+<h3 class=lab-title>
+	<span>Just a calendar</span>
+	<a href='https://calendar.sharats.me/' target=just-a-calendar>calendar.sharats.me</a>
+</h3>
+
+<p>
+	An easily reachable endpoint to have a calendar to look at. No signup, no setup, no
+	downloads, no flash and very little features. Perfect when you want to show a calendar and
+	talk about dates when sharing your screen in a presentation or meeting.
+</p>
+
+<ul>
+	<li>Mark dates with four different colors.</li>
+	<li>Marked dates are saved in your browser's local storage, so they survive restarts.
+	<li>Right click on a date to quickly copy the data in several useful formats.
+	<li>Dark mode, for the rest of you guys.
+	<li>Hotkeys for common actions. Hit <kbd>?</kbd> for quick help.
+	<li>Remove all marks with a single click.
+</ul>
+
+<h3 class=lab-title>
+	<span>Timezoner</span>
+	<a href='http://tz.sharats.me' target=timezoner>tz.sharats.me</a>
+</h3>
+
+<p>
+	A simple UI to help convert times in various time zones. Powered by moment.js, so is aware
+	of all changes to timezones, DST updates etc. No signup, no setup, no downloads, no flash
+	and very little features. Perfect when you want to discuss time zones with a global team and
+	sharing your screen in a presentation or meeting.
+</p>
+
+<ul>
+	<li>Click on a number in the time of any time zone and hit up/down arrows to step.
+	<li>Changing the time/date of one time zone updates all the other times.
+	<li>Time zone list is saved in your browser's local storage so survives restarts.
+</ul>
+
+<h3 class=lab-title>
+	<span>Silly Calculator</span>
+	<a href='https://calc.sharats.me' target=calc>calc.sharats.me</a>
+</h3>
+
+<p>A notepad style in-browser calculator, that displays results live on the right side.</p>
+
+<ul>
+	<li>Folding support for sections of the worksheet (defined by lines ending with a <code>:</code>).
+	<li>Variables support in the calculations.
+	<li>Powered by <a href='https://mathjs.org/' target=_blank>math.js</a>.
+</ul>
+
+<h3 class=lab-title>
+	<span>Command Line Generator</span>
+	<a href='https://cligen.sharats.me' target=cligen>cligen.sharats.me</a>
+</h3>
+
+<p>A simple no-fuss UI to generate often used command lines with arguments.</p>
+
+<ul>
+	<li>Includes short sections on help on how the generated command works and, if applicable,
+		what to look out for when running the command.
+	<li>Currently supports the `tar` command.
+</ul>
+
+<p><a href=/labs/>More &rarr;</a></p>

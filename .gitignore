@@ -1,5 +1,7 @@
-/output
-/.idea
+/_site
+/node_modules
+/package-lock.json
 *.iml
+/.idea
 __pycache__
 .mypy_cache

@@ -1,8 +1,0 @@
-{% extends 'base.html' %}
-
-{% block main %}
-	<h1>{{ title_unsuffixed }}</h1>
-	{%- with group_by_month = true %}
-		{% include 'post-list-partial.html' %}
-	{%- endwith %}
-{% endblock %}

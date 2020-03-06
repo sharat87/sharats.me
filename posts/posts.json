@@ -1,0 +1,5 @@
+{
+	"layout": "layouts/post.njk",
+	"comments": true,
+	"permalink": "{{ page.filePathStem }}/"
+}

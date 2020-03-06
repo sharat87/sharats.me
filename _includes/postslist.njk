@@ -1,0 +1,30 @@
+{%- if postslist %}
+<ol reversed class="post-list" style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
+	{%- set prevMonth = null %}
+	{%- for post in postslist | reverse %}
+		{%- if groupByMonth and prevMonth != post.date | monthLabel %}
+			{% set prevMonth = post.date | monthLabel %}
+			<li><h2>{{ prevMonth }}</h2>
+		{%- endif %}
+		<li>
+		<a href="{{ post.url | url }}" class=title>{% if post.data.title %}{{ post.data.title | markdown | safe }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+		<span class="subtext">
+			<time datetime="{{ post.date | iso }}">{{ post.date | readableDate }}</time>
+			{%- set id = loop.index %}
+			<input type=checkbox name="tagsToggler{{ id }}" id="tagsToggler{{ id }}" class="toggler hide">
+			{%- for tag in post.data.tags %}
+			{%- if loop.first %}
+			<a href="{{ tagUrl | url }}" class="tag first">{{ tag }}</a>
+			<label class=tag for='tagsToggler{{ id }}' title='Show more tags'>&hellip;</label>
+			{%- else %}
+			<a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
+			{%- endif %}
+			{%- endfor %}
+		</span>
+	{%- endfor %}
+</ol>
+
+{%- else %}
+	<p>There's no postslist yet.</p>
+
+{%- endif %}

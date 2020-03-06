@@ -1,0 +1,11 @@
+---
+layout: layouts/base.njk
+templateClass: tmpl-page
+---
+
+{%- set fullUrl = metadata.url.substr(0, metadata.url.length - 1) + (page.url | url) %}
+<h1><a href="{{ fullUrl }}" rel="bookmark"><span>{{ title | markdown | safe }}</span></a></h1>
+
+{{ content | safe }}
+
+<p><a href="{{ '/' | url }}">← Home</a></p>
