@@ -312,23 +312,23 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 	font-size: .85em;
 }
 
-.direct-link {
+.header-anchor {
 	margin-left: 12px;
 	display: none;
 	text-decoration: none;
 	font-family: var(--font-mono);
 	font-size: .7em;
-	vertical-align: super;
+	vertical-align: top;
 	padding: 0 3px;
 	border-radius: 1px;
 }
 
-.direct-link:hover {
+.header-anchor:hover {
 	background-color: var(--link-color);
 	color: white;
 }
 
-:hover > .direct-link {
+:hover > .header-anchor {
 	display: inline-block;
 }
 

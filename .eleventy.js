@@ -160,8 +160,6 @@ function makeMarkdownRenderer() {
 
 	md.use(require("markdown-it-anchor"), {
 		permalink: true,
-		permalinkClass: "direct-link",
-		permalinkSymbol: "#",
 		slugify
 	});
 
