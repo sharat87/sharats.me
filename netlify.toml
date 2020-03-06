@@ -1,4 +1,4 @@
 [build]
   publish = "_site"
-  command = "DEBUG=* eleventy"
+  command = "eleventy"
   environment = { NODE_VERSION = "10", NODE_END = "production" }
