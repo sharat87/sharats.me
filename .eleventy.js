@@ -255,7 +255,7 @@ function transformFinalHTML($) {
 	// FIXME: Need a simpler faster way to do this, at the `markdown-it` level.
 	$(".table-of-contents a").each((index, el) => {
 		$(el).html($($(el).attr('href')).html());
-	}).find('.direct-link').remove();
+	}).find('.header-anchor').remove();
 
 	// Special class for paragraphs with just a single image.
 	$("p > img, p > [role='img'], p > svg").each((index, el) => {
