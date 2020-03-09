@@ -222,11 +222,12 @@ function codeFenceRenderer(tokens, idx, options, env, slf) {
 		return html;
 
 	const lang = match[1], extra = match[2];
+	html = `<div class="hl" ${lang ? ('data-lang="' + lang + '"') : ""}>` + html + "</div>";
+
 	if (!extra)
 		return html;
 
 	const config = JSON.parse(extra);
-	html = `<div class="hl" ${lang ? ('data-lang="' + lang + '"') : ""}>` + html + "</div>";
 	let extraWrapping = false;
 
 	if (config.linenos) {
