@@ -59,6 +59,14 @@ module.exports = function (eleventyConfig) {
 		return html.substr(3, html.length - 8);
 	});
 
+	eleventyConfig.addShortcode("video", (name) => {
+		return [
+			`<video src="/img/${name}" muted playsinline preload controls>Your browser does not`,
+			`support HTML5 video. Here's <a href="/img/${name}">a link to the video</a>`,
+			`instead.</video>`,
+		].join(" ");
+	});
+
 	eleventyConfig.addTransform("htmlPostProcessor", (content, outputPath) => {
 		if (!outputPath.endsWith(".html"))
 			return content;

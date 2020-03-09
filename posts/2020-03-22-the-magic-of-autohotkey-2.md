@@ -177,9 +177,7 @@ The code is not very pretty, but oh well. It works well and I'd rather not touch
 
 Here's a little **mute** video recording of this at work:
 
-<video src="/img/autohotkey-select-by-pattern.mp4" muted playsinline preload controls>Your browser
-does not support HTML5 video. Here's <a href="/img/autohotkey-select-by-pattern.mp4">a link to the
-video</a> instead.</video>
+{% video "autohotkey-select-by-pattern.mp4" %}
 
 ### Batch Rename
 
@@ -299,7 +297,9 @@ following hotkey to your master script:
 ^+b::Run batch-rename.ahk
 ```
 
-TODO: Here's a cool animation on this hotkey!
+Here's a little **mute** video recording of some usage examples of this tool:
+
+{% video "autohotkey-rename-by-regex.mp4" %}
 
 ### Copy Paths of Selected Files
 
@@ -336,7 +336,8 @@ JoinArrayContents(arr, delimiter="`n") {
 }
 ```
 
-TODO: Show a GIF.
+Now I can select one or more files, hit <kbd>^+c</kbd> and the full paths of *all* the selected
+files will end up in my clipboard.
 
 ### Copy Contents of Selected Files
 
@@ -369,7 +370,8 @@ This doesn't work with images yet though. Still have to figure that out.
 This is the same `Explorer_GetSelected` I referred to in the previous section. However, in the above
 hotkey definition, instead of setting the paths to `Clipboard`, we set the contents of the files.
 
-TODO: Show GIF.
+Just like the previous hotkey, I can select multiple *text* files and hit <kbd>^+x</kbd> and the
+contents of all selected files will end up in my clipboard, separated by two blank lines.
 
 ### Create File with Clipboard Contents
 
@@ -406,7 +408,10 @@ in the previous sections. The way this works is when the hotkey is triggered, we
 enter the name of the file to which the clipboard's contents will be saved. Once we provide a file
 name and submit, the file is created.
 
-TODO: Show GIF.
+With this, I can copy some text out of a webpage or an email in Outlook and saving it to a text file
+is a quick <kbd>^+v</kbd>. Once I created this hotkey, it became my primary way of creating new text
+files. I no longer open Notepad, write (or paste) and then save the file to the desired directory.
+Instead, I open the folder, use this hotkey to create the file, and then open the file in Notepad.
 
 ### Create Folder Hierarchy and Enter it
 
@@ -454,7 +459,8 @@ triggered, we get a prompt where we can enter a folder tree (*i.e.,* folders sep
 `\\`) and they will all be created. As a bonus, we are also switched to that newly created folder
 so we can start to work with the folder we just created.
 
-TODO: Show GIF
+Now I can hit <kbd>^n</kbd> and type in `src/main/java` or `2020-01/pics`, and all nesting structure
+is created and navigated, which is usually followed by pasting some files.
 
 ## Email Selected File(s) with Outlook
 
@@ -535,3 +541,14 @@ the focus is set to the "To:" field, perfectly to quickly start working on my em
 Note, of course, that since this connects to the Outlook OLE object, Outlook needs to be running for
 this work.
 {: .note }
+
+## Conclusion
+
+
+
+
+[ealt-1]: https://www.xyplorer.com/
+[ealt-2]: https://www.zabkat.com/
+[ealt-3]: https://www.gpsoft.com.au/
+[ealt-4]: https://www.ghisler.com/
+[explorer-lib]: https://autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
