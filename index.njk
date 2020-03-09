@@ -1,6 +1,5 @@
 ---
 layout: layouts/home.njk
-postCount: 6
 ---
 
 <h1>Hi there!</h1>
@@ -9,9 +8,9 @@ postCount: 6
 I've learnt. Feel free to browse and <a href='/contact/'>reach out</a> if you want to say
 hello.</p>
 
-<h1>Latest {{ postCount }} posts</h1>
+<h1>Recent posts</h1>
 
-{%- set postslist = collections.posts | head(-postCount) %}
+{%- set postslist = collections.posts | head(-6) %}
 {%- set postslistCounter = collections.posts | length %}
 {%- include "postslist.njk" %}
 
