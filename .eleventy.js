@@ -16,14 +16,17 @@ module.exports = function (eleventyConfig) {
 
 	eleventyConfig.setDataDeepMerge(true);
 
-	eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
-
 	eleventyConfig.addFilter("readableDate", date => DateTime.fromJSDate(date).toFormat("d LLL yyyy"));
 
 	eleventyConfig.addFilter("monthLabel", date => DateTime.fromJSDate(date).toFormat("LLLL yyyy"));
 
 	// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
-	eleventyConfig.addFilter("iso", dateObj => DateTime.fromJSDate(dateObj).toFormat("yyyy-LL-dd"));
+	// eleventyConfig.addFilter("iso", dateObj => DateTime.fromJSDate(dateObj).toFormat("yyyy-LL-dd"));
+	eleventyConfig.addFilter("iso", d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`);
+
+	function pad(n) {
+		return n < 10 ? `0${n}` : n;
+	}
 
 	// Get the first `n` elements of a collection.
 	eleventyConfig.addFilter("head", (array, n) => {
@@ -54,8 +57,9 @@ module.exports = function (eleventyConfig) {
 	const markdownLibrary = makeMarkdownRenderer();
 	eleventyConfig.setLibrary("md", markdownLibrary);
 
-	eleventyConfig.addFilter("markdown", (content) => {
+	eleventyConfig.addFilter("line_md", (content) => {
 		const html = markdownLibrary.render(content);
+		// Strip the `<p>` tag.
 		return html.substr(3, html.length - 8);
 	});
 
