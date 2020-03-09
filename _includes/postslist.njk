@@ -7,7 +7,7 @@
 			<li><h2>{{ prevMonth }}</h2>
 		{%- endif %}
 		<li>
-		<a href="{{ post.url | url }}" class=title>{% if post.data.title %}{{ post.data.title | line_md | safe }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+		<a href="{{ post.url | url }}" class=title>{% if post.data.title %}{{ post.data.title | lineMarkdown | safe }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
 		<span class="subtext">
 			<time datetime="{{ post.date | iso }}">{{ post.date | readableDate }}</time>
 			{%- set id = loop.index %}

@@ -57,11 +57,13 @@ module.exports = function (eleventyConfig) {
 	const markdownLibrary = makeMarkdownRenderer();
 	eleventyConfig.setLibrary("md", markdownLibrary);
 
-	eleventyConfig.addFilter("line_md", (content) => {
+	eleventyConfig.addFilter("lineMarkdown", (content) => {
 		const html = markdownLibrary.render(content);
 		// Strip the `<p>` tag.
 		return html.substr(3, html.length - 8);
 	});
+
+	eleventyConfig.addFilter("replaceSigns", replaceSigns);
 
 	eleventyConfig.addShortcode("video", (name) => {
 		return [
@@ -196,6 +198,8 @@ function makeMarkdownRenderer() {
 
 	md.use(require("markdown-it-abbr"));
 
+	md.core.ruler.before("replacements", "smarty", smartySignerRule);
+
 	md.renderer.rules.fence_orig = md.renderer.rules.fence;
 	md.renderer.rules.fence = codeFenceRenderer;
 
@@ -247,6 +251,31 @@ function codeFenceRenderer(tokens, idx, options, env, slf) {
 		html = "<div class=hltable>" + html + "</div>";
 
 	return html;
+}
+
+
+function smartySignerRule(state) {
+	// The order of replacements is significant -- avoid premature match
+	// Source: https://github.com/adam-p/markdown-it-smartarrows
+	const ARROWS_RE = /--|==/;
+	for (const token of state.tokens) {
+		if (token.type === 'inline' && ARROWS_RE.test(token.content))
+			for (const ctoken of token.children)
+				if (ctoken.type === 'text' && ARROWS_RE.test(ctoken.content))
+					ctoken.content = replaceSigns(ctoken.content)
+	}
+}
+
+function replaceSigns(text) {
+	// Ref: ndash vs mdash: https://www.punctuationmatters.com/hyphen-dash-n-dash-and-m-dash/
+	return text
+		.replace(/(^|[^<])<-->([^>]|$)/mg, '$1\u2194$2')
+		.replace(/(^|[^-])-->([^>]|$)/mg, '$1\u2192$2')
+		.replace(/(^|[^<])<--([^-]|$)/mg, '$1\u2190$2')
+		.replace(/(^|[^<])--([^>]|$)/mg, '$1\u2014$2') // em-dash
+		.replace(/(^|[^<])<==>([^>]|$)/mg, '$1\u21d4$2')
+		.replace(/(^|[^=])==>([^>]|$)/mg, '$1\u21d2$2')
+		.replace(/(^|[^<])<==([^=]|$)/mg, '$1\u21d0$2');
 }
 
 
