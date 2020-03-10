@@ -155,6 +155,7 @@ function setupSyntaxHighlighting(eleventyConfig) {
 	const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 	eleventyConfig.addPlugin(pluginSyntaxHighlight, {
 		init: function ({ Prism }) {
+			// Language aliases coming from Pygments.
 			require("prismjs/components/")(["python", "shell-session", "bash", "autohotkey"]);
 			Prism.languages.awk = Prism.languages.clike;
 			Prism.languages.pycon = Prism.languages.python;
@@ -217,16 +218,42 @@ function codeFenceRenderer(tokens, idx, options, env, slf) {
 	// Prism turns newline characters to `<br>`. Figure out how to get it to not to.
 	html = html.replace(/<br>/g, "\n");
 
+	const newLineMatches = html.match(/\n/g);
+	if (newLineMatches) {
+		const lineCount = newLineMatches.length;
+		if (lineCount > 24) {
+			const previewPat = /^([^\n]*\n){20}/;
+			const match = html.match(previewPat);
+			if (match) {
+				let i = Math.random();
+				html = html
+					.replace(/^(([^\n]*\n){20})((.|\n)*)(<\/code><\/pre>\n?)$/, '$1<span class="expanded">$3</span>$5')
+					.replace(
+						"><code",
+						`><input type=checkbox class="expand-btn" id="code-${i}"><label for="code-${i}">Show ${lineCount - 20} more lines</label><code`
+					);
+				// const showPartCode = code.innerHTML.substr(0, match[0].length);
+				// const openCount = showPartCode.match(/<\w+/g).length,
+				// 	closeCount = showPartCode.match(/<\/\w+/g).length;
+				// if (openCount !== closeCount)
+				// code.innerHTML = code.innerHTML.substr(0, match[0].length) +
+				// 	`<span class="expanded">` +
+				// 	code.innerHTML.substr(match[0].length, code.innerHTML.length) +
+				// 	"</span>";
+			}
+		}
+	}
+
 	const match = tokens[idx].info.match(/^(\w+)(\s+.+)?$/);
 	if (!match)
 		return html;
 
 	const lang = match[1], extra = match[2];
-	html = `<div class="hl" ${lang ? ('data-lang="' + lang + '"') : ""}>` + html + "</div>";
+	let prefix = `<div class="hl" ${lang ? ('data-lang="' + lang + '"') : ""}>`;
+	let suffix = "</div>";
 
 	if (!extra)
-		return html;
-
+		return prefix + html + suffix;
 	const config = JSON.parse(extra);
 	let extraWrapping = false;
 
@@ -237,21 +264,26 @@ function codeFenceRenderer(tokens, idx, options, env, slf) {
 		const nums = [];
 		for (let i = 1; i <= linesNum;)
 			nums.push(i++);
-		const lineNosMarkup = "<div class=linenodiv aria-hidden=true><pre>" + nums.join("\n") + '</pre></div>'
-		html = lineNosMarkup + html;
+		if (linesNum >= 24) {
+			nums[19] += '<span class="expanded" style="display:none">' ;
+			nums[linesNum - 1] += "</span>";
+		}
+		prefix = "<div class=linenodiv aria-hidden=true><pre>" + nums.join("\n") + '</pre></div>' + prefix;
 	}
 
 	if (config.filename) {
 		extraWrapping = true;
 		const filename = config.filename.trim();
 		const downloadLink = '<a href="data:text/plain,' + tokens[idx].content.replace(/"/g, '&quot;') + '" class="download-btn button" download="' + filename + '">Download</a>';
-		html = "<span class=filename>" + filename + downloadLink + "</span>" + html;
+		prefix = "<span class=filename>" + filename + downloadLink + "</span>" + prefix;
 	}
 
-	if (extraWrapping)
-		html = "<div class=hltable>" + html + "</div>";
+	if (extraWrapping) {
+		prefix = "<div class=hltable>" + prefix;
+		suffix += "</div>";
+	}
 
-	return html;
+	return prefix + html + suffix;
 }
 
 

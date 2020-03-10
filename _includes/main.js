@@ -43,23 +43,35 @@ function main() {
 			event.preventDefault();
 	});
 
-	// Collapse large code blocks.
+	/*/ Collapse large code blocks.
+	let i = 0;
 	for (const code of document.querySelectorAll('pre > code')) {
 		const newLineMatches = code.innerHTML.match(/\n|<br>/g);
 		if (!newLineMatches)
 			continue;
+
 		const lineCount = newLineMatches.length;
 		if (lineCount < 25)
 			continue;
+
 		const previewPat = /^([^\n]*\n){20}/;
 		const match = code.innerHTML.match(previewPat);
 		if (!match)
 			continue;
+
 		code.dataset.fullMarkup = code.innerHTML;
-		code.innerHTML = code.innerHTML.substr(0, match[0].length);
-		code.insertAdjacentHTML('afterEnd',
-			'<button class=show-full-code-btn data-click=showFullCodeBlock>' +
-			`&darr; Show ${lineCount - 20} more lines</button>`);
+		code.insertAdjacentHTML(
+			"beforeBegin",
+			`<input type=checkbox class="expand-btn" id="code-${i}"><label for="code-${i}">Show ${lineCount - 20} more lines</label>`
+		);
+		// const showPartCode = code.innerHTML.substr(0, match[0].length);
+		// const openCount = showPartCode.match(/<\w+/g).length,
+		// 	closeCount = showPartCode.match(/<\/\w+/g).length;
+		// if (openCount !== closeCount)
+		code.innerHTML = code.innerHTML.substr(0, match[0].length) +
+			`<span class="expanded">` +
+			code.innerHTML.substr(match[0].length, code.innerHTML.length) +
+			"</span>";
 
 		const table = code.closest('.hltable');
 		if (table) {
@@ -67,7 +79,15 @@ function main() {
 			lineNos.dataset.fullMarkup = lineNos.innerHTML;
 			lineNos.innerHTML = lineNos.innerHTML.substr(0, lineNos.innerHTML.match(previewPat)[0].length);
 		}
-	}
+	} // */
+
+	document.body.addEventListener("change", (event) => {
+		if (event.target.matches("input.expand-btn")) {
+			const top = event.target.closest(".hltable");
+			if (top)
+				top.querySelector(".linenodiv .expanded").style = "";
+		}
+	});
 }
 
 function updateTimes() {
@@ -103,7 +123,7 @@ function onBodyClick(event) {
 
 function copyCodeBlock(btn) {
 	const codeEl = btn.closest('.hl').querySelector('pre code').cloneNode(true);
-	for (const el of codeEl.querySelectorAll('.hide'))
+	for (const el of codeEl.querySelectorAll('.hide, summary'))
 		el.remove();
 	let text = codeEl.textContent.trim();
 	if (text.includes('\n'))

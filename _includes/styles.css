@@ -691,6 +691,7 @@ form :last-child {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 	border-right: 1px solid rgba(0, 0, 0, .06);
+	user-select: none;
 }
 
 .hltable .hl pre {
@@ -727,6 +728,18 @@ form :last-child {
 	transform: translateY(30%);
 }
 
+.hl details[open] summary {
+	display: none;
+}
+
+.hl summary {
+	background-color: var(--link-color);
+	color: white;
+	display: inline-block;
+	padding: 3px 6px 3px 0;
+	border-radius: 0 6px 6px 0;
+}
+
 .hltable .filename {
 	width: 100%;
 	background-color: rgba(0, 0, 0, .1);
@@ -741,6 +754,31 @@ form :last-child {
 .hltable .download-btn {
 	margin-left: 2em;
 	padding: 0 1em;
+}
+
+.hl .expanded,
+.hl .expand-btn {
+	display: none;
+}
+
+.hl .expand-btn + label {
+	position: absolute;
+	bottom: 1em;
+	left: 1em;
+	background-color: var(--link-color);
+	color: white;
+	padding: 3px 6px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.hl .expand-btn:checked ~ code .expanded {
+	display: initial;
+}
+
+.hl .expand-btn:checked,
+.hl .expand-btn:checked + label {
+	display: none;
 }
 
 .highlight-line {
