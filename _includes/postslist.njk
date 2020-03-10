@@ -13,11 +13,12 @@
 			{%- set id = loop.index %}
 			<input type=checkbox name="tagsToggler{{ id }}" id="tagsToggler{{ id }}" class="toggler hide">
 			{%- for tag in post.data.tags %}
+			{%- set tagUrl = "/tags/" + tag | url %}
 			{%- if loop.first %}
-			<a href="{{ tagUrl | url }}" class="tag first">{{ tag }}</a>
+			<a href="{{ tagUrl }}" class="tag first">{{ tag }}</a>
 			<label class=tag for='tagsToggler{{ id }}' title='Show more tags'>&hellip;</label>
 			{%- else %}
-			<a href="{{ tagUrl | url }}" class="tag">{{ tag }}</a>
+			<a href="{{ tagUrl }}" class="tag">{{ tag }}</a>
 			{%- endif %}
 			{%- endfor %}
 		</span>
