@@ -91,18 +91,20 @@ function main() {
 }
 
 function updateTimes() {
-	for (const el of document.querySelectorAll('time[data-show-relative]')) {
-		el.title = el.title || el.textContent;
-		el.textContent = timeSince(Date.parse(el.getAttribute('datetime')));
+	for (const el of document.querySelectorAll("time[data-show-relative]")) {
+		if (!el.title)
+			el.title = el.textContent;
+		el.innerHTML = `${el.title} (${timeSince(el.getAttribute("datetime"))})`;
 	}
 }
 
 function timeSince(date) {
-	let i, u, s = Math.round((new Date() - date) / 100000);
-	if ((i = Math.round(s / 315360)) >= 1) u = 'year';
-	else if ((i = Math.round(s / 25920)) >= 1) u = 'month';
-	else if ((i = Math.round(s / 864)) >= 1) u = 'day';
-	return u ? `~${i} ${u}${i > 1 ? 's' : ''} ago` : 'today';
+	let i, u, s = Math.round((new Date() - Date.parse(date)) / 100000);
+	if (s < 0) return "<span style='color:red'><b>warp zone future</b></span>";
+	else if ((i = Math.round(s / 315360)) >= 1) u = "year";
+	else if ((i = Math.round(s / 25920)) >= 1) u = "month";
+	else if ((i = Math.round(s / 864)) >= 1) u = "day";
+	return u ? `~${i} ${u}${i > 1 ? "s" : ""} ago` : "today";
 }
 
 function cookiesOkSave() {
