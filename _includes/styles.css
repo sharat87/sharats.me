@@ -692,6 +692,7 @@ form :last-child {
 	border-bottom-right-radius: 0;
 	border-right: 1px solid rgba(0, 0, 0, .06);
 	user-select: none;
+	text-align: right;
 }
 
 .hltable .hl pre {
