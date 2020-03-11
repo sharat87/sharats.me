@@ -34,18 +34,18 @@ it's consistent with most other such GNU commands.
 
 Additional options after `-c`:
 
-1. `v` --- Enable verbose output. Adding this will print each file as it is being added to the
+1. `v` -- Enable verbose output. Adding this will print each file as it is being added to the
    archive.
 
-1. `z` or `j` --- Specify the compression format, if needed. Use `z` for `gz` archive or `j` for
+1. `z` or `j` -- Specify the compression format, if needed. Use `z` for `gz` archive or `j` for
    `bz2` archive. This can also be `a` to infer the compression format from the file name, but only
    if the `f` (explained in the next point) is also given. Other compression formats like `--xz`,
    `--lzip` etc. can also be used.
 
-1. `f` --- Use the next argument as the file name of the archive. If this argument is not provided,
+1. `f` -- Use the next argument as the file name of the archive. If this argument is not provided,
    the archive content is written to the standard out.
 
-1. `--remove-files` --- Remove files after adding them to the archive. Be careful with this.
+1. `--remove-files` -- Remove files after adding them to the archive. Be careful with this.
 
 To illustrate the examples, I'll clone one of my public repositories and play around with creating
 archives of it.
@@ -117,10 +117,10 @@ The `-t` (or `--list`) can be used to list the contents of an archive without ex
 
 Additional options after `-t`:
 
-1. `v` --- Verbose listing. The affect of adding this option is like adding `-l` to the `ls`
-   command. That is, it will show each file's permissions, size, last modified *etc.* details.
+1. `v` -- Verbose listing. The affect of adding this option is like adding `-l` to the `ls` command.
+   That is, it will show each file's permissions, size, last modified *etc.* details.
 
-1. `f` --- Treat next argument as the archive file name. This argument is *usually* always needed
+1. `f` -- Treat next argument as the archive file name. This argument is *usually* always needed
    with the `-t` command (unless the archive is being piped in to the `tar -t` command).
 
 Let's run this on our package archive created in the previous section.
@@ -162,17 +162,17 @@ The `-x` (or `--extract`) command is used to **extract** the contents of archive
 
 This command takes the following arguments:
 
-1. `v` --- Verbose logging. Prints each file path as it is being extracted.
+1. `v` -- Verbose logging. Prints each file path as it is being extracted.
 
-1. `z` or `j` --- Specify the compression format, if needed. Similar in working as with the `-c`
+1. `z` or `j` -- Specify the compression format, if needed. Similar in working as with the `-c`
    command.
 
-1. `f` --- Reads the next argument as the archive file name. This is almost always used with this
+1. `f` -- Reads the next argument as the archive file name. This is almost always used with this
    command to specify the archive to extract. If this is not provided, the archive content is
    expected to be available from standard input.
 
-1. `k` (or `--keep-old-files`) --- Fail if any existing files will be overwritten by extracting.
-   This is useful if you don't want any of your existing files to be overwritten.
+1. `k` (or `--keep-old-files`) -- Fail if any existing files will be overwritten by extracting. This
+   is useful if you don't want any of your existing files to be overwritten.
 
 So, to extract our archive (in a separate location, of course):
 

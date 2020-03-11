@@ -160,8 +160,8 @@ article][romainl-article] on the topic by [romainl][]. Thank you!
 This is another very old mapping that still survives. It comes in two flavors, I use `cm` and `cu`
 for these. Briefly,
 
-- `cm` --- *cd* to current buffer's directory.
-- `cu` --- *cd* to the current **project**'s root directory.
+- `cm` -- *cd* to current buffer's directory.
+- `cu` -- *cd* to the current **project**'s root directory.
 
 The first one is fairly simple to implement:
 

@@ -29,7 +29,7 @@ follow for others.
 
 > Any sufficiently advanced technology is indistinguishable from magic.
 >
-> --- *Clarke's Third Law, 1973*
+> -- *Clarke's Third Law, 1973*
 
 In these articles, I'll share some of the hotkeys I use, how I came about them and how they improve
 my workflow. It is not a beginner's AutoHotkey tutorial, that would be the official documentation or
