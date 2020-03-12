@@ -1,5 +1,5 @@
 ---
-title: The Magic of AutoHotkey -- Chapter Ⅱ
+title: The Magic of AutoHotkey -- Part 2
 tags: [autohotkey, productivity, windows, automation]
 description: >
     My automation stack for day-to-day working, that's built on Autohotkey over six years. This is
@@ -7,11 +7,11 @@ description: >
     explorer and using OLE objects for office applications.
 ---
 
-In the previous part of *The Magic of AutoHotkey*, we looked at automating small pieces of routine
-tasks with various applications, as well as identifying things that could be done better with a
-quick hotkey. This is the next chapter of the story. In this article, I'll show you how I tamed the
-stock file explorer as well as connecting to office applications with OLE to provide additional rich
-functionality.
+In the previous part of [The Magic of AutoHotkey][prev-article], we looked at automating small
+pieces of routine tasks with various applications, as well as identifying things that could be done
+better with a quick hotkey. This is the next chapter of the story. In this article, I'll show you
+how I tamed the stock file explorer as well as connecting to office applications with OLE to provide
+additional rich functionality.
 
 [TOC]
 
@@ -23,7 +23,7 @@ tuned for a power user. May be that's also why [there's][ealt-1] [so][ealt-2] [m
 been to add exactly the few things I needed in the native file explorer, using AutoHotkey. I'll run
 through those here.
 
-As is the case in previous sections, I have a module called `file-explorer-tweaks.ahk` which is
+As is the case in the previous part, I have a module called `file-explorer-tweaks.ahk` which is
 `#Include`-ed in my master script.
 
 To start, we define a window group, which includes all file explorer windows. We later use this
@@ -41,8 +41,9 @@ This group now matches the file explorer windows, desktop and the file open dial
 
 Almost all the web browsers today have the default hotkey <kbd>^l</kbd> which focuses the location
 bar, and selects everything in it. But in the file explorer, this is <kbd>!d</kbd>. Habits rule and
-I constantly hit <kbd>^l</kbd> when I wanted to change something in the location bar until I added
-the following to save me from insanity:
+I constantly hit <kbd>^l</kbd> in the file explorer window when I wanted to change something in the
+location bar. Obviously, it didn't work and it would drive me crazy. Until I added the following to
+save me from insanity:
 
 ```ahk
 #IfWinActive ahk_group FileListers
@@ -50,13 +51,13 @@ the following to save me from insanity:
 ```
 
 While this works fine on the face of it, if I hit <kbd>Escape</kbd> after focusing the location bar
-like this, the focus is not returned to the file list. I haven't figured out a solution to that, so
-that one's open.
+like this, the focus is not returned to the file list. I haven't figured out a solution to that yet,
+so that one's open.
 
 ### Open Command Window
 
-The file explorer has a nice less-known trick. If I right click without any files selected with the
-<kbd>Shift</kbd> key held down, I get an extra option in the context menu, called "Open command
+The file explorer has a nice less-known trick. If I right click without any files selected and with
+the <kbd>Shift</kbd> key held down, I get an extra option in the context menu, called "Open command
 window here". Clicking on that menu item will open a new command prompt window in the current
 directory. This is extremely convenient if you need the command window often (which you might,
 especially if you're a software developer).
@@ -76,7 +77,7 @@ directory*.
 ### Folder Shortcuts
 
 Folder shortcuts is where I define a hotkey that will navigate to a specific directory, always. For
-example, while in a file explorer, hitting <kbd>^h</kbd> should navigate to the hold folder, hitting
+example, while in a file explorer, hitting <kbd>^h</kbd> should navigate to the home folder, hitting
 <kbd>^j</kbd> should navigate to the Downloads folder (this key opens the downloads view in web
 browsers, see what I did there?).
 
@@ -90,19 +91,20 @@ browsers, see what I did there?).
 ^b::Send !dC:\labs{Enter}
 ```
 
-This snippet uses the `homedir` variable defined in an [earlier section](#the-setup).
+This snippet uses the `homedir` variable defined in the [previous article][homedir-section].
 
 On the face of it, these are very simple hotkeys. We pass <kbd>!d</kbd> to focus the location input
-and type in the location where we want to go to. Simple & effective.
+and type in the location where we want to go to. Simple & effective. They serve sort of like quick
+access bookmarks and are probably my most used hotkeys defined with AutoHotkey overall, by a margin.
 
 ### Better Hotkeys for Directional Navigation
 
 In the previous section, we dealt with navigating to absolution locations. But how about directional
 navigation, where we want to go back or forward or even up the directory chain?
 
-The default hotkeys for this leverage the arrow keys, which require taking my hands off the home
-row. So, I'm using the following keys for these three operations, which are inspired by similar
-behavior in Vim (again!).
+The default hotkeys for this leverage the arrow keys, which require taking my hands off the
+keyboard's home row. So, I'm using the following keys for these three operations, which are inspired
+by similar behavior in Vim (again!).
 
 ```ahk
 ; Navigate with the keyboard better!
@@ -182,7 +184,7 @@ Here's a little **mute** video recording of this at work:
 ### Batch Rename
 
 This is actually built to be invoked as a separate AutoHotkey process, not to be `#Include`-ed into
-a master script. That's because the GUI is slightly more complex that what we've seen in previous
+a master script. That's because the GUI is slightly more complex than what we've seen in previous
 sections and I didn't bother to make it work well as a module.
 
 ```ahk {"linenos": true, "filename": "batch-rename.ahk"}
@@ -301,11 +303,17 @@ Here's a little **mute** video recording of some usage examples of this tool:
 
 {% video "autohotkey-rename-by-regex.mp4" %}
 
+If you're using this, please keep caution. Please inspect the previous table before clicking on the
+"Apply" button. If it ends up messing your files up, don't hold me responsible. I'm sharing this
+without warranty. As any source code block on this website, this is shared here with [ISC
+License](/licenses/isc/).
+{: .note }
+
 ### Copy Paths of Selected Files
 
-This, again, is actually partly fulfilled by default functionality. When we <kbd>Shift+Right
-Click</kbd> on a file, we get the option to "Copy as path", which works fine for simple cases. But I
-wanted the following additional things for this feature:
+This, again, is actually *partly* fulfilled by default Windows functionality. When we
+<kbd>Shift+Right Click</kbd> on a file, we get the option to "Copy as path", which works fine for
+simple cases. But I wanted the following additional things for this feature:
 
 1. A keyboard hotkey, like <kbd>^+c</kbd>.
 1. No surrounding double quotes.
@@ -342,14 +350,11 @@ files will end up in my clipboard.
 ### Copy Contents of Selected Files
 
 This one, although sounds similar to the previous section, is quite different and useful in a very
-different way. Where the previous section's hotkey copies the selected files' paths, this hotkey is
-intended to copy the selected files' contents as a whole.
+different way. Where the previous section's hotkey copies the selected files' *paths*, this hotkey
+is intended to copy the selected files' *contents* as a whole.
 
 I have a few (several?) small text files with snippets, template messages, etc. With this, I just
 select one or multiple files and hit <kbd>Ctrl+Shift+x</kbd> and I'm ready to paste their contents.
-
-This doesn't work with images yet though. Still have to figure that out.
-{: .note }
 
 ```ahk
 #IfWinActive ahk_group FileListers
@@ -372,6 +377,8 @@ hotkey definition, instead of setting the paths to `Clipboard`, we set the conte
 
 Just like the previous hotkey, I can select multiple *text* files and hit <kbd>^+x</kbd> and the
 contents of all selected files will end up in my clipboard, separated by two blank lines.
+
+This doesn't work with images yet though. Still have to figure that one out.
 
 ### Create File with Clipboard Contents
 
@@ -412,6 +419,9 @@ With this, I can copy some text out of a webpage or an email in Outlook and savi
 is a quick <kbd>^+v</kbd>. Once I created this hotkey, it became my primary way of creating new text
 files. I no longer open Notepad, write (or paste) and then save the file to the desired directory.
 Instead, I open the folder, use this hotkey to create the file, and then open the file in Notepad.
+Somehow, it feels more natural.
+
+This doesn't work with images either. Have to figure this one out too.
 
 ### Create Folder Hierarchy and Enter it
 
@@ -457,15 +467,15 @@ CreateFolderHierarchy() {
 This uses the same explorer library I mentioned in the previous sections. When this hotkey is
 triggered, we get a prompt where we can enter a folder tree (*i.e.,* folders separated by `/` or
 `\\`) and they will all be created. As a bonus, we are also switched to that newly created folder
-so we can start to work with the folder we just created.
+so we can start working with it right away.
 
 Now I can hit <kbd>^n</kbd> and type in `src/main/java` or `2020-01/pics`, and all nesting structure
 is created and navigated, which is usually followed by pasting some files.
 
 ## Email Selected File(s) with Outlook
 
-Considering most corporate workplaces use Outlook in some capacity for work email, I think it is
-important to look at how we use it, and what parts of it we can automate / improve.
+Outlook is necessary tool for email at most corporate workplaces. So it's important to look at how
+we use it, and what parts of it we can automate / improve.
 
 It's also quite common to have to send files over email as attachments. Yet, considering how often
 we tend to do that, it's still a tedious process. Go to outlook, start new mail, drag-drop the file
@@ -498,7 +508,7 @@ OutlookNewMail(attachments=0) {
         for index, file in attachments {
             mail.Attachments.Add(file)
             SplitPath, file, basename
-            msg := msg . "<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+            msg := msg . "<p class=MsoNormal>&nbsp;&nbsp;&nbsp; "
                     . basename . "<o:p></o:p></p>"
             if (attachments.Length() == 1)
                 sub := "File: " . basename
@@ -525,28 +535,35 @@ interactions with Office applications like Outlook. We leverage this in the abov
 All I have to do now, is fill up the "To:" field and hit <kbd>Ctrl+Enter</kbd>. I've been loving
 this ever since.
 
+Note, of course, that since this connects to the Outlook OLE object, Outlook needs to be running for
+this work.
+{: .note }
+
 ### Global Hotkey for New Mail
 
 If you've noticed, the above function's `attachments` argument has a default value. If this argument
-is not provided, we just get a blank email window open up. This is also convenient, when we need it.
-So I have it as a *global* hotkey:
+is not provided, we just get a blank email window open up. This is convenient on its own.  So I have
+it as a *global* hotkey:
 
 ```ahk
 #c::OutlookNewMail()
 ```
 
 This works really well since the new mail window opens up with my signature already filled up and
-the focus is set to the "To:" field, perfectly to quickly start working on my email.
-
-Note, of course, that since this connects to the Outlook OLE object, Outlook needs to be running for
-this work.
-{: .note }
+the focus is set to the "To:" field perfectly to quickly start working on my email.
 
 ## Conclusion
 
+AutoHotkey is a powerful tool for automating all sorts of workflows on Windows. If you can get past
+the quirks in the language itself, the underlying engine is very powerful. I know that over the few
+years I've used it, I've only made use of a small portion of it's potential. In addition, the help
+file that is shipped with AutoHotkey (right-click on the tray icon and click on "Help") is very
+good. It's exhaustive, very detailed and contains lots of examples. I encourage going over it
+occasionally to find interesting things to add to your workflow. Good luck!
 
 
-
+[prev-article]: ../the-magic-of-autohotkey/
+[homedir-section]: ../the-magic-of-autohotkey/#the-setup
 [ealt-1]: https://www.xyplorer.com/
 [ealt-2]: https://www.zabkat.com/
 [ealt-3]: https://www.gpsoft.com.au/
