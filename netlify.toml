@@ -1,4 +1,4 @@
 [build]
   publish = "_site"
-  command = "eleventy"
+  command = "make"
   environment = { NODE_VERSION = "10", NODE_END = "production" }
