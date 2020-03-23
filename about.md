@@ -50,7 +50,12 @@ Attribution 4.0 International (CC BY 4.0) license](/licenses/cc-by). If you woul
 large parts of the content on this website, please [get in touch](/contact/).
 
 All **code** from **block-level** code elements on this website, unless otherwise specified, is
-licensed with the [ISC License](/licenses/isc/).
+licensed with the [ISC License][isc].
+
+The builder for this website is available at [GitHub](https://github.com/sharat87/sharats.me) under
+the [ISC License][isc].
+
+[isc]: /licenses/isc/
 
 ## Warning
 
