@@ -1,4 +1,4 @@
-set wildignore+=*/_site/*
+set wildignore+=*/_site/*,*/node_modules/*
 
 command -nargs=1 NewPost call <SID>NewPost(<q-args>)
 function s:NewPost(slug) abort
@@ -10,10 +10,11 @@ endfunction
 command! Build tab ter npx.cmd eleventy
 
 command! Serve call <SID>LaunchServer()
+nnoremap <silent> <Leader>s :Serve<CR>
 fun s:LaunchServer() abort
-	let nr = bufnr('eleventy --serve')
+	let nr = bufnr('make serve')
 	if nr >= 0
 		call job_stop(term_getjob(nr))
 	endif
-	tab terminal npx.cmd eleventy --serve
+	tab terminal make serve
 endfun
