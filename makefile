@@ -10,4 +10,8 @@ deps:
 	npm install
 
 
-.PHONY: build serve deps
+outdated:
+	npm outdated
+
+
+.PHONY: build serve deps outdated
