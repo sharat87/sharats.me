@@ -1,4 +1,4 @@
-build:
+build: node_modules
 	npx eleventy
 
 
@@ -6,7 +6,10 @@ serve:
 	DEV_MODE=1 npx eleventy --serve --port 3030
 
 
-deps:
+node_modules: node_modules/make_sentinel
+
+
+node_modules/make_sentinel: package.json
 	npm install
 
 

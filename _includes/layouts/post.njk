@@ -26,6 +26,8 @@ templateClass: tmpl-post
 	target=_blank rel=noopener title='Save to Instapaper'>Instapaper</a>.
 </p>
 
+{% include 'current_projects.njk' %}
+
 <article>{{ content | safe }}</article>
 
 <section class="screen-only page-end-mark">

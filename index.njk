@@ -8,6 +8,8 @@ layout: layouts/home.njk
 I've learnt. Feel free to browse and <a href='/contact/'>reach out</a> if you want to say
 hello.</p>
 
+{% include 'current_projects.njk' %}
+
 <h1>Recent posts</h1>
 
 {%- set postslist = collections.posts | head(-6) %}
