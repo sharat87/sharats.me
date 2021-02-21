@@ -99,8 +99,10 @@
 		</div>
 
 		<script>
+		window.goatcounter = {no_onload: localStorage.getItem("noAnalytics") === "1"};
 		{% include "main.js" %}
 		</script>
+		<script data-goatcounter="https://ssk.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 		<!-- Current page: {{ page.url | url }} -->
 	</body>
