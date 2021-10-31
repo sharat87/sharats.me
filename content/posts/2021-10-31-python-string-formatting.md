@@ -1,5 +1,6 @@
 ---
 title: Python string formatting
+status: draft
 ---
 
 ## Percentage Style Formatting
