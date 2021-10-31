@@ -2,7 +2,7 @@
 title: Contact
 ---
 
-<form name=contact method=post>
+<form name=contact netlify>
 <table>
 <tr>
 	<td><label for=email>Your email</label></td>
