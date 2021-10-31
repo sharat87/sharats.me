@@ -1,0 +1,4 @@
+pelican[markdown]
+pelican-sitemap
+ghp-import
+PyYAML

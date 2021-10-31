@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content_title %}{% endblock %}
+{% block content %}
+
+<h1>Namaste 🙏</h1>
+
+<p>I am Shrikant. This is my blog/website where I write stuff about the work I do and things
+I've learnt. Feel free to browse and <a href="/contact/">reach out</a> if you want to say
+hello.</p>
+
+{% include "banners.html" %}
+
+<h1>Recent Posts</h1>
+
+{%- with articles = articles_page.object_list[:6] %}
+{%- include "article-listing.html" %}
+{%- endwith %}
+
+<p><a href="{{ SITEURL }}/{{ ARCHIVES_URL }}">See all posts &rarr;</a></p>
+
+<h1 id=labs>Labs</h1>
+
+<h3 class=lab-title>
+	<span>⭐️ Prestige</span>
+	<a href="https://prestigemad.com/" target=prestige rel=noopener>prestigemad.com</a>
+</h3>
+
+<p>A text-based API testing tool for API developers. An interface-less Postman. Open source, with source at <a rel=noopener href="https://github.com/sharat87/prestige">GitHub</a>.</p>
+
+<h3 class=lab-title>
+	<span>Httpbun</span>
+	<a href="https://httpbun.com/" target=httpbun rel=noopener>httpbun.com</a>
+</h3>
+
+<p>This is an HTTP service with endpoints that are useful when testing any HTTP client, like a browser, a library, or any API developer tool. It's heavily inspired by <a href="https://httpbin.org" rel=noopener>httpbin</a>.</p>
+
+<h3 class=lab-title>
+	<span>Just a calendar</span>
+	<a href="https://calendar.sharats.me/" target="just-a-calendar" rel="noopener">calendar.sharats.me</a>
+</h3>
+
+<p>An easily reachable endpoint to have a calendar to look at. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to show a calendar and talk about dates when sharing your screen in a presentation or meeting.</p>
+
+<h3 class="lab-title">
+	<span>Timezoner</span>
+	<a href="http://tz.sharats.me" target="timezoner">tz.sharats.me</a>
+</h3>
+
+<p>A simple UI to help convert times in various time zones. Powered by moment.js, so is aware of all changes to timezones, DST updates etc. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to discuss time zones with a global team and sharing your screen in a presentation or meeting.</p>
+
+<h3 class="lab-title">
+	<span>Silly Calculator</span>
+	<a href="https://calc.sharats.me" target="calc" rel="noopener">calc.sharats.me</a>
+</h3>
+
+<p>A notepad style in-browser calculator, that displays results live on the right side.</p>
+
+<p><a href="{{ SITEURL }}/labs/">See all &rarr;</a></p>
+
+{% include "subscribe-form.html" %}
+
+{% endblock content %}

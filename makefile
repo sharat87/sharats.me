@@ -1,20 +1,42 @@
-build: node_modules
-	npx eleventy
+PELICAN?=venv/bin/pelican
+PELICANOPTS=
 
 
-serve:
-	DEV_MODE=1 npx eleventy --serve --port 3030
+DEBUG ?= 0
+ifeq ($(DEBUG), 1)
+	PELICANOPTS += --debug
+endif
+
+PORT ?= 0
+ifneq ($(PORT), 0)
+	PELICANOPTS += -p $(PORT)
+endif
 
 
-node_modules: node_modules/make_sentinel
+help:
+	@echo 'make build -- to generate static assets'
+	@echo 'make clean -- to delete generated assets'
+	@echo 'make serve [PORT=8000] -- watch and server generated website'
+	@echo 'make deploy -- build and deploy to GitHub Pages'
+
+build: venv/deps-sentinel
+	"$(PELICAN)" $(PELICANOPTS)
+
+netlify: venv/deps-sentinel
+	pelican $(PELICANOPTS)
+
+clean:
+	if test -d output; then rm -rf output; fi
+
+serve: venv/deps-sentinel
+	ENV=dev "$(PELICAN)" --listen --autoreload $(PELICANOPTS)
+
+deploy: clean build
+	ghp-import --message="Rebuild site" --branch=gh-pages output
+	git push origin gh-pages
+
+venv/deps-sentinel: requirements.txt
+	source venv/bin/activate && pip install -r requirements.txt
 
 
-node_modules/make_sentinel: package.json
-	npm install
-
-
-outdated:
-	npm outdated
-
-
-.PHONY: build serve deps outdated
+.PHONY: help build clean serve deploy

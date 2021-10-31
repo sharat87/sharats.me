@@ -1,6 +1,5 @@
-/_site
-/node_modules
-*.iml
-/.idea
+/output
+/venv
+
+.DS_Store
 __pycache__
-.mypy_cache

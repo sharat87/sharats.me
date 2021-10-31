@@ -1,4 +1,4 @@
 [build]
-  publish = "_site"
-  command = "make"
-  environment = { NODE_VERSION = "10", NODE_END = "production" }
+  publish = "output"
+  command = "make netlify"
+  environment = { PYTHON_VERSION = "3.9" }

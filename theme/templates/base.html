@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock html_lang %}">
+<head>
+	{% block head %}
+	<meta charset=utf-8>
+	<meta name=generator content=Pelican>
+	<title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+	<link rel=manifest href="/site.webmanifest">
+	<link rel=apple-touch-icon href="/apple-touch-icon.png">
+	<link rel=preconnect href="https://fonts.googleapis.com">
+	<link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
+	<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap">
+	<link rel=stylesheet href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/styles.css">
+	<style>.hide, .sr-only { display: none !important; }</style>
+	{%- if FEED_ALL_ATOM %}
+	<link href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }}">
+	{%- endif %}
+	{%- if FEED_ALL_RSS %}
+	<link href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}">
+	{%- endif %}
+	{% block extra_head %}{% endblock extra_head %}
+	{% endblock head %}
+	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="The Sharat's">
+</head>
+
+<body>
+
+	<header>
+		<input class="nav-toggle" name="nav-toggle" id="nav-toggle" type="checkbox">
+		<div class="compact">
+			<h1><a href="{{ SITEURL }}/" rel="home">{{ SITENAME }}</a></h1>
+			<label class="nav-toggle" for="nav-toggle">
+				<svg width="25" height="20" role="img">
+					<title>Toggle navigation menu</title>
+					<g stroke="black" stroke-width="2" stroke-linecap="round">
+						<line x1="4" y1="4" x2="21" y2="4"></line>
+						<line x1="4" y1="10" x2="21" y2="10"></line>
+						<line x1="4" y1="16" x2="21" y2="16"></line>
+					</g>
+				</svg>
+			</label>
+		</div>
+		<nav>
+			{%- for title, link in MENUITEMS %}
+				<a href="{{ link }}">{{ title }}</a>
+			{%- endfor %}
+			{%- if DISPLAY_PAGES_ON_MENU -%}
+			{%- for pg in pages | sort(attribute="metadata.order") -%}
+				<a href="{{ SITEURL }}/{{ pg.url }}"{% if pg == page %} class="active"{% endif %}>{{ pg.title }}</a>
+			{%- endfor %}
+			{%- endif %}
+			{% if FEED_ALL_ATOM %}
+				<a href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}" title="Atom Feed">Feed</a>
+			{% elif FEED_ALL_RSS %}
+				<a href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}">RSS</a>
+			{% endif %}
+		</nav>
+	</header>
+
+	<noscript>
+		<p class=js-message>I see you have Javascript disabled. A fine choice, I must say. You'll be happy to know that <em>all</em> interactive features on this website work without Javascript.</p>
+	</noscript>
+
+	<main>{% block content %}{% endblock %}</main>
+
+	<footer>
+		<div class=content>
+			<p>Copyright © 2010-2021, Shrikant Sharat Kandula. For copying any content from this website, please <a href="/contact/">get in touch</a>.</p>
+			<p>Find me on
+				{%- for name, link in SOCIAL %}
+					<a target=_blank rel=noopener href="{{ link }}">{{ name }}</a>{% if loop.last %}.{% else %},{% endif %}
+				{%- endfor -%}
+				</p>
+		</div>
+	</footer>
+
+	<div id=cookiesOkBox class="screen-only hide">
+		<p>This website uses cookies. By continuing to use this website, you agree to our use of cookies.
+		<a href="{{ SITEURL }}/privacy-policy/" target=_blank title="Privacy Policy">Know more</a>.</p>
+		<p><button data-click=cookiesOkSave>Okay</button></p>
+	</div>
+
+	<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/main.js"></script>
+</body>
+</html>

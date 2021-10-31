@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block html_lang %}{{ article.lang }}{% endblock %}
+
+{% block head -%}
+{{ super() -}}
+{%- if article.summary -%}
+	<meta name=description content="{{ article.summary | striptags | safe | truncate(150) }}">
+{%- endif -%}
+{% endblock %}
+
+{% block title %}{{ article.title | striptags }}{% endblock %}
+
+{% block extra_head %}
+{% import 'translations.html' as translations with context %}
+{% if translations.entry_hreflang(article) %}
+  {{ translations.entry_hreflang(article) }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1><a href="{{ SITEURL }}/{{ article.url }}" rel=bookmark title="Permalink to {{ article.title | striptags }}">{{ article.title | markdown }}</a></h1>
+
+<div class=title-subtext>
+	<div class=screen-only>
+		<time datetime="{{ article.date.isoformat() }}" data-show-relative>{{ article.locale_date }}</time>
+		<span style="margin-left: 2em">By {% for author in article.authors %}<a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% endfor %}</span>
+	</div>
+	<div class=print-only>
+		<b>Published:</b> {{ article.locale_date }}<br>
+		{%- if article.authors %}
+		<b>Author:</b> {% for author in article.authors %}{{ author }}{% endfor %}<br>
+		{%- endif %}
+		<div class=print-msg>
+			Thank you for printing from <a href="https://sharats.me/">sharats.me</a>. Do check back regularly for more
+			such awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
+		</div>
+	</div>
+</div>
+
+<p>Read Later on
+<a href="https://getpocket.com/edit.php?url={{ SITEURL }}/{{ article.url }}&amp;title={{ article.title | striptags }}" target=_blank rel=noopener title="Save to Pocket">Pocket</a> or
+<a href="https://instapaper.com/edit?url={{ SITEURL }}/{{ article.url }}&amp;title={{ article.title | striptags }}" target=_blank rel=noopener title="Save to Instapaper">Instapaper</a>.
+</p>
+
+{% include "banners.html" %}
+
+<article>{{ article.content }}</article>
+
+<section class="screen-only page-end-mark">
+	<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+		<defs>
+			<g id="svgPalm">
+				<path stroke-width="2" fill="none" d="M2 22 h 6 l 4 -5 v -14 a 1 1 180 0 0 -3 0 v 2 l -2 8 l -6 3 Z"></path>
+				<line x1="4" y1="14" x2="9" y2="20" stroke-width="1.3"></line>
+			</g>
+		</defs>
+		<g stroke="#666">
+			<use xlink:href="#svgPalm"></use>
+			<use xlink:href="#svgPalm" transform="translate(24 0) scale(-1, 1)"></use>
+		</g>
+	</svg>
+</section>
+
+<div class="note post-footer">
+	<p>
+	<strong>Post tagged with</strong>
+	{% for tag in article.tags -%}
+	<a href="{{ SITEURL }}/{{ tag.url }}" title="Posts tagged with {{ tag | escape }}" class=tag rel=tag>{{ tag | escape }}</a>
+	{% endfor -%}
+	</p>
+	<p class=share-links>
+	<strong>Share article:</strong>
+	<a href="mailto:?subject=Read: {{ article.title | striptags }}&amp;body={{ SITEURL }}/{{ article.url }} :: {{ article.summary | striptags }}" target=_blank rel=noopener title="Share by Email">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+	</a>
+	<a href="https://twitter.com/intent/tweet?url={{ SITEURL }}{{ article.url }}&amp;text={{ article.title | striptags }}" target=_blank rel=noopener title="Share on Twitter">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+	</a>
+	<a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ SITEURL }}/{{ article.url }}&amp;title={{ article.title | striptags }}" target=_blank rel=noopener title="Share on LinkedIn">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+	</a>
+	</p>
+	<p><a href="https://www.buymeacoffee.com/sharat87" target=_blank rel=noopener>Buy me a coffee</a>.</p>
+</div>
+
+{% if DISQUS_SITENAME and SITEURL and article.status != "draft" %}
+<div class=comments>
+	<h2>Comments</h2>
+	<div id=disqus_thread></div>
+	<script>
+		const disqus_config = function () {
+			this.page.url = "{{ SITEURL }}/{{ article.url }}";
+			this.page.identifier = "{{ article.url }}";
+		}
+		(() => {
+			var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+			s.src = '//{{ DISQUS_SITENAME }}.disqus.com/embed.js';
+			s.setAttribute("data-timestamp", +new Date());
+			{# document.head.appendChild(s); #}
+		})();
+	</script>
+	<noscript>Please enable JavaScript to view the comments.</noscript>
+</div>
+{% endif %}
+{% endblock %}
