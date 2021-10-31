@@ -22,7 +22,7 @@ help:
 build: venv/deps-sentinel
 	"$(PELICAN)" $(PELICANOPTS)
 
-netlify: venv/deps-sentinel
+netlify:
 	pelican $(PELICANOPTS)
 
 clean:
