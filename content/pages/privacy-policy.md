@@ -9,8 +9,6 @@ information is used.
 This privacy policy document outlines the types of personal information is received and collected by
 sharats.me and how it is used.
 
-If you have any additional questions, please use the [contact page](/contact.html) to contact us.
-
 ## Log Files
 
 This website is hosted with our hosting partner, [Netlify](https://netlify.com>). While we don't

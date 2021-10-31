@@ -73,7 +73,6 @@ MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
     ("About", "/about/"),
-    ("Contact", "/contact/"),
 ]
 
 SOCIAL = [

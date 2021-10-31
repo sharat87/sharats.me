@@ -41,8 +41,7 @@ I'm doing and would like to support my work, please consider the following optio
 ## License
 
 All **prose** on this website, unless otherwise specified, is licensed with [Creative Commons
-Attribution 4.0 International (CC BY 4.0) license](/licenses/cc-by). If you would like to reuse
-large parts of the content on this website, please [get in touch](/contact/).
+Attribution 4.0 International (CC BY 4.0) license](/licenses/cc-by).
 
 All **code** from **block-level** code elements on this website, unless otherwise specified, is
 licensed with the [ISC License][isc].
