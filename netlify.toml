@@ -1,0 +1,4 @@
+[build]
+  publish = "output"
+  command = "make netlify"
+  environment = { PYTHON_VERSION = "3.8" }
