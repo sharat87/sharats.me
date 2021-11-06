@@ -1,5 +1,8 @@
+/.env
 /output
 /venv
+
+/stars.json
 
 .DS_Store
 __pycache__

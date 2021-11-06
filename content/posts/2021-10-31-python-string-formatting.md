@@ -3,11 +3,12 @@ title: Python string formatting
 status: draft
 ---
 
+Show string formatting from several other languages?
+{.note}
+
 ## Percentage Style Formatting
 
-Python supports C's `printf`-style formatting using percentage prefixed format specifiers. For
-example, the format specifier `d` is used for formatting integers, so the expression `'I have %d
-candies.' % 7` would return the string `'I have 7 candies.'`.
+Python supports C's `printf`-style formatting using percentage prefixed format specifiers. For example, the format specifier `d` is used for formatting integers, so the expression `'I have %d candies.' % 7` would return the string `'I have 7 candies.'`.
 
 The syntax for this style of formatting follows a structure like the below:
 

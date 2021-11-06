@@ -22,7 +22,7 @@ of this can be a pain.
 So, I decided a neat flowchart visualising the dependency relationships between
 all the installed jars would give me a picture. And yes, it did.
 
-![Gem dependency graph](/img/gem-dependency-graph.png)
+![Gem dependency graph]({static}/static/gem-dependency-graph.png)
 
 Here's how I got the flowchart: (save this in say, gem-graph.sh)
 

@@ -4,7 +4,7 @@ title: About
 
 <p><img src="{static}/static/shrikant-sharat-kandula.jpg" class=profile></p>
 
-Hello! I am Shrikant Sharat Kandula, a Programmer and student Actuary, from India.
+Hello! I am Shrikant Sharat Kandula, a software developer, from India.
 
 ## What's powering it?
 
@@ -23,20 +23,19 @@ Python for now, but I intend to do such articles with Javascript and Bash as wel
 ## How can you help?
 
 Writing quality content and maintaining a website/blog takes a lot of time and effort. I currently
-spend 15-20 hours per week in addition to my day-job for content on this website. If you like what
+spend 5-10 hours per week in addition to my day-job for content on this website. If you like what
 I'm doing and would like to support my work, please consider the following options.
 
-<a href='https://www.buymeacoffee.com/sharat87' target=_blank title='No signup required'>
-<img src='{static}/static/bmac.png' alt='Buy me a coffee!'></a>
+<a href="https://www.buymeacoffee.com/sharat87" target=_blank title="No signup required">
+<img src="{static}/static/bmac.png" alt="Buy me a coffee!"></a>
 
 ## Get in touch!
 
-<a href="mailto:shrikantsharat.k@gmail.com" title='Email me'>Email</a>
-<a href="https://github.com/sharat87" title='GitHub'>GitHub</a>
-<a href="https://stackoverflow.com/users/sharat87" title='StackOverflow'>StackOverflow</a>
-<a href="https://www.linkedin.com/in/sharat87" title='LinkedIn'>LinkedIn</a>
-<a href="https://twitter.com/sharat87" title='Twitter'>Twitter</a>
-{: .social }
+- [Email](mailto:shrikantsharat.k@gmail.com)
+- [GitHub](https://github.com/sharat87)
+- [StackOverflow](https://stackoverflow.com/users/sharat87)
+- [LinkedIn](https://www.linkedin.com/in/sharat87)
+- [Twitter](https://twitter.com/sharat87)
 
 ## License
 

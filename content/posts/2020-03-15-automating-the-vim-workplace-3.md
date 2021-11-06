@@ -10,6 +10,12 @@ This is the third installment of my [Automate the Vim workplace][first-article] 
 always, feel free to grab the ideas in this article or, better yet, take inspiration and inspect
 your workflow to identify such opportunities.
 
+This article is part of a series:
+
+1. [Chapter Ⅰ](../automating-the-vim-workplace/).
+1. [Chapter Ⅱ](../automating-the-vim-workplace-2/).
+1. Chapter Ⅲ (this article).
+
 [TOC]
 
 Please note that all that I share below is what I'm using with Vim (more specifically, GVim on
@@ -162,7 +168,7 @@ EOPYTHON
 endfun
 ```
 
-![Demo of transpose mapping](/img/vim-transpose.gif)
+![Demo of transpose mapping]({static}/static/vim-transpose.gif)
 
 The keys I'm hitting in the GIF is <kbd>gtip</kbd>. I'm transposing the lines in the inner
 paragraph.
@@ -201,7 +207,7 @@ Here's a nice GIF showing this off! Note that although it looks like we're just 
 white space to align stuff, *no new space characters are inserted*. The document remains unchanged.
 It's just the display size of tab characters is what we're changing with `vartabstop`.
 
-![Tabs line up demo](/img/vim-tabs-line-up-demo.gif)
+![Tabs line up demo]({static}/static/vim-tabs-line-up-demo.gif)
 
 Finally tab separated files are easier to deal with than comma separated files.
 

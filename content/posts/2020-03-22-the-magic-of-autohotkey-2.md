@@ -13,6 +13,11 @@ better with a quick hotkey. This is the next chapter of the story. In this artic
 how I tamed the stock file explorer as well as connecting to office applications with OLE to provide
 additional rich functionality.
 
+This article is part of a series:
+
+1. [Part 1](../the-magic-of-autohotkey/)
+1. Part 2 (this article).
+
 [TOC]
 
 ## File Explorer Magic

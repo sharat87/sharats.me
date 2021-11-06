@@ -4,6 +4,7 @@ tags: vim, productivity
 reddit_url: r/vim/comments/enlz8x
 description: >
     Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
+disqus_id: cache/posts/2020-01-12_automating-the-vim-workplace.html
 ---
 
 I majorly use two tools for my coding workflow and one of them is GVim (on Windows). It's my primary
@@ -11,7 +12,11 @@ choice for editing text for ten years now and in that time, I've picked up sever
 that made me very productive. I'm hoping to do several articles in the coming weeks to share some of
 these.
 
-Check out [next Chapter][next-article] in this article series, now out!
+This article is part of a series:
+
+1. Chapter Ⅰ (this article).
+1. [Chapter Ⅱ](../automating-the-vim-workplace-2/).
+1. [Chapter Ⅲ](../automating-the-vim-workplace-3/).
 
 [TOC]
 
@@ -383,7 +388,6 @@ Read the next article in this series: [Automating the Vim workplace -- Chapter �
 {: .note }
 
 
-[next-article]: ../automating-the-vim-workplace-2/
 [insertmode]: http://vimdoc.sourceforge.net/htmldoc/options.html#'insertmode'
 [i_ctrl-l]: http://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-L
 [r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0

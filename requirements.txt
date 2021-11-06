@@ -1,4 +1,3 @@
-pelican[markdown]
-pelican-sitemap
-ghp-import
-PyYAML
+pelican[markdown]==4.7.1
+pelican-sitemap==1.0.2
+requests==2.26

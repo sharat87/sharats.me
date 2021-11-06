@@ -12,6 +12,12 @@ month. As promised, here's a follow up with more on how I identified and address
 that could be improved to speed me up. Feel free to grab the ideas in this article or, better yet,
 take inspiration and inspect your workflow to identify such opportunities.
 
+This article is part of a series:
+
+1. [Chapter Ⅰ](../automating-the-vim-workplace/).
+1. Chapter Ⅱ (this article).
+1. [Chapter Ⅲ](../automating-the-vim-workplace-3/).
+
 [TOC]
 
 Please note that all that I share below is what I'm using with Vim (more specifically, GVim on
@@ -243,7 +249,7 @@ paragraph and also downwards to the last line of the paragraph.
 
 The following GIF might make this easier to understand:
 
-![Vertical-line selection demo](/img/vim-vertical-selection-manual.gif)
+![Vertical-line selection demo]({static}/static/vim-vertical-selection-manual.gif)
 
 This seems simple enough to do manually when there's just a few lines to deal with. But when there's
 &gt;15 lines and you notice yourself doing this a dozen times a day, you need a better way.
@@ -371,7 +377,7 @@ like the default <kbd>y</kbd>) that takes the selected lines (or selected block)
 
 Here's a preview of this in action:
 
-![Copy column as CSV demo](/img/vim-copy-as-csv.gif)
+![Copy column as CSV demo]({static}/static/vim-copy-as-csv.gif)
 
 This combined with the <kbd>vm</kbd> explained in a previous section, it's really quick to take a
 column of values as a comma separated string.

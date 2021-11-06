@@ -5,11 +5,11 @@ tags: clojure
 
 ## Backstory
 
-I have recently learned [clojure][] and its the first time I've been exposed to
-lisp and the code-as-data way of life. I was eager to use clojure to make an
+I have recently learned [Clojure][] and its the first time I've been exposed to
+lisp and the code-as-data way of life. I was eager to use Clojure to make an
 app, any app, a simple silly personal tool to help me out with a tedious task.
 
-[clojure]: http://clojure.org
+[Clojure]: http://clojure.org
 
 One such tool I created was [classypants][]. Its a small swing based GUI tool
 that helps one to make sense out of the values of `PATH` like variables. The
@@ -34,7 +34,7 @@ possible with the then implementation.
 The implementation of the search I have today can do much more than even that.
 Its a powerful query language at work, using which we can filter entries that
 point to non-existing files, entries that point to directories that contain a
-said file and other wierdos.
+said file and other weirdos.
 
 ## How is it done?
 
@@ -94,8 +94,8 @@ function,
   (read-string (str "(" search-str ")")))
 ```
 
-What we do above is wrap the `search-str` in paranthesis and read it into a
-clojure `list`. Lets try out our function in the repl
+What we do above is wrap the `search-str` in parenthesis and read it into a
+Clojure `list`. Lets try out our function in the REPL.
 
 ```clojure
 user=> (digest ":not resource")

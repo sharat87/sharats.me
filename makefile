@@ -20,7 +20,7 @@ help:
 	@echo 'make deploy -- build and deploy to GitHub Pages'
 
 build: venv/deps-sentinel
-	"$(PELICAN)" $(PELICANOPTS)
+	if [[ -f .env ]]; then set -a; source .env; set +a; fi; "$(PELICAN)" $(PELICANOPTS)
 
 netlify:
 	pelican $(PELICANOPTS)
@@ -29,7 +29,7 @@ clean:
 	if test -d output; then rm -rf output; fi
 
 serve: venv/deps-sentinel
-	ENV=dev "$(PELICAN)" --listen --autoreload $(PELICANOPTS)
+	if [[ -f .env ]]; then set -a; source .env; set +a; fi; ENV=dev "$(PELICAN)" --listen --autoreload $(PELICANOPTS)
 
 deploy: clean build
 	ghp-import --message="Rebuild site" --branch=gh-pages output
@@ -37,6 +37,7 @@ deploy: clean build
 
 venv/deps-sentinel: requirements.txt
 	source venv/bin/activate && pip install -r requirements.txt
+	touch venv/deps-sentinel
 
 
 .PHONY: help build clean serve deploy

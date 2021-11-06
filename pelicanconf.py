@@ -1,13 +1,12 @@
 import os, os.path
 from glob import glob
 
-from pygments.formatters import HtmlFormatter
-
 is_dev = os.getenv("ENV") == "dev"
 
 AUTHOR = "Shrikant Sharat Kandula"
 SITENAME = "The Sharat's"
-SITEURL = "" if is_dev else "https://sharats.me"
+PROD_SITEURL = "https://sharats.me"
+SITEURL = "http://localhost:8000" if is_dev else PROD_SITEURL
 
 THEME = "theme"
 
@@ -21,35 +20,24 @@ EXTRA_PATH_METADATA = {
     for filename in glob(os.path.join(PATH, _root_static, "*"))
 }
 
-class HtmlFlexFormatter(HtmlFormatter):
-    def wrap(self, source, outfile):
-        return self._wrap_code(source)
+FILENAME_METADATA = r"(?:(?P<date>\d{4}-\d{2}-\d{2})-)?(?P<slug>[-a-z0-9]*)"
 
-    def _wrap_code(self, source):
-        yield 0, '<code>'
-        for i, t in source:
-            if i == 1:
-                # it's a line of formatted code
-                t += '<br>'
-            yield i, t
-        yield 0, '</code>'
-
-
-codehilite_plugin = "markdown.extensions.codehilite"
-# codehilite_plugin = "codehilite_ssk"
 MARKDOWN = {
     # Extensions at <https://python-markdown.github.io/extensions/>.
     "extension_configs": {
-        codehilite_plugin: {
+        "markdown.extensions.codehilite": {
             "guess_lang": False,
             "cssclass": "hl",
-            "pygments_formatter": HtmlFlexFormatter,
         },
         "markdown.extensions.extra": {},
         "markdown.extensions.meta": {},
         "markdown.extensions.toc": {
+            "title": "Contents",
             "marker": "[TOC]",
+            "permalink": True,
         },
+        "markdown.extensions.sane_lists": {},
+        "markdown.extensions.smarty": {},
         "markdown_ext": {},
     },
     "output_format": "html5",
@@ -57,9 +45,7 @@ MARKDOWN = {
 
 TIMEZONE = "Asia/Kolkata"
 
-DEFAULT_LANG = "en"
-
-FEED_DOMAIN = SITEURL
+FEED_DOMAIN = PROD_SITEURL
 FEED_ALL_ATOM = "posts/index.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
@@ -67,11 +53,11 @@ DELETE_OUTPUT_DIRECTORY = True
 # Content with dates in the future should get a default status of `draft`.
 WITH_FUTURE_DATES = False
 
-# Order is hard to get if pages were to show automatically in the menu.
-DISPLAY_PAGES_ON_MENU = False
+# Order is hard to get if pages were to show automatically in the menu. So we specify explicitly.
 MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
+    # ("Rèsumè", "/resume/"),
     ("About", "/about/"),
 ]
 
@@ -112,12 +98,16 @@ JINJA_FILTERS = {
 }
 
 DISQUS_SITENAME = "sharats-me"
-#GOOGLE_ANALYTICS = ""
+
+
 
 PLUGINS = [
+    "pelican_ext",
     "sitemap",
 ]
 
 SITEMAP = {
     "format": "xml",
 }
+if is_dev:
+    SITEMAP["exclude"] = ["drafts/"]

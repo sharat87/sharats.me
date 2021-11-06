@@ -4,12 +4,10 @@
 	{% block head %}
 	<meta charset=utf-8>
 	<meta name=generator content=Pelican>
-	<title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+	<title>{% block title %}{% endblock %}{% if self.title() %} — {% endif %}{{ SITENAME }}</title>
+	<meta name=viewport content="width=device-width">
 	<link rel=manifest href="/site.webmanifest">
 	<link rel=apple-touch-icon href="/apple-touch-icon.png">
-	<link rel=preconnect href="https://fonts.googleapis.com">
-	<link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
-	<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap">
 	<link rel=stylesheet href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/styles.css">
 	<style>.hide, .sr-only { display: none !important; }</style>
 	{%- if FEED_ALL_ATOM %}
@@ -40,15 +38,11 @@
 				</svg>
 			</label>
 		</div>
-		<nav>
+		<nav class=screen-only>
+			{#- TODO: Highlight for Posts page needs a better solution. #}
 			{%- for title, link in MENUITEMS %}
-				<a href="{{ link }}">{{ title }}</a>
+				<a href="{{ link }}"{% if (page and link[1:] == page.url) or (link.endswith("/posts/") and output_file == "posts/index.html") %} class=active{% endif %}>{{ title }}</a>
 			{%- endfor %}
-			{%- if DISPLAY_PAGES_ON_MENU -%}
-			{%- for pg in pages | sort(attribute="metadata.order") -%}
-				<a href="{{ SITEURL }}/{{ pg.url }}"{% if pg == page %} class="active"{% endif %}>{{ pg.title }}</a>
-			{%- endfor %}
-			{%- endif %}
 			{% if FEED_ALL_ATOM %}
 				<a href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}" title="Atom Feed">Feed</a>
 			{% elif FEED_ALL_RSS %}
@@ -58,14 +52,14 @@
 	</header>
 
 	<noscript>
-		<p class=js-message>I see you have Javascript disabled. A fine choice, I must say. You'll be happy to know that <em>all</em> interactive features on this website work without Javascript.</p>
+		<p class=js-message>I see you have Javascript disabled. A fine choice, I must say. You'll be happy to know that almost <em>all</em> interactive features on this website work without Javascript.</p>
 	</noscript>
 
 	<main>{% block content %}{% endblock %}</main>
 
 	<footer>
 		<div class=content>
-			<p>Copyright © 2010-2021, Shrikant Sharat Kandula.</p>
+			<p>© 2010&ndash;2021 Shrikant Sharat Kandula.</p>
 			<p>Find me on
 				{%- for name, link in SOCIAL %}
 					<a target=_blank rel=noopener href="{{ link }}">{{ name }}</a>{% if loop.last %}.{% else %},{% endif %}

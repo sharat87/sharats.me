@@ -12,6 +12,11 @@ at how things work differently (coming from Linux), I got used to it and started
 in some ways. A big part of the reason for that on Windows is [AutoHotkey][]. I will document my
 automations and experiences over the years in this two-part article series.
 
+This article is part of a series:
+
+1. Part 1 (this article).
+1. [Part 2](../the-magic-of-autohotkey-2/)
+
 [TOC]
 
 [AutoHotkey][] is an open-source programming language for Windows, that lends itself extremely well
@@ -320,7 +325,7 @@ Finally, we define a hotkey to summon the snippets window. I use <kbd>^;</kbd>.
 
 That's it! Here it is in action:
 
-![Snippets tool demo](/img/autohotkey-snippets.gif)
+![Snippets tool demo]({static}/static/autohotkey-snippets.gif)
 
 ## Window Watcher
 
@@ -452,7 +457,7 @@ with the current time at the bottom of my screen every 20 minutes. That is, I ge
 at `:00` times, a small green OSD at `:20` times and a small orange OSD at `:40` times. Here's
 preview of how this looks:
 
-![Time OSD example view](/img/autohotkey-time-osd.png)
+![Time OSD example view]({static}/static/autohotkey-time-osd.png)
 
 Again, for this, I have a separate module called `time-osd.ahk` which I `#Include` in the master
 script and call it's init function. (This init-function-in-a-separate-module is something I came up

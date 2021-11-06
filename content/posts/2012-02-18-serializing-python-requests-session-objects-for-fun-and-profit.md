@@ -2,6 +2,7 @@
 title: Serializing python-requests' Session objects for fun and profit
 tags: python, python-requests, python-pickle
 hn_id: 9857170
+disqus_id: serializing-python-requests-session-objects-for-fun-and-profit.html
 ---
 
 ## Prepare
@@ -132,7 +133,7 @@ use pickle.
 
 Next plan I had was to pick up attributes and data from a `Session` object, just
 enough to recreate this object using the Session constructor, and serialize
-those attributes as a json. After all, the Session's API is very easy to use,
+those attributes as a JSON. After all, the Session's API is very easy to use,
 how hard can picking attributes from it be? :)
 
 So, I dug in the [sessions.py][] module of python-requests library. And here's
@@ -187,7 +188,7 @@ Traceback (most recent call last):
 TypeError: 'list' object is not callable
 ```
 
-Okay, that error message is very wierd. Why would anyone *call* a list object?
+Okay, that error message is very weird. Why would anyone *call* a list object?
 
 Go dig in the [models.py] module. See this
 

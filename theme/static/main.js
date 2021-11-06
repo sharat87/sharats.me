@@ -1,8 +1,6 @@
 window.onload = main
 
 function main() {
-	setInterval(updateTimes, 60000)
-	updateTimes()
 	document.body.addEventListener("click", onBodyClick)
 
 	if (document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/)) {
@@ -16,67 +14,28 @@ function main() {
 		el.setAttribute("title", document.getElementById(el.getAttribute("href").slice(1)).textContent.trim())
 	}
 
-	for (const el of document.querySelectorAll("div.hl")) {
+	for (const el of document.querySelectorAll(".hl")) {
 		const buttons = []
 		if (el.dataset.lang == "pycon")
-			buttons.push(`<button type=button class=console-toggle-btn
-				title="Hide output and '&gt;&gt;&gt;' prompt">&gt;&gt;&gt;</button>`)
+			buttons.push(`<button class=console-toggle-btn title="Hide output and '&gt;&gt;&gt;' prompt">&gt;&gt;&gt;</button>`)
 		if (el.dataset.lang == "console")
-			buttons.push(`<button type=button class=console-toggle-btn
-				title="Hide output and prompt strings">$</button>`)
-		buttons.push("<button type=button class=copy-btn>Copy</button>")
-		el.insertAdjacentHTML("beforeEnd", "<div class=btns>" + buttons.join("\n") + "</div>")
+			buttons.push(`<button class=console-toggle-btn title="Hide output and prompt strings">$</button>`)
+		if (el.querySelector(".filename")) {
+			buttons.push(`<button data-click=downloadCodeBlock class=download-btn>Download</button>`)
+		}
+		buttons.push("<button data-click=copyCodeBlock class=copy-btn>Copy</button>")
+		el.querySelector(".btns").innerHTML = buttons.join("\n")
 	}
 
 	document.body.addEventListener("click", (event) => {
-		if (event.target.matches("a[href="#"]") || event.target.closest("a[href="#"]") !== null) {
+		if (event.target.matches("a[href='#']") || event.target.closest("a[href='#']") !== null) {
 			event.preventDefault()
 		}
 	})
 
-	/*/ Collapse large code blocks.
-	let i = 0
-	for (const code of document.querySelectorAll('pre > code')) {
-		const newLineMatches = code.innerHTML.match(/\n|<br>/g)
-		if (!newLineMatches)
-			continue
-
-		const lineCount = newLineMatches.length
-		if (lineCount < 25)
-			continue
-
-		const previewPat = /^([^\n]*\n){20}/
-		const match = code.innerHTML.match(previewPat)
-		if (!match)
-			continue
-
-		code.dataset.fullMarkup = code.innerHTML
-		code.insertAdjacentHTML(
-			"beforeBegin",
-			`<input type=checkbox class="expand-btn" id="code-${i}"><label for="code-${i}">Show ${lineCount - 20} more lines</label>`
-		)
-		// const showPartCode = code.innerHTML.substr(0, match[0].length)
-		// const openCount = showPartCode.match(/<\w+/g).length,
-		// 	closeCount = showPartCode.match(/<\/\w+/g).length
-		// if (openCount !== closeCount)
-		code.innerHTML = code.innerHTML.substr(0, match[0].length) +
-			`<span class="expanded">` +
-			code.innerHTML.substr(match[0].length, code.innerHTML.length) +
-			"</span>"
-
-		const table = code.closest('.hltable')
-		if (table) {
-			const lineNos = table.querySelector('.linenodiv pre')
-			lineNos.dataset.fullMarkup = lineNos.innerHTML
-			lineNos.innerHTML = lineNos.innerHTML.substr(0, lineNos.innerHTML.match(previewPat)[0].length)
-		}
-	} // */
-
-	document.body.addEventListener("change", (event) => {
-		if (event.target.matches("input.expand-btn")) {
-			const top = event.target.closest(".hltable")
-			if (top)
-				top.querySelector(".linenodiv .expanded").style = ""
+	document.body.addEventListener("animationend", event => {
+		if (event.target.className === "ghost") {
+			event.target.remove()
 		}
 	})
 
@@ -86,15 +45,6 @@ function main() {
 	s.async = "async"
 	s.src = "//gc.zgo.at/count.js"
 	document.head.appendChild(s)
-}
-
-function updateTimes() {
-	for (const el of document.querySelectorAll("time[data-show-relative]")) {
-		if (!el.title) {
-			el.title = el.textContent
-		}
-		el.innerHTML = `${el.title} (${timeSince(el.getAttribute("datetime"))})`
-	}
 }
 
 function timeSince(date) {
@@ -114,21 +64,17 @@ function cookiesOkSave() {
 }
 
 function onBodyClick(event) {
-	if (event.target.classList.contains("copy-btn"))
-		copyCodeBlock(event.target)
-	else if (event.target.classList.contains("console-toggle-btn"))
+	if (event.target.classList.contains("console-toggle-btn"))
 		toggleConsoleCeremony(event.target)
 	else if (event.target.dataset.click)
 		window[event.target.dataset.click](event)
 }
 
-function copyCodeBlock(btn) {
-	const codeEl = btn.closest(".hl").querySelector("pre code").cloneNode(true)
-	for (const el of codeEl.querySelectorAll(".hide, summary"))
-		el.remove()
-	let text = codeEl.textContent.trim()
-	if (text.includes('\n'))
-		text += '\n'
+function copyCodeBlock(event) {
+	const btn = event.target
+	let text = btn.closest(".hl").querySelector("pre.content").textContent.trim()
+	if (text.includes("\n"))
+		text += "\n"
 
 	const te = document.createElement("textarea")
 	te.style = "position: fixed; top: 0; left: 0; width: 1px; height: 1px"
@@ -138,13 +84,34 @@ function copyCodeBlock(btn) {
 	document.execCommand("copy")
 	te.remove()
 
-	const prevText = btn.innerText
-	btn.innerText = "Copied!"
-	btn.disabled = 1
-	setTimeout(() => {
-		btn.innerText = prevText
-		btn.removeAttribute("disabled")
-	}, 1000)
+	showGhost(btn, "Copied!")
+}
+
+function downloadCodeBlock(event) {
+	const btn = event.target
+	let text = btn.closest(".hl").querySelector("pre.content").textContent.trim()
+	if (text.includes("\n"))
+		text += "\n"
+
+	const filename = btn.closest(".hl").querySelector(".filename").textContent.trim()
+
+	const el = document.createElement("a")
+	el.style.display = "none"
+	el.setAttribute("download", filename)
+	el.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text))
+	document.body.append(el)
+	el.click()
+	el.remove()
+
+	showGhost(btn, "Downloaded")
+}
+
+function showGhost(el, label) {
+	const rect = el.getBoundingClientRect()
+	document.body.insertAdjacentHTML(
+		"beforeend",
+		`<div class=ghost style="left: ${rect.x}px; top: ${rect.y}px; min-width: ${rect.width}px; ${rect.height}px">${label}<div>`
+	)
 }
 
 function toggleConsoleCeremony(btn) {
@@ -153,23 +120,12 @@ function toggleConsoleCeremony(btn) {
 		el.classList.toggle("hide")
 }
 
-function showFullCodeBlock(event) {
-	const code = event.target.previousElementSibling
-	code.innerHTML = code.dataset.fullMarkup
-	event.target.remove()
-	const table = code.closest(".hltable")
-	if (table) {
-		const lineNos = table.querySelector(".linenodiv pre")
-		lineNos.innerHTML = lineNos.dataset.fullMarkup
-	}
-}
-
 function loadComments(event) {
 	event.target.remove()
 	document.getElementById("disqus_thread").innerHTML = "Loading comments&hellip;"
 	const s = document.createElement("script")
 	s.async = true
-	s.src = "//sharats-me.disqus.com/embed.js"
+	s.src = "//" + DISQUS_SITENAME + ".disqus.com/embed.js"
 	s.setAttribute("data-timestamp", +new Date())
 	document.body.appendChild(s)
 }

@@ -5,7 +5,7 @@ description: >
     An extensive article on the subprocess module in Python's standard library. Filled with examples
     and scenarios from my experienece with explanations and rationales for the solutions.
 hn_id: 3906882
-disqus_url: http://sharats.me/the-ever-useful-and-neat-subprocess-module.html
+disqus_id: the-ever-useful-and-neat-subprocess-module.html
 ---
 
 Python's [subprocess][] module is one of my favourite modules in the standard library. If you have

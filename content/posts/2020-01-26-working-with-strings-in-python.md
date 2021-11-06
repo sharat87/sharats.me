@@ -4,6 +4,7 @@ tags: python, programming, reference, tutorial
 description: >
     Everything you need handy as a quick reference when working with strings in Python. A complement
     to the official documentation.
+disqus_id: cache/posts/2020-01-26_working-with-strings-in-python.html
 ---
 
 This article will be a practical rundown of working with strings in Python, made up of things I
