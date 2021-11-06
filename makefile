@@ -9,7 +9,7 @@ endif
 
 PORT ?= 0
 ifneq ($(PORT), 0)
-	PELICANOPTS += -p $(PORT)
+	PELICANOPTS += --port $(PORT)
 endif
 
 

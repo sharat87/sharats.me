@@ -525,11 +525,6 @@ form[name="subscribe"] {
 	position: absolute;
 	top: 3px;
 	right: 3px;
-	display: none;
-}
-
-.hl .content:hover ~ .btns {
-	display: block;
 }
 
 .hl .show-full-code-btn {
@@ -684,6 +679,16 @@ form[name="subscribe"] {
 @media print {
 	.screen-only {
 		display: none !important;
+	}
+}
+
+@media (hover: hover) {
+	.hl .btns {
+		display: none;
+	}
+
+	.hl:hover .btns {
+		display: block;
 	}
 }
 
