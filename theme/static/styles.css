@@ -9,6 +9,10 @@ html {
 	--body-strong-color: #111;
 	--link-color: #06A;
 	--font-mono: Consolas, Menlo, monospace;
+	scroll-behavior: smooth;
+	scrollbar-color: currentColor transparent;
+	scrollbar-width: thin;
+	overflow-y: scroll;
 }
 
 html, body {
@@ -524,7 +528,7 @@ form[name="subscribe"] {
 	display: none;
 }
 
-.hl:hover .btns {
+.hl .content:hover ~ .btns {
 	display: block;
 }
 
