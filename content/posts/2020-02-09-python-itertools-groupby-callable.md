@@ -206,7 +206,7 @@ This is the point I was getting at in the first paragraph of this section. The g
 (the values in the dictionary above) are *de facto* destroyed once we yield another group. So, if we
 wanted to construct a dictionary like this, we need to do something like the following:
 
-```python {"linenos": true}
+```python linenos=true
 import itertools
 from collections import defaultdict
 from pprint import pprint
@@ -252,7 +252,7 @@ should have the following characteristics:
 
 This might look something like the following:
 
-```python {"linenos": true}
+```python linenos=true
 import itertools
 from collections import defaultdict
 from pprint import pprint

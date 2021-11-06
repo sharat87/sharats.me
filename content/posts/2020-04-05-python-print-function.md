@@ -220,7 +220,7 @@ the `sys.stdout` file object. Usually, these two are the same. But, of course, w
 Consider the following script which changes the value of `sys.stdout`, prints something, and then
 restores the value of `sys.stdout` to its original value.
 
-```python {"linenos": true}
+```python linenos=true
 import sys
 
 original_stdout = sys.stdout
@@ -266,7 +266,7 @@ prints information using the `print` function, but instead, we want that output 
 further processing. We can replace `sys.stdout` with a `io.StringIO` instance before calling that
 function, and then restore it after. Here's how this might look like:
 
-```python {"linenos": true}
+```python linenos=true
 import io, sys
 
 def print_product(a, b):

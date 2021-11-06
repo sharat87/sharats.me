@@ -118,7 +118,7 @@ But, I needed them like this:
 
 So, the following little python script did the trick:
 
-```python {"linenos": true}
+```python linenos=true
 #!/usr/bin/env python3
 
 import sys

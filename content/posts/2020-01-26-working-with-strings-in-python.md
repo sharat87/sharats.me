@@ -62,7 +62,7 @@ In practice, this syntax is commonly used for one of the following:
 The string created when using tripled quoted strings will contain *everything* between the tripled
 quotes. This includes any indentation present due to Python block-style formatting. For example:
 
-```python {"linenos": true}
+```python linenos=true
 def make_story():
     text = '''
     Once upon a time, there was a planet.
@@ -93,7 +93,7 @@ There's three things to note in the string defined in this function:
 
 Considering the above three points, we rewrite the previous code fragment as:
 
-```python {"linenos": true}
+```python linenos=true
 import textwrap
 
 def make_story():
@@ -152,7 +152,7 @@ Python has a nice compiler level feature to auto-concatenate *literal* strings t
 other (or more correctly, forming a single expressions). Take a look at an example to illustrate the
 point:
 
-```python {"linenos": true}
+```python linenos=true
 query = (
     'SELECT * FROM employees'
     '  WHERE name = ?'
@@ -597,7 +597,7 @@ where they are positioned in a Python program.
 
 Consider the following function with a docstring on line 2
 
-```python {"linenos": true}
+```python linenos=true
 def triple(n):
     """Triples the given number and returns the result."""
     return n * 3

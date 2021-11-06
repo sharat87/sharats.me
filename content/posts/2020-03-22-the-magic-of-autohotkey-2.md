@@ -141,7 +141,7 @@ at how easy it was to make the file selection by a pattern.
 
 So, here's the code for this:
 
-```ahk {"linenos": true}
+```ahk linenos=true
 ; Get selected files in explorer and more:
 ; http://www.autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
 #IfWinActive ahk_group FileListers
@@ -192,7 +192,7 @@ This is actually built to be invoked as a separate AutoHotkey process, not to be
 a master script. That's because the GUI is slightly more complex than what we've seen in previous
 sections and I didn't bother to make it work well as a module.
 
-```ahk {"linenos": true, "filename": "batch-rename.ahk"}
+```ahk linenos=true filename=batch-rename.ahk
 #NoEnv
 #NoTrayIcon
 
@@ -390,7 +390,7 @@ This doesn't work with images yet though. Still have to figure that one out.
 This is the opposite of the previous hotkey. Here, I want whatever is in the Clipboard to be saved
 to a text file in the current folder.
 
-```ahk {"linenos": true}
+```ahk linenos=true
 #IfWinActive ahk_group FileListers
 ^+v::
     CreateFileWithClipboardContents() {

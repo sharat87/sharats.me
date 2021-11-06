@@ -29,29 +29,14 @@ class ImageLinks(Preprocessor):
 
 class FenceConfigs(Preprocessor):
     """
-    Different JSON-based syntax for configuring fence blocks, so syntax highlighting still works in Vim.
+    Brace-less syntax for configuring fence blocks, so syntax highlighting still works in Vim.
     """
 
     def run(self, lines):
-        new_lines = []
-
         for i, line in enumerate(lines):
-            match = re.match(r"^```\s*(?P<lang>\w+)\s+(?P<conf>.+)", line)
+            lines[i] = re.sub(r"^```\s*(?P<lang>\w+)\s+(?P<conf>.+)", r"```{ .\g<lang> \g<conf> }", line)
 
-            if match:
-                conf = json.loads(match.group("conf"))
-
-                parts = ["```{", "." + match.group("lang")]
-                if conf.get("linenos"):
-                    parts.append("linenos=true")
-                if conf.get("filename"):
-                    parts.append('filename="' + conf["filename"] + '"')
-                parts.append("}")
-                line = " ".join(parts)
-
-            new_lines.append(line)
-
-        return new_lines
+        return lines
 
 
 class ExternalLinks(Treeprocessor):

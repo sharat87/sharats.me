@@ -416,7 +416,7 @@ compare it with the same solution written using traditional `for`-loop.
 First, let's define two functions that solve the same problem, but one uses comprehensions, and the
 other doesn't.
 
-```python {"linenos": true}
+```python linenos=true
 def loop_squares():
     result = []
     for n in range(4):
@@ -497,7 +497,7 @@ comprehension and passing (*returning*) the result to our `comp_squares` functio
 the `comp_squares` function is using an extra layer in the stack frame. We can confirm this by
 changing the functions to the following:
 
-```python {"linenos": true}
+```python linenos=true
 import traceback
 
 def loop_squares():

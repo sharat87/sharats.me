@@ -167,7 +167,7 @@ be used with text objects. Much easier to hit.
 I often edit new files like `:e css/styles.css`, without realizing that I have to create the `css`
 folder before saving this. But that's not productive, my tool should do that automatically.
 
-```vim {"linenos": true}
+```vim linenos=true
 " Create file's directory before saving, if it doesn't exist.
 " Original: https://stackoverflow.com/a/4294176/151048
 augroup BWCCreateDir
@@ -347,7 +347,7 @@ but it's nice to have nonetheless.
 This is very similar to the above. Instead of sorting, I'm reversing the lines. Unfortunately, we
 don't have a `:reverse` command like `:sort`, so this one is more DIY.
 
-```vim {"linenos": true}
+```vim linenos=true
 " Reverse lines, selected or over motion.
 nnoremap <silent> gr :set opfunc=ReverseLines<CR>g@
 vnoremap <silent> gr :<C-u>call ReverseLines('vis')<CR>

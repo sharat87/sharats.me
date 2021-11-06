@@ -45,6 +45,7 @@ GITHUB_STARS_QUERY = '''\
 def render_github_stars(content):
     GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
     if not GITHUB_API_TOKEN:
+        print("GitHub token not available.")
         return
 
     stars_by_project = {}

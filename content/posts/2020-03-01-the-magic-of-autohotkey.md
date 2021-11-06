@@ -177,7 +177,7 @@ hitting the red close button at the top right of the window.
 
 In the second part of this exercise, we add windows to the groups:
 
-```ahk {"linenos": true}
+```ahk linenos=true
 ; Windows that should just disappear on ESC, but don't already.
 GroupAdd, CloseOnEsc, ahk_class Photo_Lightweight_Viewer
 GroupAdd, CloseOnEsc, ahk_class ConsoleWindowClass
@@ -264,7 +264,7 @@ and their expansions. When this window is focused, I can hit one of those keys a
 immediately closed and the corresponding expansion is typed out. This has been working unchanged for
 over four years for me and has never failed me.
 
-```ahk {"linenos": true, "filename": "snippets.ahk"}
+```ahk linenos=true filename=snippets.ahk
 SnippetsInit() {
     Gui, Snips: Default
     Gui, Font, s18 q5, Consolas
@@ -343,7 +343,7 @@ To address this, I have a `window-watcher.ahk` module that defines the logic of 
 the visible windows and detecting if anything is opened or closed. This module defines the function
 `WindowWatcherInit` (among others), which needs to be called once to initialize the polling timer.
 
-```ahk {"linenos": true, "filename": "window-watchers.ahk"}
+```ahk linenos=true filename=window-watchers.ahk
 WindowWatcherInit() {
     static initDone := false
 
@@ -388,7 +388,7 @@ new window's `hwnd` passed as the only argument. In this function, I match this 
 various types of windows and take the action I need. Here's a short preview of that function (in
 reality, the function is 81 lines long in my master script).
 
-```ahk {"linenos": true}
+```ahk linenos=true
 OnWindowCreated(hwnd) {
     global homedir
 
@@ -463,7 +463,7 @@ Again, for this, I have a separate module called `time-osd.ahk` which I `#Includ
 script and call it's init function. (This init-function-in-a-separate-module is something I came up
 with that was working well enough, I have no idea if it's a best practice).
 
-```ahk {"linenos": true, "filename": "time-osd.ahk"}
+```ahk linenos=true filename=time-osd.ahk
 TimeOSDInit() {
     global TimeOSDLabel
     SetTimer, TimeOSDPulse, 1000
@@ -527,7 +527,7 @@ Windows). The following snippet that I currently use, gets me <kbd>d</kbd> (like
 <kbd>+n</kbd> (like Vim's <kbd>N</kbd>), <kbd>x</kbd> (to close a tab), <kbd>g</kbd> and
 <kbd>+g</kbd> (like Vim's <kbd>g</kbd> & <kbd>G</kbd>).
 
-```ahk {"linenos": true}
+```ahk linenos=true
 #IfWinActive ahk_exe SumatraPDF.exe ahk_class SUMATRA_PDF_FRAME
 $d::
 $e::

@@ -74,7 +74,7 @@ Here, the `task_main` function is defined to accept two arguments. The `users_se
 `sales_service`. In our task runner application, we use the `inspect` module to identify the
 abstractions being used in `task_main` and pass them accordingly. Here's how it works:
 
-```python {"linenos": true}
+```python linenos=true
 import importlib
 import inspect
 

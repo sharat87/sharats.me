@@ -98,7 +98,7 @@ set ruler
 Next, I set `rulerformat` as a variable since it's slightly easier this way when dealing with escape
 characters.
 
-```vim {"linenos": true}
+```vim linenos=true
 let &rulerformat = '%50(b%n %{&ff} %{&ft}' .
             \ '%( %{len(getqflist()) ? ("q" . len(getqflist())) : ""}%)' .
             \ '%( %{search("\\s$", "cnw", 0, 200) ? "∙$" : ""}%)' .
@@ -184,7 +184,7 @@ so far. Nevertheless, my mapping below supports looking for a few other such *pr
 There's a few plugins that do this as well, probably better than this, but I like to do these kind
 of simple things myself, to have control and to have it tuned to my habits.
 
-```vim {"linenos": true}
+```vim linenos=true
 " Map to change pwd to the repo-root-directory of the current buffer.
 nnoremap cu :call <SID>CdToRepoRoot()<CR>
 let g:markers = split('.git .hg .svn .project .idea manage.py pom.xml')
@@ -267,7 +267,7 @@ the visual-block mode and move the cursor so that the vertical line is selected.
 GIF above, our function would construct the normal mode command <kbd>\&lt;C-v&gt;2jo1k</kbd>. This
 works quite well and doesn't affect the jumplist.
 
-```vim {"linenos": true}
+```vim linenos=true
 nnoremap <expr> vm <SID>VisualVLine()
 fun! s:VisualVLine() abort
     let [_, lnum, col; _] = getcurpos()
@@ -302,7 +302,7 @@ my screen, I've heard complaints from people connecting from their mobile device
 
 The following two mappings are born out of this need.
 
-```vim {"linenos": true}
+```vim linenos=true
 " Increase / Decrease font size.
 let g:font_size_pat = s:iswin ? ':h\zs\d\+' : '\d\+'
 nnoremap <silent> z+ :<C-u>let &guifont = substitute(

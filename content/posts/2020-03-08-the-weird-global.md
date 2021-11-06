@@ -15,7 +15,7 @@ the simple sense and situations where it can drive people nuts.
 Consider the following `top.py` script. We have a single module-level (aka `global`) variable here
 and we change it's value in the function `done`.
 
-```python {"linenos": true, "filename": "top.py"}
+```python linenos=true filename=top.py
 are_we_done = False
 
 
@@ -96,7 +96,7 @@ considered as modifying.
 This behaviour of global variables causes some slightly unintuitive situations. For example,
 consider the following piece of code:
 
-```python {"linenos": true}
+```python linenos=true
 is_server_up = False
 
 
@@ -110,7 +110,7 @@ mark_server_up()
 In this script, we are using the global variable `is_server_up` on line 5, without declaring it as
 `global`, and it works fine. Now, we add another line to this function:
 
-```python {"linenos": true}
+```python linenos=true
 is_server_up = False
 
 
