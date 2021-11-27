@@ -108,7 +108,7 @@ class User:
 
 Let's inspect the hash values of `User` objects.
 
-```python
+```pycon
 >>> ned = User('Ned', 'Stark')
 >>> hash(ned)
 8784834659087
@@ -125,7 +125,7 @@ As seen above, the hash value did not change even though the object was modified
 objects can be used as keys for a dictionary since they meet the requirement, but it should be kept
 in mind that they are mutable.
 
-```python
+```pycon
 >>> ned = User('Ned', 'Stark')
 >>> d = {ned: 123}
 >>> d[ned]
@@ -137,7 +137,7 @@ in mind that they are mutable.
 
 If that doesn't seem confusing, try this:
 
-```python
+```pycon
 >>> robb = ned
 >>> ned = User('Ned', 'Start')
 >>> robb.first_name
@@ -162,7 +162,7 @@ following method:
 
 Now, the hash of the object changes when we change the `first_name`.
 
-```python
+```pycon
 >>> ned = User('Ned', 'Stark')
 >>> hash(ned)
 4091961891370636651
@@ -173,7 +173,7 @@ Now, the hash of the object changes when we change the `first_name`.
 
 Using these objects as keys can be confusing as well:
 
-```python
+```pycon
 >>> ned = User('Ned', 'Stark')
 >>> d = {ned: 123}
 >>> d[ned]
@@ -201,7 +201,7 @@ Dictionaries have a [`.keys`][.keys] method that returns an object of type [`dic
 which is an iterable (technically, a *view*) of the keys of the dictionary. Note that this method
 used to return an ordinary `list` in Python 2.
 
-```python
+```pycon
 >>> countries = country_currencies.keys()
 >>> countries
 dict_keys(['India', 'Russia', 'USA', 'Japan'])
@@ -222,7 +222,7 @@ more](https://docs.python.org/3/whatsnew/3.6.html#whatsnew36-pep468).
 
 So, what's special about `dict_keys`, as opposed to a `list`? Look look!
 
-```python
+```pycon
 >>> countries
 dict_keys(['India', 'Russia', 'USA', 'Japan'])
 >>> country_currencies['France'] = 'Euro'
@@ -234,7 +234,7 @@ See? The `dict_keys` object is a *view* of the keys of the original dictionary o
 dictionary's keys change, so does the keys view. Of course, we can make a set of currently
 available keys by passing it to `set` builtin. This set would be independent of the dictionary.
 
-```python
+```pycon
 >>> set(countries)
 {'Japan', 'USA', 'Russia', 'India', 'France'}
 ```
@@ -249,7 +249,7 @@ Additionally, the `dict_keys` objects are themselves `set`-like. They implement 
 abstraction. So, we don't need to convert them to a `set` in order to do set operations on them. For
 example, here's an intersection operation:
 
-```python
+```pycon
 >>> isinstance(countries, collections.abc.Set)
 True
 >>> countries & {'India', 'China'}
@@ -260,7 +260,7 @@ True
 
 Here's a quick example of using tuples as keys in a dictionary:
 
-```python
+```pycon
 >>> data = {
 ...     ('a', 1): 'a1',
 ...     ('a', 2): 'a2',
@@ -282,7 +282,7 @@ restrictions on what types can be used as values in a dictionary.
 We can get a sequence of values in a `dict` with the [`.values`][.values] method. This returns a
 [`dict_values`][views] object.
 
-```python
+```pycon
 >>> currencies = country_currencies.values()
 >>> currencies
 dict_values(['Rupee', 'Ruble', 'Dollar', 'Euro', 'Yen'])
@@ -294,7 +294,7 @@ False
 
 This is *live* as well!
 
-```python
+```pycon
 >>> del country_currencies['France']
 >>> currencies
 dict_values(['Rupee', 'Ruble', 'Dollar', 'Yen'])
@@ -308,7 +308,7 @@ since unlike the keys, values don't have to be unique or hashable.
 Dictionaries also provide a [`.items`][.items] method that returns all the key--value pairs as a
 sequence of 2-tuples.
 
-```python
+```pycon
 >>> pairs = country_currencies.items()
 >>> pairs
 dict_items([('India', 'Rupee'), ('Russia', 'Ruble'), ('USA', 'Dollar'), ('Japan', 'Yen')])
@@ -333,7 +333,7 @@ The above code uses [f-strings][] introduced in Python 3.6. In older versions of
 
 The `dict_items` object also implements the `Set` abstraction.
 
-```python
+```pycon
 >>> isinstance(pairs, collections.abc.Set)
 True
 ```
@@ -341,14 +341,14 @@ True
 However, the abstraction's methods only work if the dictionary's values are hashable, not just the
 keys. So, for the dictionary we are working with, the `pairs` object can be used as a set.
 
-```python
+```pycon
 >>> pairs & {('India', 'Rupee'), ('UK', 'Pound')}
 {('India', 'Rupee')}
 ```
 
 But if we try this on a dictionary whose values are not `hash`able, say, lists, then it fails.
 
-```python
+```pycon
 >>> number_types = {
 ...     'even': [2, 4, 6, 8],
 ...     'odd': [1, 3, 5, 7, 9],
@@ -362,7 +362,7 @@ True
 
 Let's try intersecting this with an empty set.
 
-```python
+```pycon
 >>> pairs & set()
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -426,7 +426,7 @@ There are a few other ways to create dictionaries besides the `{}` syntax. Here'
 The `dict` callable can be used to create dictionaries from a list of tuples or bypassing the keys
 and values as keyword arguments.
 
-```python
+```pycon
 >>> dict([('Chromium', 24), ('Phosphorus', 15), ('Silver', 47)])
 {'Chromium': 24, 'Phosphorus': 15, 'Silver': 47}
 ```
@@ -435,7 +435,7 @@ This is obviously more convenient than the dictionary syntax *only* if we alread
 If we have the keys and corresponding values in different lists, we can `zip` them up and pass the
 result to `dict`.
 
-```python
+```pycon
 >>> dict(zip(
 ...     ['Sulfer', 'Calcium', 'Gold'],  # Keys
 ...     [16, 20, 79],  # Values
@@ -445,7 +445,7 @@ result to `dict`.
 
 Of course, we can pass keyword arguments directly to `dict`, in addition to the above even.
 
-```python
+```pycon
 >>> dict(dict([('Chromium', 24), ('Phosphorus', 15)]), Sodium=11, Nitrogen=7)
 {'Chromium': 24, 'Phosphorus': 15, 'Sodium': 11, 'Nitrogen': 7}
 >>> dict(Sodium=11, Nitrogen=7)
@@ -462,7 +462,7 @@ future reader, and, *slightly* faster[^1] as well.
 Python 3 (and 2.7) added support for dict comprehensions which are very similar to list
 comprehensions, but with a small variation in syntax.
 
-```python
+```pycon
 >>> dict((i, i**2) for i in range(5))  # Using the `dict` builtin.
 {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 >>> {i: i**2 for i in range(5)}  # Using a dict comprehension.
@@ -481,7 +481,7 @@ Unsurprisingly, dictionaries pop up in a lot of places in Python. Here's a few o
 When defining a function that takes arbitrary keyword arguments, they are passed to the function as
 a dictionary.
 
-```python
+```pycon
 >>> def construct(**counts):
 ...     print(counts)
 ...     print(len(counts), type(counts))
@@ -493,7 +493,7 @@ a dictionary.
 
 Of course, we can pass a dictionary's data as keyword arguments to a function using similar syntax.
 
-```python
+```pycon
 >>> kw_args = {'a': 1, 'b': 2, 'c': 3}
 >>> construct(**kw_args)
 {'a': 1, 'b': 2, 'c': 3}
@@ -506,7 +506,7 @@ The `globals` builtin function gives a dictionary of all names and their values 
 global namespace. We can modify this dictionary to define new names or delete existing ones,
 although that's probably a bad idea.
 
-```python
+```pycon
 >>> len(globals())
 25
 >>> globals()['x'] = 123
@@ -544,7 +544,7 @@ close to Python's own syntax for dictionaries.
 
 Here's a quick example:
 
-```python
+```pycon
 >>> import json
 >>> json.dumps(country_currencies)
 '{"India": "Rupee", "Russia": "Ruble", "USA": "Dollar", "Japan": "Yen"}'
@@ -592,7 +592,7 @@ item syntax on our objects.
 
 Here's a simple example:
 
-```python
+```pycon
 >>> class Store:
 ...     def __getitem__(self, name):
 ...             return name.upper()
@@ -631,7 +631,7 @@ position in the ordering is unchanged.
 
 Create a new `OrderedDict`:
 
-```python
+```pycon
 >>> from collections import OrderedDict
 >>> planet_satellites = OrderedDict(
 ...     Mercury=0,
@@ -660,7 +660,7 @@ way.
 
 They are just dictionaries under the hood.
 
-```python
+```pycon
 >>> isinstance(planet_satellites, dict)
 True
 >>> planet_satellites['Mars']
@@ -669,7 +669,7 @@ True
 
 These objects support being reversed as well:
 
-```python
+```pycon
 >>> rev_planets = OrderedDict(reversed(planet_satellites.items()))
 >>> pprint(rev_planets)
 OrderedDict([('Neptune', 14),
@@ -729,7 +729,7 @@ When we try to get the value of a letter from `counts`, and that letter doesn't 
 `counts[letter]`. Precisely what we were doing in our previous example. So, what does `int` return
 when called with no arguments? You guessed it, zero!
 
-```python
+```pycon
 >>> int()
 0
 >>> float()
@@ -759,7 +759,7 @@ for this key and the value of the first match is returned.
 
 This is better illustrated with an example. Let's create a `ChainMap` with dummy data:
 
-```python
+```pycon
 >>> from collections import ChainMap
 >>> data = ChainMap({'a': 1, 'b': 2, 'c': 3}, {'c': 30, 'd': 40, 'e': 50})
 >>> data
@@ -770,7 +770,7 @@ ChainMap({'a': 1, 'b': 2, 'c': 3}, {'c': 30, 'd': 40, 'e': 50})
 
 Let's try indexing:
 
-```python
+```pycon
 >>> data['a']
 1
 >>> data['e']
@@ -785,7 +785,7 @@ and `'c'` is indexed from the first dictionary.
 As mentioned in the documentation, writes, updates and deletes, however, operate on the first
 dictionary alone.
 
-```python
+```pycon
 >>> data['a'] = 91
 >>> data
 ChainMap({'a': 91, 'b': 2, 'c': 3}, {'c': 30, 'd': 40, 'e': 50})
@@ -799,7 +799,7 @@ ChainMap({'a': 91, 'b': 2, 'c': 93, 'e': 951}, {'c': 30, 'd': 40, 'e': 50})
 
 Of course, if we explicitly want to modify the last dictionary, it can be indexed directly:
 
-```python
+```pycon
 >>> data.maps[-1]['c'] = 999
 >>> data
 ChainMap({'a': 91, 'b': 2, 'c': 93, 'e': 951}, {'c': 999, 'd': 40, 'e': 50})
@@ -851,7 +851,7 @@ store dictionary.
 
 Let's try it out.
 
-```python
+```pycon
 >>> data = CaselessDict(accept='application/json')
 >>> data['accept']
 'application/json'
@@ -869,7 +869,7 @@ how to interpret the disassembled instructions in this article. We use the [`dis
 
 Let's try this a very simple function.
 
-```python
+```pycon
 >>> dis.dis(lambda: {'a': 1})
   1           0 LOAD_CONST               1 ('a')
               2 LOAD_CONST               2 (1)
@@ -885,7 +885,7 @@ dictionary to build. From the official docs,
 
 Now let's do this with two elements in the dict.
 
-```python
+```pycon
 >>> dis.dis(lambda: {'a': 1, 'b': 2})
   1           0 LOAD_CONST               1 (1)
               2 LOAD_CONST               2 (2)

@@ -40,26 +40,22 @@
 		</div>
 		<nav class=screen-only>
 			{#- TODO: Highlight for Posts page needs a better solution. #}
-			{%- for title, link in MENUITEMS %}
+			{%- for title, link in MENUITEMS -%}
 				<a href="{{ link }}"{% if (page and link[1:] == page.url) or (link.endswith("/posts/") and output_file == "posts/index.html") %} class=active{% endif %}>{{ title }}</a>
-			{%- endfor %}
-			{% if FEED_ALL_ATOM %}
+			{%- endfor -%}
+			{%- if FEED_ALL_ATOM -%}
 				<a href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}" title="Atom Feed">Feed</a>
-			{% elif FEED_ALL_RSS %}
+			{%- elif FEED_ALL_RSS -%}
 				<a href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}">RSS</a>
-			{% endif %}
+			{%- endif -%}
 		</nav>
 	</header>
-
-	<noscript>
-		<p class=js-message>I see you have Javascript disabled. A fine choice, I must say. You'll be happy to know that almost <em>all</em> interactive features on this website work without Javascript.</p>
-	</noscript>
 
 	<main>{% block content %}{% endblock %}</main>
 
 	<footer>
 		<div class=content>
-			<p>© 2010&ndash;2021 Shrikant Sharat Kandula.</p>
+			<p>© 2010&ndash;2021 Shrikant Sharat Kandula. <a href="https://github.com/sharat87/sharats.me" target=_blank rel=noopener>Source on GitHub</a>.</p>
 			<p>Find me on
 				{%- for name, link in SOCIAL %}
 					<a target=_blank rel=noopener href="{{ link }}">{{ name }}</a>{% if loop.last %}.{% else %},{% endif %}

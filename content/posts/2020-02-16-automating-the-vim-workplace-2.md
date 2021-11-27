@@ -418,5 +418,5 @@ Read the previous article in this series: [Automating the Vim workplace][prev-ar
 [map-expr]: http://vimdoc.sourceforge.net/htmldoc/map.html#:map-expression
 [c-v]: http://vimdoc.sourceforge.net/htmldoc/visual.html#CTRL-V
 [key-{]: http://vimdoc.sourceforge.net/htmldoc/motion.html#{
-{% raw %}[key-}]: http://vimdoc.sourceforge.net/htmldoc/motion.html#}{% endraw %}
+[key-}]: http://vimdoc.sourceforge.net/htmldoc/motion.html#}
 [sub-replace-expression]: http://vimdoc.sourceforge.net/htmldoc/change.html#sub-replace-expression

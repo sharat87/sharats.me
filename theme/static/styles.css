@@ -5,7 +5,7 @@
 html {
 	--bg1: #FFF;
 	--bg2: #F7F7F7;
-	--body-normal-color: #222;
+	color: #222;
 	--body-strong-color: #111;
 	--link-color: #06A;
 	--font-mono: Consolas, Menlo, monospace;
@@ -23,7 +23,6 @@ html, body {
 
 body {
 	background: var(--bg1);
-	color: var(--body-normal-color);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -37,11 +36,9 @@ strong {
 	color: var(--body-strong-color);
 }
 
-.js-message {
-	background-color: var(--link-color);
-	color: white;
-	padding: 3px 6px;
-	border-radius: 3px;
+ol > li > ul {
+	/* Second level `ul` under an `ol` can have discs, instead of hollow circles. */
+	list-style: disc;
 }
 
 .table-wrapper {
@@ -53,23 +50,32 @@ strong {
 	white-space: pre;
 }
 
-ol > li > ul {
-	/* Second level `ul` under an `ol` can have discs, instead of hollow circles. */
-	list-style: disc;
-}
-
 table {
 	border-collapse: collapse;
+	margin: 0 auto;
 }
 
 th {
 	text-align: left;
-	background-color: rgba(0, 0, 0, .04);
+	background-color: #0001;
+}
+
+th, td {
+	border: 1px solid #BBB;
+	padding: 6px;
 }
 
 :link, :visited {
 	color: var(--link-color);
 	word-break: break-word;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 a img {
@@ -127,10 +133,6 @@ blockquote :first-child {
 
 blockquote :last-child {
 	margin-bottom: 0;
-}
-
-address {
-	margin: 0 0 1.5em;
 }
 
 pre, code, kbd, tt, var {
@@ -199,19 +201,6 @@ video {
 	max-width: 90%;
 }
 
-figure {
-	margin: 0;
-}
-
-table {
-	margin: 0 auto;
-}
-
-th, td {
-	border: 1px solid #BBB;
-	padding: 6px;
-}
-
 main {
 	width: 100%;
 	max-width: 960px;
@@ -224,6 +213,7 @@ header {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 header h1 {
@@ -233,22 +223,12 @@ header h1 {
 	padding: 6px 12px;
 }
 
-header a {
-	text-decoration: none;
-	display: inline-block;
-	white-space: nowrap;
-}
-
 header nav a {
-	font-size: 1.2em;
-	padding: 3px 9px;
-	margin: 0 6px;
-	border-radius: 0 0 3px 3px;
+	margin: 0 9px;
 }
 
-header nav :is(a:hover, a.active) {
-	background-color: var(--link-color);
-	color: white;
+header nav a.active {
+	text-decoration: underline;
 }
 
 header .compact {
@@ -268,7 +248,6 @@ header .compact {
 .headerlink {
 	margin-left: 12px;
 	display: none;
-	text-decoration: none;
 	font-family: var(--font-mono);
 	font-size: .5em;
 	vertical-align: super;
@@ -296,7 +275,6 @@ button, .btn, input[type="submit"], .button, .button:visited {
 	color: white;
 	border-radius: 2px;
 	padding: 6px 1em;
-	text-decoration: none;
 }
 
 input[type="email"], textarea {
@@ -330,11 +308,6 @@ main h1:first-child {
 	margin-bottom: 0;
 }
 
-main h1:first-child a {
-	text-decoration: none;
-	color: inherit;
-}
-
 .post-list {
 	padding-left: 1em;
 }
@@ -366,16 +339,12 @@ main h1:first-child a {
 footer {
 	background-color: var(--bg2);
 	margin-top: 2em;
-	padding: 1em 0 2em;
 	width: 100%;
 }
 
 footer .content {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
 	margin: 0 auto;
-	padding: 0 3px;
+	padding: 1em 3px 2em;
 	width: 100%;
 	max-width: 960px;
 }
@@ -391,14 +360,6 @@ footer .content {
 	padding-left: 1.5em;
 }
 
-:is(.toc, .post-list, footer) a, a.tag {
-	text-decoration: none;
-}
-
-:is(.toc, .post-list, footer) a:hover, a.tag:hover {
-	text-decoration: underline;
-}
-
 .toctitle {
 	font-size: 1.2em;
 	font-weight: bold;
@@ -411,11 +372,11 @@ footer .content {
 	color: inherit;
 	font-size: .8em;
 	padding: 3px 6px;
-	text-decoration: none;
 }
 
 .star-btn:hover {
 	background: #EEE;
+	text-decoration: none;
 }
 
 #cookiesOkBox {
@@ -522,6 +483,7 @@ form[name="subscribe"] {
 }
 
 .hl .btns {
+	display: none;
 	position: absolute;
 	top: 3px;
 	right: 3px;
@@ -626,10 +588,6 @@ form[name="subscribe"] {
 		display: none;
 	}
 
-	header nav a {
-		border-radius: 0;
-	}
-
 	input.nav-toggle:checked ~ nav {
 		display: flex;
 	}
@@ -683,10 +641,6 @@ form[name="subscribe"] {
 }
 
 @media (hover: hover) {
-	.hl .btns {
-		display: none;
-	}
-
 	.hl:hover .btns {
 		display: block;
 	}
@@ -696,7 +650,7 @@ form[name="subscribe"] {
 	html {
 		--bg1: #222;
 		--bg2: #333;
-		--body-normal-color: #EEE;
+		color: #EEE;
 		--body-strong-color: #FFF;
 		--link-color: #39A;
 		--font-mono: Consolas, Menlo, monospace;
@@ -720,6 +674,7 @@ form[name="subscribe"] {
 
 	p.img img, img[src$=".gif"], video {
 		filter: brightness(70%);
+		-webkit-filter: brightness(70%); /* For iOS Safari */
 	}
 
 	.star-btn {

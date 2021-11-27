@@ -81,7 +81,7 @@ def render_github_stars(content):
         stars = stars_by_project.get(project, "N/A")
         if stars > 999:
             stars = f"{round(stars / 1000)}k"
-        return f'<a class=star-btn href="https://github.com/sharat87/{project}" target=_blank rel=noopener title="Star project on GitHub">Star {stars}</a>'
+        return f'<a class=star-btn href="https://github.com/{project}" target=_blank rel=noopener title="Star project on GitHub">Star {stars}</a>'
 
     content._content = re.sub(r"{github-stars\s+(?P<project>.+?)}", replacement, content._content)
 

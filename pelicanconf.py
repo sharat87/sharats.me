@@ -1,12 +1,12 @@
 import os, os.path
 from glob import glob
 
-is_dev = os.getenv("ENV") == "dev"
+IS_DEV = os.getenv("ENV") == "dev"
 
 AUTHOR = "Shrikant Sharat Kandula"
 SITENAME = "The Sharat's"
 PROD_SITEURL = "https://sharats.me"
-SITEURL = "http://localhost:8000" if is_dev else PROD_SITEURL
+SITEURL = "" if IS_DEV else PROD_SITEURL
 
 THEME = "theme"
 
@@ -58,7 +58,6 @@ MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
     # ("Rèsumè", "/resume/"),
-    ("About", "/about/"),
 ]
 
 SOCIAL = [
@@ -108,6 +107,5 @@ PLUGINS = [
 
 SITEMAP = {
     "format": "xml",
+    "exclude": ["drafts/"],
 }
-if is_dev:
-    SITEMAP["exclude"] = ["drafts/"]
