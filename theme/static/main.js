@@ -3,12 +3,6 @@ window.onload = main
 function main() {
 	document.body.addEventListener("click", onBodyClick)
 
-	if (document.cookie.match(/(^|;\s*)cookiesOk=1(;|$)/)) {
-		cookiesOkSave()  // Save again for it to expire in seven days from now.
-	} else {
-		document.getElementById("cookiesOkBox").classList.remove("hide")
-	}
-
 	for (const el of document.querySelectorAll("sup a.footnote-ref")) {
 		// TODO: Move footnote tooltips to build-time.
 		el.setAttribute("title", document.getElementById(el.getAttribute("href").slice(1)).textContent.trim())
@@ -54,13 +48,6 @@ function timeSince(date) {
 	else if ((i = Math.round(s / 25920)) >= 1) u = "month"
 	else if ((i = Math.round(s / 864)) >= 1) u = "day"
 	return u ? `~${i} ${u}${i > 1 ? "s" : ""} ago` : "today"
-}
-
-function cookiesOkSave() {
-	const date = new Date()
-	date.setTime(date.getTime() + (7*24*60*60*1000))
-	document.cookie = "cookiesOk=1; expires=" + date.toUTCString() + "; path=/"
-	document.getElementById("cookiesOkBox").classList.add("hide")
 }
 
 function onBodyClick(event) {
