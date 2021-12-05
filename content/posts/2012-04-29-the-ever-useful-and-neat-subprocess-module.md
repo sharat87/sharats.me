@@ -223,8 +223,7 @@ concerned with `stdout`. This can be done by setting the `stderr` argument to
 Second is to create a `Popen` object with `stderr` set to [`subprocess.PIPE`][PIPE] (optionally
 along with `stdout` argument) and read from its `stderr` attribute which is a readable file-like
 object. There is also a convenience method on `Popen` class, called `.communicate`, which optionally
-takes a string to be sent to the process's `stdin` and returns a tuple of `(stdout_content,
-stderr_content)`.
+takes a string to be sent to the process's `stdin` and returns a tuple of `(stdout_content, stderr_content)`.
 
 ### Watching both `stdout` and `stderr`
 
