@@ -1,6 +1,7 @@
 ---
 title: Time is different every time
 tags: automation, shower-thoughts
+hn_id: 29680269
 ---
 
 I love automating things, with shell aliases, global hotkeys, IDE snippets etc.
