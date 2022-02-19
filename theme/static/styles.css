@@ -6,7 +6,7 @@ html {
 	--bg1: #FFF;
 	--bg2: #F7F7F7;
 	color: #222;
-	--body-strong-color: #111;
+	--strong-fg: #000;
 	--link-color: #06A;
 	--font-mono: Consolas, Menlo, monospace;
 	scroll-behavior: smooth;
@@ -32,8 +32,16 @@ body {
 	line-height: 1.4;
 }
 
+.subtitle {
+	font-size: 1.2em;
+}
+
+.subtitle p {
+	margin-top: 0;
+}
+
 strong {
-	color: var(--body-strong-color);
+	color: var(--strong-fg);
 }
 
 ol > li > ul {
@@ -85,7 +93,8 @@ a img {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: inherit;
-	margin: 1em 0 .5em;
+	margin: 1.3em 0 .5em;
+	color: var(--strong-fg);
 }
 
 h1 {
@@ -216,10 +225,9 @@ header {
 	align-items: center;
 }
 
-header h1 {
-	font-size: 1.6em;
+.brand {
+	font-size: 1.2em;
 	line-height: 1;
-	margin: 0;
 	padding: 6px 12px;
 }
 
@@ -250,7 +258,7 @@ header .compact {
 	display: none;
 	font-family: var(--font-mono);
 	font-size: .5em;
-	vertical-align: super;
+	vertical-align: middle;
 	padding: 0 3px;
 	border-radius: 1px;
 }
@@ -651,7 +659,7 @@ form[name="subscribe"] {
 		--bg1: #222;
 		--bg2: #333;
 		color: #EEE;
-		--body-strong-color: #FFF;
+		--strong-fg: #FFF;
 		--link-color: #39A;
 		--font-mono: Consolas, Menlo, monospace;
 	}

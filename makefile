@@ -16,7 +16,7 @@ clean:
 
 new-post:
 	@read -p "Title: " title \
-		&& f="content/posts/$$(date +%Y-%m-%d)-$$(echo "$$title" | tr A-Z a-z | sed -E -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$$//g').md" \
+		&& f="content/posts/$$(date +%Y-%m-%d)-$$(echo "$$title" | tr A-Z a-z | sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$$//g').md" \
 		&& if test -f "$$f"; then echo File "'$$f'" already exists. Exiting.; exit 1; fi; \
 		echo "Creating '$$f'." \
 		&& echo "---\ntitle: $$title\nstatus: draft\n---\n\nA brand new article here!" > "$$f"

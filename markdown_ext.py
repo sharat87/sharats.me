@@ -172,7 +172,7 @@ class CustomFormatter(pygments.formatters.html.HtmlFormatter):
 
         yield 0, ('</div>' if should_collapse else '') + '</pre>'
 
-        if line_count > 23:
+        if should_collapse:
             yield 0, f'<label for={input_id}><span class="btn show-full-code-btn">Show remaining {line_count - 20} lines</span></label>'
 
         yield 0, '<div class="btns"></div>'

@@ -1,5 +1,6 @@
-import os, os.path
-from glob import glob
+import os
+import time
+import pathlib
 
 IS_DEV = os.getenv("ENV") == "dev"
 
@@ -16,8 +17,8 @@ _root_static = "root-static"
 STATIC_PATHS = ["static", _root_static]
 
 EXTRA_PATH_METADATA = {
-    os.path.relpath(filename, start=PATH): { "path": os.path.basename(filename) }
-    for filename in glob(os.path.join(PATH, _root_static, "*"))
+    str(p.relative_to(PATH)): { "path": p.name }
+    for p in pathlib.Path(PATH, _root_static).glob("*")
 }
 
 FILENAME_METADATA = r"(?:(?P<date>\d{4}-\d{2}-\d{2})-)?(?P<slug>[-a-z0-9]*)"
@@ -94,6 +95,10 @@ def _render_markdown(text: str):
 
 JINJA_FILTERS = {
     "markdown": _render_markdown,
+}
+
+JINJA_GLOBALS = {
+    "current_year": time.strftime("%Y"),
 }
 
 DISQUS_SITENAME = "sharats-me"

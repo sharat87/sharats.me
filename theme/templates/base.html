@@ -24,12 +24,11 @@
 <body>
 
 	<header>
-		<input class="nav-toggle" name="nav-toggle" id="nav-toggle" type="checkbox">
-		<div class="compact">
-			<h1><a href="{{ SITEURL }}/" rel="home">{{ SITENAME }}</a></h1>
-			<label class="nav-toggle" for="nav-toggle">
+		<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>
+		<div class=compact>
+			<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home">{{ SITENAME }}</a></div>
+			<label class=nav-toggle for=nav-toggle title="Toggle navigation menu">
 				<svg width="25" height="20" role="img">
-					<title>Toggle navigation menu</title>
 					<g stroke="black" stroke-width="2" stroke-linecap="round">
 						<line x1="4" y1="4" x2="21" y2="4"></line>
 						<line x1="4" y1="10" x2="21" y2="10"></line>
@@ -55,7 +54,7 @@
 
 	<footer>
 		<div class=content>
-			<p>© 2010&ndash;2021 Shrikant Sharat Kandula. <a href="https://github.com/sharat87/sharats.me" target=_blank rel=noopener>Source on GitHub</a>.</p>
+			<p>© 2010&ndash;{{ current_year }} Shrikant Sharat Kandula. <a href="https://github.com/sharat87/sharats.me" target=_blank rel=noopener>Source on GitHub</a>.</p>
 			<p>Find me on
 				{%- for name, link in SOCIAL %}
 					<a target=_blank rel=noopener href="{{ link }}">{{ name }}</a>{% if loop.last %}.{% else %},{% endif %}
