@@ -310,8 +310,8 @@ Video: autohotkey-rename-by-regex.mp4
 
 If you're using this, please keep caution. Please inspect the previous table before clicking on the
 "Apply" button. If it ends up messing your files up, don't hold me responsible. I'm sharing this
-without warranty. As any source code block on this website, this is shared here with [ISC
-License](/licenses/isc/).
+without warranty. As any source code block on this website, this is shared here with [MIT
+License](/licenses/mit/).
 {: .note }
 
 ### Copy Paths of Selected Files
