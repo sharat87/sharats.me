@@ -4,13 +4,13 @@ tags: vim, productivity
 reddit_url: r/vim/comments/enlz8x
 description: >
     Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
+reddit_url: r/vim/comments/enlz8x
 disqus_id: cache/posts/2020-01-12_automating-the-vim-workplace.html
 ---
 
 I majorly use two tools for my coding workflow and one of them is GVim (on Windows). It's my primary
 choice for editing text for ten years now and in that time, I've picked up several habits and tricks
-that made me very productive. I'm hoping to do several articles in the coming weeks to share some of
-these.
+that made me very productive.
 
 This article is part of a series:
 

@@ -5,6 +5,7 @@ description: >
     My automation stack for day-to-day working, that's built on Autohotkey over six years. This is
     part 2 of the "Magic of AutoHotkey" series. In this part, we look at automating the file
     explorer and using OLE objects for office applications.
+reddit_url: r/AutoHotkey/comments/fms8ca
 ---
 
 In the previous part of [The Magic of AutoHotkey][prev-article], we looked at automating small

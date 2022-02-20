@@ -4,6 +4,7 @@ tags: python, programming, tutorial
 description: >
     This is a thorough guide to the various forms of comprehension expressions in the Python
     programming language. Contains several examples of list, set, and dictionary comprehensions.
+reddit_url: r/Python/comments/faaj8q
 ---
 
 Comprehensions are a syntax construct used for applying some form of transformations and filtering

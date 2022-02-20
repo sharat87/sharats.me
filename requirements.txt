@@ -1,3 +1,4 @@
-pelican[markdown]==4.7.1
+pelican[markdown]==4.7.2
 pelican-sitemap==1.0.2
-requests==2.26
+pelican-jinja2content==1.0.1
+requests==2.27.1

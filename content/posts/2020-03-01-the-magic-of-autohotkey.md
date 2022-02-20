@@ -1,18 +1,17 @@
 ---
 title: The Magic of AutoHotkey
 tags: autohotkey, productivity, windows, automation, workflow
-reddit_url: r/AutoHotkey/comments/fbn7vv
 description: >
     My automation stack for day-to-day working, that's built on Autohotkey over six years. Contains
     lots of tips and examples for automating small trivial tasks on Windows with Autohotkey.
+reddit_url: r/AutoHotkey/comments/fbn7vv
 ---
 
 For the past several years, my primary work station has been Windows 7. After the initial swearing
 at how things work differently (coming from Linux), I got used to it and started to really like it,
-in some ways. A big part of the reason for that on Windows is [AutoHotkey][]. I will document my
-automations and experiences over the years in this two-part article series.
+in some ways. A big part of the reason for that on Windows is [AutoHotkey][].
 
-This article is part of a series:
+I will document my automations and experiences over the years in this two-part article series.
 
 1. Part 1 (this article).
 1. [Part 2](../the-magic-of-autohotkey-2/)
@@ -537,7 +536,7 @@ $e::
         Send %A_ThisHotkey%
     } else {
         k := SumatraKeys[StrReplace(A_ThisHotkey, "$", "")]
-        Send {%k% 22}
+        Send {% raw %}{%k% 22}{% endraw %}
     }
     Return
 
@@ -584,7 +583,8 @@ I have come to the point that working on Windows is practically hair-wrecking fo
 AutoHotkey (and my scripts, of course). I encourage you to check it out and explore the
 possibilities.
 
-I intend to publish a sequel to this article in a week or two, so, stay tuned or subscribe!
+You can read the [Part 2](../the-magic-of-autohotkey-2/) of this now!
+{: .note }
 
 
 [AutoHotkey]: https://www.autohotkey.com/

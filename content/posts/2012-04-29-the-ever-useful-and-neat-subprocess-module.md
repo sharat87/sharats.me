@@ -5,6 +5,7 @@ description: >
     An extensive article on the subprocess module in Python's standard library. Filled with examples
     and scenarios from my experienece with explanations and rationales for the solutions.
 hn_id: 3906882
+reddit_url: r/Python/comments/sydg4
 disqus_id: the-ever-useful-and-neat-subprocess-module.html
 ---
 

@@ -4,6 +4,7 @@ tags: python, programming, data-structures, reference
 description: >
     An extensive write up on dictionaries in Python, with examples and explanations, serving as a
     supplementary reference for the official documentation.
+reddit_url: r/Python/comments/73cbrq
 ---
 
 The Python [Dictionary][] is a key--value style data structure that is tightly integrated with the

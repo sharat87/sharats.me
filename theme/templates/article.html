@@ -64,7 +64,7 @@ awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
 {%- endif %}
 {%- if article.hn_id and article.reddit_url %} or {% endif %}
 {%- if article.reddit_url %}
-	<a target=_blank href="https://www.reddit.com/{{ reddit_url }}">Reddit</a>
+	<a target=_blank href="https://www.reddit.com/{{ article.reddit_url }}">Reddit</a>
 {%- endif -%}
 .</p>
 {%- endif %}

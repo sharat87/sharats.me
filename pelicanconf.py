@@ -107,7 +107,8 @@ DISQUS_SITENAME = "sharats-me"
 
 PLUGINS = [
     "pelican_ext",
-    "sitemap",
+    "sitemap",  # Generates a sitemap XML.
+    "jinja2content",  # Makes Jinja2 templating possible in content files.
 ]
 
 SITEMAP = {
