@@ -2,7 +2,9 @@ import os
 import time
 import pathlib
 
-IS_DEV = os.getenv("ENV") == "dev"
+env_name = os.getenv("ENV")
+IS_DEV = env_name == "dev"
+IS_PDF = env_name == "pdf"
 
 AUTHOR = "Shrikant Sharat Kandula"
 SITENAME = "The Sharat's"

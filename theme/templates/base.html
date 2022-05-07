@@ -8,6 +8,11 @@
 	<meta name=viewport content="width=device-width">
 	<link rel=manifest href="/site.webmanifest">
 	<link rel=apple-touch-icon href="/apple-touch-icon.png">
+	{%- if IS_PDF %}
+	<link rel=preconnect href="https://fonts.googleapis.com">
+	<link rel=preconnect href="https://fonts.gstatic.com" crossorigin>
+	<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+	{%- endif %}
 	<link rel=stylesheet href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/styles.css">
 	<style>.hide, .sr-only { display: none !important; }</style>
 	{%- if FEED_ALL_ATOM %}

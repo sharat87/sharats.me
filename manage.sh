@@ -3,7 +3,7 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-if [[ -n ${XTRACE:-} ]]; then
+if [[ -n ${XTRACE-} ]]; then
 	set -o xtrace
 fi
 
@@ -21,35 +21,32 @@ serve() {
 }
 
 build() {
+	local port=8000
+	local pid
+
 	venv-activate-if-needed
 	if [[ -f .env ]]; then
 		set -a
 		source .env
 		set +a
 	fi
+
+	# TODO: Find an unused port?
+	export ENV=pdf
+	python -m pelican --debug --listen --port $port --bind 0.0.0.0 &
+	pid=$!
+	sleep 3
+	wkhtmltopdf --user-style-sheet pdf.css --zoom 1.2 --enable-internal-links \
+		http://localhost:$port/resume \
+		output/static/shrikant-sharat-kandula-resume.pdf
+	kill -9 $pid
+
 	pelican --debug --ignore-cache --fatal errors
-	build-pdfs
 }
 
 netlify() {
-	build-without-venv
-}
-
-build-without-venv() {
 	USE_VENV=false
 	build
-}
-
-build-pdfs() {
-	venv-activate-if-needed
-	pushd output
-	local port=8000
-	python -m http.server $port &
-	pid=$!
-	sleep 1
-	wkhtmltopdf --user-style-sheet ../pdf.css --zoom 1.2 --enable-internal-links http://localhost:$port/resume static/shrikant-sharat-kandula-resume.pdf
-	kill -9 $pid
-	popd
 }
 
 clean() {
