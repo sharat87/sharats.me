@@ -10,6 +10,7 @@ March 1988
 {.info}
 
 [Download PDF](/static/shrikant-sharat-kandula-resume.pdf).
+{.pdf-hide}
 
 <br>
 Namaste! I'm Shri, from India. I'm interested in working with **remote** companies, working close to the **Indian time zone**. Prefer software companies.

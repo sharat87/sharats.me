@@ -17,7 +17,7 @@ serve() {
 		set +a
 	fi
 	export ENV=dev
-	exec pelican --debug --listen --autoreload --port "${PORT:-8000}" --bind 0.0.0.0
+	exec python -m pelican --debug --listen --autoreload --port "${PORT:-8000}" --bind 0.0.0.0
 }
 
 build() {
@@ -27,7 +27,7 @@ build() {
 		source .env
 		set +a
 	fi
-	pelican
+	pelican --debug --ignore-cache --fatal errors
 	build-pdfs
 }
 
@@ -46,8 +46,8 @@ build-pdfs() {
 	local port=8000
 	python -m http.server $port &
 	pid=$!
-	sleep 2
-	wkhtmltopdf --user-style-sheet pdf.css --zoom 1.2 http://localhost:$port/resume static/shrikant-sharat-kandula-resume.pdf
+	sleep 1
+	wkhtmltopdf --user-style-sheet ../pdf.css --zoom 1.2 http://localhost:$port/resume static/shrikant-sharat-kandula-resume.pdf
 	kill -9 $pid
 	popd
 }

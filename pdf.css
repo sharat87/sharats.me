@@ -1,3 +1,7 @@
+body {
+	font-family: Lato;
+}
+
 header, footer {
 	display: none;
 }
@@ -24,4 +28,8 @@ h4 {
 
 .pdf-only {
 	display: initial !important;
+}
+
+.pdf-hide {
+	display: none;
 }
