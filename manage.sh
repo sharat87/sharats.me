@@ -37,7 +37,6 @@ netlify() {
 }
 
 build-pdfs() {
-	make build
 	pushd output
 	local port=8000
 	../venv/bin/python -m http.server $port &
