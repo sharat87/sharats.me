@@ -56,7 +56,7 @@ build() {
 	pelican --ignore-cache --fatal errors
 }
 
-netlify() {
+build-ci() {
 	USE_VENV=false
 	build
 }

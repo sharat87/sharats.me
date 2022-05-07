@@ -1,4 +1,0 @@
-[build]
-  publish = "output"
-  command = "./manage.sh netlify"
-  environment = { PYTHON_VERSION = "3.8" }
