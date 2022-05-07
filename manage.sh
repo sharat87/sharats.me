@@ -47,7 +47,7 @@ build-pdfs() {
 	python -m http.server $port &
 	pid=$!
 	sleep 1
-	wkhtmltopdf --user-style-sheet ../pdf.css --zoom 1.2 http://localhost:$port/resume static/shrikant-sharat-kandula-resume.pdf
+	wkhtmltopdf --user-style-sheet ../pdf.css --zoom 1.2 --enable-internal-links http://localhost:$port/resume static/shrikant-sharat-kandula-resume.pdf
 	kill -9 $pid
 	popd
 }
