@@ -1,5 +1,8 @@
 * {
 	box-sizing: border-box;
+	scroll-behavior: smooth;
+	scrollbar-color: currentColor transparent;
+	scrollbar-width: thin;
 }
 
 html {
@@ -9,9 +12,6 @@ html {
 	--strong-fg: #000;
 	--link-color: #08A; /* From <https://commons.wikimedia.org/wiki/File:Opponent_colors.svg> */
 	--font-mono: Consolas, Menlo, monospace;
-	scroll-behavior: smooth;
-	scrollbar-color: currentColor transparent;
-	scrollbar-width: thin;
 	overflow-y: scroll;
 }
 
