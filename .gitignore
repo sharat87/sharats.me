@@ -2,6 +2,7 @@
 /output
 /venv
 
+/content/root-static/pdfs
 /stars.json
 
 .DS_Store

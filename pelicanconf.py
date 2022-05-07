@@ -1,4 +1,4 @@
-import os
+import os, os.path
 import time
 import pathlib
 
@@ -19,8 +19,8 @@ _root_static = "root-static"
 STATIC_PATHS = ["static", _root_static]
 
 EXTRA_PATH_METADATA = {
-    str(p.relative_to(PATH)): { "path": p.name }
-    for p in pathlib.Path(PATH, _root_static).glob("*")
+    str(p.relative_to(PATH)): { "path": str(p.relative_to(os.path.join(PATH, _root_static))) }
+    for p in pathlib.Path(PATH, _root_static).glob("**/*")
 }
 
 FILENAME_METADATA = r"(?:(?P<date>\d{4}-\d{2}-\d{2})-)?(?P<slug>[-a-z0-9]*)"

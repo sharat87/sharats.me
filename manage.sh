@@ -21,7 +21,9 @@ serve() {
 }
 
 build() {
+	# TODO: Find an unused port?
 	local port=8000
+	local old_pid
 	local pid
 
 	venv-activate-if-needed
@@ -31,20 +33,27 @@ build() {
 		set +a
 	fi
 
-	# TODO: Find an unused port?
-	export ENV=pdf
 	clean
-	pelican --debug &
-	python -m pelican --debug --listen --port $port --bind 0.0.0.0 &
+	ENV=pdf pelican
+	old_pid="$(ps -ef | awk '/python -m http\.server 8000/ {print $2}')"
+	if [[ -n $old_pid ]]; then
+		kill -9 "$old_pid"
+	fi
+	pushd output
+	python -m http.server $port &
 	pid=$!
-	sleep 3
+	popd
+
+	sleep 1
+	local pdfs_path=content/root-static/pdfs
+	mkdir -pv $pdfs_path
 	wkhtmltopdf --user-style-sheet pdf.css --zoom 1.2 --enable-internal-links \
 		http://localhost:$port/resume \
-		output/static/shrikant-sharat-kandula-resume.pdf
+		$pdfs_path/shrikant-sharat-kandula-resume.pdf
+	ls output/static
 	kill -9 $pid
 
-	export ENV=
-	pelican --debug --ignore-cache --fatal errors
+	pelican --ignore-cache --fatal errors
 }
 
 netlify() {

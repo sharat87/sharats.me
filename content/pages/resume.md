@@ -9,7 +9,7 @@ bodyclass: resume
 March 1988
 {.info}
 
-[Download PDF](/static/shrikant-sharat-kandula-resume.pdf).
+[Download PDF](/pdfs/shrikant-sharat-kandula-resume.pdf).
 {.pdf-hide}
 
 <br>
