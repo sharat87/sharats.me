@@ -21,7 +21,7 @@
 	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="The Sharat's">
 </head>
 
-<body>
+<body{% if (article or page) and (article or page).bodyclass %} class="{{ (article or page).bodyclass }}"{% endif %}>
 
 	<header>
 		<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>

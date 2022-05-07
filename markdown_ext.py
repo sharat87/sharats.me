@@ -46,8 +46,13 @@ class ExternalLinks(Treeprocessor):
 
     def run(self, root):
         for el in root.iter("a"):
-            if re.match(r"^https?://", el.get("href", "")):
+            href = el.get("href", "")
+            # TODO: Check that the host isn't `sharats.me` or `localhost`.
+            if re.match(r"^https?://", href):
                 el.attrib.update(rel="noopener noreferrer", target="_blank")
+            elif href.startswith("/"):
+                # Needed for links in PDFs.
+                el.attrib.update(href="https://sharats.me" + href)
 
 
 class TableWrapper(Treeprocessor):
@@ -136,7 +141,7 @@ class CustomFormatter(pygments.formatters.html.HtmlFormatter):
         # Disable the default table linenos wrapping.
         self.linenos = 0
 
-    def wrap(self, source, outfile):
+    def wrap(self, source):
         if self.wrapcode:
             source = self._wrap_code(source)
         return self._wrap_div(self.grid_wrap(source))

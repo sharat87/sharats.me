@@ -218,15 +218,14 @@ main {
 }
 
 header {
-	width: 100%;
 	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
+	flex-direction: column;
 	align-items: center;
 }
 
 .brand {
-	font-size: 1.2em;
+	font-size: 1.3em;
+	margin: .5em 0;
 	line-height: 1;
 	padding: 6px 12px;
 }
@@ -243,6 +242,10 @@ header .compact {
 	display: flex;
 	align-items: stretch;
 	justify-content: space-between;
+}
+
+dt {
+	margin-top: 1.5em;
 }
 
 .nav-toggle {
@@ -535,6 +538,18 @@ form[name="subscribe"] {
 .prestige-ref {
 	background-color: #EFF;
 	border-color: #0AF;
+}
+
+.resume h1 {
+	text-align: center;
+}
+
+.resume .info {
+	text-align: center;
+}
+
+.pdf-only {
+	display: none;
 }
 
 /* pygments styles BEGIN */
