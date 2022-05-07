@@ -33,6 +33,7 @@ build() {
 
 	# TODO: Find an unused port?
 	export ENV=pdf
+	python -m pelican --debug &
 	python -m pelican --debug --listen --port $port --bind 0.0.0.0 &
 	pid=$!
 	sleep 3
@@ -41,6 +42,8 @@ build() {
 		output/static/shrikant-sharat-kandula-resume.pdf
 	kill -9 $pid
 
+	export ENV=
+	clean
 	pelican --debug --ignore-cache --fatal errors
 }
 
