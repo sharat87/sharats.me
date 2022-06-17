@@ -50,7 +50,6 @@ build() {
 	wkhtmltopdf --user-style-sheet pdf.css --zoom 1.2 --enable-internal-links \
 		http://localhost:$port/resume \
 		$pdfs_path/shrikant-sharat-kandula-resume.pdf
-	ls output/static
 	kill -9 $pid
 
 	pelican --ignore-cache --fatal errors
@@ -61,11 +60,19 @@ build-ci() {
 	build
 }
 
+ppdf() {
+	venv-activate-if-needed
+	python gen-pdf.py
+}
+
 clean() {
 	rm -rf output
 }
 
-new-post() {
+new() {
+	local type
+	type="${1-post}"
+
 	local title
 	read -rp "Title: " title
 	local f
@@ -79,7 +86,7 @@ new-post() {
 		return 1
 	fi
 	echo "Creating '$f'."
-	printf "---\ntitle: %s\nstatus: draft\n---\n\nA brand new article here!" "$title" > "$f"
+	printf -- "---\ntitle: %s\nstatus: draft\n---\n\nA brand new article here!\n\n[TOC]\n\n## Section 1\n## Conclusion\n" "$title" > "$f"
 }
 
 venv-activate-if-needed() {
@@ -90,7 +97,7 @@ venv-activate-if-needed() {
 		python3 -m venv --prompt sharats.me venv
 	fi
 	source venv/bin/activate
-	if [[ -f venv/deps-sentinel && requirements.txt -ot venv/deps-sentinel ]]; then
+	if [[ ! -f venv/deps-sentinel || requirements.txt -nt venv/deps-sentinel ]]; then
 		pip install -r requirements.txt
 		touch venv/deps-sentinel
 	fi

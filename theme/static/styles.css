@@ -1,13 +1,13 @@
 * {
 	box-sizing: border-box;
 	scroll-behavior: smooth;
-	scrollbar-color: currentColor transparent;
+	scrollbar-color: #888 transparent;
 	scrollbar-width: thin;
 }
 
 html {
 	--bg1: #FFF;
-	--bg2: #F7F7F7;
+	--bg2: #EEE;
 	color: #222;
 	--strong-fg: #000;
 	--link-color: #08A; /* From <https://commons.wikimedia.org/wiki/File:Opponent_colors.svg> */
@@ -44,6 +44,10 @@ strong {
 	color: var(--strong-fg);
 }
 
+a strong {
+	color: inherit;
+}
+
 ol > li > ul {
 	/* Second level `ul` under an `ol` can have discs, instead of hollow circles. */
 	list-style: disc;
@@ -76,14 +80,6 @@ th, td {
 :link, :visited {
 	color: var(--link-color);
 	word-break: break-word;
-}
-
-a {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
 }
 
 a img {
@@ -360,20 +356,14 @@ footer .content {
 	max-width: 960px;
 }
 
-.toc {
-	background-color: var(--bg2);
-	border-radius: 3px;
-	padding: .5em;
-}
-
 .toc ul {
 	margin: 0;
-	padding-left: 1.5em;
 }
 
 .toctitle {
-	font-size: 1.2em;
+	font-size: 1.6em;
 	font-weight: bold;
+	padding: 1em 0 .5em 0;
 }
 
 .star-btn {
@@ -388,47 +378,6 @@ footer .content {
 .star-btn:hover {
 	background: #EEE;
 	text-decoration: none;
-}
-
-#cookiesOkBox {
-	width: 500px;
-	padding: 24px;
-	background: #333;
-	color: white;
-	position: fixed;
-	bottom: 30px;
-	right: 30px;
-	border-radius: 2px;
-	box-shadow: 6px 6px 24px rgba(0, 0, 0, .6);
-	display: flex;
-	align-items: center;
-}
-
-#cookiesOkBox > * {
-	margin: 0 24px 0 0;
-}
-
-#cookiesOkBox > :last-child {
-	margin-right: 0;
-}
-
-#cookiesOkBox a {
-	color: inherit;
-}
-
-@media (max-width: 600px) {
-	#cookiesOkBox {
-		bottom: 0px !important;
-		left: 0px !important;
-		width: 100%  !important;
-		border-radius: 0;
-		padding: 12px 6px;
-		align-items: stretch;
-	}
-
-	#cookiesOkBox button {
-		height: 100%;
-	}
 }
 
 form[name="subscribe"] {
@@ -585,7 +534,7 @@ form[name="subscribe"] {
 .hl .nl { color: #f57900 } /* Name.Label */
 .hl .nt { color: #204a87 } /* Name.Tag */
 .hl .ow { color: #204a87 } /* Operator.Word */
-.hl .w { color: #f8f8f8; text-decoration: underline } /* Text.Whitespace */
+/*.hl .w { color: #f8f8f8; text-decoration: underline }*/ /* Text.Whitespace */
 .hl :is(.mb, .mf, .mh, .mi, .mo, .il) { color: #0000cf } /* Numbers */
 .hl :is(.sa, .sb, .sc, .dl, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss) { color: #4e9a06 } /* Strings */
 .hl .sd { color: #8f5902 } /* Literal.String.Doc */
@@ -667,16 +616,23 @@ form[name="subscribe"] {
 	.hl:hover .btns {
 		display: block;
 	}
+
+	a {
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
 	html {
-		--bg1: #222;
-		--bg2: #333;
+		--bg1: #333;
+		--bg2: #444;
 		color: #EEE;
-		--strong-fg: #FFF;
-		--link-color: #39A;
-		--font-mono: Consolas, Menlo, monospace;
+		--strong-fg: #DDD;
+		--link-color: #3BD;
 	}
 
 	.appsmith-ref {
@@ -732,7 +688,7 @@ form[name="subscribe"] {
 	.hl .ld { color: #e6db74 } /* Literal.Date */
 	.hl .m { color: #ae81ff } /* Literal.Number */
 	.hl .s { color: #e6db74 } /* Literal.String */
-	.hl :is(.nb, .ni, .nl, .nn, .py, .nv, .w, .bp, .vc, .vg, .vi, .vm, .il) { color: #f8f8f2 } /* Names */
+	.hl :is(.nb, .ni, .nl, .nn, .py, .nv, .bp, .vc, .vg, .vi, .vm, .il) { color: #f8f8f2 } /* Names */
 	.hl .na { color: #a6e22e } /* Name.Attribute */
 	.hl .nc { color: #a6e22e } /* Name.Class */
 	.hl .no { color: #66d9ef } /* Name.Constant */

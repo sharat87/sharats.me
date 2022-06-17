@@ -67,5 +67,7 @@ Aug 2009 &mdash; Developer with **Knolskape**, Bengaluru
 
 1. Hobbies include reading on my Kindle, running around with my ~2yo and playing on my XBox with my wife.
 
-Find me on [LinkedIn](/linkedin). Here's the [latest version of this document](https://sharats.me/resume/).
+1. Travelled/Worked around the world, India, the US, France, Dubai.
+
+Find me on [LinkedIn](/linkedin). Document generated on {{ date_iso }}. [View the latest version of this document](https://sharats.me/resume/).
 {.pdf-only}

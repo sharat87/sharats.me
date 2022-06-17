@@ -1,6 +1,7 @@
 import os, os.path
 import time
 import pathlib
+import datetime
 
 env_name = os.getenv("ENV")
 IS_DEV = env_name == "dev"
@@ -35,7 +36,7 @@ MARKDOWN = {
         "markdown.extensions.extra": {},
         "markdown.extensions.meta": {},
         "markdown.extensions.toc": {
-            "title": "Contents",
+            "title": "Table of Contents",
             "marker": "[TOC]",
             "permalink": True,
         },
@@ -100,6 +101,7 @@ JINJA_FILTERS = {
 }
 
 JINJA_GLOBALS = {
+    "date_iso": datetime.date.today().isoformat(),
     "current_year": time.strftime("%Y"),
 }
 
