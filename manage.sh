@@ -26,6 +26,8 @@ build() {
 	local old_pid
 	local pid
 
+	echo "System Time: $(date)"
+
 	venv-activate-if-needed
 	if [[ -f .env ]]; then
 		set -a
