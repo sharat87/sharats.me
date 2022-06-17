@@ -1,7 +1,6 @@
 ---
 title: Peeking into HTTPS Traffic with a Proxy
 tags: proxy, docker, mitmproxy, https, curl, appsmith
-status: draft
 ---
 
 This article is about configuring a web application, Appsmith in this case, to run correctly behind a firewall that does SSL decryption, as a Docker container. Instead of a firewall, we'll use a proxy, which, for the purpose of the problem statement, should be the same.
