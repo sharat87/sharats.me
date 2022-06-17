@@ -141,7 +141,7 @@ class CustomFormatter(pygments.formatters.html.HtmlFormatter):
         # Disable the default table linenos wrapping.
         self.linenos = 0
 
-    def wrap(self, source):
+    def wrap(self, source, output=None):
         if self.wrapcode:
             source = self._wrap_code(source)
         return self._wrap_div(self.grid_wrap(source))
