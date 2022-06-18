@@ -3,4 +3,5 @@ pelican-sitemap
 pelican-jinja2content
 requests
 pygments
+typing-extensions
 pyppeteer
