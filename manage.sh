@@ -104,7 +104,7 @@ venv-activate-if-needed() {
 		pip-sync
 	else
 		if [[ ! -f requirements.txt || requirements.in -nt requirements.txt ]]; then
-			pip-compile --generate-hashes requirements.in
+			pip-compile requirements.in
 		fi
 		if [[ ! -f venv/deps-sentinel || requirements.txt -nt venv/deps-sentinel ]]; then
 			pip install -r requirements.txt
