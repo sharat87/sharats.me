@@ -99,9 +99,16 @@ venv-activate-if-needed() {
 		python3 -m venv --prompt sharats.me venv
 	fi
 	source venv/bin/activate
-	if [[ ! -f venv/deps-sentinel || requirements.txt -nt venv/deps-sentinel ]]; then
-		pip install -r requirements.txt
-		touch venv/deps-sentinel
+	if [[ -n "${CI-}" ]]; then
+		pip-sync
+	else
+		if [[ ! -f requirements.txt || requirements.in -nt requirements.txt ]]; then
+			pip-compile --generate-hashes requirements.in
+		fi
+		if [[ ! -f venv/deps-sentinel || requirements.txt -nt venv/deps-sentinel ]]; then
+			pip install -r requirements.txt
+			touch venv/deps-sentinel
+		fi
 	fi
 }
 
