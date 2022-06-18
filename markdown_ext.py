@@ -144,7 +144,7 @@ class CustomFormatter(pygments.formatters.html.HtmlFormatter):
     def wrap(self, source, output=None):
         if self.wrapcode:
             source = self._wrap_code(source)
-        return self._wrap_div(self.grid_wrap(source))
+        return self.grid_wrap(source)
 
     def grid_wrap(self, source):
         source = list(source)

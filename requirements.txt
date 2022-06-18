@@ -112,9 +112,9 @@ pyee==8.2.2 \
     --hash=sha256:5c7e60f8df95710dbe17550e16ce0153f83990c00ef744841b43f371ed53ebea \
     --hash=sha256:c09f56e36eb10bf23aa2aacf145f690ded75b990a3d9523fd478b005940303d2
     # via pyppeteer
-pygments==2.11.2 \
-    --hash=sha256:44238f1b60a76d78fc8ca0528ee429702aae011c265fe6a8dd8b63049ae41c65 \
-    --hash=sha256:4e426f72023d88d03b2fa258de560726ce890ff3b630f88c21cbb8b2503b8c6a
+pygments==2.12.0 \
+    --hash=sha256:5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb \
+    --hash=sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519
     # via
     #   -r requirements.in
     #   pelican
@@ -133,9 +133,9 @@ pytz==2022.1 \
     # via
     #   feedgenerator
     #   pelican
-requests==2.27.1 \
-    --hash=sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61 \
-    --hash=sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d
+requests==2.28.0 \
+    --hash=sha256:bc7861137fbce630f17b03d3ad02ad0bf978c844f3536d0edda6499dafce2b6f \
+    --hash=sha256:d568723a7ebd25875d8d1eaf5dfa068cd2fc8194b2e483d7b1f7c81918dbec6b
     # via -r requirements.in
 rich==12.4.4 \
     --hash=sha256:4c586de507202505346f3e32d1363eb9ed6932f0c2f63184dea88983ff4971e2 \
