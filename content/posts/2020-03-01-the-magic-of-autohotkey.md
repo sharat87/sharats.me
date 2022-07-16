@@ -105,7 +105,7 @@ workaround for me has been to do <kbd>Alt+Tab</kbd> a couple of times and we're 
 It's still arguable how useful this solution is. The pop-up Calendar has very limited functionality.
 The most annoying this is probably that I spend a few seconds selecting the month I want to look at
 and accidentally click on another window and that Calendar is gone! After a lot of swearing, I
-attempted to solve this problem and built [calendar.sharats.me](https://calendar.sharats.me). It's
+attempted to solve this problem and built [justacalendar.app](https://justacalendar.app). It's
 super-quick, no-login-required, light-weight, just a calendar to look at, and mark dates to top. Do
 check it out! Thanks.
 {: .note }
