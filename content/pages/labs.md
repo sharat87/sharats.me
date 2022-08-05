@@ -6,7 +6,7 @@ This is a list of my public projects and experiments. You may follow me on [GitH
 
 ## Prestige 🔥
 
-[prestigemad.com](https://prestigemad.com) [Source Code](https://github.com/sharat87/prestige) {github-stars prestige}
+[prestige.dev](https://prestige.dev) [Source Code](https://github.com/sharat87/prestige) {github-stars prestige}
 { .links }
 
 A text-based HTTP client in the browser. An interface-less Postman. It supports a powerful grammar with embedded JavaScript for templating requests, doing environments, asserting responses and any other fancy.

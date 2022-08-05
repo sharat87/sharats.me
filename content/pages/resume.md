@@ -21,7 +21,7 @@ Namaste! I'm Shri, from India. I'm interested in working with **remote** compani
 
 1. Several open source projects and contributions on [GitHub](/gh). May provide a better idea of my experience than this document.
 
-1. Currently building [Prestige](https://prestigemad.com), as an open-source side project, mostly because I needed a tool like this for myself.
+1. Currently building [Prestige](https://prestige.dev), as an open-source side project, mostly because I needed a tool like this for myself.
 
 1. Vim user since 2007, IntelliJ IDEA Ultimate since 2015, are both still my preferred hammers at most nails.
 
