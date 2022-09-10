@@ -6,8 +6,6 @@
 
 <p>I am Shrikant. This is my blog/website where I write stuff about the work I do and things I've learnt.</p>
 
-{% include "banners.html" %}
-
 <h1>Recent Posts</h1>
 
 {%- with articles = articles_page.object_list[:6] %}
@@ -16,15 +14,23 @@
 
 <p><a href="{{ SITEURL }}/{{ ARCHIVES_URL }}">See all posts &rarr;</a></p>
 
-{% include "subscribe-form.html" %}
-
 <h1 id=labs>Labs</h1>
 
-<h3>
-	⭐️ Prestige <small><a href="https://prestige.dev/" target=prestige rel=noopener>prestige.dev</a></small>
-</h3>
-
-<p>A text-based API testing tool for API developers. An interface-less Postman. Open source, with source at <a rel=noopener href="https://github.com/sharat87/prestige">GitHub</a>.</p>
+<div class=banners>
+<p class=appsmith-ref>
+Hello! We're building <strong>Appsmith</strong>, an open-source internal tool builder with drag-and-drop widget builder,
+support for several databases and REST APIs. Check us out at
+<a href="https://appsmith.com" target=_blank rel=noopener>appsmith.com</a>, or the repo at
+<a href="https://github.com/appsmithorg/appsmith" target=_blank rel=noopener>GitHub</a>.
+<!-- {github-stars appsmithorg/appsmith} -->
+</p>
+<p class=prestige-ref>
+Also checkout my current weekend project, <strong>Prestige</strong>, a simple text based HTTP client for API developers
+(like Postman) at <a href="https://prestige.dev" target=_blank rel=noopener>prestige.dev</a>, or the repo at
+<a href="https://github.com/sharat87/prestige" target=_blank rel=noopener>GitHub</a>.
+<!-- {github-stars prestige} -->
+</p>
+</div>
 
 <h3>
 	Httpbun <small><a href="https://httpbun.com/" target=httpbun rel=noopener>httpbun.com</a></small>
@@ -37,12 +43,6 @@
 </h3>
 
 <p>An easily reachable endpoint to have a calendar to look at. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to show a calendar and talk about dates when sharing your screen in a presentation or meeting.</p>
-
-<h3>
-	Timezoner <small><a href="http://tz.sharats.me" target="timezoner">tz.sharats.me</a></small>
-</h3>
-
-<p>A simple UI to help convert times in various time zones. Powered by moment.js, so is aware of all changes to timezones, DST updates etc. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to discuss time zones with a global team and sharing your screen in a presentation or meeting.</p>
 
 <h3>
 	Silly Calculator <small><a href="https://calc.sharats.me" target="calc" rel="noopener">calc.sharats.me</a></small>

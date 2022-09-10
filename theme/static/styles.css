@@ -336,7 +336,12 @@ main h1:first-child {
 
 .post-list .title {
 	font-size: 1.2em;
-	margin-right: 1em;
+	margin-left: 1em;
+}
+
+.post-list .subtext {
+	width: 6em;
+	text-align: right;
 }
 
 .tag {

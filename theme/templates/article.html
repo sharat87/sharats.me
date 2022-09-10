@@ -47,8 +47,6 @@ awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
 
 <article>{{ article.content }}</article>
 
-<hr>
-
 {%- if article.hn_id or article.reddit_url %}
 <p><b>Discuss on</b>:
 {%- if article.hn_id %}
@@ -61,29 +59,8 @@ awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
 .</p>
 {%- endif %}
 
-<p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18" style="fill:none;stroke:currentColor">
-	<polygon points="3,8 7,4 14,4 14,12 7,12" stroke-linejoin="round" />
-	<circle cx="7" cy="8" r="1" />
-</svg>
-{% for tag in article.tags -%}
-<a href="{{ SITEURL }}/{{ tag.url }}" title="Posts tagged with {{ tag | escape }}" rel=tag class=tag>{{ tag | escape }}</a>
-{%- if loop.last %}.{% else %}, {% endif %}
-{% endfor -%}
-</p>
-
-<p>Share on
-<a href="mailto:?subject=Read: {{ article.title | striptags }}&amp;body={{ SITEURL }}/{{ article.url }} :: {{ article.summary | striptags }}" target=_blank rel=noopener>Email</a> or
-<a href="https://twitter.com/intent/tweet?url={{ SITEURL }}{{ article.url }}&amp;text={{ article.title | striptags }}" target=_blank rel=noopener>Twitter</a> or
-<a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ SITEURL }}/{{ article.url }}&amp;title={{ article.title | striptags }}" target=_blank rel=noopener title="Share on LinkedIn">LinkedIn</a> or
-on all of them!
-</p>
-
-<p><a href="https://www.buymeacoffee.com/sharat87" target=_blank rel=noopener><img src="/static/bmac.png" alt="Buy me a coffee"></a></p>
-
-{% include "subscribe-form.html" %}
-
 {% if DISQUS_SITENAME and SITEURL and article.status != "draft" %}
+<hr>
 <section class=comments>
 	<h2>Comments</h2>
 	<p class=print-only>View comments at <a href="{{ SITEURL }}/{{ article.url }}#comments">{{ SITEURL }}/{{ article.url }}#comments</a>
