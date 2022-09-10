@@ -5,5 +5,8 @@
 /content/root-static/pdfs
 /stars.json
 
+.idea
+*.iml
+
 .DS_Store
 __pycache__

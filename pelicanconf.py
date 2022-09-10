@@ -61,7 +61,7 @@ WITH_FUTURE_DATES = False
 MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
-    ("Rèsumè", "/resume/"),
+    # ("Rèsumè", "/resume/"),
 ]
 
 SOCIAL = [

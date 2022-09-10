@@ -4,4 +4,4 @@ This is the source of my blog, hosted at [sharats.me](https://sharats.me). It is
 
 All code & content &copy; Shrikant Sharat Kandula. Unless otherwise specified, plain-text content is licensed with [CC BY-SA](https://sharats.me/licenses/cc-by/), code licensed with [MIT License](https://sharats.me/licenses/mit/).
 
-Site is deployed on [Netlify](https://netlify.com). Build command is `make build`.
+Site is deployed on [Cloudflare Pages](https://pages.cloudflare.com/). Build command is `./manage.sh build`.

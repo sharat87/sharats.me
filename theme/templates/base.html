@@ -29,18 +29,8 @@
 <body{% if (article or page) and (article or page).bodyclass %} class="{{ (article or page).bodyclass }}"{% endif %}>
 
 	<header>
-		<input class=nav-toggle name=nav-toggle id=nav-toggle type=checkbox>
 		<div class=compact>
 			<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home">{{ SITENAME }}</a></div>
-			<label class=nav-toggle for=nav-toggle title="Toggle navigation menu">
-				<svg width="25" height="20" role="img">
-					<g stroke="black" stroke-width="2" stroke-linecap="round">
-						<line x1="4" y1="4" x2="21" y2="4"></line>
-						<line x1="4" y1="10" x2="21" y2="10"></line>
-						<line x1="4" y1="16" x2="21" y2="16"></line>
-					</g>
-				</svg>
-			</label>
 		</div>
 		<nav class=screen-only>
 			{#- TODO: Highlight for Posts page needs a better solution. #}

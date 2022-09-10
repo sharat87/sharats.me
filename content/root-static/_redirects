@@ -17,6 +17,8 @@
 /tags.html          /tags/           301
 /feeds/all.atom.xml /posts/index.xml 301
 
+/posts/the-magic-of-autohotkey-part-2/ /posts/the-magic-of-autohotkey-2/ 301
+
 /the-ever-useful-and-neat-subprocess-module.html                     /posts/the-ever-useful-and-neat-subprocess-module/                     301
 /serializing-python-requests-session-objects-for-fun-and-profit.html /posts/serializing-python-requests-session-objects-for-fun-and-profit/ 301
 /dependency-graph-of-all-installed-gems.html                         /posts/dependency-graph-of-all-installed-gems/                         301
