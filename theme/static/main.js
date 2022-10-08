@@ -6,9 +6,9 @@ window.onload = () => {
 
 	for (const el of document.querySelectorAll(".hl")) {
 		const buttons = []
-		if (el.dataset.lang == "pycon")
+		if (el.dataset.lang === "pycon")
 			buttons.push(`<button class=console-toggle-btn onclick="toggleConsoleCeremony(event)" title="Hide output and '&gt;&gt;&gt;' prompt">&gt;&gt;&gt;</button>`)
-		if (el.dataset.lang == "console")
+		if (el.dataset.lang === "console")
 			buttons.push(`<button class=console-toggle-btn onclick="toggleConsoleCeremony(event)" title="Hide output and prompt strings">$</button>`)
 		if (el.querySelector(".filename")) {
 			buttons.push(`<button onclick="downloadCodeBlock(event)" class=download-btn>Download</button>`)
@@ -29,29 +29,24 @@ window.onload = () => {
 		}
 	})
 
-	window.goatcounter = {no_onload: localStorage.getItem("noAnalytics") === "1"}
-	const s = document.createElement("script")
-	s.dataset.goatcounter = "https://ssk.goatcounter.com/count"
-	s.async = "async"
-	s.src = "//gc.zgo.at/count.js"
-	document.head.appendChild(s)
+	if (location.protocol === "https:" && location.hostname !== "localhost" && localStorage.u !== "1") {
+		document.body.insertAdjacentHTML(
+			"beforeend",
+			`<script async data-website-id="bd2b9a7e-1356-4ead-bb87-596387ad24d4" defer src="//u.sharats.me/main.js"></script>`,
+		)
+	}
 }
 
 function copyCodeBlock(event) {
 	const btn = event.target
 	let text = btn.closest(".hl").querySelector("pre.content").textContent.trim()
-	if (text.includes("\n"))
+	if (text.includes("\n")) {
 		text += "\n"
+	}
 
-	const te = document.createElement("textarea")
-	te.style = "position: fixed; top: 0; left: 0; width: 1px; height: 1px"
-	document.body.appendChild(te)
-	te.value = text
-	te.select()
-	document.execCommand("copy")
-	te.remove()
-
-	showGhost(btn, "Copied!")
+	navigator.clipboard.writeText(text)
+		.then(() => showGhost(btn, "Copied"))
+		.catch(err => showGhost(btn, err))
 }
 
 function downloadCodeBlock(event) {

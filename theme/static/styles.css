@@ -1,7 +1,9 @@
 * {
 	box-sizing: border-box;
 	scroll-behavior: smooth;
+	/*noinspection CssUnknownProperty*/
 	scrollbar-color: #888 transparent;
+	/*noinspection CssUnknownProperty*/
 	scrollbar-width: thin;
 }
 
@@ -169,7 +171,7 @@ pre code {
 }
 
 kbd {
-	border-width: 1px 1px 1.6px;
+	border-width: 1px 1px 2px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, .3);
 	border-radius: 3px;
@@ -555,6 +557,12 @@ form[name="subscribe"] {
 .hl :is(.fm, .vc, .vg, .vi, .vm, .nc, .no, .nf, .nn, .nx, .py, .nv) { color: inherit } /* Names */
 /* pygments styles END */
 
+@media (max-width: 350px) {
+	header {
+		flex-direction: column;
+	}
+}
+
 @media (max-width: 600px) {
 	ol, ul {
 		padding-left: 1.5em;
@@ -664,7 +672,7 @@ form[name="subscribe"] {
 	.hl .n { color: #f8f8f2 } /* Name */
 	.hl .o { color: #f92672 } /* Operator */
 	.hl .p { color: #f8f8f2 } /* Punctuation */
-	.hl :(.ch, .cm, .cp, .cpf, .c1, .cs, .gu) { color: #75715e } /* Comments */
+	.hl :is(.ch, .cm, .cp, .cpf, .c1, .cs, .gu) { color: #75715e } /* Comments */
 	.hl .gd { color: #f92672 } /* Generic.Deleted */
 	.hl .ge { font-style: italic } /* Generic.Emph */
 	.hl .gi { color: #a6e22e } /* Generic.Inserted */
