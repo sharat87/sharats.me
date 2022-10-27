@@ -9,7 +9,7 @@
 
 html {
 	--bg1: #FFF;
-	--bg2: #EEE;
+	--bg2: #F7F7F7;
 	color: #222;
 	--strong-fg: #000;
 	--link-color: #08A; /* From <https://commons.wikimedia.org/wiki/File:Opponent_colors.svg> */
@@ -222,11 +222,6 @@ header {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	opacity: .6;
-}
-
-header:hover {
-	opacity: 1;
 }
 
 .brand {
@@ -285,7 +280,7 @@ input, textarea, button, select {
 	font: inherit;
 }
 
-button, .btn, input[type="submit"], .button, .button:visited {
+button, .btn {
 	cursor: pointer;
 	border: 0;
 	background-color: var(--link-color);
@@ -294,15 +289,7 @@ button, .btn, input[type="submit"], .button, .button:visited {
 	padding: 6px 1em;
 }
 
-input[type="email"], textarea {
-	background-color: #0001;
-	color: inherit;
-	border: 2px solid var(--bg2);
-	border-radius: 3px;
-	box-shadow: inset 0 2px 2px #0001;
-}
-
-input[type="email"]:focus, textarea:focus {
+:is(input, textarea):focus {
 	outline: none;
 	border-color: var(--link-color);
 }
@@ -310,15 +297,6 @@ input[type="email"]:focus, textarea:focus {
 button:disabled {
 	opacity: .3;
 	cursor: not-allowed;
-}
-
-.profile {
-	border: 3px solid #333;
-	border-radius: 50%;
-	overflow: hidden;
-	display: flex;
-	max-width: 130px;
-	margin: .5em 0;
 }
 
 main h1:first-child {
@@ -359,16 +337,9 @@ main h1:first-child {
 }
 
 footer {
-	background-color: var(--bg2);
+	border-top: 1px solid #EEE;
 	margin-top: 2em;
-	width: 100%;
-}
-
-footer .content {
-	margin: 0 auto;
-	padding: 1em 3px 2em;
-	width: 100%;
-	max-width: 960px;
+	padding: 1em;
 }
 
 .toc ul {

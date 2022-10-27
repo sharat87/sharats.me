@@ -1,4 +1,4 @@
-import os, os.path
+import os.path
 import time
 import pathlib
 import datetime
@@ -62,12 +62,6 @@ MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
     # ("Rèsumè", "/resume/"),
-]
-
-SOCIAL = [
-    ("GitHub", "/github"),
-    ("LinkedIn", "/linkedin"),
-    ("Twitter", "/twitter"),
 ]
 
 DEFAULT_PAGINATION = False

@@ -20,14 +20,11 @@
 
 {% block content %}
 <h1>{{ article.title | markdown }}</h1>
+<time datetime="{{ article.date.isoformat() }}" style="font-size: .8em; color: #888;">{{ article.locale_date }}</time>
 
 {%- if article.subtitle %}
 <div class=subtitle>{{ article.subtitle }}</div>
 {%- endif %}
-
-<p class=screen-only style='opacity: .8; margin-top: 0'>
-	<em>~<time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time></em>
-</p>
 
 <p class=print-only>
 <em>
