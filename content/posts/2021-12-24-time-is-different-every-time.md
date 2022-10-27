@@ -44,8 +44,8 @@ The trick is recognize, and even assume, that you'll be the only user ever of th
 
 So, what do I automate? I've written about my automations and workflows quite a bit in the past:
 
-- [Automating with Vim workplace](./2020-01-12-automating-the-vim-workplace.md), [part 2](2020-02-16-automating-the-vim-workplace-2.md), and [part 3](2020-03-15-automating-the-vim-workplace-3.md).
-- [The Magic of AutoHotkey](2020-03-01-the-magic-of-autohotkey.md), and [part 2](2020-03-22-the-magic-of-autohotkey-2.md).
+- [Automating with Vim workplace](../automating-the-vim-workplace/), [part 2](../automating-the-vim-workplace-2/), and [part 3](../automating-the-vim-workplace-3/).
+- [The Magic of AutoHotkey](../the-magic-of-autohotkey/), and [part 2](../the-magic-of-autohotkey-2/).
 
 Today, I primarily work with macOS, and have come to love Hammerspoon, as an alternative to AutoHotkey on Windows. I intend to write about my Hammerspoon automations as well, soon.
 
