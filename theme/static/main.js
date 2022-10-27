@@ -28,13 +28,6 @@ window.onload = () => {
 			event.target.remove()
 		}
 	})
-
-	if (location.protocol === "https:" && location.hostname !== "localhost" && localStorage.u !== "1") {
-		document.body.insertAdjacentHTML(
-			"beforeend",
-			`<script data-website-id="bd2b9a7e-1356-4ead-bb87-596387ad24d4" src="https://u.sharats.me/main.js"></script>`,
-		)
-	}
 }
 
 function copyCodeBlock(event) {

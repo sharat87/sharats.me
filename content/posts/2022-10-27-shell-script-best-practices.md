@@ -1,6 +1,7 @@
 ---
 title: Shell Script Best Practices
 tags: bash, best-practices, opinion
+hn_id: 33354286
 ---
 
 This article is about a few quick thumb rules I use when writing shell scripts that I've come to appreciate over the years. Very opinionated.
