@@ -24,7 +24,7 @@ This article is about a few quick thumb rules I use when writing shell scripts t
 	- This will ensure that a pipeline command is treated as failed, even if one command in the pipeline fails.
 
 1. Use `set -o xtrace`, with a check on `$TRACE` env variable.
-	- For copy-paste: `if [[ -n ${TRACE-} ]]; then set -o xtrace; fi`.
+	- For copy-paste: `if [[ -n "${TRACE-}" ]]; then set -o xtrace; fi`.
 	- This helps in debugging your scripts, a lot. Like, really lot.
 	- People can now _enable_ debug mode, by running your script as `TRACE=1 ./script.sh` instead of `./script.sh`.
 
@@ -85,6 +85,6 @@ main "$@"
 
 ## Conclusion
 
-I try to follow these rules in my scripts and they're known to have made at lease my own life better. I'm still not consistent though, unfortunately, in following my own rules. So perhaps writing them down this way will help me improve there as well.
+I try to follow these rules in my scripts, and they're known to have made at least my own life better. I'm still not consistent though, unfortunately, in following my own rules. So perhaps writing them down this way will help me improve there as well.
 
 Do you have anything you think I should add to this? Please share in the comments!
