@@ -465,6 +465,10 @@ form[name="subscribe"] {
 	margin: 1rem;
 }
 
+del {
+	color: #888;
+}
+
 .appsmith-ref {
 	background-color: #FFF7F0;
 	border-color: #F70;

@@ -30,7 +30,7 @@ This article is about a few quick thumb rules I use when writing shell scripts t
 	- People can now _enable_ debug mode, by running your script as `TRACE=1 ./script.sh` instead of `./script.sh`.
 
 1. Use `[[ ]]` for conditions in `if` / `while` statements, instead of `[ ]` or `test`.
-	- `[[ ]]` is a bash builtin, and is more powerful than `[ ]` or `test`.
+	- `[[ ]]` is a bash ~~builtin~~ keyword, and is more powerful than `[ ]` or `test`.
 
 1. Always quote variable accesses with double-quotes.
 	- One place where it's _okay_ not to is on the _left-hand-side_ of an `[[ ]]` condition. But even there I'd recommend quoting.
@@ -91,3 +91,5 @@ I try to follow these rules in my scripts, and they're known to have made at lea
 Do you have anything you think I should add to this? Please share in the comments!
 
 Edit 1: Included fixes from HN comments at <https://news.ycombinator.com/item?id=33355407> and <https://news.ycombinator.com/item?id=33355077>.
+
+Edit 2: Fix from <https://news.ycombinator.com/item?id=33354759>.

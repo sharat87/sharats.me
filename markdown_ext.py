@@ -1,4 +1,3 @@
-import json
 import re
 import xml.etree.ElementTree as etree
 
@@ -16,7 +15,7 @@ class ImageLinks(Preprocessor):
 
         for i, line in enumerate(lines):
             if (i == 0 or not lines[i - 1]) and (i == i_max or not lines[i + 1]):
-                match = re.match(r"^!\[.+?\]\((.+?)\)$", line)
+                match = re.match(r"^!\[.+?]\((.+?)\)$", line)
                 if match:
                     new_lines.append("[" + line + "](" + match.group(1) + ")")
                     new_lines.append("{: .img }")
@@ -91,7 +90,7 @@ class VideoProcessor(BlockProcessor):
 
         if m is None:
             # This should never happen, but just in case...
-            logger.warn("We've got a problem video: %r" % block)
+            print("We've got a problem video: %r" % block)
             return
 
         h = etree.SubElement(parent, "video")
