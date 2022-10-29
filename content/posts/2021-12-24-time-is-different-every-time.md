@@ -40,7 +40,7 @@ But there's an ugly face to this. We should know when some shortcut is _enough_.
 
 Part of the problem is, developers, just like artists, often are never done. There's always a small finishing touch that can be done.
 
-The trick is recognize, and even assume, that you'll be the only user ever of this shortcut. If it works for you, without too many brain cycles, in a critical situation, you're done. Move on.
+The trick is to recognize, and even assume, that you'll be the only user ever of this shortcut. If it works for you, without too many brain cycles, in a critical situation, you're done. Move on.
 
 So, what do I automate? I've written about my automations and workflows quite a bit in the past:
 

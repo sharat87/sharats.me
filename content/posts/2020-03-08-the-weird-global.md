@@ -2,8 +2,7 @@
 title: The Weird `global`
 tags: python, rant
 description: >
-    Usage of the global keyword and how it can be unintuitive some times, with lots of examples and
-    details.
+    Usage of the global keyword and how it can be unintuitive sometimes, with lots of examples and details.
 ---
 
 Python's `global` keyword allows us to change the value of module-level variables inside functions.
@@ -12,8 +11,8 @@ the simple sense and situations where it can drive people nuts.
 
 ## Simple Usage
 
-Consider the following `top.py` script. We have a single module-level (aka `global`) variable here
-and we change it's value in the function `done`.
+Consider the following `top.py` script. We have a single module-level (aka `global`) variable here,
+and we change its value in the function `done`.
 
 ```python linenos=true filename=top.py
 are_we_done = False

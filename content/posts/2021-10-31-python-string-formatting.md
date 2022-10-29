@@ -40,7 +40,7 @@ good idea to ensure the format specifier's type matches the values being passed 
 table illustrates this point where we try to format a few specifiers with values of different types:
 
 | String | `42`          | `3.141`      | `'moon'`    | `'84'`      |
-| ------ | ------------- | ------------ | ----------- | ----------- |
+|--------|---------------|--------------|-------------|-------------|
 | `'%d'` | `'42'`        | `'3'`        | `TypeError` | `TypeError` |
 | `'%f'` | `'42.000000'` | `'3.141000'` | `TypeError` | `TypeError` |
 | `'%s'` | `'42'`        | `'3.141'`    | `'moon'`    | `'84'`      |

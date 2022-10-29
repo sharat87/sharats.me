@@ -136,7 +136,7 @@ Let's run a normal `curl` request on this container to see if the proxy settings
 docker run ace curl http://httpbun.com/get
 ```
 
-If the proxy configuration is working, then you should see this request appear in the proxy UI. Also for `https` URLs:
+If the proxy configuration is working, then you should see this request appear in the proxy UI. Also, for `https` URLs:
 
 ```sh
 docker run ace curl https://httpbun.com/get
@@ -173,7 +173,7 @@ This should now print the correct response, as well as show up on the proxy UI w
 
 This has culminated in creating the PR [#14207](https://github.com/appsmithorg/appsmith/pull/14207/files). This PR contains a fer QoL improvements over the solution above.
 
-1. We install `ca-certificates-java`, so that when we run `update-ca-certificates`, they are also installed into the JVM truststore. This is important since, one, Java maintains its own truststore (like Firefox), and two, Appsmith's server runs on the JVM so we need this there as well.
+1. We install `ca-certificates-java`, so that when we run `update-ca-certificates`, they are also installed into the JVM truststore. This is important since, one, Java maintains its own truststore (like Firefox), and two, Appsmith's server runs on the JVM, so we need this there as well.
 
 2. We provide support for a `ca-certs` folder in the volume, where users can drop any root cert files which will be auto-added on container startup.
 
@@ -201,11 +201,11 @@ brew install charles
 
 Open Charles
 
-Go to `Proxy -> SSL Proxying Settings`, under "SSL Proxying", add a few domains you want SSL decryption to be done. Let's add an entry under "Incude", with host set to `httpbun.com` and port set to `443` (which is the default port of HTTPS).
+Go to `Proxy -> SSL Proxying Settings`, under "SSL Proxying", add a few domains you want SSL decryption to be done. Let's add an entry under "Include", with host set to `httpbun.com` and port set to `443` (which is the default port of HTTPS).
 
 Check with http curl, response should show up correctly, and the request should show up in Charles with full information.
 
-Check with https curl, get an error response back, and the request should show up in Charles with incomplede information, and a red error icon.
+Check with https curl, get an error response back, and the request should show up in Charles with incomplete information, and a red error icon.
 
 To get the Charles' root certificate, go to `Help -> SSL Proxying -> Save Charles Root Certificate...`. Provide a location to save this cert, like your home folder.
 

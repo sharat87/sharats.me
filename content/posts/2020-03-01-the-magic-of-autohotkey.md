@@ -23,11 +23,11 @@ to tasks within the GUI scripting and automation domains. The hotkey functionali
 good, something I haven't found in any other general purpose programming language ([AutoIt][] most
 likely comes close, but I've never tried it so can't speak for it).
 
-The language itself may seem a bit flaky around the syntax and some of the constructs, but once we
+The language itself may seem a bit flaky around the syntax and some of its constructs, but once we
 get used to them, we can leverage the powerful engine underneath it. That, combined with the
 well-written documentation, makes AutoHotkey a must-have tool for any Windows power user.
 
-Some of the hotkeys I use (few that I can't show off here) are so well integrated into my daily
+Some hotkeys I use (few that I can't show off here) are so well integrated into my daily
 workflow, that my fingers just flow on the keyboard and things happen on screen that are hard to
 follow for others.
 
@@ -70,7 +70,7 @@ up the documentation for these individual directives, I won't repeat them here.
 ## The Common Magic
 
 These are essentials that are general enough that I believe everyone using AutoHotkey should have.
-Let's quickly run these down so we can move on to more exciting stuff.
+Let's quickly run these down, so we can move on to more exciting stuff.
 
 ### Reload AutoHotkey Script
 
@@ -84,7 +84,7 @@ reloaded.
 ```
 
 All script snippets discussed here, if and when added to your master script, would start working
-fine with a reload like above. No need to quit it and start again.
+fine with a Reload like above. No need to quit it and start again.
 {: .note }
 
 ### Open the Toolbar Calendar
@@ -100,7 +100,7 @@ the system tray. Then we navigate to the time and hit the <kbd>{Enter}</kbd> key
 
 There's a problem with this though. Once the calendar opens up, and we close it by hitting the
 <kbd>Escape</kbd> key, the focus is not returned to the window that had focus originally. The
-workaround for me has been to do <kbd>Alt+Tab</kbd> a couple of times and we're back to work.
+workaround for me has been to do <kbd>Alt+Tab</kbd> a couple of times, and we're back to work.
 
 It's still arguable how useful this solution is. The pop-up Calendar has very limited functionality.
 The most annoying this is probably that I spend a few seconds selecting the month I want to look at
@@ -115,7 +115,7 @@ check it out! Thanks.
 Every time my mouse moves to the bottom right corner, all my windows go transparent, and *almost*
 reduce me to swearing again. Now, I know we can turn this behaviour off by disabling Aero or some
 other setting and I can even agree that this feature can be useful. But to me, firstly, I hardly
-keep anything on my Desktop so even it's existence is quite useless to me. Secondly, even if I
+keep anything on my Desktop, so its mere existence is quite useless to me. Secondly, even if I
 wanted to look at the desktop, it's a quick <kbd>#d</kbd> away, which is much faster considering my
 fingers are almost always on the keyboard.
 
@@ -133,8 +133,7 @@ problem goes away, so, I'm not complaining.
 
 Remember how some websites (especially bank websites) disallow pasting values into inputs. This is
 extremely annoying when using a password manager or when I want to just paste something. I've tried
-several different solutions to this, and the current answer I have with AutoHotkey has served me the
-best.
+several solutions to this, and the current answer I have with AutoHotkey has served me the best.
 
 ```ahk
 #v::SendInput, {Raw}%Clipboard%
@@ -142,7 +141,7 @@ best.
 
 The idea is that instead of sending a paste operation, we have AutoHotkey *type out the contents of
 the clipboard*. This has the additional benefit of stripping any formatting in the text in the
-clipboard, if for instance, we've copied something from a website or a word document with heavy
+clipboard, if for instance, we've copied something from a website or a Word document with heavy
 formatting.
 
 ## Close on Escape Key
@@ -150,7 +149,7 @@ formatting.
 There are some windows that I'd love to close with just a tap on the <kbd>Escape</kbd> key, but they
 don't. A few examples of where I (instinctively) expect this are the photo viewer, font viewer, the
 playlist in VLC etc. Then there's another set of windows that I found myself trying to close by
-hitting <kbd>^w</kbd> (this intuition likely comes from it's behaviour in Firefox and Chrome).
+hitting <kbd>^w</kbd> (this intuition likely comes from its behaviour in Firefox and Chrome).
 Either way, I needed these keys to act the way I was expecting them to.
 
 There's two parts to the solution to this. First, we define the hotkeys to close the windows on
@@ -190,7 +189,7 @@ GroupAdd, CloseOnCW, ahk_class Notepad ahk_exe notepad.exe
 GroupAdd, CloseOnCW, ahk_class FM ahk_exe 7zFM.exe
 ```
 
-This should be fairly self explanatory. We add certain windows (as identified by `WinTitle` style
+This should be fairly self-explanatory. We add certain windows (as identified by `WinTitle` style
 filters) and add them to the two groups, using the `GroupAdd` command.
 
 There's one special case here. The stock Windows Calculator app. This one clears the display on
@@ -258,7 +257,7 @@ for this actually, but they don't work on every application. For me particularly
 be working with GVim (which is where I write most of my prose), which they weren't. So, with a lot
 of help from the Internet, I came up with a solution.
 
-Instead of hotstrings, I'll use a hotkey that summons a OSD (on-screen-display) with a list of keys
+Instead of hotstrings, I'll use a hotkey that summons an OSD (on-screen-display) with a list of keys
 and their expansions. When this window is focused, I can hit one of those keys and the windows is
 immediately closed and the corresponding expansion is typed out. This has been working unchanged for
 over four years for me and has never failed me.
@@ -420,7 +419,7 @@ OnWindowCreated(hwnd) {
 ```
 
 There are other methods to achieve the window-watching without polling and I encourage you to try
-them out if you're not comfortable with polling, like with using `RegisterShellHookWindow`. In my
+them out if you're not comfortable with this polling system, like with using `RegisterShellHookWindow`. In my
 experience, such solutions seemed to miss some windows and were able to catch only a small limited
 set of the windows there were opening. So I went with polling, which was less efficient, but has
 been more reliable for me.
@@ -435,7 +434,7 @@ Menu, Tray, Add, Add border to image in clipboard, AddBorderToImageInCb
 ```
 
 The callback for this menu item invokes the following function. Here, we just run the appropriate
-ImageMagick command and show a little dialog when it's done so we can go ahead and paste the
+ImageMagick command and show a little dialog when it's done, so we can go ahead and paste the
 bordered image.
 
 ```ahk
@@ -459,7 +458,7 @@ preview of how this looks:
 ![Time OSD example view]({static}/static/autohotkey-time-osd.png)
 
 Again, for this, I have a separate module called `time-osd.ahk` which I `#Include` in the master
-script and call it's init function. (This init-function-in-a-separate-module is something I came up
+script and call its init function. (This init-function-in-a-separate-module is something I came up
 with that was working well enough, I have no idea if it's a best practice).
 
 ```ahk linenos=true filename=time-osd.ahk
@@ -572,13 +571,13 @@ g::Send, {Escape}{Home}
 #IfWinActive
 ```
 
-This looks like a sad, long, hairy piece of code (probably because it is), but it works so I let it
+This looks like a sad, long, hairy piece of code (probably because it is), but it works, so I let it
 be. This sentiment shows up a lot when dealing with AutoHotkey code. But it works, and it works
 really well.
 
 ## Conclusion
 
-AutoHotkey's language may have it's quirks, but it's a very powerful tool when it comes to hotkeys.
+AutoHotkey's language may have its quirks, but it's a very powerful tool when it comes to hotkeys.
 I have come to the point that working on Windows is practically hair-wrecking for me without
 AutoHotkey (and my scripts, of course). I encourage you to check it out and explore the
 possibilities.

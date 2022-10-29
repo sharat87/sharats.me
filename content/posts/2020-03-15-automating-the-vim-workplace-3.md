@@ -3,7 +3,7 @@ title: Automating the Vim workplace &mdash; Chapter Ⅲ
 tags: vim, productivity
 description: >
     More ideas and inspiration for identifying repeated actions in your Vim workflow and automate
-    them, and improve your productivity! A follow up to the previous article on this topic.
+    them, and improve your productivity! A follow-up to the previous article on this topic.
 reddit_url: r/vim/comments/fiytyd
 ---
 
@@ -82,7 +82,7 @@ into a single one.
 
 Then, on a weekend when I was feeling particularly silly, I extended this to accept a number in
 front of <kbd>dc</kbd> which specifies the number of newlines to end up with. So now, this mapping
-can both condense, and expand vertical blank space to any size I want! Yay silly weekends!
+can both condense, and expand vertical blank space to any size I want! Yay, silly weekends!
 
 ## Duplicate Text in Motion
 
@@ -129,8 +129,8 @@ reduction in keys is not what I'm aiming at here. It's cognitive load of "duplic
 use it as often.
 
 Additionally, if triggered in visual mode, the duplicated text is selected again in visual mode.
-This quickly visually highlights for me the newly inserted text so I can get back on track as to
-what I intended to do with the duplicated text.
+This quickly highlights the newly inserted text, so I can continue with operating on the
+duplicated text.
 
 Now, if you're aware of the `:t` (or `:copy`) command, then what I'm doing above may seem
 pointlessly elaborate. To an extent, I agree. In fact, I'm using the `:t` command for the
@@ -169,6 +169,9 @@ EOPYTHON
 endfun
 ```
 
+Needs `+python3`.
+{: .note }
+
 ![Demo of transpose mapping]({static}/static/vim-transpose.gif)
 
 The keys I'm hitting in the GIF is <kbd>gtip</kbd>. I'm transposing the lines in the inner
@@ -201,7 +204,7 @@ EOPYTHON
 endfun
 ```
 
-Note that I implemented this in Python 3, so you'll need `+python3` if you want to yank this one.
+Needs `+python3`.
 {: .note }
 
 Here's a nice GIF showing this off! Note that although it looks like we're just adding a lot of
@@ -210,7 +213,7 @@ It's just the display size of tab characters is what we're changing with `vartab
 
 ![Tabs line up demo]({static}/static/vim-tabs-line-up-demo.gif)
 
-Finally tab separated files are easier to deal with than comma separated files.
+Finally, tab separated files are easier to deal with than comma separated files.
 
 Also, if you're into CSV and tab separated files, I recommend checking out the amazing [csv.vim][]
 plugin. It makes similar use of the `vartabstop` option.
@@ -276,7 +279,7 @@ endfun
 ```
 
 This may seem pointless in that, it's not very hard to do this with visual block mode. Sure. On that
-note, even <kbd>A</kbd> is pretty pointless, it can be done with just <kbd>\$a</kbd>, right? No. The
+note, even <kbd>A</kbd> is pretty pointless, it can be done with just <kbd>$a</kbd>, right? No. The
 point here is not about having a shorter key sequence to do this, but a more semantic one. Just like
 <kbd>A</kbd> spells "append at end of line", to me, <kbd>ga;ip</kbd> spells "adding semicolon to
 every line in the paragraph". Personally, I think better this way.

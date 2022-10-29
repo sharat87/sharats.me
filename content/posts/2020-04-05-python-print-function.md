@@ -96,7 +96,7 @@ This prints the following mind bogglingly useful output:
       hammertime
     sky
 
-Yeah that's a useful trick, but please, consider people's sanity when you do such !@#\$.
+Yeah, that's a useful trick, but please, consider people's sanity when you do such !@#$.
 
 ## Handling of non-string types
 

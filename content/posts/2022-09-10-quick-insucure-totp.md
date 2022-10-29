@@ -135,7 +135,7 @@ Video: totp-generator-demo.mp4
 
 ## Conclusion
 
-Again, this can be very convenient, but is not very secure. The way I use it on my system is quite a bit different from what I demonstrate here, but that's only because I don't want to show off the exact format I am using. So feel free to tweak the CSV format and use something else like JSON or some other encrypted source altogather, like `pass` CLI perhaps. But, I can't speak for that.
+Again, this can be very convenient, but is not very secure. The way I use it on my system is quite a bit different from what I demonstrate here, but that's only because I don't want to show off the exact format I am using. So feel free to tweak the CSV format and use something else like JSON or some other encrypted source altogether, like the `pass` CLI, perhaps. But, I can't speak for that.
 
 Keep your keys safe. They are nothing less than passwords.
 

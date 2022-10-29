@@ -24,7 +24,7 @@ This article is part of a series:
 ## File Explorer Magic
 
 The file explorer is probably my most used application during work. Yet, it doesn't feel like it's
-tuned for a power user. May be that's also why [there's][ealt-1] [so][ealt-2] [many][ealt-3]
+tuned for a power user. Maybe that's also why [there's][ealt-1] [so][ealt-2] [many][ealt-3]
 [alternatives][ealt-4] to file explorers. I've tried a few of them in the past, but the best has
 been to add exactly the few things I needed in the native file explorer, using AutoHotkey. I'll run
 through those here.
@@ -48,7 +48,7 @@ This group now matches the file explorer windows, desktop and the file open dial
 Almost all the web browsers today have the default hotkey <kbd>^l</kbd> which focuses the location
 bar, and selects everything in it. But in the file explorer, this is <kbd>!d</kbd>. Habits rule and
 I constantly hit <kbd>^l</kbd> in the file explorer window when I wanted to change something in the
-location bar. Obviously, it didn't work and it would drive me crazy. Until I added the following to
+location bar. Obviously, it didn't work, and it would drive me crazy. Until I added the following to
 save me from insanity:
 
 ```ahk
@@ -62,7 +62,7 @@ so that one's open.
 
 ### Open Command Window
 
-The file explorer has a nice less-known trick. If I right click without any files selected and with
+The file explorer has a nice less-known trick. If I right-click without any files selected and with
 the <kbd>Shift</kbd> key held down, I get an extra option in the context menu, called "Open command
 window here". Clicking on that menu item will open a new command prompt window in the current
 directory. This is extremely convenient if you need the command window often (which you might,
@@ -181,7 +181,7 @@ SelectByRegEx() {
 }
 ```
 
-The code is not very pretty, but oh well. It works well and I'd rather not touch it.
+The code is not very pretty, but oh well. It works well, and I'd rather not touch it.
 
 Here's a little **mute** video recording of this at work:
 
@@ -472,7 +472,7 @@ CreateFolderHierarchy() {
 
 This uses the same explorer library I mentioned in the previous sections. When this hotkey is
 triggered, we get a prompt where we can enter a folder tree (*i.e.,* folders separated by `/` or
-`\\`) and they will all be created. As a bonus, we are also switched to that newly created folder
+`\`) and they will all be created. As a bonus, we are also switched to that newly created folder,
 so we can start working with it right away.
 
 Now I can hit <kbd>^n</kbd> and type in `src/main/java` or `2020-01/pics`, and all nesting structure
@@ -562,7 +562,7 @@ the focus is set to the "To:" field perfectly to quickly start working on my ema
 
 AutoHotkey is a powerful tool for automating all sorts of workflows on Windows. If you can get past
 the quirks in the language itself, the underlying engine is very powerful. I know that over the few
-years I've used it, I've only made use of a small portion of it's potential. In addition, the help
+years I've used it, I've only made use of a small portion of its potential. In addition, the help
 file that is shipped with AutoHotkey (right-click on the tray icon and click on "Help") is very
 good. It's exhaustive, very detailed and contains lots of examples. I encourage going over it
 occasionally to find interesting things to add to your workflow. Good luck!

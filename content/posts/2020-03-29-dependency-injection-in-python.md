@@ -13,9 +13,9 @@ This is a quick write-up of how I did it in Python, using the standard library m
 
 ## The Problem
 
-I'll be illustrating the problem in a slightly different context so as to not reveal too many
-details of the subject matter. So, if the problem feels unrealistic or stupid, that's just a result
-of my unimaginative thinking.
+I'll be illustrating the problem in a slightly different context, so I don't derail too much into
+the subject, which would just be a distraction. So, if the problem feels unrealistic or stupid,
+that's just a result of my unimaginative thinking.
 
 We have an application, let's call it the task runner, that lets users choose a task to run, and
 runs that task. Each such task is implemented as a separate Python script file, that take no user
@@ -23,7 +23,7 @@ inputs, but do connect to a database and a few REST endpoints.
 
 So this is how it works. We have a bunch of wrapper classes that provide high-level abstractions for
 the database and the REST endpoints. Instances of these classes are given to the task scripts, which
-use them to perform the their task.
+use them to perform their task.
 
 The task scripts are also expected to *return* some information back to our application, with
 details such as whether the task was successful or the reasons if there's an error etc. The approach
@@ -41,17 +41,18 @@ were probably good reasons it was done this way:
 
 1. It was very simple and easy to implement. There's little to no magic.
 1. The task scripts can be updated on production without restarting the application and the changes
-   would take affect immediately.
+   would take effect immediately.
 1. The scripts' logic can be written as module level code. Full freedom on how the code is
    structured and written.
 
 Arguing on how horrible this approach is would be a great topic for a heated debate, and,
-fortunately that's not what I set to write about here. For reasons I won't go into, we decided to
-move to a more sophisticated approach and so started looking.
+fortunately that's not what I set to write about here. This simple method, while worked, didn't
+scale with the team. We soon decided to move to a more sophisticated approach and so started
+looking.
 
 A major reason (among several) for this decision was to have the scripts not depend on implicit
 globals. The use of implicit globals meant that the scripts were using variables that appear as not
-defined to static code analyzers.  Additionally, since the script file was being read into a string
+defined to static code analyzers. Additionally, since the script file was being read into a string
 and `eval`-ed, the stack trace from any errors were not very helpful.
 
 ## The New DI Solution
@@ -96,7 +97,7 @@ def run_task_script(script):
 In this function, we first convert the script file name into it's module name (hoping it doesn't
 contain any spaces or dash characters). Then, we use the `importlib` module to import the module of
 that name. Next, we call `inspect.signature` function on the module's `task_main` function to get
-it's parameter names.
+its parameter names.
 
 Based on these argument names (in `args`), we then construct a dictionary with these names as keys
 and the instance of the API abstraction class, as the value. We then pass this as the keyword
