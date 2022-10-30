@@ -20,6 +20,13 @@ Frontend is a [Mithril.js](https://mithril.js.org/) project, and backend is a [D
 
 This is an HTTP service with endpoints that are useful when testing any HTTP client, like a browser, a library, or any API developer tool. It's heavily inspired by [httpbin](https://httpbin.org).
 
+## LittleTools
+
+[littletools.app](https://littletools.app) {github-stars littletools}
+{ .links }
+
+A suite of little power tools for developers and powers users. Very early stage project.
+
 ## Just a calendar
 
 [justacalendar.app](https://justacalendar.app/) {github-stars just-a-calendar}
