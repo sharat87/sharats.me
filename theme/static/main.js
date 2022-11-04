@@ -75,8 +75,3 @@ function toggleConsoleCeremony(event) {
 	for (const el of preEl.querySelectorAll("span.gp, span.go"))
 		el.classList.toggle("hide")
 }
-
-function loadComments(event) {
-	event.target.outerHTML = "Loading comments&hellip;"
-	document.body.insertAdjacentHTML("beforeend", `<script async src="//${DISQUS_SITENAME}.disqus.com/embed.js" data-timestamp="${+new Date}"></script>`)
-}

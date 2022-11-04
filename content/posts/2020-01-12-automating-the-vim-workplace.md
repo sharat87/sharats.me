@@ -5,7 +5,6 @@ reddit_url: r/vim/comments/enlz8x
 description: >
     Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
 reddit_url: r/vim/comments/enlz8x
-disqus_id: cache/posts/2020-01-12_automating-the-vim-workplace.html
 ---
 
 I majorly use two tools for my coding workflow and one of them is GVim (on Windows). It's my primary

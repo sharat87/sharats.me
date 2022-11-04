@@ -6,7 +6,6 @@ description: >
     and scenarios from my experienece with explanations and rationales for the solutions.
 hn_id: 3906882
 reddit_url: r/Python/comments/sydg4
-disqus_id: the-ever-useful-and-neat-subprocess-module.html
 ---
 
 Python's [subprocess][] module is one of my favourite modules in the standard library. If you have

@@ -1,7 +1,6 @@
 ---
 title: Vim undo breaks with auto-close plugins
 tags: vim, vim-plugins
-disqus_id: vim-undo-breaks-with-auto-close-plugins.html
 ---
 
 ## Prelude

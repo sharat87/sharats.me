@@ -2,7 +2,6 @@
 title: Serializing python-requests' Session objects for fun and profit
 tags: python, python-requests, python-pickle
 hn_id: 9857170
-disqus_id: serializing-python-requests-session-objects-for-fun-and-profit.html
 ---
 
 ## Prepare

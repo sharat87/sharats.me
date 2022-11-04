@@ -99,9 +99,6 @@ JINJA_GLOBALS = {
     "current_year": time.strftime("%Y"),
 }
 
-DISQUS_SITENAME = "sharats-me"
-
-
 
 PLUGINS = [
     "pelican_ext",

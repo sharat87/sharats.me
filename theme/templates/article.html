@@ -56,23 +56,4 @@ awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
 .</p>
 {%- endif %}
 
-{% if DISQUS_SITENAME and SITEURL and article.status != "draft" %}
-<hr>
-<section class=comments>
-	<h2>Comments</h2>
-	<p class=print-only>View comments at <a href="{{ SITEURL }}/{{ article.url }}#comments">{{ SITEURL }}/{{ article.url }}#comments</a>
-	<div id=disqus_thread>
-		<button type=button onclick="loadComments(event)" class=screen-only style="margin:0 1em">Load comments</button>
-	</div>
-	<noscript class=screen-only><p>Comments require JavaScript to be enabled.
-		<a href='http://enable-javascript.com'>Learn how to do this for your browser</a>.</p></noscript>
-</section>
-<script>
-	const DISQUS_SITENAME = "{{ DISQUS_SITENAME }}";
-	function disqus_config() {
-		this.page.url = "{{ PROD_SITEURL }}/{{ article.url }}";
-		this.page.identifier = "{{ article.disqus_id or article.slug }}";
-	}
-</script>
-{% endif %}
-{% endblock %}
+{%- endblock %}
