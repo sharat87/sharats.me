@@ -8,7 +8,7 @@ appdirs==1.4.4
     # via pyppeteer
 blinker==1.4
     # via pelican
-certifi==2022.6.15
+certifi==2022.12.7
     # via
     #   pyppeteer
     #   requests
@@ -23,9 +23,7 @@ feedgenerator==2.0.0
 idna==3.3
     # via requests
 importlib-metadata==4.11.4
-    # via
-    #   markdown
-    #   pyppeteer
+    # via pyppeteer
 jinja2==3.1.2
     # via pelican
 markdown==3.3.7
