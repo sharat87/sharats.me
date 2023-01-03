@@ -3,7 +3,7 @@ title: Test your Proxy Support
 status: draft
 ---
 
-Several network configurations, especially in large companies and universities, have a proxy configured for all outgoing traffic. Any network traffic that tries to go out _bypassing_ this proxy, will be blocked. For a self-hosted web application, the server will also need to make all and any outgoing connectionr via this proxy.
+Several network configurations, especially in large companies and universities, have a proxy configured for all outgoing traffic. Any network traffic that tries to go out _bypassing_ this proxy, will be blocked. For a self-hosted web application, the server will also need to make all and any outgoing connections via this proxy.
 
 Now, several applications, web application servers included, support the `HTTP_PROXY` and `HTTPS_PROXY` environment variables to configure such a proxy. But if you, as the developer of such a web application, don't have a network that blocks non-proxy traffic, want to test your web app's proxy support, how do you do it? How can we ensure, that when a proxy is configured, all outgoing requests are only ever made through the proxy?
 
@@ -15,7 +15,7 @@ This article is my attempt at answering this.
 
 To do this, we'll be using Docker's networking features. It provides a simple set of primitives to solve what we need here.
 
-By default Docker sets up a Bridge network for us, that allows connectivity to external endpoints. With explicit configuration, we can also have an _internal_ network, where connections are only allowed to other containers that are also connected to this internal network.
+By default, Docker sets up a Bridge network for us, that allows connectivity to external endpoints. With explicit configuration, we can also have an _internal_ network, where connections are only allowed to other containers that are also connected to this internal network.
 
 You can read more about this in Docker's official documentation about [Networking in Docker Compose](https://docs.docker.com/compose/networking/).
 
