@@ -43,8 +43,8 @@ GITHUB_STARS_QUERY = '''\
 
 
 def render_github_stars(content):
-    GITHUB_API_TOKEN = os.getenv("GITHUB_API_TOKEN")
-    if not GITHUB_API_TOKEN:
+    github_api_token = os.getenv("GITHUB_API_TOKEN")
+    if not github_api_token:
         print("GitHub token not available.")
         return
 
@@ -53,14 +53,14 @@ def render_github_stars(content):
     try:
         with open("stars.json") as f:
             stars_by_project = json.load(f)
-    except Exception as e:
+    except FileNotFoundError:
         response = requests.post(
             "https://api.github.com/graphql",
             json={
                 "query": GITHUB_STARS_QUERY,
             },
             headers={
-                "Authorization": "Bearer " + GITHUB_API_TOKEN,
+                "Authorization": "Bearer " + github_api_token,
             },
         )
         if not response.ok:
@@ -78,10 +78,9 @@ def render_github_stars(content):
         project = match.group("project")
         if "/" not in project:
             project = "sharat87/" + project
-        stars = stars_by_project.get(project, "N/A")
-        if stars > 999:
-            stars = f"{round(stars / 1000)}k"
-        return f'<a class=star-btn href="https://github.com/{project}" target=_blank rel=noopener title="Star project on GitHub">Star {stars}</a>'
+        stars: int = stars_by_project.get(project, 0)
+        stars_str: str = f"{round(stars / 1000)}k" if stars > 999 else str(stars)
+        return f'<a class=star-btn href="https://github.com/{project}" target=_blank rel=noopener title="Star project on GitHub">Star {stars_str}</a>'
 
     content._content = re.sub(r"{github-stars\s+(?P<project>.+?)}", replacement, content._content)
 
