@@ -1,6 +1,5 @@
 pelican[markdown]
 pelican-sitemap
-pelican-jinja2content
 requests
 pygments
 pyppeteer

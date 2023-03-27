@@ -103,7 +103,6 @@ JINJA_GLOBALS = {
 PLUGINS = [
     "pelican_ext",
     "sitemap",  # Generates a sitemap XML.
-    "jinja2content",  # Makes Jinja2 templating possible in content files.
 ]
 
 SITEMAP = {

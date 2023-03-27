@@ -55,9 +55,11 @@ This one, should also succeed, unless you've installed `mitmproxy` via a differe
 
 The way an SSL proxy works is by establishing two SSL connections, one with the client (a browser, or `curl`), initiated by the client, and another with the server (the `httpbun.com` server in this case). Everything sent by the client is encrypted using the certificate of `mitmproxy`, and everything by and to the server is encrypted with the server's certificate.
 
-When installing `mitmproxy` via `brew`, the root certificate was automatically installed on your system, and so `curl` won't complain about the certificate being unverified.
+The first time `mitmproxy` is started, it creates a new root certificate, in the `~/.mitmproxy` folder. We can install this root certificate on our system, and then `curl`, or any other client, will trust it. The `mitmproxy` docs talk about [how to install this cert](https://docs.mitmproxy.org/stable/concepts-certificates/#installing-the-mitmproxy-ca-certificate-manually). Optionally, for `curl`, instead of installing the cert, we can use the `--cacert` flag to point to the root certificate.
 
-To illustrate this, we can run the same thing in a container, and we should see the error right away:
+Another point to note here, is that installing this root certificate on your system, doesn't mean it'll be trusted in any Docker containers run on your system. Docker containers are isolated systems in this context, and maintain their own list of trusted root certificates.
+
+To illustrate this, first, let's run the same request from inside a container, and we should see the error right away:
 
 ```sh
 docker run --rm alpine/curl --proxy host.docker.internal:9020 https://httpbun.com/get
@@ -68,8 +70,6 @@ At this, you should see a certificate validation error. This is because the root
 To confirm that this is indeed because of `mitmproxy`, run the same `docker run` command without the `--proxy host.docker.internal` and you won't see this error, despite running with `https`.
 
 Now we've reproduced the situation where a process (a web server in our case), inside a Docker container, is trying to run behind an SSL-decrypting firewall (or, an SSL-decrypting proxy in our case here). Let's see what we can do to get this to work.
-
-
 
 ## Setting up
 

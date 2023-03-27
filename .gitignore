@@ -5,6 +5,9 @@
 /content/root-static/pdfs
 /stars.json
 
+/.task
+Taskfile.yml
+
 .idea
 *.iml
 

@@ -151,11 +151,13 @@ pre, code, kbd, tt, var {
 
 pre {
 	max-width: 100%;
-	padding: 9px;
+	padding: 1em .5em;
 	margin: 0;
 	overflow: auto;
 	word-wrap: normal;
 	word-break: normal;
+	border: 1px solid #EEE;
+	border-radius: 3px;
 }
 
 code {
@@ -487,7 +489,7 @@ del {
 }
 
 /* pygments styles BEGIN */
-.hl .hll { background-color: #ffffcc }
+.hl .hll { background-color: #dfd; display: block }
 .hl :is(.c, .ch, .cm, .cp, .cpf, .c1, .cs) { color: #8f5902 } /* Comments */
 .hl .err { color: #a40000; outline: 1px solid #ef2929 } /* Error */
 .hl .g { color: inherit } /* Generic */
@@ -620,8 +622,8 @@ del {
 	}
 
 	p.img img, img[src$=".gif"], video {
-		filter: brightness(70%);
-		-webkit-filter: brightness(70%); /* For iOS Safari */
+		filter: brightness(80%);
+		-webkit-filter: brightness(80%); /* For iOS Safari */
 	}
 
 	.star-btn {
@@ -633,7 +635,11 @@ del {
 		background: #777;
 	}
 
-	.hl .hll { background-color: #49483e }
+	pre {
+		border-color: #555;
+	}
+
+	.hl .hll { background-color: #463 }
 	.hl  { background: #272822; color: #f8f8f2 }
 	.hl .c { color: #75715e } /* Comment */
 	.hl .err { color: #960050; background-color: #1e0010 } /* Error */

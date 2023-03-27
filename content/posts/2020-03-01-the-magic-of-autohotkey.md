@@ -535,7 +535,7 @@ $e::
         Send %A_ThisHotkey%
     } else {
         k := SumatraKeys[StrReplace(A_ThisHotkey, "$", "")]
-        Send {% raw %}{%k% 22}{% endraw %}
+        Send {%k% 22}
     }
     Return
 

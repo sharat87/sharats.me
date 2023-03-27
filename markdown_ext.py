@@ -1,4 +1,5 @@
 import re
+import shlex
 import xml.etree.ElementTree as etree
 
 from markdown.extensions import Extension
@@ -33,7 +34,24 @@ class FenceConfigs(Preprocessor):
 
     def run(self, lines):
         for i, line in enumerate(lines):
-            lines[i] = re.sub(r"^```\s*(?P<lang>\w+)\s+(?P<conf>.+)", r"```{ .\g<lang> \g<conf> }", line)
+            match = re.match(r"^```(?P<lang>\w+)\s+(?P<conf>.+)", line)
+            if match is None:
+                continue
+            parts = shlex.split(match.group("conf"))
+
+            modified_parts = []
+            for part in parts:
+                key, value = part.split("=", 1)
+                if key == "hl_lines":
+                    # Range syntax is not working for `hl_lines`, for some reason. So we convert them to flat list of line numbers.
+                    value = re.sub(
+                        r"(\d+)-(\d+)",
+                        lambda m: " ".join(map(str, range(int(m[1]), 1 + int(m[2])))),
+                        value,
+                    )
+                modified_parts.append(key + "=\"" + value + "\"")
+
+            lines[i] = "```{ ." + match.group("lang") + " " + " ".join(modified_parts) + " }"
 
         return lines
 

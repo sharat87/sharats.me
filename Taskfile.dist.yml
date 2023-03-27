@@ -1,0 +1,96 @@
+version: 3
+
+env:
+  PORT: 8000
+
+dotenv:
+  - .env
+
+set:
+  - nounset
+
+tasks:
+  serve:
+    env:
+      ENV: dev
+    cmds:
+      - venv/bin/pelican --debug --listen --autoreload --port "$PORT" --bind 0.0.0.0
+    deps:
+      - deps
+
+  build:
+    cmds:
+      - venv/bin/pelican --ignore-cache --fatal errors
+    deps:
+      - deps
+
+  new:
+    preconditions:
+      - sh: test -n "{{ .title }}"
+        msg: Please provide a title for the new post
+    cmds:
+      - |
+        f="content/posts/$(date +%Y-%m-%d)-$(
+          echo "{{ .title }}" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$//g'
+        ).md"
+        if test -f "$f"; then
+          echo "File '$f' already exists. Exiting." >&2
+          exit 1
+        fi
+        cat <<EOF > "$f"
+        ---
+        title: {{ .title }}
+        status: draft
+        ---
+
+        Content start here.
+
+        [TOC]
+
+        ## Section 1
+
+        ## Conclusion
+
+        EOF
+
+  deps:
+    run: once
+    cmds:
+      - venv/bin/pip install -r requirements.txt
+      - touch venv/sentinel
+    deps:
+      - requirements.txt
+      - venv
+    sources:
+      - requirements.txt
+    generates:
+      - venv/sentinel
+
+  requirements.txt:
+    internal: true
+    run: once
+    preconditions:
+      - if [[ -n $CI ]]; then echo 'Should not generate requirements.txt in CI' >&2; exit 1; fi
+    cmds:
+      - venv/bin/pip-compile requirements.in
+    sources:
+      - requirements.in
+    generates:
+      - requirements.txt
+    deps:
+      - venv
+
+  venv:
+    internal: true
+    run: once
+    status:
+      - test -d venv
+    cmds:
+      - python3 -m venv --prompt sharats.me venv
+      - venv/bin/pip install --upgrade pip pip-tools
+
+  clean:
+    cmds:
+      - rm -rf output __pycache__ venv
