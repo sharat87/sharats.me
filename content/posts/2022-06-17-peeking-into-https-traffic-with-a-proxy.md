@@ -51,7 +51,7 @@ Again, same thing, but with HTTPS, without a proxy. You should see the same resp
 curl --proxy localhost:9020 https://httpbun.com/get
 ```
 
-This one, should also succeed, unless you've installed `mitmproxy` via a different method. Let's see why.
+This will fail with a verification error, that the SSL certificate couldn't be verified. Let's see why.
 
 The way an SSL proxy works is by establishing two SSL connections, one with the client (a browser, or `curl`), initiated by the client, and another with the server (the `httpbun.com` server in this case). Everything sent by the client is encrypted using the certificate of `mitmproxy`, and everything by and to the server is encrypted with the server's certificate.
 
