@@ -332,44 +332,6 @@ Let's bring it up with `docker-compose up -d rproxy`.
 
 Now, if we open <http://localhost:8091> in the browser on the host system, we should see the response from our little piece of awesome.
 
-## Modifying HTTP Requests and Responses
-
-We can create a custom addon Python script, as an addon to `mitmproxy`, to customize how the requests from the `subject` container work. For example, let's start with the below `mitmproxy-addon.py` file:
-
-```python
-def request(flow):
-    flow.response.content = flow.response.content.replace(b"httpbun.com", b"butter")
-```
-
-Let's edit the `proxy` container to mount this file as a volume, and run `mitmproxy` with this script:
-
-```yaml hl_lines="4 10"
-  proxy:
-    image: mitmproxy/mitmproxy
-    ports: ["8081:8081"]
-    command: mitmweb --web-host 0.0.0.0 -s /addon.py
-    networks:
-      intnet: {}
-      extnet: {}
-    volumes:
-      - ./certs:/home/mitmproxy/.mitmproxy:ro
-      - ./mitmproxy-addon.py:/addon.py
-```
-
-Now let's go back to our subject container, and try to access <http://httpbun.com> again:
-
-```bash
-docker-compose exec subject bash
-curl http://httpbun.com/get
-curl http://httpbun.org/get
-```
-
-Notice in the two responses above, the `url` field in the first one, has `httpbun.com` replaced with `butter`, but in the second one, it remains intact.
-
-This specific example is arguably less useful than butter, but it illustrates the point. Both requests and responses can be modified, selectively for specific hosts even. This lends to a lot of flexibility in creating scenarios to test our application. Learn more about this in `mitmproxy`'s documentation at <https://docs.mitmproxy.org/stable/api/events.html>.
-
-Just like the above, we can use a custom addon to `mitmproxy` to inhibit/modify DNS responses. As see in the [`mitmproxy` docs](https://docs.mitmproxy.org/stable/api/events.html#DNSEvents), we have to define a `dns_request`/`dns_response` function, to tamper the request/response object(s).
-
 ## Testing Appsmith
 
 Appsmith is a low-code internal tool builder. It's a webapp that lets you build internal tools, without writing code. It's a great tool for building internal tools, but it's also a great tool to test internal tools.
