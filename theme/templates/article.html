@@ -20,7 +20,11 @@
 
 {% block content %}
 <h1>{{ article.title | markdown }}</h1>
+{%- if article.status == "published" %}
 <time datetime="{{ article.date.isoformat() }}" style="font-size: .8em; color: #888;">{{ article.locale_date }}</time>
+{%- else %}
+<span style="font-size: .8em; color: #888;">Not published. This is a {{ article.status }}.</span>
+{%- endif %}
 
 {%- if article.subtitle %}
 <div class=subtitle>{{ article.subtitle }}</div>
