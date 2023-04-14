@@ -60,6 +60,7 @@ build() {
 build-ci() {
 	USE_VENV=false
 	python -m pip install --upgrade pip
+	export PYTHONPATH=.
 	build
 }
 
