@@ -14,7 +14,7 @@ window.onload = () => {
 			buttons.push(`<button onclick="downloadCodeBlock(event)" class=download-btn>Download</button>`)
 		}
 		buttons.push(`<button onclick="copyCodeBlock(event)" class=copy-btn>Copy</button>`)
-		el.querySelector(".btns").innerHTML = buttons.join("\n")
+		el.insertAdjacentHTML("beforeend", "<div class=btns>" + buttons.join("\n") + "</div>")
 	}
 
 	document.body.addEventListener("click", (event) => {

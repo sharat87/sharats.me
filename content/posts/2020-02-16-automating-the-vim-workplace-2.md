@@ -394,11 +394,12 @@ back.
 
 Identify, optimize, repeat.
 
-Read the previous article in this series: [Automating the Vim workplace][prev-article].
+Read the [previous article][prev-article], or the [next article][next-article] in this series.
 {: .note }
 
 
 [prev-article]: ../automating-the-vim-workplace/
+[next-article]: ../automating-the-vim-workplace-3/
 [ruler]: http://vimdoc.sourceforge.net/htmldoc/options.html#'ruler'
 [rulerformat]: http://vimdoc.sourceforge.net/htmldoc/options.html#'rulerformat'
 [fileformat]: http://vimdoc.sourceforge.net/htmldoc/options.html#'fileformat'

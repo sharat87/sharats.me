@@ -13,8 +13,8 @@ your workflow to identify such opportunities.
 
 This article is part of a series:
 
-1. [Chapter Ⅰ](../automating-the-vim-workplace/).
-1. [Chapter Ⅱ](../automating-the-vim-workplace-2/).
+1. [Chapter Ⅰ][first-article].
+1. [Chapter Ⅱ][prev-article].
 1. Chapter Ⅲ (this article).
 
 [TOC]
@@ -295,7 +295,11 @@ this write-up.
 This one is shorter than usual and that's not because of lack of content, it's more because of
 terrible planning on my part. Nevertheless, stay tuned for more in this series!
 
+Read the [previous article][prev-article] in this series.
+{: .note }
+
 
 [first-article]: ../automating-the-vim-workplace/
+[prev-article]: ../automating-the-vim-workplace-2/
 [vartabstop]: https://vimhelp.org/options.txt.html#%27vartabstop%27
 [csv.vim]: https://github.com/chrisbra/csv.vim

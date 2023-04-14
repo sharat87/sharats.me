@@ -3,6 +3,8 @@ import time
 import pathlib
 import datetime
 
+import markdown_ext
+
 env_name = os.getenv("ENV")
 IS_DEV = env_name == "dev"
 IS_PDF = env_name == "pdf"
@@ -30,6 +32,8 @@ MARKDOWN = {
     # Extensions at <https://python-markdown.github.io/extensions/>.
     "extension_configs": {
         "markdown.extensions.codehilite": {
+            # Pygments formatter options from <https://pygments.org/docs/formatters/#HtmlFormatter>.
+            "pygments_formatter": markdown_ext.CustomFormatter,
             "guess_lang": False,
             "cssclass": "hl",
         },

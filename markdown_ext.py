@@ -1,12 +1,15 @@
+import itertools
 import re
 import shlex
 import xml.etree.ElementTree as etree
 
+import markdown.extensions.codehilite
+import pygments.formatters.html
+from markdown.blockprocessors import BlockProcessor
 from markdown.extensions import Extension
+from markdown.inlinepatterns import SimpleTagInlineProcessor
 from markdown.preprocessors import Preprocessor
 from markdown.treeprocessors import Treeprocessor
-from markdown.blockprocessors import BlockProcessor
-from markdown.inlinepatterns import SimpleTagInlineProcessor
 
 
 class ImageLinks(Preprocessor):
@@ -42,6 +45,7 @@ class FenceConfigs(Preprocessor):
             modified_parts = []
             for part in parts:
                 key, value = part.split("=", 1)
+
                 if key == "hl_lines":
                     # Range syntax is not working for `hl_lines`, for some reason. So we convert them to flat list of line numbers.
                     value = re.sub(
@@ -49,6 +53,7 @@ class FenceConfigs(Preprocessor):
                         lambda m: " ".join(map(str, range(int(m[1]), 1 + int(m[2])))),
                         value,
                     )
+
                 modified_parts.append(key + "=\"" + value + "\"")
 
             lines[i] = "```{ ." + match.group("lang") + " " + " ".join(modified_parts) + " }"
@@ -64,7 +69,6 @@ class ExternalLinks(Treeprocessor):
     def run(self, root):
         for el in root.iter("a"):
             href = el.get("href", "")
-            # TODO: Check that the host isn't `sharats.me` or `localhost`.
             if re.match(r"^https?://", href):
                 el.attrib.update(rel="noopener noreferrer", target="_blank")
             elif href.startswith("/"):
@@ -146,13 +150,11 @@ def makeExtension(**kwargs):
     return SharatsExt(**kwargs)
 
 
-# Monkey patching for table-less code-blocks with line numbers.
-import pygments.formatters.html
-import markdown.extensions.codehilite
-import hashlib
-from collections import defaultdict
+# Custom Pygments formatter, for rendering code blocks to the HTML that I want.
 class CustomFormatter(pygments.formatters.html.HtmlFormatter):
-    def __init__(self, _, **kwargs):
+    collapse_counter = itertools.count()
+
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.is_linenos_enabled = self.linenos > 0
         # Disable the default table linenos wrapping.
@@ -167,44 +169,34 @@ class CustomFormatter(pygments.formatters.html.HtmlFormatter):
         source = list(source)
         line_count = sum(item[0] for item in source)
         should_collapse = line_count > 25
-        input_id = "co-" + dum_hash(source)
 
         if should_collapse:
-            yield 0, f'<input type=checkbox id={input_id}>'
+            input_id = f"co-{next(CustomFormatter.collapse_counter)}"
+            yield 0, (
+                f"<input type=checkbox id={input_id}>"
+                f"<label for={input_id}><span class='btn show-full-code-btn'>Show remaining {line_count - 20} lines</span></label>"
+            )
 
         if self.filename:
-            yield 0, '<div class=filename><span>' + self.filename + '</span></div>'
+            yield 0, "<div class=filename><span>" + self.filename + "</span></div>"
 
         if self.is_linenos_enabled:
             yield 0, (
-                '<pre class="linenos">' +
-                "\n".join(f'{"<div class=collapse>" if should_collapse and n == 21 else ""}<span>{n}</span>' for n in range(1, 1 + line_count)) +
-                ('</div>' if should_collapse else '') +
-                '</pre>'
+                "<pre class=linenos>" +
+                "".join(
+                    f"<span{' class=collapse' if should_collapse and n > 20 else ''}>{n}\n</span>"
+                    for n in range(1, 1 + line_count)
+                ) +
+                "</pre>"
             )
 
-        yield 0, '<pre class="content">'
+        yield 0, "<pre class=content>"
 
         line_no = 1
         for t, line in source:
-            if should_collapse and line_no == 21:
-                line = '<div class=collapse>' + line
+            if t:
+                line = f"<span{' class=collapse' if should_collapse and line_no > 20 else ''}>{line}</span>"
             yield t, line
             line_no += t
 
-        yield 0, ('</div>' if should_collapse else '') + '</pre>'
-
-        if should_collapse:
-            yield 0, f'<label for={input_id}><span class="btn show-full-code-btn">Show remaining {line_count - 20} lines</span></label>'
-
-        yield 0, '<div class="btns"></div>'
-
-
-hash_counts = defaultdict(int)
-def dum_hash(lines):
-    value = hashlib.md5(''.join(l for _, l in lines).encode()).hexdigest()
-    hash_counts[value] += 1
-    value += str(hash_counts[value])
-    return value
-
-markdown.extensions.codehilite.get_formatter_by_name = CustomFormatter
+        yield 0, "</pre>"

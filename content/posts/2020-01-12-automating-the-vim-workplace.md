@@ -1,7 +1,6 @@
 ---
 title: Automating the Vim workplace
 tags: vim, productivity
-reddit_url: r/vim/comments/enlz8x
 description: >
     Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
 reddit_url: r/vim/comments/enlz8x
@@ -383,10 +382,11 @@ long build is running, grab a coffee and open the Vim docs!
 
 Identify, optimize, repeat.
 
-Read the next article in this series: [Automating the Vim workplace -- Chapter Ⅱ][next-article].
+Read the [next article][next-article] in this series.
 {: .note }
 
 
+[next-article]: ../automating-the-vim-workplace-2/
 [insertmode]: http://vimdoc.sourceforge.net/htmldoc/options.html#'insertmode'
 [i_ctrl-l]: http://vimdoc.sourceforge.net/htmldoc/insert.html#i_CTRL-L
 [r/vim]: https://www.reddit.com/r/vim/comments/enlz8x/automating_the_vim_workplace/fe396x0

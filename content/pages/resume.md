@@ -3,8 +3,6 @@ title: Shrikant Sharat Kandula &mdash; Rèsumè
 bodyclass: resume
 ---
 
-[+91 98674 88842](tel:+919867488842) ·
-[shrikantsharat.k@gmail.com](mailto:shrikantsharat.k@gmail.com) ·
 [sharats.me](/) ·
 March 1988
 {.info}

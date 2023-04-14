@@ -233,6 +233,14 @@ header {
 	padding: 6px 12px;
 }
 
+:is(header, .toc, .post-list) a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 header nav a {
 	margin: 0 9px;
 }
@@ -322,8 +330,9 @@ main h1:first-child {
 }
 
 .post-list .subtext {
-	width: 6em;
+	width: 10ch;
 	text-align: right;
+	white-space: nowrap;
 }
 
 .tag {
@@ -414,12 +423,19 @@ form[name="subscribe"] {
 	grid-row: 2 / 3;
 	grid-column: 1 / 2;
 	text-align: right;
-	border-right: 1px solid #0001;
+	border-right: none;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .hl .content {
 	grid-row: 2 / 3;
 	grid-column: 2 / 3;
+}
+
+.hl .linenos + .content {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 .hl .filename span {
@@ -448,7 +464,7 @@ form[name="subscribe"] {
 }
 
 .hl :checked ~ :is(.linenos, .content) .collapse {
-	display: block;
+	display: initial;
 }
 
 .banners {
@@ -585,14 +601,6 @@ del {
 @media (hover: hover) {
 	.hl:hover .btns {
 		display: block;
-	}
-
-	a {
-		text-decoration: none;
-	}
-
-	a:hover {
-		text-decoration: underline;
 	}
 }
 

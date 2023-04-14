@@ -293,7 +293,7 @@ To convert the case of a subpattern, follow the $ with one of the following char
 
 Nonexistent backreferences and those that did not match anything in Haystack -- such as one of the subpatterns in "(abc)|(xyz)" -- are transcribed as empty strings.
 )
-MsgBox, %help%
+    MsgBox, %help%
 }
 ```
 
