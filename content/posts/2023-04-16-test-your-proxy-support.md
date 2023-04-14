@@ -1,6 +1,5 @@
 ---
 title: Test your Proxy Support
-status: draft
 ---
 
 Several network configurations, especially in large companies and universities, have a proxy configured for all outgoing traffic. Any network traffic that tries to go out _bypassing_ this proxy, will be blocked. For a self-hosted web application, the server will also need to make all and any outgoing connections via this proxy.
