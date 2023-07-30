@@ -21,6 +21,8 @@ tasks:
   build:
     cmds:
       - venv/bin/pelican --ignore-cache --fatal errors
+    env:
+      PYTHONPATH: .
     deps:
       - deps
 

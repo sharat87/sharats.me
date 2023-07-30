@@ -46,4 +46,6 @@ jobs:
       - name: Publish
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: netlify deploy --prod --site sharats-me --dir output
+        run: |
+          netlify --telemetry-disable
+          netlify deploy --prod --site sharats-me --dir output
