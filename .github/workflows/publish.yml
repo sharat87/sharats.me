@@ -31,6 +31,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: pelican --ignore-cache --fatal errors
 
       - name: Publish
