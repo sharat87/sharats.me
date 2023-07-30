@@ -60,7 +60,7 @@ Here, in the `redirect_uri` query parameter, we'd expect to see `http://one.com/
 redirect_uri=http://one.com/login/oauth2/code/google
 ```
 
-Similarly, if we try with `X-Forwarded-Host` header, or the more standard `Forwarded` header, we always see the correct host in the `redirect_uri` query parameter.
+Similarly, if we try with [`X-Forwarded-Host`][X-Forwarded-Host] header, or the more standard [`Forwarded`][Forwarded] header, we always see the correct host in the `redirect_uri` query parameter.
 
 ```console
 > curl -sSi http://localhost:8001/oauth2/authorization/google \
@@ -224,3 +224,7 @@ This way, if there's no incoming `Forwarded` header, we don't send it to the bac
 ## Conclusion
 
 The confusion between `Forwarded` and `X-Forwarded-*` suite of headers, and which takes precedence when _both_ are set, turned out to be the underlying problem. The NGINX we use inside Appsmith, was only ever tuned to work with `X-Forwarded-*` suite of headers. Additionally, since Google Cloud Run is so opaque, in the sense that we can't even get shell access into the running container, using tools like Httpbun can be very helpful in figuring out what details the request actually contains.
+
+
+[X-Forwarded-Host]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host
+[Forwarded]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Forwarded

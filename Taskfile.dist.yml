@@ -19,12 +19,22 @@ tasks:
       - deps
 
   build:
-    cmds:
-      - venv/bin/pelican --ignore-cache --fatal errors
-    env:
-      PYTHONPATH: .
     deps:
       - deps
+      - build-ci
+
+  build-ci:
+    cmds:
+      - |
+        if [[ -d venv ]]; then source venv/bin/activate; fi
+        pelican --ignore-cache --fatal errors
+      - |
+        # Add all draft links to redirect to their final location
+        find output/posts -type d -depth 1 -maxdepth 1 \
+          | xargs basename \
+          | sed 's,\(.*\),/drafts/\1.html /posts/\1 301,' >> output/_redirects
+    env:
+      PYTHONPATH: .
 
   new:
     preconditions:
@@ -60,7 +70,9 @@ tasks:
   deps:
     run: once
     cmds:
-      - venv/bin/pip install -r requirements.txt
+      - |
+        if [[ -d venv ]]; then source venv/bin/activate; fi
+        pip install -r requirements.txt
       - touch venv/sentinel
     deps:
       - requirements.txt
