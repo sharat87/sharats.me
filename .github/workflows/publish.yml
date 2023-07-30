@@ -35,8 +35,15 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: pelican --ignore-cache --fatal errors
 
-      - name: Publish
-        uses: cloudflare/wrangler-action@2.0.0
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          command: pages deploy output --project-name=sharats-me
+          node-version: 18
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Publish
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: netlify deploy --prod --site sharats-me --dir output
