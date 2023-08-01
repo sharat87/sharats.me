@@ -54,7 +54,7 @@ curl -sSi http://localhost:8001/oauth2/authorization/google \
   -H 'Host: one.com' | grep -Eo 'redirect_uri=[^&]+'
 ```
 
-Here, in the `redirect_uri` query parameter, we'd expect to see `http://one.com/login/oauth2/code/google`, which we indeed do.
+Here, in the `redirect_uri` query parameter, we see the URL that we expect to see, with `one.com` as the host.
 
 ```
 redirect_uri=http://one.com/login/oauth2/code/google
