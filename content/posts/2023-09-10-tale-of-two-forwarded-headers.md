@@ -1,8 +1,8 @@
 ---
 title: A Tale of Two Forwarded Headers
+description: >
+    Learn how the `Forwarded` and `X-Forwarded-*` headers can be confused in a multi-reverse proxy setup. This post details the troubleshooting of OAuth2 redirect URL for Appsmith on Google Cloud Run, and how NGINX and header precedence played a role in the solution.
 ---
-
-TODO: Change screenshots to use sharat87/httpbun
 
 This is the story of how I handled troubleshooting the redirect URL for OAuth2 in Appsmith, which contained the host as `localhost` instead of the actual domain name when hosted on Google Cloud Run. This is a story of how `Forwarded` and `X-Forwarded-*` headers were propagating through multiple reverse proxies and how they can be confused.
 
@@ -90,7 +90,7 @@ To get this information, let's run an instance of [`httpbun`](https://httpbun.co
 
 Here's a sample configuration of how we can run httpbun on Cloud Run.
 
-![httpbun on Cloud Run part 1]({static}/static/cloudrun-httpbun.png)
+![httpbun on Cloud Run]({static}/static/cloudrun-httpbun.png)
 
 Once this is deployed, we get a URL like `https://httpbun-abcdefghij-uc.a.run.app`. Let's make a request to this and see what headers it reports as being part of the request.
 
