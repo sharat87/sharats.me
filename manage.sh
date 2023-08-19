@@ -9,17 +9,6 @@ fi
 
 USE_VENV=true
 
-serve() {
-	venv-activate-if-needed
-	if [[ -f .env ]]; then
-		set -a
-		source .env
-		set +a
-	fi
-	export ENV=dev
-	exec python -m pelican --debug --listen --autoreload --port "${PORT:-8000}" --bind 0.0.0.0
-}
-
 build() {
 	# TODO: Find an unused port?
 	local port=8000
@@ -57,40 +46,9 @@ build() {
 	pelican --ignore-cache --fatal errors
 }
 
-build-ci() {
-	USE_VENV=false
-	python -m pip install --upgrade pip
-	export PYTHONPATH=.
-	build
-}
-
 ppdf() {
 	venv-activate-if-needed
 	python gen-pdf.py
-}
-
-clean() {
-	rm -rf output
-}
-
-new() {
-	local type
-	type="${1-post}"
-
-	local title
-	read -rp "Title: " title
-	local f
-	f="content/posts/$(date +%Y-%m-%d)-$(
-		echo "$title" \
-			| tr '[:upper:]' '[:lower:]' \
-			| sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$//g'
-	).md"
-	if test -f "$f"; then
-		echo File "'$f'" already exists. Exiting.
-		return 1
-	fi
-	echo "Creating '$f'."
-	printf -- "---\ntitle: %s\nstatus: draft\n---\n\nA brand new article here!\n\n[TOC]\n\n## Section 1\n## Conclusion\n" "$title" > "$f"
 }
 
 venv-activate-if-needed() {
