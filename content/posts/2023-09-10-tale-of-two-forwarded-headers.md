@@ -1,24 +1,26 @@
 ---
-title: Story of a Forwarded Header
+title: A Tale of Two Forwarded Headers
 ---
 
-This is the story of troubleshooting why the redirect URL for OAuth2 in Appsmith, contains the host as `localhost`, instead of the actual domain name, when hosted on Google Cloud Run. This is a story of how `Forwarded` and `X-Forwarded-*` headers were propagating through multiple reverse proxies, and how they can be confused.
+TODO: Change screenshots to use sharat87/httpbun
+
+This is the story of how I handled troubleshooting the redirect URL for OAuth2 in Appsmith, which contained the host as `localhost` instead of the actual domain name when hosted on Google Cloud Run. This is a story of how `Forwarded` and `X-Forwarded-*` headers were propagating through multiple reverse proxies and how they can be confused.
 
 ## The Problem
 
-Appsmith is a low-code internal tool builder, that has a React-based frontend, and a Java+Spring based backend server. This backend uses the `spring-security` module's support for OAuth2 authentication, to enable logging in to Appsmith with Google.
+Appsmith is an internal tool builder that has a React-based frontend and a Java+Spring based backend server. This backend uses the `spring-security` module's support for OAuth2 authentication, which enables logging in to Appsmith with Google.
 
 Google Cloud Run is 
 
-> [...] a managed compute platform that let's you run containers directly on top of Google's scalable infrastructure.
+> [...] a managed compute platform that lets you run containers directly on top of Google's scalable infrastructure.
 
 In other words, Google Cloud Run is a _serverless_ abstraction, to run Docker containers.
 
-Now, when Appsmith, which is shipped as a single Docker image, is run on Google Cloud Run, and is configured to enable Login with Google, the redirect URL that is used as part of the OAuth2 flow, gets the host as `localhost`, instead of the actual domain name. This makes the OAuth2 flow fail, because of a mismatch in redirect URL.
+When running Appsmith on Google Cloud Run and enabling Login with Google, the redirect URL used as part of the OAuth2 flow includes the host as `localhost` instead of the actual domain name. This causes the OAuth2 flow to fail due to a mismatch in the redirect URL.
 
 ## Primary Behaviour
 
-Let's start an Appsmith container, with Google OAuth configured, and see what redirect URL gets generated, in a controlled environment.
+Let's start an Appsmith container, with Google OAuth configured, and see what redirect URL gets generated in a controlled environment.
 
 ```bash
 docker run --name appsmith -p 8001:80 -v stacks:/appsmith-stacks -d \
@@ -27,15 +29,15 @@ docker run --name appsmith -p 8001:80 -v stacks:/appsmith-stacks -d \
   appsmith/appsmith-ce:v1.9.29
 ```
 
-We configure Google OAuth with dummy values here, since we only care about the generated redirect URL, and not the complete OAuth flow.
+We configure Google OAuth with dummy values here, since we only care about the generated redirect URL and not the complete OAuth flow.
 
-Let's wait a little while for that to start, and show up working on `http://localhost:8001`. Then, let's initiate the OAuth2 flow and see the redirect URL.
+Let's wait a little while for that to start and show up working on `http://localhost:8001`. Then, let's initiate the OAuth2 flow and see the redirect URL.
 
 ```bash
 curl -sSi http://localhost:8001/oauth2/authorization/google
 ```
 
-This will print _all_ the response headers. Let's just pick the `redirect_uri` query parameter in the `Location` header (which contains the Google authorization endpoint, as part of the OAuth2 flow).
+This will print _all_ the response headers. Let's just pick the `redirect_uri` query parameter in the `Location` header (which contains the Google authorization endpoint as part of the OAuth2 flow).
 
 ```bash
 curl -sSi http://localhost:8001/oauth2/authorization/google | grep -Eo 'redirect_uri=[^&]+'
@@ -47,7 +49,7 @@ We get the result as this:
 redirect_uri=http://localhost/login/oauth2/code/google
 ```
 
-Which is not entirely accurate because it's missing the `:8001` part, but that's a problem for another day. For now, let's just focus on the `localhost` part. This is the correct host here. But if we make this request with a different host,
+Which is not entirely accurate because it's missing the `:8001` part, but that's a problem for another day. For now, let's just focus on the `localhost` part. This is the correct host here. But if we make this request with a different host:
 
 ```bash
 curl -sSi http://localhost:8001/oauth2/authorization/google \
@@ -72,7 +74,7 @@ redirect_uri=http://two.com/login/oauth2/code/google
 redirect_uri=http://three.com/login/oauth2/code/google
 ```
 
-So, the Appsmith backend server seems to be handling the host detection quite well, and yet, when it's run on Google Cloud Run, the host is always `localhost`.
+The Appsmith backend server seems to be handling the host detection quite well, but when it's run on Google Cloud Run, the host is always `localhost`.
 
 ```console
 > curl -sSi https://appsmith-abcdefghij-uc.a.run.app/oauth2/authorization/google \
@@ -82,25 +84,15 @@ redirect_uri=http://localhost/login/oauth2/code/google
 
 ## Cloud Run, the Reverse Proxy
 
-We've established that if the host is shared correctly with Appsmith, it produces the correct `redirect_uri`. So something about the way Google Cloud Run is forwarding the host, is not working as expected. We want to find out just what Cloud Run is sending across.
+We've established that if the host is shared correctly with Appsmith, it produces the correct `redirect_uri`. So something about the way Google Cloud Run is forwarding the host is not working as expected. We want to find out just what Cloud Run is sending across.
 
-To get this information, let's run an instance of [`httpbun`](https://httpbun.com) on Cloud Run, which can respond with all the headers it receives. But for this, since httpbun's image is available only on ghcr.io, we need to manually push it to DockerHub before we can use it in Google Cloud Run.
+To get this information, let's run an instance of [`httpbun`](https://httpbun.com) on Cloud Run, which can respond with all the headers it receives.
 
-```bash
-docker pull --platform linux/amd64 ghcr.io/sharat87/httpbun
-docker tag ghcr.io/sharat87/httpbun dockerhubuser/httpbun
-docker push dockerhubuser/httpbun
-```
+Here's a sample configuration of how we can run httpbun on Cloud Run.
 
-(You'll want to replace `dockerhubuser` with your own DockerHub username.)
+![httpbun on Cloud Run part 1]({static}/static/cloudrun-httpbun.png)
 
-Here's a sample configuration of how we can run this httpbun on Cloud Run.
-
-![httpbun on Cloud Run part 1]({static}/static/cloudrun-httpbun-1.png)
-
-![httpbun on Cloud Run part 2]({static}/static/cloudrun-httpbun-2.png)
-
-Once this is deployed, we get a URL like `https://httpbun-abcdefghij-uc.a.run.app`. Let's make a request to this and see what headers it reports as part of the request.
+Once this is deployed, we get a URL like `https://httpbun-abcdefghij-uc.a.run.app`. Let's make a request to this and see what headers it reports as being part of the request.
 
 ```console
 > curl -sSi https://httpbun-abcdefghij-uc.a.run.app/headers
@@ -120,9 +112,9 @@ Fantastic! We see that Cloud Run sends the actual host in the `Host` header, ins
 
 But in addition to that, notice that we have a `Forwarded` header too. This contains the same information as `X-Fowarded-For` and `X-Forwarded-Proto`, and doesn't contain a `host` field.
 
-> Detour: The `Forwarded` header is a more standard header that holds the same (and some more) information as the `X-Forwarded-*` suite of headers, which is are a little less standard-ly defined. What's peculiar here, is that Cloud Run appears to be sending _both_ `Forwarded` and `X-Forwarded-*` headers.
+> Detour: The `Forwarded` header is a more standard header that holds the same (and some more) information as the `X-Forwarded-*` suite of headers, which is are a little less standard-ly defined. What's peculiar here is that Cloud Run appears to be sending _both_ `Forwarded` and `X-Forwarded-*` headers.
 
-This is a case we didn't test, with our local Appsmith. That is, send the actual host in the `Host` header, but also include a `Forwarded` header with information about the origin protocol (and IP Address). Let's do that now.
+We didn't test this case with our local Appsmith. That is, we didn't send the actual host in the `Host` header, but also include a `Forwarded` header with information about the origin protocol (and IP Address). Let's do that now.
 
 ```console
 > curl -sSi http://localhost:8001/oauth2/authorization/google \
@@ -134,7 +126,7 @@ Boom! There it is. Although we're sending the host in `Host` header, Appsmith re
 
 ## The Reverse Proxy Inside Appsmith Container
 
-If you look inside the Appsmith container, we can see that there's an NGINX process that handles incoming requests, and serves static files, if the URL points to a static file, or pass it on to the Appsmith backend server, if the path looks like an API call. This NGINX configuration file is generated by [this script](https://github.com/appsmithorg/appsmith/blob/v1.9.29/deploy/docker/templates/nginx/nginx-app-http.conf.template.sh), and you can peek into the actual configuration used by running `docker exec appsmith cat /etc/nginx/sites-enabled/default`. For the URL we've been `curl`-ing so far, the route that matches is this:
+Inside the Appsmith container, we have an NGINX process that handles all incoming requests. If the request points to a static file, it is served immediately. If it points to a backend API call, NGINX will proxy the request over to the Appsmith backend server. This NGINX configuration file is generated by [this script](https://github.com/appsmithorg/appsmith/blob/v1.9.29/deploy/docker/templates/nginx/nginx-app-http.conf.template.sh), and you can peek into the actual configuration used by running `docker exec appsmith cat /etc/nginx/sites-enabled/default`. For the URL we've been `curl`-ing so far, the route that matches is this:
 
 ```nginx
   location /oauth2 {
@@ -163,7 +155,7 @@ map $http_x_forwarded_host $origin_host {
 }
 ```
 
-What this is essentially doing is, if the incoming request has an `X-Forwarded-Proto` header, the `$origin_scheme` is set to that header's value. If that header is _not_ present in the request, `$origin_scheme` is set to `$scheme`, which is an NGINX variable set to the current request's protocol. Similarly, `$origin_host` either takes the value of `X-Forwarded-Host` header if present, or the current request's host (which is _usually_ the `Host` header of the request).
+What this is essentially doing is setting up so that if the incoming request has an `X-Forwarded-Proto` header, the `$origin_scheme` is set to that header's value. If that header is _not_ present in the request, `$origin_scheme` is set to `$scheme`. This is an NGINX variable set to the current request's protocol. Similarly, `$origin_host` either takes the value of `X-Forwarded-Host` header if present, or the current request's host (which is _usually_ the `Host` header of the request).
 
 This means that once the request goes from this NGINX to Appsmith backend server, `Host` becomes `localhost:8080`, `X-Forwarded-Host` is set to `appsmith-abcdefghij-uc.a.run.app`, and the others, `X-Forwarded-Proto`, `X-Forwarded-For` and even the `Forwarded` header, are passed along as is.
 
@@ -173,7 +165,7 @@ Since the `Forwarded` header is the more modern standard, it's value usually tak
 
 This means the `X-Forwarded-Host` header is completely ignored, and the server instead looks for a `host=` field in the `Forwarded` header, which is missing, so it thinks the host it receives in the `Host` header, `localhost:8080`, is the actual host, and uses that to construct the `redirect_uri`.
 
-We can simulate this theory by sending a request to the Appsmith backend server directly, instead of going through the NGINX proxy. We can do this by using the `docker exec` command, like this:
+We can simulate this theory by sending a request to the Appsmith backend server directly instead of going through the NGINX proxy. We can do this by using the `docker exec` command, like this:
 
 ```console
 > docker exec appsmith curl -sSi localhost:8080/oauth2/authorization/google \
@@ -213,7 +205,7 @@ map $http_forwarded $final_forwarded {
 }
 ```
 
-Then, in the `http` block, we set the `Forwarded` header as follows:
+In the `http` block, we set the `Forwarded` header as follows:
 
 ```nginx
   proxy_set_header Forwarded $final_forwarded;
