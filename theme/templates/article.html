@@ -25,10 +25,6 @@
 <p style="font-size: .8em; color: #f44;">Not published. This is a {{ article.status }}.</p>
 {%- endif %}
 
-{%- if article.subtitle %}
-<div class=subtitle>{{ article.subtitle }}</div>
-{%- endif %}
-
 <p class=print-only>
 <em>
 <b>Published:</b> {{ article.locale_date }}<br>
@@ -41,7 +37,7 @@
 <p class=print-only>
 <em>
 Thank you for printing from <a href="{{ PROD_SITEURL }}">sharats.me</a>. Do check back regularly for more such
-awesome content. Subscribe to at sharats.me/posts/index.xml to stay updated.
+awesome content. Subscribe at sharats.me/posts/index.xml to stay updated.
 </em>
 </p>
 

@@ -549,7 +549,6 @@ into one that is written using traditional `for`-loops.
     flex-grow: 1;
     margin: 6px;
     height: 148px;
-    font-family: var(--font-mono), monospace;
     font-size: inherit;
     font-variant-ligatures: none;
 }

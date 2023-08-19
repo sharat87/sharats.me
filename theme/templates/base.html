@@ -29,9 +29,7 @@
 <body{% if (article or page) and (article or page).bodyclass %} class="{{ (article or page).bodyclass }}"{% endif %}>
 
 	<header>
-		<div class=compact>
-			<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home">{{ SITENAME }}</a></div>
-		</div>
+		<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home">{{ SITENAME }}</a></div>
 		<nav class=screen-only>
 			{#- TODO: Highlight for Posts page needs a better solution. #}
 			{%- for title, link in MENUITEMS -%}

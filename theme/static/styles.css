@@ -1,9 +1,7 @@
 * {
 	box-sizing: border-box;
 	scroll-behavior: smooth;
-	/*noinspection CssUnknownProperty*/
 	scrollbar-color: #888 transparent;
-	/*noinspection CssUnknownProperty*/
 	scrollbar-width: thin;
 }
 
@@ -11,7 +9,6 @@ html {
 	--bg1: #FFF;
 	--bg2: #F7F7F7;
 	color: #222;
-	--strong-fg: #000;
 	--link-color: #08A; /* From <https://commons.wikimedia.org/wiki/File:Opponent_colors.svg> */
 	--font-mono: Consolas, Menlo, monospace;
 	overflow-y: scroll;
@@ -32,22 +29,6 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif;
 	font-size: 18px;
 	line-height: 1.4;
-}
-
-.subtitle {
-	font-size: 1.2em;
-}
-
-.subtitle p {
-	margin-top: 0;
-}
-
-strong {
-	color: var(--strong-fg);
-}
-
-a strong {
-	color: inherit;
 }
 
 ol > li > ul {
@@ -89,18 +70,13 @@ a img {
 	vertical-align: middle;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: inherit;
+h2, h3, h4, h5, h6 {
 	margin: 1.3em 0 .5em;
-	color: var(--strong-fg);
 }
 
 h1 {
+	margin: .3em 0 0;
 	font-size: 2.4em;
-}
-
-* + h1 {
-	margin-top: 2em;
 }
 
 h2 {
@@ -128,10 +104,11 @@ h6 {
 }
 
 blockquote {
-	background-color: rgba(0, 0, 0, .05);
+	background-color: var(--bg2);
 	padding: 12px;
-	border-left: 4px solid rgba(0, 0, 0, .3);
+	border-left: 4px solid #111;
 	margin: 1em 2em;
+	font-style: italic;
 }
 
 blockquote :first-child {
@@ -175,7 +152,7 @@ pre code {
 kbd {
 	border-width: 1px 1px 2px;
 	border-style: solid;
-	border-color: rgba(0, 0, 0, .3);
+	border-color: #111;
 	border-radius: 3px;
 	padding: 0 3px;
 }
@@ -188,12 +165,7 @@ dd {
 	margin-bottom: .5em;
 }
 
-hr {
-	border-width: 1px 0 0;
-	border-color: #EEE;
-}
-
-img, svg, [role="img"] {
+img {
 	height: auto;
 	max-width: 100%;
 	vertical-align: middle;
@@ -202,7 +174,7 @@ img, svg, [role="img"] {
 p.img img, img[src$=".gif"], video {
 	margin: 0 auto;
 	display: block;
-	box-shadow: 0 0 6px rgba(0, 0, 0, .4);
+	box-shadow: 0 0 6px #222;
 	border-radius: 6px;
 }
 
@@ -221,7 +193,6 @@ header {
 	width: 100%;
 	max-width: 960px;
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 }
@@ -249,22 +220,8 @@ header nav a.active {
 	text-decoration: underline;
 }
 
-header .compact {
-	display: flex;
-	align-items: stretch;
-	justify-content: space-between;
-}
-
 dt {
 	margin-top: 1.5em;
-}
-
-.nav-toggle {
-	display: none;
-}
-
-.nav-toggle [role="img"] {
-	vertical-align: middle;
 }
 
 .headerlink {
@@ -274,23 +231,25 @@ dt {
 	font-size: .5em;
 	vertical-align: middle;
 	padding: 0 3px;
-	border-radius: 1px;
-}
-
-.headerlink:hover {
-	background-color: var(--link-color);
-	color: white;
 }
 
 :is(h1, h2, h3, h4, h5, h6):hover .headerlink {
 	display: inline-block;
 }
 
-input, textarea, button, select {
-	font: inherit;
+textarea {
+	background-color: #0001;
+	color: inherit;
+	border: 1px solid currentColor;
+}
+
+textarea:focus {
+	outline: none;
+	border-color: var(--link-color);
 }
 
 button, .btn {
+	font: inherit;
 	cursor: pointer;
 	border: 0;
 	background-color: var(--link-color);
@@ -299,18 +258,9 @@ button, .btn {
 	padding: 6px 1em;
 }
 
-:is(input, textarea):focus {
-	outline: none;
-	border-color: var(--link-color);
-}
-
 button:disabled {
 	opacity: .3;
 	cursor: not-allowed;
-}
-
-main h1:first-child {
-	margin: .3em 0 0;
 }
 
 .post-list {
@@ -335,10 +285,6 @@ main h1:first-child {
 	white-space: nowrap;
 }
 
-.tag {
-	display: inline-block;
-}
-
 .note {
 	background-color: #DEF;
 	border-radius: 3px;
@@ -348,9 +294,11 @@ main h1:first-child {
 }
 
 footer {
-	border-top: 1px solid #EEE;
-	margin-top: 2em;
+	border-top: 1px solid var(--bg2);
+	margin-top: 5em;
 	padding: 1em;
+	align-self: stretch;
+	text-align: center;
 }
 
 .toc ul {
@@ -375,13 +323,6 @@ footer {
 .star-btn:hover {
 	background: #EEE;
 	text-decoration: none;
-}
-
-form[name="subscribe"] {
-	border-left: 3px solid var(--link-color);
-	background-color: #F9F9FF;
-	padding: 12px;
-	margin: 2em 1em;
 }
 
 .ghost {
@@ -478,10 +419,6 @@ form[name="subscribe"] {
 	margin: 1rem;
 }
 
-del {
-	color: #888;
-}
-
 .appsmith-ref {
 	background-color: #FFF7F0;
 	border-color: #F70;
@@ -490,6 +427,10 @@ del {
 .prestige-ref {
 	background-color: #EFF;
 	border-color: #0AF;
+}
+
+del {
+	color: #888;
 }
 
 .resume h1 {
@@ -609,8 +550,11 @@ del {
 		--bg1: #333;
 		--bg2: #444;
 		color: #EEE;
-		--strong-fg: #F6F6F6;
 		--link-color: #3BD;
+	}
+
+	blockquote {
+		border-color: #eee;
 	}
 
 	.appsmith-ref {
