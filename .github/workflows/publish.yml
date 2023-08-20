@@ -38,14 +38,6 @@ jobs:
           tar -xzf task_linux_amd64.tar.gz task
           ./task build-ci
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
-
       - name: Publish
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
