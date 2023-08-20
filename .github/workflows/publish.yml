@@ -33,6 +33,7 @@ jobs:
       - name: Build
         env:
           PYTHONPATH: ${{ github.workspace }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           wget 'https://github.com/go-task/task/releases/download/v3.28.0/task_linux_amd64.tar.gz'
           tar -xzf task_linux_amd64.tar.gz task

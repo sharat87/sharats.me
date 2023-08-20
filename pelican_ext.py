@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import sys
 
 from pelican import signals
 import requests
@@ -43,10 +44,10 @@ GITHUB_STARS_QUERY = '''\
 
 
 def render_github_stars(content):
-    github_api_token = os.getenv("GITHUB_API_TOKEN")
-    if not github_api_token:
-        print("GitHub token not available.")
-        return
+    github_token = os.getenv("GITHUB_TOKEN")
+    if not github_token:
+        print("GitHub token not available.", file=sys.stderr)
+        sys.exit(1)
 
     stars_by_project = {}
 
@@ -60,7 +61,7 @@ def render_github_stars(content):
                 "query": GITHUB_STARS_QUERY,
             },
             headers={
-                "Authorization": "Bearer " + github_api_token,
+                "Authorization": "Bearer " + github_token,
             },
         )
         if not response.ok:
