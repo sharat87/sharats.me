@@ -1,15 +1,19 @@
 ---
 title: Use a proxy for LLM app development
-description: LLM app frameworks make it easy to integrate models—but hide critical details. This article shows you how to use a local proxy to see what's really happening.
+description: Frameworks like LangChain make it easy to use LLMs&mdash;but they hide the real HTTP requests. Using a local proxy (like mitmproxy) lets you inspect and debug exactly what's going on, down to the headers and raw payloads.
 ---
 
-Most everybody is developing LLM applications these days. There's tons of frameworks and libraries with new ones showing up almost every day. These libraries promise a lot, with a very common theme being that we can switch LLM API provider and the LLM itself with minimal code changes. That we can support new models and providers _much_ faster.
+Most everybody is developing LLM applications these days. New frameworks and libraries show up nearly every week. A common theme is easy switching between LLM providers with minimal code changes.
 
 That sounds great, and it is.
 
-But, as with all abstractions that make things dead simple to get started with, they make maintenance and debugging that much harder.
+But, as with all abstractions that make it dead simple to start, they also make debugging and maintenance that much harder.
 
-I'm constantly asking, under all those library function calls and abstractions, what is the API call that was eventually made? What was the exact JSON payload that was sent? What was the exact response? What were the headers? This information can make it _oh so much easier_ to debug and optimize. Once you see it in action, there's no going back.
+I'm constantly asking myself: *Under all those library calls, what actual API request was made? What payload was sent? What did the server return? What were the headers?* Having access to this info makes debugging and discovery **so much easier**. Once you see it, there's no going back.
+
+Example video:
+
+Video: mitmproxy-llm-apis.mp4
 
 All code for this article is in [this GitHub repo](https://github.com/sharat87/mitmproxy-for-llm-apps). Follow along!
 
@@ -17,23 +21,23 @@ All code for this article is in [this GitHub repo](https://github.com/sharat87/m
 
 ## Setup a local proxy
 
-The best way is to use a local forward proxy for development. There's lots of options today, I've personally used mitmproxy, Proxyman, HTTP Toolkit, and Charles. We'll go with mitmproxy here, but I've almost completely moved to Proxyman now. Most instructions remain the same.
+The best way to observe LLM traffic during development is through a **local forward proxy**. I've used mitmproxy, Proxyman, HTTP Toolkit, and Charles. Here we'll use mitmproxy, though I've recently moved to Proxyman. Most setup steps are similar.
 
-## How does this work?
+## How mitmproxy works (quick primer)
 
-If you know how these proxies operate, skip this part.
+Mitmproxy acts as a **forward proxy** between your local app and the real server.
 
-Mitmproxy is a forward proxy for use as a local proxy for development. With the right configuration, it can intercept both HTTP and HTTPS traffic.
+When your code makes a request to `example.com`, it instead sends it to mitmproxy, which then forwards it to the actual server and relays the response back. Like the name suggests, it's a <u>m</u>an <u>i</u>n <u>t</u>he <u>m</u>iddle. Or, as I like to call it, <u>m</u>achine <u>i</u>n <u>t</u>he <u>m</u>iddle.
 
-When you make an API request to a `example.com`, Python will send that request to the forward proxy. The proxy will then forward the request to the website's server. The proxy then gets the response back, and forwards it back to you. It's quite literally, "<u>m</u>an <u>i</u>n <u>t</u>he <u>m</u>iddle", or as I like to call it, "<u>m</u>achine <u>i</u>n <u>t</u>he <u>m</u>iddle"!
+### What about HTTPS?
 
-But way of working presents a problem for HTTPS. The server that our code is contacting now isn't `example.com`'s server, it's the proxy. That proxy won't have a valid cert for `example.com`, so the TLS handshake will fail.
+That's where it gets tricky. HTTPS uses TLS certificates, and mitmproxy doesn't have the real cert for `example.com`. This causes a TLS handshake failure unless you trust mitmproxy's generated **custom CA certificate**.
 
-To get around this, mitmproxy generates a CA certificate that we can tell our code to trust. That way, the connection between our code and the proxy is verified HTTPS, and the connection between proxy and the final server is also verified HTTPS.
+By trusting that CA, your app accepts mitmproxy's certificate for any domain it intercepts and so we don't see any browser warnings or connection errors about failed TLS handshakes.
 
-## Setting up a project with mitmproxy
+## Install and run mitmproxy locally
 
-You may choose to start from a blank folder, but we're going to clone the repo for this article and work with that here.
+Clone the repo (or start from scratch if you prefer):
 
 ```bash
 git clone https://github.com/sharat87/mitmproxy-for-llm-apps
@@ -42,35 +46,41 @@ uv sync
 make mitm
 ```
 
-This will start the proxy on port 9020 and the web interface on port 9021. The UI should open up in your browser now. Feel free to also open this folder in your IDE/Editor and check things out. Like start with the `Makefile`. I'm basically asking you to clone a random repo and run `make`. DO check the `Makefile` out.
+This runs mitmproxy on port 9020 and starts the web UI on port 9021. It may open in your browser. Open the `Makefile` to inspect what it does, don't just run scripts from random repos... like, who does that? (Looks out the window)
 
-Let's see if things are working fine.
+## Test with a simple HTTP request
+
+Try this to verify everything is working:
 
 ```bash
 curl -x http://localhost:9020 httpbun.com/any
 ```
 
-This request should show up in the mitmproxy UI. Check it out, look around, inspect the request, response, their headers, etc. This is the kind of detail we'll get for all APIs made to LLM providers.
+You should see this request show up in the mitmproxy UI, along with full request/response headers and bodies.
 
-## mitmproxy's CA cert
+## Trust mitmproxy's CA cert for HTTPS support
 
-If we try the above `curl` command with `https`, we'll see a TLS cert verification error.
+Now try an HTTPS URL:
 
 ```bash
 curl -x https://localhost:9020 https://httpbun.com/any
 ```
 
-The CA cert is saved in `~/.mitmproxy/mitmproxy-ca-cert.pem`. If we give this to the above `curl` command, it'll work.
+💥 **Expected** TLS verification failure.
+
+Fix it by telling `curl` to use mitmproxy's CA cert (located at `~/.mitmproxy/mitmproxy-ca-cert.pem`):
 
 ```bash
 curl -x https://localhost:9020 --cacert ~/.mitmproxy/mitmproxy-ca-cert.pem https://httpbun.com/any
 ```
 
-Now this request should show up in the mitmproxy UI, with full details, despite it being a valid and verified HTTPS request.
+Now HTTPS traffic works and shows up in mitmproxy.
 
-## Use mitmproxy with requests from Python code
+## Use mitmproxy with Python requests
 
-Let's do that in Python code now. This is illustrative, this code is already in `main.py`. Feel free to paste this to a separate `experiment.py` and run it with `uv run python experiment.py`.
+Here's how to set up Python code to route traffic through the proxy.
+
+### With `http://`:
 
 ```python filename=experiment.py
 import sys
@@ -85,33 +95,19 @@ print(response)
 print(response.text)
 ```
 
-Run it with a `http://` URL:
+Run it:
 
 ```bash
 uv run python experiment.py http://httpbun.com/any
 ```
 
-This will show up in mitmproxy. Now let's do `https://`.
+This will show up normally in mitmproxy.
 
-```bash
-uv run python experiment.py https://httpbun.com/any
-```
+### With `https://`: 
 
-As we've seen before, this will throw a TLS verification error.
+💥 Will fail with a certificate verification error.
 
-```
-httpx.ConnectError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)
-```
-
-## Getting HTTPS requests into mitmproxy
-
-We have proxy working with `http` URLs, isn't that enough? ~~Unfortunately~~ Fortunately, most all API services today are using HTTPS. If we want to intercept API calls to LLM providers, we have to have HTTPS support with the proxy.
-
-Most HTTP libraries (all?) in Python don't use the system CA trust store. So, while installing the mitmproxy's CA cert into your system is a good idea, it won't help our cause. Instead, we need to add it to the `certifi` bundle.
-
-The `certifi` package's CA trust store contains a list of CA certificates, just like most operating systems and some browsers do. There's pros/cons to doing it this way instead of just using the system trust store, and I have my opinions, but that's a ~~topic~~ rant for another day.
-
-In our Python application, just before we start making any HTTPS requests, we'll add the mitmproxy's CA cert to the `certifi` trust store. Our `main.py` will be:
+Let's make Python trust mitmproxy's CA by injecting it into `certifi`'s trusted certificates file, which `httpx` uses:
 
 ```python filename=experiment.py
 from pathlib import Path
@@ -140,19 +136,11 @@ print(response)
 print(response.text)
 ```
 
-Running it with an `https://` URL now:
+Now HTTPS requests work and appear in mitmproxy.
 
-```bash
-uv run python experiment.py https://httpbun.com/any
-```
+## Monitor OpenAI SDK calls via mitmproxy
 
-Should work now.
-
-## Monitor OpenAI SDK calls
-
-Let's use OpenAI's official SDK to make an LLM call.
-
-In our `experiment.py`, instead of the direct call to httpx, let's do this:
+Let's now observe a real LLM call using the OpenAI SDK:
 
 ```python filename=experiment.py
 import openai
@@ -172,9 +160,11 @@ We're using OpenAI's SDK, which, under all the abstractions, uses `httpx` to mak
 HTTPS_PROXY=http://127.0.0.1:9020 OPENAI_API_KEY=sk-proj-... uv run python experiment.py
 ```
 
-Running this, you should see a request to OpenAI in mitmproxy, with the full request body JSON and the response body JSON.
+You'll now see the full OpenAI API request and response payloads in mitmproxy.
 
-To potentially illustrate the value, let's change the code to use OpenAI's new responses API as well:
+## Compare different API styles
+
+Try switching from completions to the new responses API:
 
 ```python
 response = client.responses.create(
@@ -187,7 +177,9 @@ print(response.output_text)
 
 Run this and you should see how different the JSON body is structured between the two APIs. If you enable streaming in those API calls, you'll see the individual SSE events in the Response tab in mitmproxy.
 
-Same thing with LangChain:
+## Inspect LangChain calls
+
+LangChain uses OpenAI under the hood:
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -198,54 +190,63 @@ response = llm.invoke("Hello there matey!")
 print(response.content)
 ```
 
-## Scripting in mitmproxy
+All calls show up in mitmproxy showing the exact API calls under all the LangChain abstractions. This is great for understanding how higher-level tools serialize prompts and responses.
 
-Mitmproxy is very scriptable. That sounds like it's an advanced useless feature, but it's great when working with LLM APIs.
+## Use mitmproxy scripting to highlight LLM conversations
 
-[Here's a script](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/llm_commenter.py) that'll show the "conversation" in the current API, under the "Comment" tab.
+Mitmproxy supports scripting addons.
 
-When mitmproxy (or mitmweb) is run with `--script llm_conversation.py`, we'll see the conversation in the Comment tab of any OpenAI completions API call.
+Here's a [script](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/llm_commenter.py) that extracts the current LLM "conversation" and shows it in the *Comment* tab for OpenAI completions calls.
 
-Note that this doesn't work _very_ well just yet, because the "Comment" tab is a relatively new feature. But it's still better than deciphering the conversation from the JSON body. Especially with streaming responses.
+Start mitmproxy like this:
 
-## Monitor LangChain's tool call conversation
+```bash
+mitmweb --scripts llm_commenter.py
+```
 
-Let's put up a Python script that uses LangChain to get an LLM to call a tool.
+Note: it's experimental, and the Comment tab support is new, but still better than manually parsing JSON.
+
+## Inspect tool calls in LangChain
 
 > Code from prompt:
 > Write a minimal python script to call LangChain with OpenAI, with a single tool to add two numbers, and prompt OpenAI to add 20 to the answer to life, universe, and everything else.
 
-[We've added that generated code to our `main.py`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/a8721301e2431062979bcbfcc3565c536697c3ef/main.py#L59). Now running it with the proxy env variables, we should see two new calls to OpenAI completions API.
+We have the resulting code [here](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/a8721301e2431062979bcbfcc3565c536697c3ef/main.py#L59). Run it with the proxy enabled and you'll see two OpenAI calls:
 
-You should be able to see how LangChain sent the tool information to OpenAI, how OpenAI responded with a request to call the tool function, and how LangChain made another call to OpenAI with both the original request to call the tool, as well as the function call result.
+- First: receives the tool call
+- Second: sends tool execution result and gets final response
 
-As the abstractions grow, when complexity grows, such visibility is absolutely invaluable.
+Seeing this logic play out makes complex LangChain chains far easier to understand.
 
-## Handling Dynamic CA Certificates
+## Handle dynamic CA certs (e.g., EKS Kubernetes API)
 
-Here's another case. We want to equip the LLM with a tool to list pods in the default namespace in an EKS cluster.
+Some services (like EKS) use their own custom CA certs.
 
-Look at the [`kubernetes_list_pods` function in `main.py`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/a8721301e2431062979bcbfcc3565c536697c3ef/main.py#L110) for an example.
+Example: [this function](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/a8721301e2431062979bcbfcc3565c536697c3ef/main.py#L110) connects to Kubernetes and requires trusting the EKS CA.
 
-Connecting to EKS gets us a new CA cert that we'll be using to talk to the Kubernetes API. But now we need to add this new CA to the `certifi` bundle, that's used both by our application, as well as by mitmproxy. So note, if your mitmproxy is installed in a separate venv, you have to add the CA to the `certifi` bundle in that venv as well.
+You'll need to:
 
-After that, we need to get mitmproxy to clear it's SSL cache. Yes, it caches. Permanently. Understandably.
+1. Add the CA to your app's `certifi` trust store
+2. Also add it to **mitmproxy's** trust store (if in a separate venv)
+3. Clear mitmproxy's SSL cache
 
-The `ssl.clear` command is a custom command, isn't shipped with mitmproxy. It's defined as [a mitmproxy addon in this file](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/mitmproxy_ssl_clear.py).
+To clear the cache, use [`ssl.clear`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/mitmproxy_ssl_clear.py), a custom mitmproxy addon.
 
-Now running the script shows all interactions with AWS and Kubernetes APIs in mitmproxy UI. This is now ready to be wired up into a tool call for an LLM.
+Now mitmproxy shows all AWS and Kubernetes traffic. This is now ready to be wired as a tool for LLMs.
 
-## Fitting mitmproxy into a webapp's Docker container
+## Run mitmproxy in a Dockerized webapp
 
-Let's put up a small Flask webapp that has a form to take a prompt from a user, and shows an LLM response on form submission.
+We created a small Flask webapp (`server.py`) that prompts for user input and calls an LLM:
 
-This is in [the `server.py` file](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/server.py), and run it with `make serve`. Open [localhost:9022](http://localhost:9022) to see this groundbreaking LLM powered app.
+```bash
+make serve
+```
 
-The server of course, is run with the proxy env variables. So when we enter a prompt in the UI and hit submit, we see the LLM call in mitmproxy UI.
+View it at [localhost:9022](http://localhost:9022). LLM traffic will appear in mitmproxy at [localhost:9021](http://localhost:9021).
 
-Now consider the [Dockerfile](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/Dockerfile) for our webapp. There's nothing special here. We load the app into the Docker image, install dependencies and mitmproxy. Setup [an `entrypoint.sh`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/entrypoint.sh) that'll start mitmweb in the background, and run the server.
+Check out the [`Dockerfile`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/Dockerfile) and [`entrypoint.sh`](https://github.com/sharat87/mitmproxy-for-llm-apps/blob/main/entrypoint.sh) for how mitmproxy is booted inside the container.
 
-Run it like this:
+Build and run:
 
 ```bash
 docker build -t mapp . && {
@@ -254,16 +255,10 @@ docker build -t mapp . && {
 }
 ```
 
-Fill in some password and the OpenAI API key, and open [localhost:5022](http://localhost:5022) to see the app running in the Docker container.
-
-The mitmproxy web UI should be available at [localhost:5021](http://localhost:5021).
-
-Submitting a prompt in the app should show the LLM call in mitmproxy UI.
-
-Of course, goes without saying, um, DO NOT DO THIS IN PRODUCTION. Like, please don't. I'm of half a mind to not include this section here. 🤔
+> ⚠️ **Warning:** Definitely don't run this in production. Like, please _please_ don't.
 
 ## Conclusion
 
-Abstractions aren't magic&mdash;so long as we understand what's going on underneath.
+Abstractions aren't magic, they're just a facade. Looking behind the curtain can give powerful understanding of the various LLM APIs and frameworks.
 
-_Every_ web developer needs a dev proxy. _Especially_ if you're working with LLM provider APIs.
+_Every_ LLM app developer should have a local dev proxy in their toolkit.
