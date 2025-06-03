@@ -1,9 +1,7 @@
 ---
 title: Python's `itertools.groupby` callable
 tags: python, tutorial, python-itertools, itertools-groupby
-description: >
-    The itertools.groupby callable that can be used to group contiguous items in a sequence based
-    on some property of the items.
+description: The itertools.groupby callable that can be used to group contiguous items in a sequence based on some property of the items.
 ---
 
 The `groupby` utility from the [`itertools`][itertools] module can be used to group contiguous items in a

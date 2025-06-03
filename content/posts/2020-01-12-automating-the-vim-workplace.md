@@ -1,8 +1,7 @@
 ---
 title: Automating the Vim workplace
 tags: vim, productivity
-description: >
-    Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
+description: Learn to identify actions in your Vim workflow and automate them, and improve your productivity!
 reddit_url: r/vim/comments/enlz8x
 ---
 

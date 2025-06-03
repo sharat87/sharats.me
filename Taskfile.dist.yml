@@ -1,7 +1,8 @@
 version: 3
 
 env:
-  PORT: 8000
+  PORT: 6060
+  PYTHONPATH: .
 
 dotenv:
   - .env
@@ -14,20 +15,14 @@ tasks:
     env:
       ENV: dev
     cmds:
-      - venv/bin/pelican --debug --listen --autoreload --port "$PORT" --bind 0.0.0.0
-    deps:
-      - deps
+      - uv sync
+      - bash -c 'sleep 4 && open http://127.0.0.1:6060'
+      - uv run pelican --debug --listen --autoreload --port "$PORT" --bind 0.0.0.0
 
   build:
-    deps:
-      - deps
-      - build-ci
-
-  build-ci:
     cmds:
-      - |
-        if [[ -d venv ]]; then source venv/bin/activate; fi
-        pelican --ignore-cache --fatal errors
+      - uv sync
+      - uv run pelican --ignore-cache --fatal errors
       - |
         # Add all draft links to redirect to their final location
         find output/posts -type d -depth 1 -maxdepth 1 \
@@ -38,12 +33,12 @@ tasks:
 
   new:
     preconditions:
-      - sh: test -n "{{ .title }}"
+      - sh: test -n "{{ .CLI_ARGS }}"
         msg: Please provide a title for the new post
     cmds:
       - |
         f="content/posts/$(date +%Y-%m-%d)-$(
-          echo "{{ .title }}" \
+          echo "{{ .CLI_ARGS }}" \
             | tr '[:upper:]' '[:lower:]' \
             | sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$//g'
         ).md"
@@ -53,7 +48,7 @@ tasks:
         fi
         cat <<EOF > "$f"
         ---
-        title: {{ .title }}
+        title: {{ .CLI_ARGS }}
         status: draft
         ---
 
@@ -66,44 +61,6 @@ tasks:
         ## Conclusion
 
         EOF
-
-  deps:
-    run: once
-    cmds:
-      - |
-        if [[ -d venv ]]; then source venv/bin/activate; fi
-        pip install -r requirements.txt
-      - touch venv/sentinel
-    deps:
-      - requirements.txt
-      - venv
-    sources:
-      - requirements.txt
-    generates:
-      - venv/sentinel
-
-  requirements.txt:
-    internal: true
-    run: once
-    preconditions:
-      - if [[ -n $CI ]]; then echo 'Should not generate requirements.txt in CI' >&2; exit 1; fi
-    cmds:
-      - venv/bin/pip-compile requirements.in
-    sources:
-      - requirements.in
-    generates:
-      - requirements.txt
-    deps:
-      - venv
-
-  venv:
-    internal: true
-    run: once
-    status:
-      - test -d venv
-    cmds:
-      - python3 -m venv --prompt sharats.me venv
-      - venv/bin/pip install --upgrade pip pip-tools
 
   clean:
     cmds:

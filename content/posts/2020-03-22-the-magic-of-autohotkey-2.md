@@ -1,10 +1,7 @@
 ---
 title: The Magic of AutoHotkey &mdash; Part 2
 tags: autohotkey, productivity, windows, automation
-description: >
-    My automation stack for day-to-day working, that's built on Autohotkey over six years. This is
-    part 2 of the "Magic of AutoHotkey" series. In this part, we look at automating the file
-    explorer and using OLE objects for office applications.
+description: My automation stack for day-to-day working, that's built on Autohotkey over six years. This is part 2 of the "Magic of AutoHotkey" series. In this part, we look at automating the file explorer and using OLE objects for office applications.
 reddit_url: r/AutoHotkey/comments/fms8ca
 ---
 

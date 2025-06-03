@@ -1,9 +1,7 @@
 ---
 title: The Python Dictionary
 tags: python, programming, data-structures, reference
-description: >
-    An extensive write up on dictionaries in Python, with examples and explanations, serving as a
-    supplementary reference for the official documentation.
+description: An extensive write up on dictionaries in Python, with examples and explanations, serving as a supplementary reference for the official documentation.
 reddit_url: r/Python/comments/73cbrq
 ---
 

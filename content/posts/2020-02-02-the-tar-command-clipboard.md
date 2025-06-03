@@ -1,8 +1,7 @@
 ---
 title: The `tar` Command Clipboard
 tags: shell, bash, tar, tutorial, command-clipboard
-description: >
-    The tar command clipboard, quick reference for common needs with the `tar` command.
+description: The tar command clipboard, quick reference for common needs with the `tar` command.
 ---
 
 Recently, while doing an experiment with my blog's rendered output with a VPS instance, I needed to

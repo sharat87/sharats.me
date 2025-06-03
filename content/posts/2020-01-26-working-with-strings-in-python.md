@@ -1,9 +1,7 @@
 ---
 title: Working with Strings in Python
 tags: python, programming, reference, tutorial
-description: >
-    Everything you need handy as a quick reference when working with strings in Python. A complement
-    to the official documentation.
+description: Everything you need handy as a quick reference when working with strings in Python. A complement to the official documentation.
 ---
 
 This article will be a practical rundown of working with strings in Python, made up of things I

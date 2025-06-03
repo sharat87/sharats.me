@@ -1,8 +1,7 @@
 ---
 title: Migrate from Pelican to Hugo
 tags: hugo, meta, awk, python
-description: >
-    A writeup on my experience migrating this blog website from Pelican to Hugo.
+description: A writeup on my experience migrating this blog website from Pelican to Hugo.
 ---
 
 **Update:** I have now moved to using a self-made Python program that compiles my markdown article

@@ -41,7 +41,12 @@ awesome content. Subscribe at sharats.me/posts/index.xml to stay updated.
 </em>
 </p>
 
-<article>{{ article.content }}</article>
+<article>
+{%- if article.description %}
+<p style="font-size:1.3em">{{ article.description | markdown }}</p>
+{%- endif %}
+{{ article.content }}
+</article>
 
 {%- if article.hn_id or article.reddit_url %}
 <p><b>Discuss on</b>:

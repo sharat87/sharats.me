@@ -1,8 +1,7 @@
 ---
 title: The Weird `global`
 tags: python, rant
-description: >
-    Usage of the global keyword and how it can be unintuitive sometimes, with lots of examples and details.
+description: Usage of the global keyword and how it can be unintuitive sometimes, with lots of examples and details.
 ---
 
 Python's `global` keyword allows us to change the value of module-level variables inside functions.

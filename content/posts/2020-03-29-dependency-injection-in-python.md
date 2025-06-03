@@ -1,9 +1,7 @@
 ---
 title: Dependency Injection In Python
 tags: python, python-importlib, python-inspect, reflection
-description: >
-    A write-up of a simple implementation of dependency injection (DI) in Python using only the
-    standard library's importlib and inspect modules.
+description: A write-up of a simple implementation of dependency injection (DI) in Python using only the standard library's importlib and inspect modules.
 ---
 
 I chose a form of dependency injection (DI) as the solution to a recent problem I needed to solve.

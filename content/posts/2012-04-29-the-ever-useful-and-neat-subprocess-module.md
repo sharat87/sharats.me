@@ -1,9 +1,7 @@
 ---
 title: The ever useful and neat subprocess module
 tags: python, programming, python-subprocess, tutorial
-description: >
-    An extensive article on the subprocess module in Python's standard library. Filled with examples
-    and scenarios from my experienece with explanations and rationales for the solutions.
+description: An extensive article on the subprocess module in Python's standard library. Filled with examples and scenarios from my experienece with explanations and rationales for the solutions.
 hn_id: 3906882
 reddit_url: r/Python/comments/sydg4
 ---

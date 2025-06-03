@@ -1,9 +1,7 @@
 ---
 title: Automating the Vim workplace &mdash; Chapter Ⅱ
 tags: vim, productivity
-description: >
-    More ideas and inspiration for identifying repeated actions in your Vim workflow and automate
-    them, and improve your productivity! A follow up to the previous article on this topic.
+description: More ideas and inspiration for identifying repeated actions in your Vim workflow and automate them, and improve your productivity! A follow up to the previous article on this topic.
 reddit_url: r/vim/comments/f4khwq
 ---
 

@@ -1,9 +1,7 @@
 ---
 title: The Jython Pillow Guide
 tags: python, jython, java, polyglot
-description: >
-    Expert tips on writing Python programs tailored to run on Jython, making the best use of
-    Jython's features and Java interop.
+description: Expert tips on writing Python programs tailored to run on Jython, making the best use of Jython's features and Java interop.
 ---
 
 This is a document with tips and usage details about Jython that I've come across. I intend to

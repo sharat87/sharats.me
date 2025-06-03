@@ -1,7 +1,6 @@
 ---
 title: A Tale of Two Forwarded Headers
-description: >
-    Learn how the `Forwarded` and `X-Forwarded-*` headers can be confused in a multi-reverse proxy setup. This post details the troubleshooting of OAuth2 redirect URL for Appsmith on Google Cloud Run, and how NGINX and header precedence played a role in the solution.
+description: Learn how the `Forwarded` and `X-Forwarded-*` headers can be confused in a multi-reverse proxy setup. This post details the troubleshooting of OAuth2 redirect URL for Appsmith on Google Cloud Run, and how NGINX and header precedence played a role in the solution.
 ---
 
 This is the story of how I handled troubleshooting the redirect URL for OAuth2 in Appsmith, which contained the host as `localhost` instead of the actual domain name when hosted on Google Cloud Run. This is a story of how `Forwarded` and `X-Forwarded-*` headers were propagating through multiple reverse proxies and how they can be confused.
