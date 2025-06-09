@@ -22,7 +22,7 @@ tasks:
   build:
     cmds:
       - |
-        if [[ -n "$CI" ]]; then
+        if [[ -n "${CI-}" ]]; then
           uv sync --no-dev
         else
           uv sync

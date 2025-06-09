@@ -2,11 +2,11 @@ name: Publish
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: '0 3 * * *'
+  # push:
+  #   branches:
+  #     - master
+  # schedule:
+  #   - cron: '0 3 * * *'
 
 permissions:
   contents: read
