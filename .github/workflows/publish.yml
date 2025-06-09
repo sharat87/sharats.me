@@ -39,11 +39,12 @@ jobs:
           wget 'https://github.com/go-task/task/releases/download/v3.44.0/task_linux_amd64.tar.gz'
           tar -xzf task_linux_amd64.tar.gz task
           ./task build
+          npm install -g netlify-cli
 
       - name: Publish
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         run: |
           set -xeuo pipefail
-          npm install -g netlify-cli
-          netlify --telemetry-disable deploy --prod --site sharats-me --dir output
+          netlify sites:list
+          netlify deploy --prod --site sharats-me --dir output --telemetry-disable
