@@ -11,11 +11,11 @@ But, as with all abstractions that make it dead simple to start, they also make 
 
 I'm constantly asking myself: *Under all those library calls, what actual API request was made? What payload was sent? What did the server return? What were the headers?* Having access to this info makes debugging and discovery **so much easier**. Once you see it, there's no going back.
 
-Example video:
+All code for this article is in [this GitHub repo](https://github.com/sharat87/mitmproxy-for-llm-apps). Follow along!
+
+Example video (no audio):
 
 Video: mitmproxy-llm-apis.mp4
-
-All code for this article is in [this GitHub repo](https://github.com/sharat87/mitmproxy-for-llm-apps). Follow along!
 
 [TOC]
 
