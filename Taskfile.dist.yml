@@ -21,7 +21,12 @@ tasks:
 
   build:
     cmds:
-      - uv sync
+      - |
+        if [[ -n "$CI" ]]; then
+          uv sync --no-dev
+        else
+          uv sync
+        fi
       - uv run pelican --ignore-cache --fatal errors
       - |
         # Add all draft links to redirect to their final location
@@ -61,7 +66,3 @@ tasks:
         ## Conclusion
 
         EOF
-
-  clean:
-    cmds:
-      - rm -rf output __pycache__ venv

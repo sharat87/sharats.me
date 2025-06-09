@@ -1,3 +1,5 @@
+name: Publish
+
 on:
   workflow_dispatch:
   push:
@@ -15,29 +17,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get versions
         id: versions
         run:
-          sed 's/ /_version=/' .tool-versions | tee -a "$GITHUB_OUTPUT"
+          echo "python_version=$(cat .python-version)" | tee -a "$GITHUB_OUTPUT"
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ steps.versions.outputs.python_version }}
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
 
       - name: Build
         env:
           PYTHONPATH: ${{ github.workspace }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          wget 'https://github.com/go-task/task/releases/download/v3.28.0/task_linux_amd64.tar.gz'
+          wget 'https://github.com/go-task/task/releases/download/v3.44.0/task_linux_amd64.tar.gz'
           tar -xzf task_linux_amd64.tar.gz task
-          ./task build-ci
+          ./task build
 
       - name: Publish
         env:
