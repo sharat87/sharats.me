@@ -34,6 +34,8 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -xeuo pipefail
+          curl -LsSf https://astral.sh/uv/install.sh | sh
           wget 'https://github.com/go-task/task/releases/download/v3.44.0/task_linux_amd64.tar.gz'
           tar -xzf task_linux_amd64.tar.gz task
           ./task build
