@@ -27,17 +27,6 @@ An easily reachable endpoint to have a calendar to look at. No signup, no setup,
 
 Considered a "finished" project, and I'm using it every day.
 
-## Prestige
-
-[prestige.dev](https://prestige.dev) [Source Code](https://github.com/sharat87/prestige)
-{ .links }
-
-A text-based HTTP client in the browser. An interface-less Postman. It supports a powerful grammar with embedded JavaScript for templating requests, doing environments, asserting responses and any other fancy.
-
-Frontend is a [Mithril.js](https://mithril.js.org/) project, and backend is a [Django](https://www.djangoproject.com)  project.
-
-Not in active development, but I still love the idea and wish I can come back to it one day. 😃
-
 ## LittleTools
 
 [littletools.app](https://littletools.app)

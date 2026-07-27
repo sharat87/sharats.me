@@ -394,27 +394,6 @@ footer {
 	display: initial;
 }
 
-.banners {
-	margin: 2em 0;
-}
-
-.banners p {
-	border-left-width: 3px;
-	border-left-style: solid;
-	padding: 1rem;
-	margin: 1rem;
-}
-
-.appsmith-ref {
-	background-color: #FFF7F0;
-	border-color: #F70;
-}
-
-.prestige-ref {
-	background-color: #EFF;
-	border-color: #0AF;
-}
-
 del {
 	color: #888;
 }
@@ -517,14 +496,6 @@ del {
 
 	blockquote {
 		border-color: #eee;
-	}
-
-	.appsmith-ref {
-		background-color: #514236;
-	}
-
-	.prestige-ref {
-		background-color: #3B4A4A;
 	}
 
 	.note {
