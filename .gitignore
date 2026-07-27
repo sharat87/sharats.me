@@ -1,7 +1,6 @@
 /output
 /venv
 
-/content/root-static/pdfs
 
 /.task
 Taskfile.yml

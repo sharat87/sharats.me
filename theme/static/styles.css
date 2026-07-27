@@ -419,18 +419,6 @@ del {
 	color: #888;
 }
 
-.resume h1 {
-	text-align: center;
-}
-
-.resume .info {
-	text-align: center;
-}
-
-.pdf-only {
-	display: none;
-}
-
 /* pygments styles BEGIN */
 .hl .hll { background-color: #dfd; display: block }
 .hl :is(.c, .ch, .cm, .cp, .cpf, .c1, .cs) { color: #8f5902 } /* Comments */
@@ -508,21 +496,9 @@ del {
 	}
 }
 
-@media screen {
-	::selection {
-		background: var(--link-color);
-		color: white;
-	}
-
-	.print-only {
-		display: none !important;
-	}
-}
-
-@media print {
-	.screen-only {
-		display: none !important;
-	}
+::selection {
+	background: var(--link-color);
+	color: white;
 }
 
 @media (hover: hover) {

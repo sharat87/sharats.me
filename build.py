@@ -95,16 +95,6 @@ def striptags(html_text: str) -> str:
 # --- Content parsing ---------------------------------------------------------
 
 
-def slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-
-
-class Tag(str):
-    @property
-    def url(self):
-        return f"tags/{slugify(self)}/"
-
-
 def parse_front_matter(text: str) -> tuple[dict, str]:
     """Parse `---` fenced `key: value` front matter. Returns (meta, body)."""
     if not text.startswith("---"):
@@ -174,17 +164,12 @@ class Content:
         self.description = meta.get("description")
         self.hn_id = meta.get("hn_id")
         self.reddit_url = meta.get("reddit_url")
-        self.bodyclass = meta.get("bodyclass")
-        self.authors = [meta.get("author", AUTHOR)]
-        self.translations = []
-
         date_str = meta.get("date", date_str)
         self.date = (
             datetime.combine(date.fromisoformat(date_str), time.min, TIMEZONE)
             if date_str
             else None
         )
-        self.tags = [Tag(t.strip()) for t in meta.get("tags", "").split(",") if t.strip()]
 
         if kind == "article":
             if self.date and self.date > datetime.now(TIMEZONE) and "status" not in meta:
@@ -234,7 +219,6 @@ class Builder:
             THEME_STATIC_DIR="theme",
             ARCHIVES_URL="posts/",
             IS_DEV=dev,
-            IS_PDF=False,
             current_year=date.today().strftime("%Y"),
             date_iso=date.today().isoformat(),
         )
@@ -242,21 +226,16 @@ class Builder:
         self.articles = []
         self.drafts = []
         self.pages = []
-        self.tags = {}  # Tag -> [articles]
         self.now = datetime.now(TIMEZONE)
 
     def load_content(self):
         for path in sorted(CONTENT_DIR.glob("posts/*.md")):
             article = Content(path, "article", self.siteurl)
             (self.drafts if article.status == "draft" else self.articles).append(article)
-            for tag in article.tags:
-                self.tags.setdefault(tag, []).append(article)
         for path in sorted(CONTENT_DIR.glob("pages/**/*.md")):
             self.pages.append(Content(path, "page", self.siteurl))
         self.articles.sort(key=lambda a: a.date, reverse=True)
         self.drafts.sort(key=lambda a: a.date, reverse=True)
-        for tag_articles in self.tags.values():
-            tag_articles.sort(key=lambda a: a.date, reverse=True)
 
     def render(self, template_name: str, save_as: str, **context):
         template = self.jinja.get_template(template_name)
@@ -302,7 +281,7 @@ class Builder:
                 updateddate=article.date,
                 description=article.summary,
                 content=article.content,
-                categories=("posts", *article.tags),
+                categories=("posts",),
             )
         out_path = OUTPUT_DIR / FEED_PATH
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -315,9 +294,6 @@ class Builder:
             entries.append(("/" + page.url, self.now, "monthly"))
         for article in self.articles:
             entries.append(("/" + article.url, article.date, "monthly"))
-        entries.append(("/tags.html", self.now, "daily"))
-        for tag in sorted(self.tags):
-            entries.append(("/" + tag.url, self.now, "daily"))
 
         lines = [
             '<?xml version="1.0" encoding="utf-8"?>',
@@ -362,16 +338,6 @@ class Builder:
 
         self.render("index.html", "index.html")
         self.render("archives.html", "posts/index.html")
-        self.render("tags.html", "tags.html", tags=sorted(self.tags.items()))
-        for tag in sorted(self.tags):
-            tag_articles = self.tags[tag]
-            self.render(
-                "tag.html",
-                f"tags/{slugify(tag)}/index.html",
-                tag=tag,
-                articles=tag_articles,
-                articles_page=SimpleNamespace(object_list=tag_articles),
-            )
 
         self.copy_static()
         self.write_feed()
@@ -381,8 +347,7 @@ class Builder:
 
         print(
             f"Done: {len(self.articles)} articles, {len(self.drafts)} drafts, "
-            f"{len(self.pages)} pages, {len(self.tags)} tags "
-            f"({'dev' if self.dev else 'production'} build)."
+            f"{len(self.pages)} pages ({'dev' if self.dev else 'production'} build)."
         )
 
 

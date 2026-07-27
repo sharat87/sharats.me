@@ -11,35 +11,12 @@
 
 {% block title %}{{ article.title | striptags }}{% endblock %}
 
-{% block extra_head %}
-{% import 'translations.html' as translations with context %}
-{% if translations.entry_hreflang(article) %}
-	{{ translations.entry_hreflang(article) }}
-{% endif %}
-{% endblock %}
-
 {% block content %}
 <h1>{{ article.title | markdown }}</h1>
 <time datetime="{{ article.date.isoformat() }}" style="font-size: .8em; color: #888;">{{ article.locale_date }}</time>
 {%- if article.status != "published" %}
 <p style="font-size: .8em; color: #f44;">Not published. This is a {{ article.status }}.</p>
 {%- endif %}
-
-<p class=print-only>
-<em>
-<b>Published:</b> {{ article.locale_date }}<br>
-{%- if article.authors %}
-<b>Author:</b> {% for author in article.authors %}{{ author }}{% endfor %}<br>
-{%- endif %}
-</em>
-</p>
-
-<p class=print-only>
-<em>
-Thank you for printing from <a href="{{ PROD_SITEURL }}">sharats.me</a>. Do check back regularly for more such
-awesome content. Subscribe at sharats.me/posts/index.xml to stay updated.
-</em>
-</p>
 
 <article>
 {%- if article.description %}

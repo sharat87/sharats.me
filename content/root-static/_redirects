@@ -2,19 +2,15 @@
 /li       https://www.linkedin.com/in/sharat87 301
 /github   https://github.com/sharat87          301
 /gh       https://github.com/sharat87          301
-/twitter  https://twitter.com/sharat87         301
-/tw       https://twitter.com/sharat87         301
-/facebook https://www.facebook.com/sharat87    301
-/fb       https://www.facebook.com/sharat87    301
 
-/re /resume 301
-
+/connect*           /                301
 /about.html         /about/          301
 /labs.html          /labs/           301
 /archives.html      /posts/          301
 /archive.html       /posts/          301
 /archive/           /posts/          301
-/tags.html          /tags/           301
+/tags.html          /posts/          301
+/tags/*             /posts/          301
 /feeds/all.atom.xml    /posts/index.xml 301
 /feeds/all-en.atom.xml /posts/index.xml 301
 /feeds/posts.atom.xml  /posts/index.xml 301

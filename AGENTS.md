@@ -39,8 +39,8 @@ tmux window (socket `daemons`, window `sharats-me-dev`), logging to
   keeps a post unpublished (drafts render under `/drafts/<slug>.html` and are
   excluded from listings, feed and sitemap). Future-dated posts are treated as
   drafts.
-- `content/pages/` — standalone pages (resume, labs, 404, licenses), rendered
-  at `/{slug}/`.
+- `content/pages/` — standalone pages (labs, 404, licenses), rendered at
+  `/{slug}/`.
 - `content/root-static/` — files copied to the site root (favicons,
   `_redirects`, `_headers`, etc.).
 - `content/static/` — other static assets, copied to `/static/`.
@@ -55,8 +55,10 @@ tmux window (socket `daemons`, window `sharats-me-dev`), logging to
   Amend the previous commit for follow-up changes when asked.
 - New posts: use `task new -- "Title"`, which scaffolds front matter with
   `status: draft` and a `[TOC]` marker.
-- Articles are at `/posts/{slug}/`; the archive index is `/posts/`; tag pages
-  at `/tags/{slug}/`; the tag index at `/tags.html`.
+- Articles are at `/posts/{slug}/`; the archive index is `/posts/`. There are
+  no tag pages, author pages or translations — those concepts were removed;
+  `tags:` lines in old front matter are simply ignored. Old `/tags/*` URLs
+  301 to `/posts/`.
 - Atom feed: `/posts/index.xml`. Legacy Pelican feed URLs (`/feeds/*`) 301 to
   it via `content/root-static/_redirects`.
 - The production build appends 301 redirects from `/drafts/<slug>.html` to
