@@ -3,28 +3,21 @@
 <head>
 	{% block head %}
 	<meta charset=utf-8>
-	<meta name=generator content=Pelican>
 	<title>{% block title %}{% endblock %}{% if self.title() %} — {% endif %}{{ SITENAME }}</title>
-	<meta name=viewport content="width=device-width">
+	<meta name=viewport content="width=device-width, initial-scale=1">
 	<link rel=manifest href="/site.webmanifest">
 	<link rel=apple-touch-icon href="/apple-touch-icon.png">
 	<link rel=stylesheet href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/styles.css">
 	<style>.hide, .sr-only { display: none !important; }</style>
-	{%- if FEED_ALL_ATOM %}
-	<link href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }}">
-	{%- endif %}
-	{%- if FEED_ALL_RSS %}
-	<link href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }}">
-	{%- endif %}
+	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="{{ SITENAME }}">
 	{% block extra_head %}{% endblock extra_head %}
 	{% endblock head %}
-	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="The Sharat's">
 </head>
 
 <body>
 
 	<header>
-		<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home">{{ SITENAME }}</a></div>
+		<div class=brand><a href="{{ SITEURL }}/" rel=home title="Go Home"><img src="/apple-touch-icon.png" alt="" width=28 height=28>{{ SITENAME }}</a></div>
 		<nav>
 			{#- TODO: Highlight for Posts page needs a better solution. #}
 			{%- for title, link in MENUITEMS -%}

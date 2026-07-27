@@ -1,10 +1,12 @@
 <ul class=post-list>
 	{% for article in ((drafts + articles) if IS_DEV else articles) %}
 	<li>
-		{%- if article.status == "draft" %}<span style='padding:0 6px;background:#FAD;margin-right:1em'>Draft</span>{% endif -%}
 		<small class=subtext>
 			<time datetime='{{ article.date.isoformat() }}'>{{ article.locale_date }}</time>
 		</small>
-		<a href="{{ SITEURL }}/{{ article.url }}" class=title>{{ article.title | markdown }}</a>
+		<span class=title-wrap>
+			<a href="{{ SITEURL }}/{{ article.url }}" class=title>{{ article.title | markdown }}</a>
+			{%- if article.status == "draft" %} <span class=draft-badge>Draft</span>{% endif -%}
+		</span>
 	{% endfor %}
 </ul>

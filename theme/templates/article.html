@@ -13,14 +13,16 @@
 
 {% block content %}
 <h1>{{ article.title | markdown }}</h1>
-<time datetime="{{ article.date.isoformat() }}" style="font-size: .8em; color: #888;">{{ article.locale_date }}</time>
-{%- if article.status != "published" %}
-<p style="font-size: .8em; color: #f44;">Not published. This is a {{ article.status }}.</p>
-{%- endif %}
+<p class=post-meta>
+	<time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+	{%- if article.status != "published" %}
+	&middot; <span class=draft-badge>{{ article.status }}</span>
+	{%- endif %}
+</p>
 
 <article>
 {%- if article.description %}
-<p style="font-size:1.3em">{{ article.description | markdown }}</p>
+<p class=lede>{{ article.description | markdown }}</p>
 {%- endif %}
 {{ article.content }}
 </article>

@@ -46,7 +46,3 @@ This is currently being maintained by the community, the zsh-users organizations
 ## More
 
 More at [GitHub repositories page](https://github.com/sharat87?tab=repositories).
-
-<style>
-.links a + a { margin-left: 1em; }
-</style>
