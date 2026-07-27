@@ -13,7 +13,7 @@ This is an HTTP service with endpoints that are useful when testing any HTTP cli
 
 ## Just a calendar
 
-[justacalendar.app](https://justacalendar.app/)
+[cal.sharats.me](https://cal.sharats.me)
 { .links }
 
 An easily reachable endpoint to have a calendar to look at. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to show a calendar and talk about dates when sharing your screen in a presentation or meeting.
@@ -26,13 +26,6 @@ An easily reachable endpoint to have a calendar to look at. No signup, no setup,
 - Remove all marks with a single click.
 
 Considered a "finished" project, and I'm using it every day.
-
-## LittleTools
-
-[littletools.app](https://littletools.app)
-{ .links }
-
-A suite of little power tools for developers and powers users. Very hobby project.
 
 ## Antigen
 
