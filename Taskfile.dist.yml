@@ -1,20 +1,13 @@
 version: 3
 
-env:
-  PORT: 6060
-  PYTHONPATH: .
-
 set:
   - nounset
 
 tasks:
   serve:
-    env:
-      ENV: dev
     cmds:
       - uv sync
-      - bash -c 'sleep 4 && open http://127.0.0.1:6060'
-      - uv run pelican --debug --listen --autoreload --port "$PORT" --bind 0.0.0.0
+      - bash serve.sh
 
   build:
     cmds:
@@ -24,14 +17,7 @@ tasks:
         else
           uv sync
         fi
-      - uv run pelican --ignore-cache --fatal errors
-      - |
-        # Add all draft links to redirect to their final location
-        find output/posts -type d -depth 1 -maxdepth 1 \
-          | xargs basename \
-          | sed 's,\(.*\),/drafts/\1.html /posts/\1 301,' >> output/_redirects
-    env:
-      PYTHONPATH: .
+      - uv run python build.py
 
   new:
     preconditions:

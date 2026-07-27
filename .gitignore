@@ -11,3 +11,4 @@ Taskfile.yml
 
 .DS_Store
 __pycache__
+/.logs

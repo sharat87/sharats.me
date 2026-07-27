@@ -15,7 +15,9 @@
 /archive.html       /posts/          301
 /archive/           /posts/          301
 /tags.html          /tags/           301
-/feeds/all.atom.xml /posts/index.xml 301
+/feeds/all.atom.xml    /posts/index.xml 301
+/feeds/all-en.atom.xml /posts/index.xml 301
+/feeds/posts.atom.xml  /posts/index.xml 301
 
 /posts/the-magic-of-autohotkey-part-2/ /posts/the-magic-of-autohotkey-2/ 301
 
