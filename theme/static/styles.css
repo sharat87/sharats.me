@@ -311,20 +311,6 @@ footer {
 	padding: 1em 0 .5em 0;
 }
 
-.star-btn {
-	border-radius: 6px;
-	border: 1px solid #0002;
-	box-shadow: 1px 1px 2px #0001;
-	color: inherit;
-	font-size: .8em;
-	padding: 3px 6px;
-}
-
-.star-btn:hover {
-	background: #EEE;
-	text-decoration: none;
-}
-
 .ghost {
 	position: fixed;
 	font-weight: bold;
@@ -576,15 +562,6 @@ del {
 	p.img img, img[src$=".gif"], video {
 		filter: brightness(80%);
 		-webkit-filter: brightness(80%); /* For iOS Safari */
-	}
-
-	.star-btn {
-		border-color: #888;
-		box-shadow: 1px 1px 2px #0003;
-	}
-
-	.star-btn:hover {
-		background: #777;
 	}
 
 	pre {

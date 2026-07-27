@@ -4,9 +4,6 @@ env:
   PORT: 6060
   PYTHONPATH: .
 
-dotenv:
-  - .env
-
 set:
   - nounset
 

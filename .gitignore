@@ -1,9 +1,7 @@
-/.env
 /output
 /venv
 
 /content/root-static/pdfs
-/stars.json
 
 /.task
 Taskfile.yml

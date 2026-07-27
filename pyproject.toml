@@ -8,5 +8,4 @@ dependencies = [
     "pelican-sitemap>=1.2.0",
     "pelican[markdown]>=4.11.0",
     "pygments>=2.18.0",
-    "requests>=2.32.3",
 ]

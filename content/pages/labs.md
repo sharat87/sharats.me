@@ -6,14 +6,14 @@ This is a list of my public projects and experiments. You may follow me on [GitH
 
 ## Httpbun ![Icon](https://httpbun.com/assets/icon-32.png)
 
-[httpbun.com](https://httpbun.com) [httpbun.org](https://httpbun.org) [Source Code](https://github.com/sharat87/httpbun) {github-stars httpbun}
+[httpbun.com](https://httpbun.com) [httpbun.org](https://httpbun.org) [Source Code](https://github.com/sharat87/httpbun)
 { .links }
 
 This is an HTTP service with endpoints that are useful when testing any HTTP client, like a browser, a library, or any API developer tool. It's heavily inspired by [httpbin](https://httpbin.org).
 
 ## Just a calendar
 
-[justacalendar.app](https://justacalendar.app/) {github-stars just-a-calendar}
+[justacalendar.app](https://justacalendar.app/)
 { .links }
 
 An easily reachable endpoint to have a calendar to look at. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to show a calendar and talk about dates when sharing your screen in a presentation or meeting.
@@ -29,7 +29,7 @@ Considered a "finished" project, and I'm using it every day.
 
 ## Prestige
 
-[prestige.dev](https://prestige.dev) [Source Code](https://github.com/sharat87/prestige) {github-stars prestige}
+[prestige.dev](https://prestige.dev) [Source Code](https://github.com/sharat87/prestige)
 { .links }
 
 A text-based HTTP client in the browser. An interface-less Postman. It supports a powerful grammar with embedded JavaScript for templating requests, doing environments, asserting responses and any other fancy.
@@ -40,14 +40,14 @@ Not in active development, but I still love the idea and wish I can come back to
 
 ## LittleTools
 
-[littletools.app](https://littletools.app) {github-stars littletools}
+[littletools.app](https://littletools.app)
 { .links }
 
 A suite of little power tools for developers and powers users. Very hobby project.
 
 ## Antigen
 
-[Project Page](https://github.com/zsh-users/antigen) {github-stars zsh-users/antigen}
+[Project Page](https://github.com/zsh-users/antigen)
 { .links }
 
 A plugin manager for zsh, inspired by oh-my-zsh and vundle. This is one of the first of it's kind and has inspired many alternative plugin managers for zsh as well as other popular shells.
