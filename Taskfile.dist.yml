@@ -20,23 +20,21 @@ tasks:
       - uv run python build.py
 
   new:
-    preconditions:
-      - sh: test -n "{{ .CLI_ARGS }}"
-        msg: Please provide a title for the new post
     cmds:
       - |
-        f="content/posts/$(date +%Y-%m-%d)-$(
-          echo "{{ .CLI_ARGS }}" \
-            | tr '[:upper:]' '[:lower:]' \
-            | sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$//g'
-        ).md"
+        title="{{ .CLI_ARGS }}"
+        test -n "$title" || title="untitled"
+        slug=$(echo "$title" \
+          | tr '[:upper:]' '[:lower:]' \
+          | sed -E -e s/\'//g -e 's/[^a-z0-9]+/-/g' -e 's/^-|-$//g')
+        f="content/posts/$(date +%Y-%m-%d)-${slug}.md"
         if test -f "$f"; then
           echo "File '$f' already exists. Exiting." >&2
           exit 1
         fi
-        cat <<EOF > "$f"
+        cat > "$f" <<ENDOFFRONTMATTER
         ---
-        title: {{ .CLI_ARGS }}
+        title: $title
         status: draft
         ---
 
@@ -48,4 +46,7 @@ tasks:
 
         ## Conclusion
 
-        EOF
+        ENDOFFRONTMATTER
+        if [[ "${FROM-}" == "subl" ]]; then
+          subl "$f"
+        fi
