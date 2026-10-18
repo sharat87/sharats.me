@@ -1,3 +1,7 @@
+# Old domain, moving to sharat.space. Keep these first, so they win.
+https://sharats.me/*     https://sharat.space/:splat 301!
+https://www.sharats.me/* https://sharat.space/:splat 301!
+
 /linkedin https://www.linkedin.com/in/sharat87 301
 /li       https://www.linkedin.com/in/sharat87 301
 /github   https://github.com/sharat87          301
