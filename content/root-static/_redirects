@@ -1,15 +1,6 @@
-# All of sharats.me redirects to sharat.space. Each of these hosts is a domain
-# alias on this Netlify site, including the ones for other sites and apps.
-# Keep these first, so they win.
-https://sharats.me/*          https://sharat.space/:splat          301!
-https://www.sharats.me/*      https://sharat.space/:splat          301!
-https://cal.sharats.me/*      https://cal.sharat.space/:splat      301!
-https://calendar.sharats.me/* https://calendar.sharat.space/:splat 301!
-https://play.sharats.me/*     https://play.sharat.space/:splat     301!
-https://artbox.sharats.me/*   https://artbox.sharat.space/:splat   301!
-https://myportal.sharats.me/* https://myportal.sharat.space/:splat 301!
-https://quizfish.sharats.me/* https://quizfish.sharat.space/:splat 301!
-https://dashql.sharats.me/*   https://dashql.sharat.space/:splat   301!
+# sharat.space was briefly the main domain. Send it home until it lapses.
+https://sharat.space/*     https://sharats.me/:splat 301!
+https://www.sharat.space/* https://sharats.me/:splat 301!
 
 /linkedin https://www.linkedin.com/in/sharat87 301
 /li       https://www.linkedin.com/in/sharat87 301

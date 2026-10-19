@@ -35,7 +35,7 @@ OUTPUT_DIR = ROOT / "output"
 
 AUTHOR = "Shrikant Sharat Kandula"
 SITENAME = "The Sharat's"
-PROD_SITEURL = "https://sharat.space"
+PROD_SITEURL = "https://sharats.me"
 FEED_PATH = "posts/index.xml"
 TIMEZONE = timezone(timedelta(hours=5, minutes=30))  # Asia/Kolkata
 SUMMARY_MAX_WORDS = 50
