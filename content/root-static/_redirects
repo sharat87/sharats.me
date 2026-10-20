@@ -1,7 +1,3 @@
-# sharat.space was briefly the main domain. Send it home until it lapses.
-https://sharat.space/*     https://sharats.me/:splat 301!
-https://www.sharat.space/* https://sharats.me/:splat 301!
-
 /linkedin https://www.linkedin.com/in/sharat87 301
 /li       https://www.linkedin.com/in/sharat87 301
 /github   https://github.com/sharat87          301
