@@ -39,7 +39,8 @@
 	</footer>
 
 	<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/main.js"></script>
-	<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-	<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+	{% if CF_ANALYTICS_TOKEN %}
+	<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ CF_ANALYTICS_TOKEN }}"}'></script>
+	{% endif %}
 </body>
 </html>

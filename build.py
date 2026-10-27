@@ -40,6 +40,10 @@ FEED_PATH = "posts/index.xml"
 TIMEZONE = timezone(timedelta(hours=5, minutes=30))  # Asia/Kolkata
 SUMMARY_MAX_WORDS = 50
 
+# Cloudflare Web Analytics site token (dashboard → Analytics & Logs → Web Analytics).
+# The beacon is left out of dev builds, and entirely when this is empty.
+CF_ANALYTICS_TOKEN = "2a3b6670f035477c9c2d803b95926618"
+
 MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
@@ -219,6 +223,7 @@ class Builder:
             THEME_STATIC_DIR="theme",
             ARCHIVES_URL="posts/",
             IS_DEV=dev,
+            CF_ANALYTICS_TOKEN="" if dev else CF_ANALYTICS_TOKEN,
             current_year=date.today().strftime("%Y"),
             date_iso=date.today().isoformat(),
         )
