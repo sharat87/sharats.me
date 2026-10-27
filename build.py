@@ -327,7 +327,7 @@ class Builder:
         redirects = OUTPUT_DIR / "_redirects"
         with redirects.open("a") as f:
             for article in sorted(self.articles, key=lambda a: a.slug):
-                f.write(f"/drafts/{article.slug}.html /posts/{article.slug} 301\n")
+                f.write(f"/drafts/{article.slug}.html /posts/{article.slug}/ 301\n")
 
     def build(self):
         if OUTPUT_DIR.is_dir():

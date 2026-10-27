@@ -1,0 +1,19 @@
+// Cloudflare Worker serving the built site from output/ (static assets only, no script).
+// Built and deployed by Workers Builds on push to master: ./ci-build.sh, then `npx wrangler deploy`.
+{
+	"name": "sharats-me",
+	"compatibility_date": "2026-10-01",
+	// Only the real domains below, no duplicate of the site on workers.dev.
+	"workers_dev": false,
+	"assets": {
+		"directory": "./output",
+		"html_handling": "auto-trailing-slash",
+		"not_found_handling": "404-page"
+	},
+	// The proxied DNS records for these live in ~/labs/infra/dns. The www to apex
+	// redirect is a Cloudflare redirect rule there too, which runs before this Worker.
+	"routes": [
+		{ "pattern": "sharats.me/*", "zone_name": "sharats.me" },
+		{ "pattern": "www.sharats.me/*", "zone_name": "sharats.me" }
+	]
+}

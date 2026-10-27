@@ -13,3 +13,5 @@ __pycache__
 /.logs
 
 /.playwright-cli
+
+/.wrangler
