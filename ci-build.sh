@@ -3,7 +3,7 @@
 set -xeuo pipefail
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
+# The installer only adds this to PATH in shell profiles, not the running shell.
+export PATH="$HOME/.local/bin:$PATH"
 
-uv sync --no-dev
-
-exec uv run python build.py
+exec uv run --no-dev python build.py
