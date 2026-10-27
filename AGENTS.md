@@ -10,9 +10,14 @@ Content in Markdown.
   (`pyproject.toml` + `uv.lock`). Deps: `markdown`, `jinja2`, `pygments`,
   `feedgenerator`, `watchfiles`. No framework.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
-- Deployed on Netlify; the build command runs `netlify-ci.sh` (installs uv,
-  `uv sync --no-dev`, runs `build.py`). There is no `netlify.toml`; deploy
-  settings live in the Netlify UI.
+- Served by a Cloudflare Worker (static assets only, config in
+  `wrangler.jsonc`). Workers Builds deploys on push to `master`: it runs
+  `ci-build.sh` (installs uv, `uv sync --no-dev`, runs `build.py`), then
+  `npx wrangler deploy`. Build settings live in the Cloudflare dashboard. DNS
+  for sharats.me (proxied records, www to apex redirect) is in
+  `~/labs/infra/dns`.
+- Analytics: Cloudflare Web Analytics beacon in `base.html`, production builds
+  only (`CF_ANALYTICS_TOKEN` in `build.py`).
 
 ## Commands
 
