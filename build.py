@@ -17,13 +17,14 @@ import re
 import shutil
 import sys
 import threading
+import time as time_module
 import traceback
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from xml.sax.saxutils import escape as xml_escape, quoteattr
 
 import markdown
-from feedgenerator import Atom1Feed
 from jinja2 import Environment, FileSystemLoader
 
 import markdown_ext
@@ -268,29 +269,39 @@ class Builder:
                 )
 
     def write_feed(self):
-        feed = Atom1Feed(
-            title=SITENAME,
-            link=PROD_SITEURL + "/",
-            feed_url=f"{PROD_SITEURL}/{FEED_PATH}",
-            description=None,
-        )
+        def link(href, rel):
+            return f"<link href={quoteattr(href)} rel={quoteattr(rel)}/>"
+
+        parts = [
+            '<?xml version="1.0" encoding="utf-8"?>\n',
+            '<feed xmlns="http://www.w3.org/2005/Atom">',
+            f"<title>{xml_escape(SITENAME)}</title>",
+            link(PROD_SITEURL + "/", "alternate"),
+            link(f"{PROD_SITEURL}/{FEED_PATH}", "self"),
+            f"<id>{xml_escape(PROD_SITEURL)}/</id>",
+            f"<updated>{max(a.date for a in self.articles).isoformat()}</updated>",
+        ]
         for article in self.articles:
-            feed.add_item(
+            url = f"{PROD_SITEURL}/{article.url}"
+            parts += [
+                "<entry>",
                 # Titles may contain HTML entities (e.g. &mdash;); the feed
                 # wants plain text, matching what Pelican produced.
-                title=html.unescape(article.title),
-                link=f"{PROD_SITEURL}/{article.url}",
-                unique_id=f"tag:sharats.me,{article.date:%Y-%m-%d}:/{article.url}",
-                author_name=AUTHOR,
-                pubdate=article.date,
-                updateddate=article.date,
-                description=article.summary,
-                content=article.content,
-                categories=("posts",),
-            )
+                f"<title>{xml_escape(html.unescape(article.title))}</title>",
+                link(url, "alternate"),
+                f"<published>{article.date.isoformat()}</published>",
+                f"<updated>{article.date.isoformat()}</updated>",
+                f"<author><name>{xml_escape(AUTHOR)}</name></author>",
+                f"<id>tag:sharats.me,{article.date:%Y-%m-%d}:/{xml_escape(article.url)}</id>",
+                f'<summary type="html">{xml_escape(article.summary)}</summary>',
+                f'<content type="html">{xml_escape(article.content)}</content>',
+                '<category term="posts"/>',
+                "</entry>",
+            ]
+        parts.append("</feed>")
         out_path = OUTPUT_DIR / FEED_PATH
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(feed.writeString("utf-8"))
+        out_path.write_text("".join(parts))
 
     def write_sitemap(self):
         entries = []  # (url, lastmod, changefreq)
@@ -357,8 +368,6 @@ class Builder:
 
 
 def serve(port: int):
-    import watchfiles
-
     def rebuild():
         try:
             Builder(dev=True).build()
@@ -374,9 +383,21 @@ def serve(port: int):
     threading.Thread(target=server.serve_forever, daemon=True).start()
     print(f"Serving on http://127.0.0.1:{port} (watching for changes)")
 
-    watch_targets = [CONTENT_DIR, THEME_DIR, ROOT / "markdown_ext.py"]
-    for _changes in watchfiles.watch(*watch_targets):
-        rebuild()
+    # Poll mtimes rather than pull in a file-watching library; a stat() of a
+    # few hundred files every half second is negligible.
+    def snapshot():
+        paths = [ROOT / "markdown_ext.py"]
+        for d in (CONTENT_DIR, THEME_DIR):
+            paths += d.rglob("*")
+        return {p: p.stat().st_mtime_ns for p in paths if p.is_file()}
+
+    last = snapshot()
+    while True:
+        time_module.sleep(0.5)
+        current = snapshot()
+        if current != last:
+            last = current
+            rebuild()
 
 
 def main():
