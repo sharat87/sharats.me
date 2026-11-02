@@ -6,9 +6,10 @@ Content in Markdown.
 
 ## Stack
 
-- Python 3.14 (see `.python-version`; matches the Workers Builds image so
-  builds don't compile Python), managed with **uv**
-  (`pyproject.toml` + `uv.lock`). Deps: `markdown`, `jinja2`, `pygments`,
+- Python >= 3.13, managed with **uv** (`pyproject.toml` + `uv.lock`). No
+  exact version is pinned (no `.python-version` / `.tool-versions`) on
+  purpose: Workers Builds then uses its preinstalled default Python instead
+  of compiling one on every build, which took ~7 minutes. Deps: `markdown`, `jinja2`, `pygments`,
   `feedgenerator`, `watchfiles`. No framework.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
 - Served by a Cloudflare Worker (static assets only, config in
