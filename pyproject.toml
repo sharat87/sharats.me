@@ -5,7 +5,6 @@ description = "Source for sharats.me website & blog"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "jinja2>=3.1.0",
     "markdown>=3.10",
     "pygments>=2.19.0",
 ]

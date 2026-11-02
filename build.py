@@ -15,11 +15,9 @@ import shutil
 import sys
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
-from types import SimpleNamespace
 from xml.sax.saxutils import escape as xml_escape, quoteattr
 
 import markdown
-from jinja2 import Environment, FileSystemLoader
 
 import markdown_ext
 
@@ -81,7 +79,7 @@ def render_markdown(text: str) -> str:
 
 
 def render_inline_markdown(text: str) -> str:
-    """Jinja filter: render markdown and strip the wrapping <p></p>."""
+    """Render markdown and strip the wrapping <p></p>."""
     return markdown.markdown(text).strip()[len("<p>"):-len("</p>")]
 
 
@@ -158,7 +156,6 @@ class Content:
         self.slug = slug
 
         self.title = meta.get("title", "")
-        self.lang = "en"
         self.status = meta.get("status", "published")
         self.description = meta.get("description")
         self.hn_id = meta.get("hn_id")
@@ -191,6 +188,176 @@ class Content:
         return self.date.strftime("%-d %b %Y") if self.date else ""
 
 
+# --- Templates ---------------------------------------------------------------
+#
+# Plain functions returning HTML. Nothing is escaped: titles, content and
+# summaries are trusted HTML from our own Markdown. `site` is the Builder.
+
+
+def truncate(text: str, length: int, end: str = "...", leeway: int = 5) -> str:
+    """Cut at a word boundary, like Jinja's `truncate` filter did."""
+    if len(text) <= length + leeway:
+        return text
+    return text[: length - len(end)].rsplit(" ", 1)[0] + end
+
+
+def base(site, *, title: str, content: str, active: str = "", extra_head: str = "") -> str:
+    """The page layout. `active` is the menu link to highlight."""
+    nav = "".join(
+        f'<a href="{link}"{" class=active" if link == active else ""}>{name}</a>'
+        for name, link in MENUITEMS
+    )
+    beacon = (
+        '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"'
+        f""" data-cf-beacon='{{"token": "{CF_ANALYTICS_TOKEN}"}}'></script>"""
+        if not site.dev and CF_ANALYTICS_TOKEN
+        else ""
+    )
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+	<meta charset=utf-8>
+	<title>{title}{" — " if title else ""}{SITENAME}</title>
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<link rel=manifest href="/site.webmanifest">
+	<link rel=apple-touch-icon href="/apple-touch-icon.png">
+	<link rel=stylesheet href="{site.siteurl}/theme/styles.css">
+	<style>.hide, .sr-only {{ display: none !important; }}</style>
+	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="{SITENAME}">
+	{extra_head}
+</head>
+
+<body>
+
+	<header>
+		<div class=brand><a href="{site.siteurl}/" rel=home title="Go Home"><img src="/apple-touch-icon.png" alt="" width=28 height=28>{SITENAME}</a></div>
+		<nav>{nav}<a href="{PROD_SITEURL}/{FEED_PATH}" title="Atom Feed">Feed</a></nav>
+	</header>
+
+	<main>{content}</main>
+
+	<footer>
+		© 2010&ndash;{site.now:%Y} Shrikant Sharat Kandula. Source on <a href="https://github.com/sharat87/sharats.me" target=_blank rel=noopener>GitHub</a>.
+			Content licensed with <a href="/licenses/cc-by/">CC-BY</a>, and code with <a href="/licenses/mit/">MIT License</a>.
+	</footer>
+
+	<script src="{site.siteurl}/theme/main.js"></script>
+	{beacon}
+</body>
+</html>
+"""
+
+
+def article_listing(site, articles) -> str:
+    """A list of posts. Dev builds list drafts first."""
+    if site.dev:
+        articles = site.drafts + articles
+    items = "".join(
+        f"""
+	<li>
+		<small class=subtext>
+			<time datetime='{a.date.isoformat()}'>{a.locale_date}</time>
+		</small>
+		<span class=title-wrap>
+			<a href="{site.siteurl}/{a.url}" class=title>{render_inline_markdown(a.title)}</a>{" <span class=draft-badge>Draft</span>" if a.status == "draft" else ""}
+		</span>"""
+        for a in articles
+    )
+    return f"<ul class=post-list>{items}\n</ul>\n"
+
+
+def article_page(site, article) -> str:
+    extra_head = (
+        f'<meta name=description content="{truncate(striptags(article.summary), 150)}">'
+        if article.summary
+        else ""
+    )
+
+    status = (
+        f"\n\t&middot; <span class=draft-badge>{article.status}</span>"
+        if article.status != "published"
+        else ""
+    )
+    lede = (
+        f"\n<p class=lede>{render_inline_markdown(article.description)}</p>"
+        if article.description
+        else ""
+    )
+
+    discuss_links = []
+    if article.hn_id:
+        discuss_links.append(
+            f'<a target=_blank href="https://news.ycombinator.com/item?id={article.hn_id}">Hacker News</a>'
+        )
+    if article.reddit_url:
+        discuss_links.append(
+            f'<a target=_blank href="https://www.reddit.com/{article.reddit_url}">Reddit</a>'
+        )
+    discuss = (
+        f"\n<p><b>Discuss on</b>: {' or '.join(discuss_links)}.</p>" if discuss_links else ""
+    )
+
+    content = f"""
+<h1>{render_inline_markdown(article.title)}</h1>
+<p class=post-meta>
+	<time datetime="{article.date.isoformat()}">{article.locale_date}</time>{status}
+</p>
+
+<article>{lede}
+{article.content}
+</article>{discuss}"""
+
+    return base(site, title=striptags(article.title), content=content, extra_head=extra_head)
+
+
+def page_page(site, page) -> str:
+    content = f"""
+<section id="content" class="body">
+    <h1 class="entry-title">{page.title}</h1>
+    {page.content}
+</section>
+"""
+    return base(site, title=page.title, content=content, active=f"/{page.url}")
+
+
+def archives_page(site) -> str:
+    content = f"""
+<h1>Posts</h1>
+
+{article_listing(site, site.articles)}
+"""
+    return base(site, title="Posts", content=content, active="/posts/")
+
+
+def index_page(site) -> str:
+    content = f"""
+<h1>Namaste 🙏</h1>
+
+<p>I am Shrikant. This is my blog/website where I write stuff about the work I do and things I've learnt.</p>
+
+<h2>Recent Posts</h2>
+{article_listing(site, site.articles[:6])}
+<p><a href="{site.siteurl}/posts/">See all posts &rarr;</a></p>
+
+<h2 id=labs>Labs</h2>
+
+<h3>
+	Httpbun <small><a href="https://httpbun.com/" target=httpbun rel=noopener>httpbun.com</a></small>
+</h3>
+
+<p>This is an HTTP service with endpoints that are useful when testing any HTTP client, like a browser, a library, or any API developer tool. It's heavily inspired by <a href="https://httpbin.org" rel=noopener>httpbin</a>.</p>
+
+<h3>
+	Just a calendar <small><a href="https://cal.sharats.me/" target="just-a-calendar" rel="noopener">cal.sharats.me</a></small>
+</h3>
+
+<p>An easily reachable endpoint to have a calendar to look at. No signup, no setup, no downloads, no flash and very little features. Perfect when you want to show a calendar and talk about dates when sharing your screen in a presentation or meeting.</p>
+
+<p><a href="{site.siteurl}/labs/">See all &rarr;</a></p>
+"""
+    return base(site, title="", content=content)
+
+
 # --- The build ---------------------------------------------------------------
 
 
@@ -198,30 +365,6 @@ class Builder:
     def __init__(self, dev: bool):
         self.dev = dev
         self.siteurl = "" if dev else PROD_SITEURL
-
-        self.jinja = Environment(
-            loader=FileSystemLoader(THEME_DIR / "templates"),
-            trim_blocks=True,
-            lstrip_blocks=True,
-        )
-        self.jinja.filters["markdown"] = render_inline_markdown
-        self.jinja.filters["striptags"] = striptags
-        self.jinja.globals.update(
-            SITENAME=SITENAME,
-            SITEURL=self.siteurl,
-            PROD_SITEURL=PROD_SITEURL,
-            AUTHOR=AUTHOR,
-            MENUITEMS=MENUITEMS,
-            FEED_ALL_ATOM=FEED_PATH,
-            FEED_DOMAIN=PROD_SITEURL,
-            DEFAULT_LANG="en",
-            THEME_STATIC_DIR="theme",
-            ARCHIVES_URL="posts/",
-            IS_DEV=dev,
-            CF_ANALYTICS_TOKEN="" if dev else CF_ANALYTICS_TOKEN,
-            current_year=date.today().strftime("%Y"),
-            date_iso=date.today().isoformat(),
-        )
 
         self.articles = []
         self.drafts = []
@@ -237,13 +380,7 @@ class Builder:
         self.articles.sort(key=lambda a: a.date, reverse=True)
         self.drafts.sort(key=lambda a: a.date, reverse=True)
 
-    def render(self, template_name: str, save_as: str, **context):
-        template = self.jinja.get_template(template_name)
-        context.setdefault("articles", self.articles)
-        context.setdefault("drafts", self.drafts)
-        context.setdefault("articles_page", SimpleNamespace(object_list=self.articles))
-        context.setdefault("output_file", save_as)
-        html_out = template.render(**context)
+    def write_html(self, save_as: str, html_out: str):
         out_path = OUTPUT_DIR / save_as
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(html_out)
@@ -342,12 +479,12 @@ class Builder:
         self.load_content()
 
         for article in self.articles + self.drafts:
-            self.render("article.html", article.save_as, article=article)
+            self.write_html(article.save_as, article_page(self, article))
         for page in self.pages:
-            self.render("page.html", page.save_as, page=page)
+            self.write_html(page.save_as, page_page(self, page))
 
-        self.render("index.html", "index.html")
-        self.render("archives.html", "posts/index.html")
+        self.write_html("index.html", index_page(self))
+        self.write_html("posts/index.html", archives_page(self))
 
         self.copy_static()
         self.write_feed()

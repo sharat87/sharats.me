@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Source of [sharats.me](https://sharats.me), a personal blog. Static site built
-by `build.py`, a small custom builder (~400 lines, replaced Pelican in 2026).
+by `build.py`, a small custom builder (~500 lines, replaced Pelican in 2026).
 Content in Markdown.
 
 ## Stack
@@ -10,7 +10,7 @@ Content in Markdown.
   exact version is pinned (no `.python-version` / `.tool-versions`) on
   purpose: Workers Builds then uses its preinstalled default Python instead
   of compiling one on every build, which took ~7 minutes. Deps: `markdown`,
-  `jinja2`, `pygments`. No framework.
+  `pygments`. No framework, no template engine.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
 - Served by a Cloudflare Worker (static assets only, config in
   `wrangler.jsonc`). Workers Builds deploys on push to `master`: the image
@@ -35,8 +35,9 @@ root-relative URLs and lists drafts. There's no dev server; to preview, serve
 ## Layout
 
 - `build.py` — the whole build: front matter parsing, Markdown rendering,
-  Jinja templating, Atom feed, sitemap, static copying, draft redirects. All
-  site config (author, URLs, menu) is constants at the top.
+  HTML templates (plain functions returning f-strings, no escaping), Atom
+  feed, sitemap, static copying, draft redirects. All site config (author,
+  URLs, menu) is constants at the top.
 - `content/posts/YYYY-MM-DD-slug.md` — articles. Date/slug parsed from the
   filename; front matter is `---`-fenced `key: value` lines. `status: draft`
   keeps a post unpublished (drafts render under `/drafts/<slug>.html` and are
@@ -47,8 +48,7 @@ root-relative URLs and lists drafts. There's no dev server; to preview, serve
 - `content/root-static/` — files copied to the site root (favicons,
   `_redirects`, `_headers`, etc.).
 - `content/static/` — other static assets, copied to `/static/`.
-- `theme/` — custom Jinja2 theme (`templates/` + `static/`, the latter copied
-  to `/theme/`).
+- `theme/static/` — the theme's CSS and JS, copied to `/theme/`.
 - `markdown_ext.py` — custom Python-Markdown extensions (incl. a custom
   Pygments formatter with collapsible code blocks).
 
