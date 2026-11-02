@@ -10,39 +10,33 @@ Content in Markdown.
   exact version is pinned (no `.python-version` / `.tool-versions`) on
   purpose: Workers Builds then uses its preinstalled default Python instead
   of compiling one on every build, which took ~7 minutes. Deps: `markdown`,
-  `jinja2`, `pygments`. The Atom feed and the dev server's file watching are
-  plain stdlib. No framework.
+  `jinja2`, `pygments`. No framework.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
 - Served by a Cloudflare Worker (static assets only, config in
   `wrangler.jsonc`). Workers Builds deploys on push to `master`: the image
   auto-runs `uv sync` (it sees `uv.lock`), then the build command
   `uv run python build.py`, then `npx wrangler deploy`. Build settings live in
-  the Cloudflare dashboard. DNS
-  for sharats.me (proxied records, www to apex redirect) is in
-  `~/labs/infra/dns`.
+  the Cloudflare dashboard. DNS for sharats.me (proxied records, www to apex
+  redirect) is in `~/labs/infra/dns`.
 - Analytics: Cloudflare Web Analytics beacon in `base.html`, production builds
   only (`CF_ANALYTICS_TOKEN` in `build.py`).
 
 ## Commands
 
 ```sh
-task serve   # background dev server on http://127.0.0.1:6060 (via serve.sh)
 task build   # production build into output/
 task new -- "Post Title"   # scaffold a new draft in content/posts/
 ```
 
-Or directly: `uv run python build.py [--dev | --serve] [--port N]`.
-
-`serve.sh` runs the dev server (rebuild-on-change + serve) in a background
-tmux window (socket `daemons`, window `sharats-me-dev`), logging to
-`.logs/dev-server.log`. Re-running it restarts the server. To stop it:
-`tmux -L daemons kill-window -t sharats-me-dev`.
+Or directly: `uv run python build.py [--dev]`. A dev build uses
+root-relative URLs and lists drafts. There's no dev server; to preview, serve
+`output/` with any static server (e.g. `python -m http.server -d output`).
 
 ## Layout
 
 - `build.py` — the whole build: front matter parsing, Markdown rendering,
-  Jinja templating, Atom feed, sitemap, static copying, draft redirects, dev
-  server. All site config (author, URLs, menu) is constants at the top.
+  Jinja templating, Atom feed, sitemap, static copying, draft redirects. All
+  site config (author, URLs, menu) is constants at the top.
 - `content/posts/YYYY-MM-DD-slug.md` — articles. Date/slug parsed from the
   filename; front matter is `---`-fenced `key: value` lines. `status: draft`
   keeps a post unpublished (drafts render under `/drafts/<slug>.html` and are

@@ -4,19 +4,8 @@ set:
   - nounset
 
 tasks:
-  serve:
-    cmds:
-      - uv sync
-      - bash serve.sh
-
   build:
     cmds:
-      - |
-        if [[ -n "${CI-}" ]]; then
-          uv sync --no-dev
-        else
-          uv sync
-        fi
       - uv run python build.py
 
   new:

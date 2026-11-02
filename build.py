@@ -4,21 +4,15 @@
 Usage:
     python build.py            # production build into output/
     python build.py --dev      # dev build (root-relative URLs, drafts listed)
-    python build.py --serve    # dev build + watch + serve on :6060
 """
 from __future__ import annotations
 
 import argparse
-import functools
 import html
-import http.server
 import itertools
 import re
 import shutil
 import sys
-import threading
-import time as time_module
-import traceback
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -367,50 +361,12 @@ class Builder:
         )
 
 
-def serve(port: int):
-    def rebuild():
-        try:
-            Builder(dev=True).build()
-        except Exception:
-            traceback.print_exc()
-
-    rebuild()
-
-    handler = functools.partial(
-        http.server.SimpleHTTPRequestHandler, directory=str(OUTPUT_DIR)
-    )
-    server = http.server.ThreadingHTTPServer(("0.0.0.0", port), handler)
-    threading.Thread(target=server.serve_forever, daemon=True).start()
-    print(f"Serving on http://127.0.0.1:{port} (watching for changes)")
-
-    # Poll mtimes rather than pull in a file-watching library; a stat() of a
-    # few hundred files every half second is negligible.
-    def snapshot():
-        paths = [ROOT / "markdown_ext.py"]
-        for d in (CONTENT_DIR, THEME_DIR):
-            paths += d.rglob("*")
-        return {p: p.stat().st_mtime_ns for p in paths if p.is_file()}
-
-    last = snapshot()
-    while True:
-        time_module.sleep(0.5)
-        current = snapshot()
-        if current != last:
-            last = current
-            rebuild()
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dev", action="store_true", help="development build")
-    parser.add_argument("--serve", action="store_true", help="dev build + watch + serve")
-    parser.add_argument("--port", type=int, default=6060)
     args = parser.parse_args()
 
-    if args.serve:
-        serve(args.port)
-    else:
-        Builder(dev=args.dev).build()
+    Builder(dev=args.dev).build()
 
 
 if __name__ == "__main__":
