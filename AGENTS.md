@@ -6,7 +6,8 @@ Content in Markdown.
 
 ## Stack
 
-- Python 3.13 (see `.python-version` / `.tool-versions`), managed with **uv**
+- Python 3.14 (see `.python-version`; matches the Workers Builds image so
+  builds don't compile Python), managed with **uv**
   (`pyproject.toml` + `uv.lock`). Deps: `markdown`, `jinja2`, `pygments`,
   `feedgenerator`, `watchfiles`. No framework.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
