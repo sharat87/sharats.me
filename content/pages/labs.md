@@ -2,7 +2,7 @@
 title: Labs
 ---
 
-This is a list of my public projects and experiments. You may follow me on [GitHub](https://github.com/sharat87) for latest updates on my current work and future experiments.
+This is a list of my projects and experiments. Some are open source, some aren't (yet). You may follow me on [GitHub](https://github.com/sharat87) for latest updates on my current work and future experiments.
 
 ## Httpbun ![Icon](https://httpbun.com/assets/icon-32.png)
 
@@ -29,6 +29,9 @@ Considered a "finished" project, and I'm using it every day.
 
 ## Quizfish
 
+[quizfish.sharats.me](https://quizfish.sharats.me)
+{ .links }
+
 A web-based trivia game, in the spirit of the old QuizUp. Pick a topic and play a round of ten questions solo, or challenge a friend to a live matchup. Both players get the *same* ten questions, and each question goes to whoever answers it correctly first.
 
 - Accounts with email verification, and friends added by username.
@@ -36,6 +39,9 @@ A web-based trivia game, in the spirit of the old QuizUp. Pick a topic and play 
 - Invite someone by email, and you start out as friends when they sign up.
 
 ## DashQL
+
+[dashql.sharats.me](https://dashql.sharats.me)
+{ .links }
 
 A superlightweight webapp that turns your data into things you can use every day: dashboards to read, scheduled jobs to keep it moving, and API endpoints your apps can read and write through. The data can come from Postgres databases you already run, any HTTP API, or both. No new service per app, no SDK, no queue.
 
@@ -46,6 +52,9 @@ A superlightweight webapp that turns your data into things you can use every day
 - An assistant that can write all of it for you, from a plain request.
 
 ## MyPortal
+
+[myportal.sharats.me](https://myportal.sharats.me)
+{ .links }
 
 A builder for single-page websites, the kind you'd put behind the link in your bio. Instead of a form full of settings, you describe what you want in a chat, and an AI agent builds and restyles the page for you.
 
