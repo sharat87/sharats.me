@@ -182,6 +182,8 @@ class Content:
 
         self.content = render_markdown(body).replace("{static}", siteurl)
         self.summary = truncate_html_words(self.content, SUMMARY_MAX_WORDS)
+        prose = re.sub(r"<pre\b.*?</pre>", "", self.content, flags=re.S)
+        self.word_count = len(striptags(prose).split())
 
     @property
     def locale_date(self):
@@ -300,7 +302,7 @@ def article_page(site, article) -> str:
     content = f"""
 <h1>{render_inline_markdown(article.title)}</h1>
 <p class=post-meta>
-	<time datetime="{article.date.isoformat()}">{article.locale_date}</time>{status}
+	<time datetime="{article.date.isoformat()}">{article.locale_date}</time> &bull; {article.word_count:,} words{status}
 </p>
 
 <article>{lede}
