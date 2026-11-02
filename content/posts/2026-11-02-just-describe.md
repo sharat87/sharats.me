@@ -12,6 +12,10 @@ I used to use Vim. I have a 1000+ line hand-written config from ~20y of usage, a
 
 I've now moved to just SublimeText. I ask an agent to build the commands I want, build the hotkeys I want. When described well, what I get are _so_ good. Exactly what I need, "just enough".
 
+I used to use Vim-notes (my own plugin), moved to Bear on macOS (and then Obsidian for a very short while). From that hopping you can tell I wasn't happy with any of those. I just needed a lightweight markdown editor, with a quick file finder, and inline images that I can just paste at the cursor.
+
+I now use a single SublimeText project, with a notes plugin built by me, for me. Pasting images works. Hitting Enter on a bullet point starts a new bullet point. Indenting bullet points works like a fantastic outliner. Tables get reformatted on save. Trailing whitespace is trimmed everywhere except for the cursor's line on save (why is this not the default everywhere!). File names stay in sync with the H1 in the file's contents. Just enough.
+
 ## Happy and proud
 
 I was so proud and happy when my Vim configs and shortcuts worked, back in college. None of my peers understood it (hi guys!), or cared about it, but it put a smile on my face. Do I still have those shortcuts and config? Nope. I threw it away a long long time ago. And that's okay.
