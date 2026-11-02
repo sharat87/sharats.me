@@ -6,7 +6,7 @@ This is a list of my projects and experiments. Some are open source, some aren't
 
 ## Httpbun ![Icon](https://httpbun.com/assets/icon-32.png)
 
-[httpbun.com](https://httpbun.com) [httpbun.org](https://httpbun.org) [Source Code](https://github.com/sharat87/httpbun)
+[httpbun.com](https://httpbun.com) [Source Code](https://github.com/sharat87/httpbun)
 { .links }
 
 This is an HTTP service with endpoints that are useful when testing any HTTP client, like a browser, a library, or any API developer tool. It's heavily inspired by [httpbin](https://httpbin.org).
