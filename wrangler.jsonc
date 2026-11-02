@@ -1,5 +1,5 @@
 // Cloudflare Worker serving the built site from output/ (static assets only, no script).
-// Built and deployed by Workers Builds on push to master: ./ci-build.sh, then `npx wrangler deploy`.
+// Built and deployed by Workers Builds on push to master: `uv run python build.py`, then `npx wrangler deploy`.
 {
 	"name": "sharats-me",
 	"compatibility_date": "2026-10-01",

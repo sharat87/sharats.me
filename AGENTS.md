@@ -13,9 +13,10 @@ Content in Markdown.
   `feedgenerator`, `watchfiles`. No framework.
 - [Task](https://taskfile.dev) (`Taskfile.dist.yml`) is the task runner.
 - Served by a Cloudflare Worker (static assets only, config in
-  `wrangler.jsonc`). Workers Builds deploys on push to `master`: it runs
-  `ci-build.sh` (installs uv, runs `build.py` with `uv run`), then
-  `npx wrangler deploy`. Build settings live in the Cloudflare dashboard. DNS
+  `wrangler.jsonc`). Workers Builds deploys on push to `master`: the image
+  auto-runs `uv sync` (it sees `uv.lock`), then the build command
+  `uv run python build.py`, then `npx wrangler deploy`. Build settings live in
+  the Cloudflare dashboard. DNS
   for sharats.me (proxied records, www to apex redirect) is in
   `~/labs/infra/dns`.
 - Analytics: Cloudflare Web Analytics beacon in `base.html`, production builds
