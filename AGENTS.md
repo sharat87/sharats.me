@@ -18,8 +18,10 @@ Content in Markdown.
   `uv run python build.py`, then `npx wrangler deploy`. Build settings live in
   the Cloudflare dashboard. DNS for sharats.me (proxied records, www to apex
   redirect) is in `~/labs/infra/dns`.
-- Analytics: Cloudflare Web Analytics beacon in `base.html`, production builds
-  only (`CF_ANALYTICS_TOKEN` in `build.py`).
+- Analytics: Cloudflare Web Analytics beacon and PostHog (US Cloud), both in
+  `base()` and production builds only (`CF_ANALYTICS_TOKEN`, `POSTHOG_TOKEN`
+  in `build.py`). There's no CSP, so PostHog's CDN/ingestion hosts need no
+  allowlisting; if one is added, allow `https://*.posthog.com`.
 
 ## Commands
 

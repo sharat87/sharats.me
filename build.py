@@ -37,6 +37,14 @@ SUMMARY_MAX_WORDS = 50
 # The beacon is left out of dev builds, and entirely when this is empty.
 CF_ANALYTICS_TOKEN = "2a3b6670f035477c9c2d803b95926618"
 
+# PostHog project token and ingestion host. Like the Cloudflare beacon, the
+# snippet is left out of dev builds, and entirely when the token is empty.
+POSTHOG_TOKEN = "phc_nATuwru3TysQXJAdHSz8Rsg58Cg2QDde8oLN9emEFwbN"
+POSTHOG_HOST = "https://us.i.posthog.com"
+# PostHog's stub loader, verbatim from the install snippet. A plain string (not
+# an f-string) because it's full of braces.
+POSTHOG_LOADER = r'''!function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="mh bh wh xh init Xh ed Gh Jh od ac Yh ad Uh fd pd gd md yd bd capture getExtension nd mr Zh Kh calculateEventProperties wd register register_once register_for_session unregister unregister_for_session Cd Vh Sd getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys onActiveMatchingSurveysChanged renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Td identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset Id shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty xd hd createPersonProfile setInternalOrTestUser $d Ih Ch opt_in_capturing opt_out_capturing Th has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing ld debug lc Fs getPageViewId captureTraceFeedback captureTraceMetric qh".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);'''
+
 MENUITEMS = [
     ("Posts", "/posts/"),
     ("Labs", "/labs/"),
@@ -215,6 +223,13 @@ def base(site, *, title: str, content: str, active: str = "", extra_head: str = 
         if not site.dev and CF_ANALYTICS_TOKEN
         else ""
     )
+    posthog = (
+        f"<script>{POSTHOG_LOADER}\n"
+        f"posthog.init('{POSTHOG_TOKEN}', {{api_host: '{POSTHOG_HOST}',"
+        " defaults: '2026-05-30', person_profiles: 'identified_only'})</script>"
+        if not site.dev and POSTHOG_TOKEN
+        else ""
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -227,6 +242,7 @@ def base(site, *, title: str, content: str, active: str = "", extra_head: str = 
 	<style>.hide, .sr-only {{ display: none !important; }}</style>
 	<link rel=alternate href="/posts/index.xml" type="application/atom+xml" title="{SITENAME}">
 	{extra_head}
+	{posthog}
 </head>
 
 <body>
